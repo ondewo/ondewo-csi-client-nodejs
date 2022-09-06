@@ -1,4 +1,11 @@
 # Release History
+
+***************** 
+## Release ONDEWO CSI Nodejs Client 2.3.1 
+ 
+### Improvements 
+ * Tracking API Version 2.3.1 
+
 *****************
 
 ## Release ONDEWO CSI Nodejs Client 2.3.1
