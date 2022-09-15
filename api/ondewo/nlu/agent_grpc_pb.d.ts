@@ -9,6 +9,7 @@ import * as ondewo_nlu_agent_pb from '../../ondewo/nlu/agent_pb';
 import * as google_protobuf_field_mask_pb from 'google-protobuf/google/protobuf/field_mask_pb';
 import * as google_protobuf_empty_pb from 'google-protobuf/google/protobuf/empty_pb';
 import * as google_protobuf_struct_pb from 'google-protobuf/google/protobuf/struct_pb';
+import * as google_protobuf_any_pb from 'google-protobuf/google/protobuf/any_pb';
 import * as ondewo_nlu_common_pb from '../../ondewo/nlu/common_pb';
 import * as ondewo_nlu_intent_pb from '../../ondewo/nlu/intent_pb';
 import * as ondewo_nlu_user_pb from '../../ondewo/nlu/user_pb';
@@ -45,6 +46,17 @@ interface IAgentsService extends grpc.ServiceDefinition<grpc.UntypedServiceImple
 	getModelStatuses: IAgentsService_IGetModelStatuses;
 	getPlatformMapping: IAgentsService_IGetPlatformMapping;
 	setPlatformMapping: IAgentsService_ISetPlatformMapping;
+	getFullTextSearchEntityType: IAgentsService_IGetFullTextSearchEntityType;
+	getFullTextSearchEntity: IAgentsService_IGetFullTextSearchEntity;
+	getFullTextSearchEntitySynonym: IAgentsService_IGetFullTextSearchEntitySynonym;
+	getFullTextSearchIntent: IAgentsService_IGetFullTextSearchIntent;
+	getFullTextSearchIntentContextIn: IAgentsService_IGetFullTextSearchIntentContextIn;
+	getFullTextSearchIntentContextOut: IAgentsService_IGetFullTextSearchIntentContextOut;
+	getFullTextSearchIntentUsersays: IAgentsService_IGetFullTextSearchIntentUsersays;
+	getFullTextSearchIntentTags: IAgentsService_IGetFullTextSearchIntentTags;
+	getFullTextSearchIntentResponse: IAgentsService_IGetFullTextSearchIntentResponse;
+	getFullTextSearchIntentParameters: IAgentsService_IGetFullTextSearchIntentParameters;
+	reindexAgent: IAgentsService_IReindexAgent;
 }
 
 interface IAgentsService_ICreateAgent
@@ -342,6 +354,146 @@ interface IAgentsService_ISetPlatformMapping
 	responseSerialize: grpc.serialize<ondewo_nlu_agent_pb.PlatformMapping>;
 	responseDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.PlatformMapping>;
 }
+interface IAgentsService_IGetFullTextSearchEntityType
+	extends grpc.MethodDefinition<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseEntityType
+	> {
+	path: '/ondewo.nlu.Agents/GetFullTextSearchEntityType';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchResponseEntityType>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchResponseEntityType>;
+}
+interface IAgentsService_IGetFullTextSearchEntity
+	extends grpc.MethodDefinition<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseEntity
+	> {
+	path: '/ondewo.nlu.Agents/GetFullTextSearchEntity';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchResponseEntity>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchResponseEntity>;
+}
+interface IAgentsService_IGetFullTextSearchEntitySynonym
+	extends grpc.MethodDefinition<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseEntitySynonym
+	> {
+	path: '/ondewo.nlu.Agents/GetFullTextSearchEntitySynonym';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchResponseEntitySynonym>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchResponseEntitySynonym>;
+}
+interface IAgentsService_IGetFullTextSearchIntent
+	extends grpc.MethodDefinition<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseIntent
+	> {
+	path: '/ondewo.nlu.Agents/GetFullTextSearchIntent';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchResponseIntent>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchResponseIntent>;
+}
+interface IAgentsService_IGetFullTextSearchIntentContextIn
+	extends grpc.MethodDefinition<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextIn
+	> {
+	path: '/ondewo.nlu.Agents/GetFullTextSearchIntentContextIn';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextIn>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextIn>;
+}
+interface IAgentsService_IGetFullTextSearchIntentContextOut
+	extends grpc.MethodDefinition<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextOut
+	> {
+	path: '/ondewo.nlu.Agents/GetFullTextSearchIntentContextOut';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextOut>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextOut>;
+}
+interface IAgentsService_IGetFullTextSearchIntentUsersays
+	extends grpc.MethodDefinition<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseIntentUsersays
+	> {
+	path: '/ondewo.nlu.Agents/GetFullTextSearchIntentUsersays';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchResponseIntentUsersays>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchResponseIntentUsersays>;
+}
+interface IAgentsService_IGetFullTextSearchIntentTags
+	extends grpc.MethodDefinition<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseIntentTags
+	> {
+	path: '/ondewo.nlu.Agents/GetFullTextSearchIntentTags';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchResponseIntentTags>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchResponseIntentTags>;
+}
+interface IAgentsService_IGetFullTextSearchIntentResponse
+	extends grpc.MethodDefinition<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseIntentResponse
+	> {
+	path: '/ondewo.nlu.Agents/GetFullTextSearchIntentResponse';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchResponseIntentResponse>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchResponseIntentResponse>;
+}
+interface IAgentsService_IGetFullTextSearchIntentParameters
+	extends grpc.MethodDefinition<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseIntentParameters
+	> {
+	path: '/ondewo.nlu.Agents/GetFullTextSearchIntentParameters';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_agent_pb.FullTextSearchResponseIntentParameters>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.FullTextSearchResponseIntentParameters>;
+}
+interface IAgentsService_IReindexAgent
+	extends grpc.MethodDefinition<ondewo_nlu_agent_pb.ReindexAgentRequest, ondewo_nlu_operations_pb.Operation> {
+	path: '/ondewo.nlu.Agents/ReindexAgent';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_agent_pb.ReindexAgentRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.ReindexAgentRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_operations_pb.Operation>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_operations_pb.Operation>;
+}
 
 export const AgentsService: IAgentsService;
 
@@ -404,6 +556,47 @@ export interface IAgentsServer {
 		ondewo_nlu_agent_pb.PlatformMapping
 	>;
 	setPlatformMapping: grpc.handleUnaryCall<ondewo_nlu_agent_pb.PlatformMapping, ondewo_nlu_agent_pb.PlatformMapping>;
+	getFullTextSearchEntityType: grpc.handleUnaryCall<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseEntityType
+	>;
+	getFullTextSearchEntity: grpc.handleUnaryCall<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseEntity
+	>;
+	getFullTextSearchEntitySynonym: grpc.handleUnaryCall<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseEntitySynonym
+	>;
+	getFullTextSearchIntent: grpc.handleUnaryCall<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseIntent
+	>;
+	getFullTextSearchIntentContextIn: grpc.handleUnaryCall<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextIn
+	>;
+	getFullTextSearchIntentContextOut: grpc.handleUnaryCall<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextOut
+	>;
+	getFullTextSearchIntentUsersays: grpc.handleUnaryCall<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseIntentUsersays
+	>;
+	getFullTextSearchIntentTags: grpc.handleUnaryCall<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseIntentTags
+	>;
+	getFullTextSearchIntentResponse: grpc.handleUnaryCall<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseIntentResponse
+	>;
+	getFullTextSearchIntentParameters: grpc.handleUnaryCall<
+		ondewo_nlu_agent_pb.FullTextSearchRequest,
+		ondewo_nlu_agent_pb.FullTextSearchResponseIntentParameters
+	>;
+	reindexAgent: grpc.handleUnaryCall<ondewo_nlu_agent_pb.ReindexAgentRequest, ondewo_nlu_operations_pb.Operation>;
 }
 
 export interface IAgentsClient {
@@ -826,6 +1019,225 @@ export interface IAgentsClient {
 		metadata: grpc.Metadata,
 		options: Partial<grpc.CallOptions>,
 		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.PlatformMapping) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchEntityType(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseEntityType) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchEntityType(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseEntityType) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchEntityType(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseEntityType) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchEntity(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseEntity) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchEntity(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseEntity) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchEntity(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseEntity) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchEntitySynonym(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseEntitySynonym
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchEntitySynonym(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseEntitySynonym
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchEntitySynonym(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseEntitySynonym
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntent(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseIntent) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntent(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseIntent) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntent(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseIntent) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentContextIn(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextIn
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentContextIn(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextIn
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentContextIn(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextIn
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentContextOut(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextOut
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentContextOut(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextOut
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentContextOut(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextOut
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentUsersays(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentUsersays
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentUsersays(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentUsersays
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentUsersays(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentUsersays
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentTags(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentTags) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentTags(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentTags) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentTags(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentTags) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentResponse(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentResponse
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentResponse(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentResponse
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentResponse(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentResponse
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentParameters(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentParameters
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentParameters(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentParameters
+		) => void
+	): grpc.ClientUnaryCall;
+	getFullTextSearchIntentParameters(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentParameters
+		) => void
+	): grpc.ClientUnaryCall;
+	reindexAgent(
+		request: ondewo_nlu_agent_pb.ReindexAgentRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_operations_pb.Operation) => void
+	): grpc.ClientUnaryCall;
+	reindexAgent(
+		request: ondewo_nlu_agent_pb.ReindexAgentRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_operations_pb.Operation) => void
+	): grpc.ClientUnaryCall;
+	reindexAgent(
+		request: ondewo_nlu_agent_pb.ReindexAgentRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_operations_pb.Operation) => void
 	): grpc.ClientUnaryCall;
 }
 
@@ -1250,5 +1662,224 @@ export class AgentsClient extends grpc.Client implements IAgentsClient {
 		metadata: grpc.Metadata,
 		options: Partial<grpc.CallOptions>,
 		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.PlatformMapping) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchEntityType(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseEntityType) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchEntityType(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseEntityType) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchEntityType(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseEntityType) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchEntity(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseEntity) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchEntity(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseEntity) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchEntity(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseEntity) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchEntitySynonym(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseEntitySynonym
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchEntitySynonym(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseEntitySynonym
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchEntitySynonym(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseEntitySynonym
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntent(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseIntent) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntent(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseIntent) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntent(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseIntent) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentContextIn(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextIn
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentContextIn(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextIn
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentContextIn(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextIn
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentContextOut(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextOut
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentContextOut(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextOut
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentContextOut(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentContextOut
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentUsersays(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentUsersays
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentUsersays(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentUsersays
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentUsersays(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentUsersays
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentTags(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentTags) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentTags(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentTags) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentTags(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentTags) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentResponse(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentResponse
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentResponse(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentResponse
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentResponse(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentResponse
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentParameters(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentParameters
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentParameters(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentParameters
+		) => void
+	): grpc.ClientUnaryCall;
+	public getFullTextSearchIntentParameters(
+		request: ondewo_nlu_agent_pb.FullTextSearchRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (
+			error: grpc.ServiceError | null,
+			response: ondewo_nlu_agent_pb.FullTextSearchResponseIntentParameters
+		) => void
+	): grpc.ClientUnaryCall;
+	public reindexAgent(
+		request: ondewo_nlu_agent_pb.ReindexAgentRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_operations_pb.Operation) => void
+	): grpc.ClientUnaryCall;
+	public reindexAgent(
+		request: ondewo_nlu_agent_pb.ReindexAgentRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_operations_pb.Operation) => void
+	): grpc.ClientUnaryCall;
+	public reindexAgent(
+		request: ondewo_nlu_agent_pb.ReindexAgentRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_operations_pb.Operation) => void
 	): grpc.ClientUnaryCall;
 }
