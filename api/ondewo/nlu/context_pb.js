@@ -13,7 +13,21 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = Function('return this')();
+var global = function () {
+	if (this) {
+		return this;
+	}
+	if (typeof window !== 'undefined') {
+		return window;
+	}
+	if (typeof global !== 'undefined') {
+		return global;
+	}
+	if (typeof self !== 'undefined') {
+		return self;
+	}
+	return Function('return this')();
+}.call(null);
 
 var google_api_annotations_pb = require('../../google/api/annotations_pb.js');
 goog.object.extend(proto, google_api_annotations_pb);
@@ -656,7 +670,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 	proto.ondewo.nlu.ListContextsRequest.toObject = function (includeInstance, msg) {
 		var f,
 			obj = {
-				parent: jspb.Message.getFieldWithDefault(msg, 1, ''),
+				sessionId: jspb.Message.getFieldWithDefault(msg, 1, ''),
 				pageToken: jspb.Message.getFieldWithDefault(msg, 3, '')
 			};
 
@@ -694,7 +708,7 @@ proto.ondewo.nlu.ListContextsRequest.deserializeBinaryFromReader = function (msg
 		switch (field) {
 			case 1:
 				var value = /** @type {string} */ (reader.readString());
-				msg.setParent(value);
+				msg.setSessionId(value);
 				break;
 			case 3:
 				var value = /** @type {string} */ (reader.readString());
@@ -727,7 +741,7 @@ proto.ondewo.nlu.ListContextsRequest.prototype.serializeBinary = function () {
  */
 proto.ondewo.nlu.ListContextsRequest.serializeBinaryToWriter = function (message, writer) {
 	var f = undefined;
-	f = message.getParent();
+	f = message.getSessionId();
 	if (f.length > 0) {
 		writer.writeString(1, f);
 	}
@@ -738,10 +752,10 @@ proto.ondewo.nlu.ListContextsRequest.serializeBinaryToWriter = function (message
 };
 
 /**
- * optional string parent = 1;
+ * optional string session_id = 1;
  * @return {string}
  */
-proto.ondewo.nlu.ListContextsRequest.prototype.getParent = function () {
+proto.ondewo.nlu.ListContextsRequest.prototype.getSessionId = function () {
 	return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
 };
 
@@ -749,7 +763,7 @@ proto.ondewo.nlu.ListContextsRequest.prototype.getParent = function () {
  * @param {string} value
  * @return {!proto.ondewo.nlu.ListContextsRequest} returns this
  */
-proto.ondewo.nlu.ListContextsRequest.prototype.setParent = function (value) {
+proto.ondewo.nlu.ListContextsRequest.prototype.setSessionId = function (value) {
 	return jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -1088,7 +1102,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 	proto.ondewo.nlu.CreateContextRequest.toObject = function (includeInstance, msg) {
 		var f,
 			obj = {
-				parent: jspb.Message.getFieldWithDefault(msg, 1, ''),
+				sessionId: jspb.Message.getFieldWithDefault(msg, 1, ''),
 				context: (f = msg.getContext()) && proto.ondewo.nlu.Context.toObject(includeInstance, f)
 			};
 
@@ -1126,7 +1140,7 @@ proto.ondewo.nlu.CreateContextRequest.deserializeBinaryFromReader = function (ms
 		switch (field) {
 			case 1:
 				var value = /** @type {string} */ (reader.readString());
-				msg.setParent(value);
+				msg.setSessionId(value);
 				break;
 			case 2:
 				var value = new proto.ondewo.nlu.Context();
@@ -1160,7 +1174,7 @@ proto.ondewo.nlu.CreateContextRequest.prototype.serializeBinary = function () {
  */
 proto.ondewo.nlu.CreateContextRequest.serializeBinaryToWriter = function (message, writer) {
 	var f = undefined;
-	f = message.getParent();
+	f = message.getSessionId();
 	if (f.length > 0) {
 		writer.writeString(1, f);
 	}
@@ -1171,10 +1185,10 @@ proto.ondewo.nlu.CreateContextRequest.serializeBinaryToWriter = function (messag
 };
 
 /**
- * optional string parent = 1;
+ * optional string session_id = 1;
  * @return {string}
  */
-proto.ondewo.nlu.CreateContextRequest.prototype.getParent = function () {
+proto.ondewo.nlu.CreateContextRequest.prototype.getSessionId = function () {
 	return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
 };
 
@@ -1182,7 +1196,7 @@ proto.ondewo.nlu.CreateContextRequest.prototype.getParent = function () {
  * @param {string} value
  * @return {!proto.ondewo.nlu.CreateContextRequest} returns this
  */
-proto.ondewo.nlu.CreateContextRequest.prototype.setParent = function (value) {
+proto.ondewo.nlu.CreateContextRequest.prototype.setSessionId = function (value) {
 	return jspb.Message.setProto3StringField(this, 1, value);
 };
 
@@ -1542,7 +1556,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 	proto.ondewo.nlu.DeleteAllContextsRequest.toObject = function (includeInstance, msg) {
 		var f,
 			obj = {
-				parent: jspb.Message.getFieldWithDefault(msg, 1, '')
+				sessionId: jspb.Message.getFieldWithDefault(msg, 1, '')
 			};
 
 		if (includeInstance) {
@@ -1579,7 +1593,7 @@ proto.ondewo.nlu.DeleteAllContextsRequest.deserializeBinaryFromReader = function
 		switch (field) {
 			case 1:
 				var value = /** @type {string} */ (reader.readString());
-				msg.setParent(value);
+				msg.setSessionId(value);
 				break;
 			default:
 				reader.skipField();
@@ -1608,17 +1622,17 @@ proto.ondewo.nlu.DeleteAllContextsRequest.prototype.serializeBinary = function (
  */
 proto.ondewo.nlu.DeleteAllContextsRequest.serializeBinaryToWriter = function (message, writer) {
 	var f = undefined;
-	f = message.getParent();
+	f = message.getSessionId();
 	if (f.length > 0) {
 		writer.writeString(1, f);
 	}
 };
 
 /**
- * optional string parent = 1;
+ * optional string session_id = 1;
  * @return {string}
  */
-proto.ondewo.nlu.DeleteAllContextsRequest.prototype.getParent = function () {
+proto.ondewo.nlu.DeleteAllContextsRequest.prototype.getSessionId = function () {
 	return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ''));
 };
 
@@ -1626,7 +1640,7 @@ proto.ondewo.nlu.DeleteAllContextsRequest.prototype.getParent = function () {
  * @param {string} value
  * @return {!proto.ondewo.nlu.DeleteAllContextsRequest} returns this
  */
-proto.ondewo.nlu.DeleteAllContextsRequest.prototype.setParent = function (value) {
+proto.ondewo.nlu.DeleteAllContextsRequest.prototype.setSessionId = function (value) {
 	return jspb.Message.setProto3StringField(this, 1, value);
 };
 

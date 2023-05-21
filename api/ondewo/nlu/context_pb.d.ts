@@ -69,8 +69,8 @@ export namespace Context {
 }
 
 export class ListContextsRequest extends jspb.Message {
-	getParent(): string;
-	setParent(value: string): ListContextsRequest;
+	getSessionId(): string;
+	setSessionId(value: string): ListContextsRequest;
 	getPageToken(): string;
 	setPageToken(value: string): ListContextsRequest;
 
@@ -86,7 +86,7 @@ export class ListContextsRequest extends jspb.Message {
 
 export namespace ListContextsRequest {
 	export type AsObject = {
-		parent: string;
+		sessionId: string;
 		pageToken: string;
 	};
 }
@@ -137,8 +137,8 @@ export namespace GetContextRequest {
 }
 
 export class CreateContextRequest extends jspb.Message {
-	getParent(): string;
-	setParent(value: string): CreateContextRequest;
+	getSessionId(): string;
+	setSessionId(value: string): CreateContextRequest;
 
 	hasContext(): boolean;
 	clearContext(): void;
@@ -157,7 +157,7 @@ export class CreateContextRequest extends jspb.Message {
 
 export namespace CreateContextRequest {
 	export type AsObject = {
-		parent: string;
+		sessionId: string;
 		context?: Context.AsObject;
 	};
 }
@@ -211,8 +211,8 @@ export namespace DeleteContextRequest {
 }
 
 export class DeleteAllContextsRequest extends jspb.Message {
-	getParent(): string;
-	setParent(value: string): DeleteAllContextsRequest;
+	getSessionId(): string;
+	setSessionId(value: string): DeleteAllContextsRequest;
 
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): DeleteAllContextsRequest.AsObject;
@@ -229,6 +229,6 @@ export class DeleteAllContextsRequest extends jspb.Message {
 
 export namespace DeleteAllContextsRequest {
 	export type AsObject = {
-		parent: string;
+		sessionId: string;
 	};
 }

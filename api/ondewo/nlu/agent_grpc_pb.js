@@ -41,12 +41,12 @@ var google_api_annotations_pb = require('../../google/api/annotations_pb.js');
 var google_protobuf_field_mask_pb = require('google-protobuf/google/protobuf/field_mask_pb.js');
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
 var google_protobuf_struct_pb = require('google-protobuf/google/protobuf/struct_pb.js');
-var google_protobuf_any_pb = require('google-protobuf/google/protobuf/any_pb.js');
 var ondewo_nlu_common_pb = require('../../ondewo/nlu/common_pb.js');
 var ondewo_nlu_intent_pb = require('../../ondewo/nlu/intent_pb.js');
 var ondewo_nlu_user_pb = require('../../ondewo/nlu/user_pb.js');
 var ondewo_nlu_project_role_pb = require('../../ondewo/nlu/project_role_pb.js');
 var ondewo_nlu_operations_pb = require('../../ondewo/nlu/operations_pb.js');
+var ondewo_nlu_session_pb = require('../../ondewo/nlu/session_pb.js');
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 
 function serialize_google_protobuf_Empty(arg) {
@@ -368,6 +368,28 @@ function deserialize_ondewo_nlu_GetPlatformMappingRequest(buffer_arg) {
 	return ondewo_nlu_agent_pb.GetPlatformMappingRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_GetSessionsStatisticsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_agent_pb.GetSessionsStatisticsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.GetSessionsStatisticsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetSessionsStatisticsRequest(buffer_arg) {
+	return ondewo_nlu_agent_pb.GetSessionsStatisticsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_GetSessionsStatisticsResponse(arg) {
+	if (!(arg instanceof ondewo_nlu_agent_pb.GetSessionsStatisticsResponse)) {
+		throw new Error('Expected argument of type ondewo.nlu.GetSessionsStatisticsResponse');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetSessionsStatisticsResponse(buffer_arg) {
+	return ondewo_nlu_agent_pb.GetSessionsStatisticsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_ImportAgentRequest(arg) {
 	if (!(arg instanceof ondewo_nlu_agent_pb.ImportAgentRequest)) {
 		throw new Error('Expected argument of type ondewo.nlu.ImportAgentRequest');
@@ -585,7 +607,7 @@ var AgentsService = (exports.AgentsService = {
 	// <pre>
 	// grpcurl -plaintext -H 'cai-token: aimp' -d '{
 	//   "agent": {
-	//     "display_name": "Pizza Bot",
+	//     "display_name": "My Pizza Bot",
 	//     "default_language_code": "en",
 	//     "supported_language_codes": ["en"],
 	//     "time_zone": "Europe/Vienna",
@@ -876,6 +898,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_google_protobuf_Empty,
 		responseDeserialize: deserialize_google_protobuf_Empty
 	},
+	// Lists users in the project (agent)
 	listUsersInProject: {
 		path: '/ondewo.nlu.Agents/ListUsersInProject',
 		requestStream: false,
@@ -887,6 +910,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_ListUsersInProjectResponse,
 		responseDeserialize: deserialize_ondewo_nlu_ListUsersInProjectResponse
 	},
+	// Gets information from the platform
 	getPlatformInfo: {
 		path: '/ondewo.nlu.Agents/GetPlatformInfo',
 		requestStream: false,
@@ -898,6 +922,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_GetPlatformInfoResponse,
 		responseDeserialize: deserialize_ondewo_nlu_GetPlatformInfoResponse
 	},
+	// List permissions from the project (agent)
 	listProjectPermissions: {
 		path: '/ondewo.nlu.Agents/ListProjectPermissions',
 		requestStream: false,
@@ -986,6 +1011,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_Operation,
 		responseDeserialize: deserialize_ondewo_nlu_Operation
 	},
+	// Runs optimize ranking match
 	optimizeRankingMatch: {
 		path: '/ondewo.nlu.Agents/OptimizeRankingMatch',
 		requestStream: false,
@@ -1015,6 +1041,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_Operation,
 		responseDeserialize: deserialize_ondewo_nlu_Operation
 	},
+	// Gets statistics for the agent
 	getAgentStatistics: {
 		path: '/ondewo.nlu.Agents/GetAgentStatistics',
 		requestStream: false,
@@ -1026,6 +1053,18 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_GetAgentStatisticsResponse,
 		responseDeserialize: deserialize_ondewo_nlu_GetAgentStatisticsResponse
 	},
+	getSessionsStatistics: {
+		path: '/ondewo.nlu.Agents/GetSessionsStatistics',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_agent_pb.GetSessionsStatisticsRequest,
+		responseType: ondewo_nlu_agent_pb.GetSessionsStatisticsResponse,
+		requestSerialize: serialize_ondewo_nlu_GetSessionsStatisticsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_GetSessionsStatisticsRequest,
+		responseSerialize: serialize_ondewo_nlu_GetSessionsStatisticsResponse,
+		responseDeserialize: deserialize_ondewo_nlu_GetSessionsStatisticsResponse
+	},
+	// Sets status for the agent
 	setAgentStatus: {
 		path: '/ondewo.nlu.Agents/SetAgentStatus',
 		requestStream: false,
@@ -1037,6 +1076,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_Agent,
 		responseDeserialize: deserialize_ondewo_nlu_Agent
 	},
+	// Sets resources
 	setResources: {
 		path: '/ondewo.nlu.Agents/SetResources',
 		requestStream: false,
@@ -1048,6 +1088,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_google_protobuf_Empty,
 		responseDeserialize: deserialize_google_protobuf_Empty
 	},
+	// Deletes resources
 	deleteResources: {
 		path: '/ondewo.nlu.Agents/DeleteResources',
 		requestStream: false,
@@ -1059,6 +1100,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_google_protobuf_Empty,
 		responseDeserialize: deserialize_google_protobuf_Empty
 	},
+	// Exports resources
 	exportResources: {
 		path: '/ondewo.nlu.Agents/ExportResources',
 		requestStream: false,
@@ -1106,7 +1148,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_PlatformMapping,
 		responseDeserialize: deserialize_ondewo_nlu_PlatformMapping
 	},
-	// Full text search endpoint
+	// Full text search endpoint in entity types
 	getFullTextSearchEntityType: {
 		path: '/ondewo.nlu.Agents/GetFullTextSearchEntityType',
 		requestStream: false,
@@ -1118,6 +1160,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_FullTextSearchResponseEntityType,
 		responseDeserialize: deserialize_ondewo_nlu_FullTextSearchResponseEntityType
 	},
+	// Full text search endpoint in entities
 	getFullTextSearchEntity: {
 		path: '/ondewo.nlu.Agents/GetFullTextSearchEntity',
 		requestStream: false,
@@ -1129,6 +1172,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_FullTextSearchResponseEntity,
 		responseDeserialize: deserialize_ondewo_nlu_FullTextSearchResponseEntity
 	},
+	// Full text search endpoint in entity synonyms
 	getFullTextSearchEntitySynonym: {
 		path: '/ondewo.nlu.Agents/GetFullTextSearchEntitySynonym',
 		requestStream: false,
@@ -1140,6 +1184,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_FullTextSearchResponseEntitySynonym,
 		responseDeserialize: deserialize_ondewo_nlu_FullTextSearchResponseEntitySynonym
 	},
+	// Full text search endpoint in intents
 	getFullTextSearchIntent: {
 		path: '/ondewo.nlu.Agents/GetFullTextSearchIntent',
 		requestStream: false,
@@ -1151,6 +1196,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_FullTextSearchResponseIntent,
 		responseDeserialize: deserialize_ondewo_nlu_FullTextSearchResponseIntent
 	},
+	// Full text search endpoint in context ins of intents
 	getFullTextSearchIntentContextIn: {
 		path: '/ondewo.nlu.Agents/GetFullTextSearchIntentContextIn',
 		requestStream: false,
@@ -1162,6 +1208,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_FullTextSearchResponseIntentContextIn,
 		responseDeserialize: deserialize_ondewo_nlu_FullTextSearchResponseIntentContextIn
 	},
+	// Full text search endpoint in context outs of intents
 	getFullTextSearchIntentContextOut: {
 		path: '/ondewo.nlu.Agents/GetFullTextSearchIntentContextOut',
 		requestStream: false,
@@ -1173,6 +1220,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_FullTextSearchResponseIntentContextOut,
 		responseDeserialize: deserialize_ondewo_nlu_FullTextSearchResponseIntentContextOut
 	},
+	// Full text search endpoint in user says of intents
 	getFullTextSearchIntentUsersays: {
 		path: '/ondewo.nlu.Agents/GetFullTextSearchIntentUsersays',
 		requestStream: false,
@@ -1184,6 +1232,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_FullTextSearchResponseIntentUsersays,
 		responseDeserialize: deserialize_ondewo_nlu_FullTextSearchResponseIntentUsersays
 	},
+	// Full text search endpoint in tags of intents
 	getFullTextSearchIntentTags: {
 		path: '/ondewo.nlu.Agents/GetFullTextSearchIntentTags',
 		requestStream: false,
@@ -1195,6 +1244,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_FullTextSearchResponseIntentTags,
 		responseDeserialize: deserialize_ondewo_nlu_FullTextSearchResponseIntentTags
 	},
+	// Full text search endpoint in responses of intents
 	getFullTextSearchIntentResponse: {
 		path: '/ondewo.nlu.Agents/GetFullTextSearchIntentResponse',
 		requestStream: false,
@@ -1206,6 +1256,7 @@ var AgentsService = (exports.AgentsService = {
 		responseSerialize: serialize_ondewo_nlu_FullTextSearchResponseIntentResponse,
 		responseDeserialize: deserialize_ondewo_nlu_FullTextSearchResponseIntentResponse
 	},
+	// Full text search endpoint in parameters of intents
 	getFullTextSearchIntentParameters: {
 		path: '/ondewo.nlu.Agents/GetFullTextSearchIntentParameters',
 		requestStream: false,

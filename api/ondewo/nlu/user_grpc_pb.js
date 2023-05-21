@@ -244,6 +244,7 @@ function deserialize_ondewo_nlu_UserInfo(buffer_arg) {
 }
 
 var UsersService = (exports.UsersService = {
+	// Creates user
 	createUser: {
 		path: '/ondewo.nlu.Users/CreateUser',
 		requestStream: false,
@@ -255,6 +256,7 @@ var UsersService = (exports.UsersService = {
 		responseSerialize: serialize_ondewo_nlu_User,
 		responseDeserialize: deserialize_ondewo_nlu_User
 	},
+	// Gets user
 	getUser: {
 		path: '/ondewo.nlu.Users/GetUser',
 		requestStream: false,
@@ -266,6 +268,7 @@ var UsersService = (exports.UsersService = {
 		responseSerialize: serialize_ondewo_nlu_User,
 		responseDeserialize: deserialize_ondewo_nlu_User
 	},
+	// Gets user information
 	getUserInfo: {
 		path: '/ondewo.nlu.Users/GetUserInfo',
 		requestStream: false,
@@ -277,6 +280,7 @@ var UsersService = (exports.UsersService = {
 		responseSerialize: serialize_ondewo_nlu_UserInfo,
 		responseDeserialize: deserialize_ondewo_nlu_UserInfo
 	},
+	// Deletes user
 	deleteUser: {
 		path: '/ondewo.nlu.Users/DeleteUser',
 		requestStream: false,
@@ -288,6 +292,7 @@ var UsersService = (exports.UsersService = {
 		responseSerialize: serialize_google_protobuf_Empty,
 		responseDeserialize: deserialize_google_protobuf_Empty
 	},
+	// Updates user
 	updateUser: {
 		path: '/ondewo.nlu.Users/UpdateUser',
 		requestStream: false,
@@ -299,6 +304,7 @@ var UsersService = (exports.UsersService = {
 		responseSerialize: serialize_ondewo_nlu_User,
 		responseDeserialize: deserialize_ondewo_nlu_User
 	},
+	// Lists users
 	listUsers: {
 		path: '/ondewo.nlu.Users/ListUsers',
 		requestStream: false,
@@ -310,6 +316,7 @@ var UsersService = (exports.UsersService = {
 		responseSerialize: serialize_ondewo_nlu_ListUsersResponse,
 		responseDeserialize: deserialize_ondewo_nlu_ListUsersResponse
 	},
+	// Lists users information
 	listUserInfos: {
 		path: '/ondewo.nlu.Users/ListUserInfos',
 		requestStream: false,
@@ -321,6 +328,7 @@ var UsersService = (exports.UsersService = {
 		responseSerialize: serialize_ondewo_nlu_ListUserInfosResponse,
 		responseDeserialize: deserialize_ondewo_nlu_ListUserInfosResponse
 	},
+	// Creates server role
 	createServerRole: {
 		path: '/ondewo.nlu.Users/CreateServerRole',
 		requestStream: false,
@@ -332,6 +340,7 @@ var UsersService = (exports.UsersService = {
 		responseSerialize: serialize_ondewo_nlu_ServerRole,
 		responseDeserialize: deserialize_ondewo_nlu_ServerRole
 	},
+	// Get server role
 	getServerRole: {
 		path: '/ondewo.nlu.Users/GetServerRole',
 		requestStream: false,
@@ -343,6 +352,7 @@ var UsersService = (exports.UsersService = {
 		responseSerialize: serialize_ondewo_nlu_ServerRole,
 		responseDeserialize: deserialize_ondewo_nlu_ServerRole
 	},
+	// Deletes server role
 	deleteServerRole: {
 		path: '/ondewo.nlu.Users/DeleteServerRole',
 		requestStream: false,
@@ -354,6 +364,7 @@ var UsersService = (exports.UsersService = {
 		responseSerialize: serialize_google_protobuf_Empty,
 		responseDeserialize: deserialize_google_protobuf_Empty
 	},
+	// Updates server role
 	updateServerRole: {
 		path: '/ondewo.nlu.Users/UpdateServerRole',
 		requestStream: false,
@@ -365,6 +376,7 @@ var UsersService = (exports.UsersService = {
 		responseSerialize: serialize_ondewo_nlu_ServerRole,
 		responseDeserialize: deserialize_ondewo_nlu_ServerRole
 	},
+	// Lists server roles
 	listServerRoles: {
 		path: '/ondewo.nlu.Users/ListServerRoles',
 		requestStream: false,
@@ -376,6 +388,7 @@ var UsersService = (exports.UsersService = {
 		responseSerialize: serialize_ondewo_nlu_ListServerRolesResponse,
 		responseDeserialize: deserialize_ondewo_nlu_ListServerRolesResponse
 	},
+	// Lists server permissions
 	listServerPermissions: {
 		path: '/ondewo.nlu.Users/ListServerPermissions',
 		requestStream: false,
@@ -387,6 +400,7 @@ var UsersService = (exports.UsersService = {
 		responseSerialize: serialize_ondewo_nlu_ListServerPermissionsResponse,
 		responseDeserialize: deserialize_ondewo_nlu_ListServerPermissionsResponse
 	},
+	// Request to login
 	login: {
 		path: '/ondewo.nlu.Users/Login',
 		requestStream: false,
@@ -398,6 +412,7 @@ var UsersService = (exports.UsersService = {
 		responseSerialize: serialize_ondewo_nlu_LoginResponse,
 		responseDeserialize: deserialize_ondewo_nlu_LoginResponse
 	},
+	// Checks login
 	checkLogin: {
 		path: '/ondewo.nlu.Users/CheckLogin',
 		requestStream: false,

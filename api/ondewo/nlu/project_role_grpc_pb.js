@@ -110,7 +110,9 @@ function deserialize_ondewo_nlu_UpdateProjectRoleRequest(buffer_arg) {
 	return ondewo_nlu_project_role_pb.UpdateProjectRoleRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+// Project roles
 var ProjectRolesService = (exports.ProjectRolesService = {
+	// Creates a project role by creating the knowledge base master
 	createProjectRole: {
 		path: '/ondewo.nlu.ProjectRoles/CreateProjectRole',
 		requestStream: false,
@@ -122,6 +124,7 @@ var ProjectRolesService = (exports.ProjectRolesService = {
 		responseSerialize: serialize_ondewo_nlu_ProjectRole,
 		responseDeserialize: deserialize_ondewo_nlu_ProjectRole
 	},
+	// Creates a project role by getting the knowledge base master
 	getProjectRole: {
 		path: '/ondewo.nlu.ProjectRoles/GetProjectRole',
 		requestStream: false,
@@ -133,6 +136,7 @@ var ProjectRolesService = (exports.ProjectRolesService = {
 		responseSerialize: serialize_ondewo_nlu_ProjectRole,
 		responseDeserialize: deserialize_ondewo_nlu_ProjectRole
 	},
+	// Deletes project role
 	deleteProjectRole: {
 		path: '/ondewo.nlu.ProjectRoles/DeleteProjectRole',
 		requestStream: false,
@@ -144,6 +148,7 @@ var ProjectRolesService = (exports.ProjectRolesService = {
 		responseSerialize: serialize_google_protobuf_Empty,
 		responseDeserialize: deserialize_google_protobuf_Empty
 	},
+	// Updates project role
 	updateProjectRole: {
 		path: '/ondewo.nlu.ProjectRoles/UpdateProjectRole',
 		requestStream: false,
@@ -155,6 +160,7 @@ var ProjectRolesService = (exports.ProjectRolesService = {
 		responseSerialize: serialize_ondewo_nlu_ProjectRole,
 		responseDeserialize: deserialize_ondewo_nlu_ProjectRole
 	},
+	// List project roles
 	listProjectRoles: {
 		path: '/ondewo.nlu.ProjectRoles/ListProjectRoles',
 		requestStream: false,

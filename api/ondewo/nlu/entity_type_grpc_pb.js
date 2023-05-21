@@ -137,6 +137,17 @@ function deserialize_ondewo_nlu_BatchUpdateEntityTypesRequest(buffer_arg) {
 	return ondewo_nlu_entity_type_pb.BatchUpdateEntityTypesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_CreateEntityRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_entity_type_pb.CreateEntityRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.CreateEntityRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_CreateEntityRequest(buffer_arg) {
+	return ondewo_nlu_entity_type_pb.CreateEntityRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_CreateEntityTypeRequest(arg) {
 	if (!(arg instanceof ondewo_nlu_entity_type_pb.CreateEntityTypeRequest)) {
 		throw new Error('Expected argument of type ondewo.nlu.CreateEntityTypeRequest');
@@ -146,6 +157,28 @@ function serialize_ondewo_nlu_CreateEntityTypeRequest(arg) {
 
 function deserialize_ondewo_nlu_CreateEntityTypeRequest(buffer_arg) {
 	return ondewo_nlu_entity_type_pb.CreateEntityTypeRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_DeleteEntityRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_entity_type_pb.DeleteEntityRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.DeleteEntityRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_DeleteEntityRequest(buffer_arg) {
+	return ondewo_nlu_entity_type_pb.DeleteEntityRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_DeleteEntityStatus(arg) {
+	if (!(arg instanceof ondewo_nlu_entity_type_pb.DeleteEntityStatus)) {
+		throw new Error('Expected argument of type ondewo.nlu.DeleteEntityStatus');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_DeleteEntityStatus(buffer_arg) {
+	return ondewo_nlu_entity_type_pb.DeleteEntityStatus.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_DeleteEntityTypeRequest(arg) {
@@ -168,6 +201,28 @@ function serialize_ondewo_nlu_EntityType(arg) {
 
 function deserialize_ondewo_nlu_EntityType(buffer_arg) {
 	return ondewo_nlu_entity_type_pb.EntityType.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_EntityType_Entity(arg) {
+	if (!(arg instanceof ondewo_nlu_entity_type_pb.EntityType.Entity)) {
+		throw new Error('Expected argument of type ondewo.nlu.EntityType.Entity');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_EntityType_Entity(buffer_arg) {
+	return ondewo_nlu_entity_type_pb.EntityType.Entity.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_GetEntityRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_entity_type_pb.GetEntityRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.GetEntityRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetEntityRequest(buffer_arg) {
+	return ondewo_nlu_entity_type_pb.GetEntityRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_GetEntityTypeRequest(arg) {
@@ -234,6 +289,17 @@ function serialize_ondewo_nlu_Operation(arg) {
 
 function deserialize_ondewo_nlu_Operation(buffer_arg) {
 	return ondewo_nlu_operations_pb.Operation.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_UpdateEntityRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_entity_type_pb.UpdateEntityRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.UpdateEntityRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_UpdateEntityRequest(buffer_arg) {
+	return ondewo_nlu_entity_type_pb.UpdateEntityRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_UpdateEntityTypeRequest(arg) {
@@ -364,6 +430,54 @@ var EntityTypesService = (exports.EntityTypesService = {
 		requestDeserialize: deserialize_ondewo_nlu_BatchDeleteEntityTypesRequest,
 		responseSerialize: serialize_ondewo_nlu_Operation,
 		responseDeserialize: deserialize_ondewo_nlu_Operation
+	},
+	// Retrieves the specified entity .
+	getEntity: {
+		path: '/ondewo.nlu.EntityTypes/GetEntity',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_entity_type_pb.GetEntityRequest,
+		responseType: ondewo_nlu_entity_type_pb.EntityType.Entity,
+		requestSerialize: serialize_ondewo_nlu_GetEntityRequest,
+		requestDeserialize: deserialize_ondewo_nlu_GetEntityRequest,
+		responseSerialize: serialize_ondewo_nlu_EntityType_Entity,
+		responseDeserialize: deserialize_ondewo_nlu_EntityType_Entity
+	},
+	// Creates an entity  in the specified agent.
+	createEntity: {
+		path: '/ondewo.nlu.EntityTypes/CreateEntity',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_entity_type_pb.CreateEntityRequest,
+		responseType: ondewo_nlu_entity_type_pb.EntityType.Entity,
+		requestSerialize: serialize_ondewo_nlu_CreateEntityRequest,
+		requestDeserialize: deserialize_ondewo_nlu_CreateEntityRequest,
+		responseSerialize: serialize_ondewo_nlu_EntityType_Entity,
+		responseDeserialize: deserialize_ondewo_nlu_EntityType_Entity
+	},
+	// Updates the specified entity .
+	updateEntity: {
+		path: '/ondewo.nlu.EntityTypes/UpdateEntity',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_entity_type_pb.UpdateEntityRequest,
+		responseType: ondewo_nlu_entity_type_pb.EntityType.Entity,
+		requestSerialize: serialize_ondewo_nlu_UpdateEntityRequest,
+		requestDeserialize: deserialize_ondewo_nlu_UpdateEntityRequest,
+		responseSerialize: serialize_ondewo_nlu_EntityType_Entity,
+		responseDeserialize: deserialize_ondewo_nlu_EntityType_Entity
+	},
+	// Deletes the specified entity .
+	deleteEntity: {
+		path: '/ondewo.nlu.EntityTypes/DeleteEntity',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_entity_type_pb.DeleteEntityRequest,
+		responseType: ondewo_nlu_entity_type_pb.DeleteEntityStatus,
+		requestSerialize: serialize_ondewo_nlu_DeleteEntityRequest,
+		requestDeserialize: deserialize_ondewo_nlu_DeleteEntityRequest,
+		responseSerialize: serialize_ondewo_nlu_DeleteEntityStatus,
+		responseDeserialize: deserialize_ondewo_nlu_DeleteEntityStatus
 	},
 	// Creates an entity value in an entity type.
 	batchCreateEntities: {

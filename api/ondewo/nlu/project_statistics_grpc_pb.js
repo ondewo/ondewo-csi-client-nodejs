@@ -78,8 +78,9 @@ function deserialize_ondewo_nlu_StatResponse(buffer_arg) {
 	return ondewo_nlu_common_pb.StatResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+// Project Root Statistics
 var ProjectStatisticsService = (exports.ProjectStatisticsService = {
-	// Project Root Statistics
+	// Returns the intent count within a project
 	getIntentCount: {
 		path: '/ondewo.nlu.ProjectStatistics/GetIntentCount',
 		requestStream: false,
@@ -91,6 +92,7 @@ var ProjectStatisticsService = (exports.ProjectStatisticsService = {
 		responseSerialize: serialize_ondewo_nlu_StatResponse,
 		responseDeserialize: deserialize_ondewo_nlu_StatResponse
 	},
+	// Returns the entity types count within a project
 	getEntityTypeCount: {
 		path: '/ondewo.nlu.ProjectStatistics/GetEntityTypeCount',
 		requestStream: false,
@@ -102,6 +104,7 @@ var ProjectStatisticsService = (exports.ProjectStatisticsService = {
 		responseSerialize: serialize_ondewo_nlu_StatResponse,
 		responseDeserialize: deserialize_ondewo_nlu_StatResponse
 	},
+	// Returns the users count within a project
 	getUserCount: {
 		path: '/ondewo.nlu.ProjectStatistics/GetUserCount',
 		requestStream: false,
@@ -113,6 +116,7 @@ var ProjectStatisticsService = (exports.ProjectStatisticsService = {
 		responseSerialize: serialize_ondewo_nlu_StatResponse,
 		responseDeserialize: deserialize_ondewo_nlu_StatResponse
 	},
+	// Returns the sessions count within a project
 	getSessionCount: {
 		path: '/ondewo.nlu.ProjectStatistics/GetSessionCount',
 		requestStream: false,
@@ -124,7 +128,7 @@ var ProjectStatisticsService = (exports.ProjectStatisticsService = {
 		responseSerialize: serialize_ondewo_nlu_StatResponse,
 		responseDeserialize: deserialize_ondewo_nlu_StatResponse
 	},
-	// Intent Statistics
+	// Returns the training phrases count within a project
 	getTrainingPhraseCount: {
 		path: '/ondewo.nlu.ProjectStatistics/GetTrainingPhraseCount',
 		requestStream: false,
@@ -136,6 +140,7 @@ var ProjectStatisticsService = (exports.ProjectStatisticsService = {
 		responseSerialize: serialize_ondewo_nlu_StatResponse,
 		responseDeserialize: deserialize_ondewo_nlu_StatResponse
 	},
+	// Returns the responses count within a project
 	getResponseCount: {
 		path: '/ondewo.nlu.ProjectStatistics/GetResponseCount',
 		requestStream: false,
@@ -147,7 +152,7 @@ var ProjectStatisticsService = (exports.ProjectStatisticsService = {
 		responseSerialize: serialize_ondewo_nlu_StatResponse,
 		responseDeserialize: deserialize_ondewo_nlu_StatResponse
 	},
-	// Entity Type Statistics
+	// Returns the entity value count within a project
 	getEntityValueCount: {
 		path: '/ondewo.nlu.ProjectStatistics/GetEntityValueCount',
 		requestStream: false,
@@ -159,7 +164,7 @@ var ProjectStatisticsService = (exports.ProjectStatisticsService = {
 		responseSerialize: serialize_ondewo_nlu_StatResponse,
 		responseDeserialize: deserialize_ondewo_nlu_StatResponse
 	},
-	// Entity Value Statistics
+	// Returns the entity synonyms count within a project
 	getEntitySynonymCount: {
 		path: '/ondewo.nlu.ProjectStatistics/GetEntitySynonymCount',
 		requestStream: false,

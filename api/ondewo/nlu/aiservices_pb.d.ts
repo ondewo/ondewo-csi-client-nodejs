@@ -90,6 +90,8 @@ export class EntityTypeFuzzyNerConfig extends jspb.Message {
 	addEntityValues(value: string, index?: number): string;
 	getAlgorithm(): EntityTypeFuzzyNerConfig.FuzzyNerAlgorithm;
 	setAlgorithm(value: EntityTypeFuzzyNerConfig.FuzzyNerAlgorithm): EntityTypeFuzzyNerConfig;
+	getAllowOverlaps(): boolean;
+	setAllowOverlaps(value: boolean): EntityTypeFuzzyNerConfig;
 
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): EntityTypeFuzzyNerConfig.AsObject;
@@ -110,6 +112,7 @@ export namespace EntityTypeFuzzyNerConfig {
 		minimalScore: number;
 		entityValuesList: Array<string>;
 		algorithm: EntityTypeFuzzyNerConfig.FuzzyNerAlgorithm;
+		allowOverlaps: boolean;
 	};
 
 	export enum FuzzyNerAlgorithm {

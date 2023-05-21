@@ -8,12 +8,12 @@ import * as jspb from 'google-protobuf';
 import * as google_protobuf_field_mask_pb from 'google-protobuf/google/protobuf/field_mask_pb';
 import * as google_protobuf_empty_pb from 'google-protobuf/google/protobuf/empty_pb';
 import * as google_protobuf_struct_pb from 'google-protobuf/google/protobuf/struct_pb';
-import * as google_protobuf_any_pb from 'google-protobuf/google/protobuf/any_pb';
 import * as ondewo_nlu_common_pb from '../../ondewo/nlu/common_pb';
 import * as ondewo_nlu_intent_pb from '../../ondewo/nlu/intent_pb';
 import * as ondewo_nlu_user_pb from '../../ondewo/nlu/user_pb';
 import * as ondewo_nlu_project_role_pb from '../../ondewo/nlu/project_role_pb';
 import * as ondewo_nlu_operations_pb from '../../ondewo/nlu/operations_pb';
+import * as ondewo_nlu_session_pb from '../../ondewo/nlu/session_pb';
 import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb';
 
 export class Agent extends jspb.Message {
@@ -732,6 +732,99 @@ export namespace GetAgentStatisticsResponse {
 		reports: Uint8Array | string;
 		format: ReportFormat;
 		type: ReportType;
+	};
+}
+
+export class GetSessionsStatisticsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): GetSessionsStatisticsRequest;
+	getFormat(): ReportFormat;
+	setFormat(value: ReportFormat): GetSessionsStatisticsRequest;
+	getType(): SessionsReportType;
+	setType(value: SessionsReportType): GetSessionsStatisticsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): ondewo_nlu_session_pb.SessionFilter | undefined;
+	setSessionFilter(value?: ondewo_nlu_session_pb.SessionFilter): GetSessionsStatisticsRequest;
+	clearContextFiltersList(): void;
+	getContextFiltersList(): Array<ondewo_nlu_session_pb.ContextFilter>;
+	setContextFiltersList(value: Array<ondewo_nlu_session_pb.ContextFilter>): GetSessionsStatisticsRequest;
+	addContextFilters(value?: ondewo_nlu_session_pb.ContextFilter, index?: number): ondewo_nlu_session_pb.ContextFilter;
+	getLimit(): number;
+	setLimit(value: number): GetSessionsStatisticsRequest;
+	clearGroupBysList(): void;
+	getGroupBysList(): Array<string>;
+	setGroupBysList(value: Array<string>): GetSessionsStatisticsRequest;
+	addGroupBys(value: string, index?: number): string;
+	clearOrderBysList(): void;
+	getOrderBysList(): Array<string>;
+	setOrderBysList(value: Array<string>): GetSessionsStatisticsRequest;
+	addOrderBys(value: string, index?: number): string;
+
+	hasFieldMask(): boolean;
+	clearFieldMask(): void;
+	getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+	setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): GetSessionsStatisticsRequest;
+	getSqlQuery(): string;
+	setSqlQuery(value: string): GetSessionsStatisticsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): GetSessionsStatisticsRequest.AsObject;
+	static toObject(includeInstance: boolean, msg: GetSessionsStatisticsRequest): GetSessionsStatisticsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: GetSessionsStatisticsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): GetSessionsStatisticsRequest;
+	static deserializeBinaryFromReader(
+		message: GetSessionsStatisticsRequest,
+		reader: jspb.BinaryReader
+	): GetSessionsStatisticsRequest;
+}
+
+export namespace GetSessionsStatisticsRequest {
+	export type AsObject = {
+		parent: string;
+		format: ReportFormat;
+		type: SessionsReportType;
+		sessionFilter?: ondewo_nlu_session_pb.SessionFilter.AsObject;
+		contextFiltersList: Array<ondewo_nlu_session_pb.ContextFilter.AsObject>;
+		limit: number;
+		groupBysList: Array<string>;
+		orderBysList: Array<string>;
+		fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject;
+		sqlQuery: string;
+	};
+}
+
+export class GetSessionsStatisticsResponse extends jspb.Message {
+	getReports(): Uint8Array | string;
+	getReports_asU8(): Uint8Array;
+	getReports_asB64(): string;
+	setReports(value: Uint8Array | string): GetSessionsStatisticsResponse;
+	getFormat(): ReportFormat;
+	setFormat(value: ReportFormat): GetSessionsStatisticsResponse;
+	getType(): SessionsReportType;
+	setType(value: SessionsReportType): GetSessionsStatisticsResponse;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): GetSessionsStatisticsResponse.AsObject;
+	static toObject(includeInstance: boolean, msg: GetSessionsStatisticsResponse): GetSessionsStatisticsResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: GetSessionsStatisticsResponse, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): GetSessionsStatisticsResponse;
+	static deserializeBinaryFromReader(
+		message: GetSessionsStatisticsResponse,
+		reader: jspb.BinaryReader
+	): GetSessionsStatisticsResponse;
+}
+
+export namespace GetSessionsStatisticsResponse {
+	export type AsObject = {
+		reports: Uint8Array | string;
+		format: ReportFormat;
+		type: SessionsReportType;
 	};
 }
 
@@ -1499,6 +1592,8 @@ export namespace FullTextSearchResponseEntity {
 		setDisplayName(value: string): EntitySearchResult;
 		getEntityTypeName(): string;
 		setEntityTypeName(value: string): EntitySearchResult;
+		getEntityTypeDisplayName(): string;
+		setEntityTypeDisplayName(value: string): EntitySearchResult;
 		getLanguage(): string;
 		setLanguage(value: string): EntitySearchResult;
 
@@ -1517,6 +1612,7 @@ export namespace FullTextSearchResponseEntity {
 			name: string;
 			displayName: string;
 			entityTypeName: string;
+			entityTypeDisplayName: string;
 			language: string;
 		};
 	}
@@ -1579,8 +1675,12 @@ export namespace FullTextSearchResponseEntitySynonym {
 		setDisplayName(value: string): EntitySynonymSearchResult;
 		getEntityTypeName(): string;
 		setEntityTypeName(value: string): EntitySynonymSearchResult;
+		getEntityTypeDisplayName(): string;
+		setEntityTypeDisplayName(value: string): EntitySynonymSearchResult;
 		getEntityName(): string;
 		setEntityName(value: string): EntitySynonymSearchResult;
+		getEntityDisplayName(): string;
+		setEntityDisplayName(value: string): EntitySynonymSearchResult;
 		getLanguage(): string;
 		setLanguage(value: string): EntitySynonymSearchResult;
 
@@ -1602,7 +1702,9 @@ export namespace FullTextSearchResponseEntitySynonym {
 			name: string;
 			displayName: string;
 			entityTypeName: string;
+			entityTypeDisplayName: string;
 			entityName: string;
+			entityDisplayName: string;
 			language: string;
 		};
 	}
@@ -1660,6 +1762,10 @@ export namespace FullTextSearchResponseIntent {
 		setDisplayName(value: string): IntentSearchResult;
 		getDomainName(): string;
 		setDomainName(value: string): IntentSearchResult;
+		clearTagsList(): void;
+		getTagsList(): Array<string>;
+		setTagsList(value: Array<string>): IntentSearchResult;
+		addTags(value: string, index?: number): string;
 		getLanguage(): string;
 		setLanguage(value: string): IntentSearchResult;
 
@@ -1678,6 +1784,7 @@ export namespace FullTextSearchResponseIntent {
 			name: string;
 			displayName: string;
 			domainName: string;
+			tagsList: Array<string>;
 			language: string;
 		};
 	}
@@ -1738,6 +1845,12 @@ export namespace FullTextSearchResponseIntentContextIn {
 		setName(value: string): IntentContextInSearchResult;
 		getIntentName(): string;
 		setIntentName(value: string): IntentContextInSearchResult;
+		getIntentDisplayName(): string;
+		setIntentDisplayName(value: string): IntentContextInSearchResult;
+		clearTagsList(): void;
+		getTagsList(): Array<string>;
+		setTagsList(value: Array<string>): IntentContextInSearchResult;
+		addTags(value: string, index?: number): string;
 		getLanguage(): string;
 		setLanguage(value: string): IntentContextInSearchResult;
 
@@ -1758,6 +1871,8 @@ export namespace FullTextSearchResponseIntentContextIn {
 		export type AsObject = {
 			name: string;
 			intentName: string;
+			intentDisplayName: string;
+			tagsList: Array<string>;
 			language: string;
 		};
 	}
@@ -1818,6 +1933,12 @@ export namespace FullTextSearchResponseIntentContextOut {
 		setName(value: string): IntentContextOutSearchResult;
 		getIntentName(): string;
 		setIntentName(value: string): IntentContextOutSearchResult;
+		getIntentDisplayName(): string;
+		setIntentDisplayName(value: string): IntentContextOutSearchResult;
+		clearTagsList(): void;
+		getTagsList(): Array<string>;
+		setTagsList(value: Array<string>): IntentContextOutSearchResult;
+		addTags(value: string, index?: number): string;
 		getLanguage(): string;
 		setLanguage(value: string): IntentContextOutSearchResult;
 
@@ -1838,6 +1959,8 @@ export namespace FullTextSearchResponseIntentContextOut {
 		export type AsObject = {
 			name: string;
 			intentName: string;
+			intentDisplayName: string;
+			tagsList: Array<string>;
 			language: string;
 		};
 	}
@@ -1906,6 +2029,12 @@ export namespace FullTextSearchResponseIntentUsersays {
 		setType(value: string): IntentUsersaysSearchResult;
 		getIntentName(): string;
 		setIntentName(value: string): IntentUsersaysSearchResult;
+		getIntentDisplayName(): string;
+		setIntentDisplayName(value: string): IntentUsersaysSearchResult;
+		clearTagsList(): void;
+		getTagsList(): Array<string>;
+		setTagsList(value: Array<string>): IntentUsersaysSearchResult;
+		addTags(value: string, index?: number): string;
 		getLanguage(): string;
 		setLanguage(value: string): IntentUsersaysSearchResult;
 
@@ -1930,6 +2059,8 @@ export namespace FullTextSearchResponseIntentUsersays {
 			textAsEntityValues: string;
 			type: string;
 			intentName: string;
+			intentDisplayName: string;
+			tagsList: Array<string>;
 			language: string;
 		};
 	}
@@ -1992,6 +2123,12 @@ export namespace FullTextSearchResponseIntentTags {
 		setText(value: string): IntentTagsSearchResult;
 		getIntentName(): string;
 		setIntentName(value: string): IntentTagsSearchResult;
+		getIntentDisplayName(): string;
+		setIntentDisplayName(value: string): IntentTagsSearchResult;
+		clearTagsList(): void;
+		getTagsList(): Array<string>;
+		setTagsList(value: Array<string>): IntentTagsSearchResult;
+		addTags(value: string, index?: number): string;
 		getLanguage(): string;
 		setLanguage(value: string): IntentTagsSearchResult;
 
@@ -2013,6 +2150,8 @@ export namespace FullTextSearchResponseIntentTags {
 			name: string;
 			text: string;
 			intentName: string;
+			intentDisplayName: string;
+			tagsList: Array<string>;
 			language: string;
 		};
 	}
@@ -2077,6 +2216,12 @@ export namespace FullTextSearchResponseIntentResponse {
 		setResponseType(value: string): IntentResponseSearchResult;
 		getIntentName(): string;
 		setIntentName(value: string): IntentResponseSearchResult;
+		getIntentDisplayName(): string;
+		setIntentDisplayName(value: string): IntentResponseSearchResult;
+		clearTagsList(): void;
+		getTagsList(): Array<string>;
+		setTagsList(value: Array<string>): IntentResponseSearchResult;
+		addTags(value: string, index?: number): string;
 		getLanguage(): string;
 		setLanguage(value: string): IntentResponseSearchResult;
 
@@ -2099,6 +2244,8 @@ export namespace FullTextSearchResponseIntentResponse {
 			platform: string;
 			responseType: string;
 			intentName: string;
+			intentDisplayName: string;
+			tagsList: Array<string>;
 			language: string;
 		};
 	}
@@ -2161,6 +2308,12 @@ export namespace FullTextSearchResponseIntentParameters {
 		setParameterDisplayName(value: string): IntentParametersSearchResult;
 		getIntentName(): string;
 		setIntentName(value: string): IntentParametersSearchResult;
+		getIntentDisplayName(): string;
+		setIntentDisplayName(value: string): IntentParametersSearchResult;
+		clearTagsList(): void;
+		getTagsList(): Array<string>;
+		setTagsList(value: Array<string>): IntentParametersSearchResult;
+		addTags(value: string, index?: number): string;
 		getLanguage(): string;
 		setLanguage(value: string): IntentParametersSearchResult;
 
@@ -2182,6 +2335,8 @@ export namespace FullTextSearchResponseIntentParameters {
 			parameterName: string;
 			parameterDisplayName: string;
 			intentName: string;
+			intentDisplayName: string;
+			tagsList: Array<string>;
 			language: string;
 		};
 	}
@@ -2218,7 +2373,8 @@ export namespace ReindexAgentRequest {
 export enum AgentView {
 	AGENT_VIEW_UNSPECIFIED = 0,
 	AGENT_VIEW_FULL = 1,
-	AGENT_VIEW_SHALLOW = 2
+	AGENT_VIEW_SHALLOW = 2,
+	AGENT_VIEW_MINIMUM = 3
 }
 
 export enum InitiationProtocol {
@@ -2233,6 +2389,27 @@ export enum ReportType {
 	ENTITY_PER_LANGUAGE = 2,
 	ENTITY_COLLISION = 3,
 	INTENT_GENERAL = 4
+}
+
+export enum SessionsReportType {
+	SESSIONS = 0,
+	SESSION_STEPS = 1,
+	SESSION_TOP_X_INTENTS = 2,
+	SESSION_TOP_X_ENTITY_TYPES = 3,
+	SESSION_TOP_X_ENTITY_VALUES = 4,
+	SESSION_TOP_X_USERS = 5,
+	SESSION_TOP_X_LABELS = 6,
+	SESSION_TOP_X_TAGS = 7,
+	SESSION_TOP_X_PHONE_NUMBERS = 8,
+	SESSION_HUMAN_HANDOVERS = 9,
+	SESSION_SQL_QUERY = 10,
+	SESSION_LEAST_X_INTENTS = 11,
+	SESSION_LEAST_X_ENTITY_TYPES = 12,
+	SESSION_LEAST_X_ENTITY_VALUES = 13,
+	SESSION_LEAST_X_USERS = 14,
+	SESSION_LEAST_X_LABELS = 15,
+	SESSION_LEAST_X_TAGS = 16,
+	TOTAL_STATISTICS = 17
 }
 
 export enum ReportFormat {

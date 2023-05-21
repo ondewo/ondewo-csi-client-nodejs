@@ -111,7 +111,7 @@ var WebhookService = (exports.WebhookService = {
 		responseSerialize: serialize_ondewo_nlu_WebhookResponse,
 		responseDeserialize: deserialize_ondewo_nlu_WebhookResponse
 	},
-	// send a Ping to the webhook server to check server health
+	// send a Ping to the webhook server to verify server health
 	// will return True if http status_code==200 is detected in the response
 	ping: {
 		path: '/ondewo.nlu.Webhook/Ping',

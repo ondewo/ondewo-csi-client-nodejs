@@ -13,7 +13,21 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = Function('return this')();
+var global = function () {
+	if (this) {
+		return this;
+	}
+	if (typeof window !== 'undefined') {
+		return window;
+	}
+	if (typeof global !== 'undefined') {
+		return global;
+	}
+	if (typeof self !== 'undefined') {
+		return self;
+	}
+	return Function('return this')();
+}.call(null);
 
 var google_api_annotations_pb = require('../../google/api/annotations_pb.js');
 goog.object.extend(proto, google_api_annotations_pb);
@@ -1193,7 +1207,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 				entityType: (f = msg.getEntityType()) && ondewo_nlu_entity_type_pb.EntityType.toObject(includeInstance, f),
 				minimalScore: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0),
 				entityValuesList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
-				algorithm: jspb.Message.getFieldWithDefault(msg, 4, 0)
+				algorithm: jspb.Message.getFieldWithDefault(msg, 4, 0),
+				allowOverlaps: jspb.Message.getBooleanFieldWithDefault(msg, 5, false)
 			};
 
 		if (includeInstance) {
@@ -1245,6 +1260,10 @@ proto.ondewo.nlu.EntityTypeFuzzyNerConfig.deserializeBinaryFromReader = function
 				var value = /** @type {!proto.ondewo.nlu.EntityTypeFuzzyNerConfig.FuzzyNerAlgorithm} */ (reader.readEnum());
 				msg.setAlgorithm(value);
 				break;
+			case 5:
+				var value = /** @type {boolean} */ (reader.readBool());
+				msg.setAllowOverlaps(value);
+				break;
 			default:
 				reader.skipField();
 				break;
@@ -1287,6 +1306,10 @@ proto.ondewo.nlu.EntityTypeFuzzyNerConfig.serializeBinaryToWriter = function (me
 	f = message.getAlgorithm();
 	if (f !== 0.0) {
 		writer.writeEnum(4, f);
+	}
+	f = message.getAllowOverlaps();
+	if (f) {
+		writer.writeBool(5, f);
 	}
 };
 
@@ -1397,6 +1420,22 @@ proto.ondewo.nlu.EntityTypeFuzzyNerConfig.prototype.getAlgorithm = function () {
  */
 proto.ondewo.nlu.EntityTypeFuzzyNerConfig.prototype.setAlgorithm = function (value) {
 	return jspb.Message.setProto3EnumField(this, 4, value);
+};
+
+/**
+ * optional bool allow_overlaps = 5;
+ * @return {boolean}
+ */
+proto.ondewo.nlu.EntityTypeFuzzyNerConfig.prototype.getAllowOverlaps = function () {
+	return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 5, false));
+};
+
+/**
+ * @param {boolean} value
+ * @return {!proto.ondewo.nlu.EntityTypeFuzzyNerConfig} returns this
+ */
+proto.ondewo.nlu.EntityTypeFuzzyNerConfig.prototype.setAllowOverlaps = function (value) {
+	return jspb.Message.setProto3BooleanField(this, 5, value);
 };
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
@@ -3545,7 +3584,7 @@ proto.ondewo.nlu.GetAlternativeSentencesResponse.prototype.clearAlternativeSente
  * @private {!Array<number>}
  * @const
  */
-proto.ondewo.nlu.GenerateResponsesResponse.repeatedFields_ = [2];
+proto.ondewo.nlu.GenerateResponsesResponse.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 	/**
@@ -3576,7 +3615,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 	proto.ondewo.nlu.GenerateResponsesResponse.toObject = function (includeInstance, msg) {
 		var f,
 			obj = {
-				responsesList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f
+				responsesList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f
 			};
 
 		if (includeInstance) {
@@ -3611,7 +3650,7 @@ proto.ondewo.nlu.GenerateResponsesResponse.deserializeBinaryFromReader = functio
 		}
 		var field = reader.getFieldNumber();
 		switch (field) {
-			case 2:
+			case 1:
 				var value = /** @type {string} */ (reader.readString());
 				msg.addResponses(value);
 				break;
@@ -3644,16 +3683,16 @@ proto.ondewo.nlu.GenerateResponsesResponse.serializeBinaryToWriter = function (m
 	var f = undefined;
 	f = message.getResponsesList();
 	if (f.length > 0) {
-		writer.writeRepeatedString(2, f);
+		writer.writeRepeatedString(1, f);
 	}
 };
 
 /**
- * repeated string responses = 2;
+ * repeated string responses = 1;
  * @return {!Array<string>}
  */
 proto.ondewo.nlu.GenerateResponsesResponse.prototype.getResponsesList = function () {
-	return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
+	return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 1));
 };
 
 /**
@@ -3661,7 +3700,7 @@ proto.ondewo.nlu.GenerateResponsesResponse.prototype.getResponsesList = function
  * @return {!proto.ondewo.nlu.GenerateResponsesResponse} returns this
  */
 proto.ondewo.nlu.GenerateResponsesResponse.prototype.setResponsesList = function (value) {
-	return jspb.Message.setField(this, 2, value || []);
+	return jspb.Message.setField(this, 1, value || []);
 };
 
 /**
@@ -3670,7 +3709,7 @@ proto.ondewo.nlu.GenerateResponsesResponse.prototype.setResponsesList = function
  * @return {!proto.ondewo.nlu.GenerateResponsesResponse} returns this
  */
 proto.ondewo.nlu.GenerateResponsesResponse.prototype.addResponses = function (value, opt_index) {
-	return jspb.Message.addToRepeatedField(this, 2, value, opt_index);
+	return jspb.Message.addToRepeatedField(this, 1, value, opt_index);
 };
 
 /**
@@ -3686,7 +3725,7 @@ proto.ondewo.nlu.GenerateResponsesResponse.prototype.clearResponsesList = functi
  * @private {!Array<number>}
  * @const
  */
-proto.ondewo.nlu.GenerateUserSaysResponse.repeatedFields_ = [2];
+proto.ondewo.nlu.GenerateUserSaysResponse.repeatedFields_ = [1];
 
 if (jspb.Message.GENERATE_TO_OBJECT) {
 	/**
@@ -3717,7 +3756,7 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
 	proto.ondewo.nlu.GenerateUserSaysResponse.toObject = function (includeInstance, msg) {
 		var f,
 			obj = {
-				userSaysList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f
+				userSaysList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f
 			};
 
 		if (includeInstance) {
@@ -3752,7 +3791,7 @@ proto.ondewo.nlu.GenerateUserSaysResponse.deserializeBinaryFromReader = function
 		}
 		var field = reader.getFieldNumber();
 		switch (field) {
-			case 2:
+			case 1:
 				var value = /** @type {string} */ (reader.readString());
 				msg.addUserSays(value);
 				break;
@@ -3785,16 +3824,16 @@ proto.ondewo.nlu.GenerateUserSaysResponse.serializeBinaryToWriter = function (me
 	var f = undefined;
 	f = message.getUserSaysList();
 	if (f.length > 0) {
-		writer.writeRepeatedString(2, f);
+		writer.writeRepeatedString(1, f);
 	}
 };
 
 /**
- * repeated string user_says = 2;
+ * repeated string user_says = 1;
  * @return {!Array<string>}
  */
 proto.ondewo.nlu.GenerateUserSaysResponse.prototype.getUserSaysList = function () {
-	return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
+	return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 1));
 };
 
 /**
@@ -3802,7 +3841,7 @@ proto.ondewo.nlu.GenerateUserSaysResponse.prototype.getUserSaysList = function (
  * @return {!proto.ondewo.nlu.GenerateUserSaysResponse} returns this
  */
 proto.ondewo.nlu.GenerateUserSaysResponse.prototype.setUserSaysList = function (value) {
-	return jspb.Message.setField(this, 2, value || []);
+	return jspb.Message.setField(this, 1, value || []);
 };
 
 /**
@@ -3811,7 +3850,7 @@ proto.ondewo.nlu.GenerateUserSaysResponse.prototype.setUserSaysList = function (
  * @return {!proto.ondewo.nlu.GenerateUserSaysResponse} returns this
  */
 proto.ondewo.nlu.GenerateUserSaysResponse.prototype.addUserSays = function (value, opt_index) {
-	return jspb.Message.addToRepeatedField(this, 2, value, opt_index);
+	return jspb.Message.addToRepeatedField(this, 1, value, opt_index);
 };
 
 /**

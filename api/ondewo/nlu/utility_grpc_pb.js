@@ -202,6 +202,7 @@ function deserialize_ondewo_nlu_ValidateRegexResponse(buffer_arg) {
 
 // This is collection of utility endpoints, intended to language-independent operations,
 // such as code checks, regex checks, etc.
+// Holds a collection of utility functions
 var UtilitiesService = (exports.UtilitiesService = {
 	// Validates the validity of python regexes
 	validateRegex: {
@@ -303,4 +304,3 @@ var UtilitiesService = (exports.UtilitiesService = {
 });
 
 exports.UtilitiesClient = grpc.makeGenericClientConstructor(UtilitiesService);
-// Holds a collection of utility functions

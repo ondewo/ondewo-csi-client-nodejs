@@ -162,11 +162,11 @@ var OperationsService = (exports.OperationsService = {
 	// guaranteed.  If the server doesn't support this method, it returns
 	// `google.rpc.Code.UNIMPLEMENTED`.  Clients can use
 	// [Operations.GetOperation][ondewo.nlu.Operations.GetOperation] or
-	// other methods to check whether the cancellation succeeded or whether the
+	// other methods to verify whether the cancellation succeeded or whether the
 	// operation completed despite cancellation. On successful cancellation,
 	// the operation is not deleted; instead, it becomes an operation with
-	// an [Operation.error][ondewo.nlu.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code] of 1,
-	// corresponding to `Code.CANCELLED`.
+	// an [Operation.error][ondewo.nlu.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code]
+	// of 1, corresponding to `Code.CANCELLED`.
 	cancelOperation: {
 		path: '/ondewo.nlu.Operations/CancelOperation',
 		requestStream: false,

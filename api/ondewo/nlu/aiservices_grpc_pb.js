@@ -201,6 +201,7 @@ var AiServicesService = (exports.AiServicesService = {
 		responseSerialize: serialize_ondewo_nlu_ExtractEntitiesResponse,
 		responseDeserialize: deserialize_ondewo_nlu_ExtractEntitiesResponse
 	},
+	// Generates a list of training phrases
 	generateUserSays: {
 		path: '/ondewo.nlu.AiServices/GenerateUserSays',
 		requestStream: false,
@@ -212,6 +213,7 @@ var AiServicesService = (exports.AiServicesService = {
 		responseSerialize: serialize_ondewo_nlu_GenerateUserSaysResponse,
 		responseDeserialize: deserialize_ondewo_nlu_GenerateUserSaysResponse
 	},
+	// Generate responses from all intents using synonyms
 	generateResponses: {
 		path: '/ondewo.nlu.AiServices/GenerateResponses',
 		requestStream: false,
@@ -223,6 +225,7 @@ var AiServicesService = (exports.AiServicesService = {
 		responseSerialize: serialize_ondewo_nlu_GenerateResponsesResponse,
 		responseDeserialize: deserialize_ondewo_nlu_GenerateResponsesResponse
 	},
+	// Generates alternative phrase based on original phrase
 	getAlternativeSentences: {
 		path: '/ondewo.nlu.AiServices/GetAlternativeSentences',
 		requestStream: false,
@@ -234,6 +237,7 @@ var AiServicesService = (exports.AiServicesService = {
 		responseSerialize: serialize_ondewo_nlu_GetAlternativeSentencesResponse,
 		responseDeserialize: deserialize_ondewo_nlu_GetAlternativeSentencesResponse
 	},
+	// Generates alternative training phrase based on original training phrase
 	getAlternativeTrainingPhrases: {
 		path: '/ondewo.nlu.AiServices/GetAlternativeTrainingPhrases',
 		requestStream: false,
@@ -245,6 +249,7 @@ var AiServicesService = (exports.AiServicesService = {
 		responseSerialize: serialize_ondewo_nlu_GetAlternativeTrainingPhrasesResponse,
 		responseDeserialize: deserialize_ondewo_nlu_GetAlternativeTrainingPhrasesResponse
 	},
+	// Generates synonyms for a certain word
 	getSynonyms: {
 		path: '/ondewo.nlu.AiServices/GetSynonyms',
 		requestStream: false,
@@ -256,6 +261,7 @@ var AiServicesService = (exports.AiServicesService = {
 		responseSerialize: serialize_ondewo_nlu_GetSynonymsResponse,
 		responseDeserialize: deserialize_ondewo_nlu_GetSynonymsResponse
 	},
+	// Preprocess text and detects intents in a sentence
 	classifyIntents: {
 		path: '/ondewo.nlu.AiServices/ClassifyIntents',
 		requestStream: false,

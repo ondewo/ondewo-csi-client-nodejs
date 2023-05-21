@@ -6,7 +6,9 @@
 
 import * as jspb from 'google-protobuf';
 import * as google_protobuf_empty_pb from 'google-protobuf/google/protobuf/empty_pb';
+import * as google_protobuf_field_mask_pb from 'google-protobuf/google/protobuf/field_mask_pb';
 import * as google_protobuf_struct_pb from 'google-protobuf/google/protobuf/struct_pb';
+import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb';
 import * as google_rpc_status_pb from '../../google/rpc/status_pb';
 import * as google_type_latlng_pb from '../../google/type/latlng_pb';
 import * as ondewo_nlu_context_pb from '../../ondewo/nlu/context_pb';
@@ -101,6 +103,27 @@ export class QueryParameters extends jspb.Message {
 	clearPayload(): void;
 	getPayload(): google_protobuf_struct_pb.Struct | undefined;
 	setPayload(value?: google_protobuf_struct_pb.Struct): QueryParameters;
+	clearLabelsList(): void;
+	getLabelsList(): Array<string>;
+	setLabelsList(value: Array<string>): QueryParameters;
+	addLabels(value: string, index?: number): string;
+	clearPlatformsList(): void;
+	getPlatformsList(): Array<ondewo_nlu_intent_pb.Intent.Message.Platform>;
+	setPlatformsList(value: Array<ondewo_nlu_intent_pb.Intent.Message.Platform>): QueryParameters;
+	addPlatforms(
+		value: ondewo_nlu_intent_pb.Intent.Message.Platform,
+		index?: number
+	): ondewo_nlu_intent_pb.Intent.Message.Platform;
+	getAccountId(): string;
+	setAccountId(value: string): QueryParameters;
+	getPropertyId(): string;
+	setPropertyId(value: string): QueryParameters;
+	getDatastreamId(): string;
+	setDatastreamId(value: string): QueryParameters;
+	getOriginId(): string;
+	setOriginId(value: string): QueryParameters;
+	getIdentifiedUserId(): string;
+	setIdentifiedUserId(value: string): QueryParameters;
 
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): QueryParameters.AsObject;
@@ -119,6 +142,13 @@ export namespace QueryParameters {
 		contextsList: Array<ondewo_nlu_context_pb.Context.AsObject>;
 		resetContexts: boolean;
 		payload?: google_protobuf_struct_pb.Struct.AsObject;
+		labelsList: Array<string>;
+		platformsList: Array<ondewo_nlu_intent_pb.Intent.Message.Platform>;
+		accountId: string;
+		propertyId: string;
+		datastreamId: string;
+		originId: string;
+		identifiedUserId: string;
 	};
 }
 
@@ -168,8 +198,6 @@ export namespace QueryInput {
 export class QueryResult extends jspb.Message {
 	getQueryText(): string;
 	setQueryText(value: string): QueryResult;
-	getLanguageCode(): string;
-	setLanguageCode(value: string): QueryResult;
 	getSpeechRecognitionConfidence(): number;
 	setSpeechRecognitionConfidence(value: number): QueryResult;
 	getAction(): string;
@@ -208,11 +236,15 @@ export class QueryResult extends jspb.Message {
 	setIntent(value?: ondewo_nlu_intent_pb.Intent): QueryResult;
 	getIntentDetectionConfidence(): number;
 	setIntentDetectionConfidence(value: number): QueryResult;
+	getQueryTextOriginal(): string;
+	setQueryTextOriginal(value: string): QueryResult;
 
 	hasDiagnosticInfo(): boolean;
 	clearDiagnosticInfo(): void;
 	getDiagnosticInfo(): google_protobuf_struct_pb.Struct | undefined;
 	setDiagnosticInfo(value?: google_protobuf_struct_pb.Struct): QueryResult;
+	getLanguageCode(): string;
+	setLanguageCode(value: string): QueryResult;
 
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): QueryResult.AsObject;
@@ -227,7 +259,6 @@ export class QueryResult extends jspb.Message {
 export namespace QueryResult {
 	export type AsObject = {
 		queryText: string;
-		languageCode: string;
 		speechRecognitionConfidence: number;
 		action: string;
 		parameters?: google_protobuf_struct_pb.Struct.AsObject;
@@ -239,7 +270,9 @@ export namespace QueryResult {
 		outputContextsList: Array<ondewo_nlu_context_pb.Context.AsObject>;
 		intent?: ondewo_nlu_intent_pb.Intent.AsObject;
 		intentDetectionConfidence: number;
+		queryTextOriginal: string;
 		diagnosticInfo?: google_protobuf_struct_pb.Struct.AsObject;
+		languageCode: string;
 	};
 }
 
@@ -449,8 +482,8 @@ export namespace EventInput {
 }
 
 export class Session extends jspb.Message {
-	getSessionId(): string;
-	setSessionId(value: string): Session;
+	getName(): string;
+	setName(value: string): Session;
 	clearSessionStepsList(): void;
 	getSessionStepsList(): Array<SessionStep>;
 	setSessionStepsList(value: Array<SessionStep>): Session;
@@ -473,7 +506,7 @@ export class Session extends jspb.Message {
 
 export namespace Session {
 	export type AsObject = {
-		sessionId: string;
+		name: string;
 		sessionStepsList: Array<SessionStep.AsObject>;
 		sessionInfo?: SessionInfo.AsObject;
 	};
@@ -486,6 +519,9 @@ export namespace Session {
 }
 
 export class SessionStep extends jspb.Message {
+	getName(): string;
+	setName(value: string): SessionStep;
+
 	hasDetectIntentRequest(): boolean;
 	clearDetectIntentRequest(): void;
 	getDetectIntentRequest(): DetectIntentRequest | undefined;
@@ -500,6 +536,11 @@ export class SessionStep extends jspb.Message {
 	setContextsList(value: Array<ondewo_nlu_context_pb.Context>): SessionStep;
 	addContexts(value?: ondewo_nlu_context_pb.Context, index?: number): ondewo_nlu_context_pb.Context;
 
+	hasTimestamp(): boolean;
+	clearTimestamp(): void;
+	getTimestamp(): google_protobuf_timestamp_pb.Timestamp | undefined;
+	setTimestamp(value?: google_protobuf_timestamp_pb.Timestamp): SessionStep;
+
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): SessionStep.AsObject;
 	static toObject(includeInstance: boolean, msg: SessionStep): SessionStep.AsObject;
@@ -512,9 +553,11 @@ export class SessionStep extends jspb.Message {
 
 export namespace SessionStep {
 	export type AsObject = {
+		name: string;
 		detectIntentRequest?: DetectIntentRequest.AsObject;
 		detectIntentResponse?: DetectIntentResponse.AsObject;
 		contextsList: Array<ondewo_nlu_context_pb.Context.AsObject>;
+		timestamp?: google_protobuf_timestamp_pb.Timestamp.AsObject;
 	};
 }
 
@@ -563,6 +606,11 @@ export class ListSessionsRequest extends jspb.Message {
 	getSessionFilter(): SessionFilter | undefined;
 	setSessionFilter(value?: SessionFilter): ListSessionsRequest;
 
+	hasFieldMask(): boolean;
+	clearFieldMask(): void;
+	getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+	setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): ListSessionsRequest;
+
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): ListSessionsRequest.AsObject;
 	static toObject(includeInstance: boolean, msg: ListSessionsRequest): ListSessionsRequest.AsObject;
@@ -579,6 +627,36 @@ export namespace ListSessionsRequest {
 		sessionView: Session.View;
 		pageToken: string;
 		sessionFilter?: SessionFilter.AsObject;
+		fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject;
+	};
+}
+
+export class ContextFilter extends jspb.Message {
+	getContextName(): string;
+	setContextName(value: string): ContextFilter;
+	getKey(): string;
+	setKey(value: string): ContextFilter;
+	getValue(): string;
+	setValue(value: string): ContextFilter;
+	getOperator(): ComparisonOperator;
+	setOperator(value: ComparisonOperator): ContextFilter;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ContextFilter.AsObject;
+	static toObject(includeInstance: boolean, msg: ContextFilter): ContextFilter.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ContextFilter, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ContextFilter;
+	static deserializeBinaryFromReader(message: ContextFilter, reader: jspb.BinaryReader): ContextFilter;
+}
+
+export namespace ContextFilter {
+	export type AsObject = {
+		contextName: string;
+		key: string;
+		value: string;
+		operator: ComparisonOperator;
 	};
 }
 
@@ -638,6 +716,85 @@ export class SessionFilter extends jspb.Message {
 	getOutputContextsList(): Array<ondewo_nlu_context_pb.Context>;
 	setOutputContextsList(value: Array<ondewo_nlu_context_pb.Context>): SessionFilter;
 	addOutputContexts(value?: ondewo_nlu_context_pb.Context, index?: number): ondewo_nlu_context_pb.Context;
+	getDurationInSMin(): number;
+	setDurationInSMin(value: number): SessionFilter;
+	getDurationInSMax(): number;
+	setDurationInSMax(value: number): SessionFilter;
+	getDurationInMMin(): number;
+	setDurationInMMin(value: number): SessionFilter;
+	getDurationInMMax(): number;
+	setDurationInMMax(value: number): SessionFilter;
+	getDurationInMRoundedMin(): number;
+	setDurationInMRoundedMin(value: number): SessionFilter;
+	getDurationInMRoundedMax(): number;
+	setDurationInMRoundedMax(value: number): SessionFilter;
+	getDurationInterval15sRoundedMin(): number;
+	setDurationInterval15sRoundedMin(value: number): SessionFilter;
+	getDurationInterval15sRoundedMax(): number;
+	setDurationInterval15sRoundedMax(value: number): SessionFilter;
+	getDurationInterval30sRoundedMin(): number;
+	setDurationInterval30sRoundedMin(value: number): SessionFilter;
+	getDurationInterval30sRoundedMax(): number;
+	setDurationInterval30sRoundedMax(value: number): SessionFilter;
+	getDurationInterval45sRoundedMin(): number;
+	setDurationInterval45sRoundedMin(value: number): SessionFilter;
+	getDurationInterval45sRoundedMax(): number;
+	setDurationInterval45sRoundedMax(value: number): SessionFilter;
+	getStartedTimeSlotPerHourMin(): string;
+	setStartedTimeSlotPerHourMin(value: string): SessionFilter;
+	getStartedTimeSlotPerHourMax(): string;
+	setStartedTimeSlotPerHourMax(value: string): SessionFilter;
+	getStartedTimeSlotPerQuarterHourMin(): string;
+	setStartedTimeSlotPerQuarterHourMin(value: string): SessionFilter;
+	getStartedTimeSlotPerQuarterHourMax(): string;
+	setStartedTimeSlotPerQuarterHourMax(value: string): SessionFilter;
+	getStartedTimeSlotPerHalfHourMin(): string;
+	setStartedTimeSlotPerHalfHourMin(value: string): SessionFilter;
+	getStartedTimeSlotPerHalfHourMax(): string;
+	setStartedTimeSlotPerHalfHourMax(value: string): SessionFilter;
+	getStartedTimeSlotPerDayPhaseMin(): string;
+	setStartedTimeSlotPerDayPhaseMin(value: string): SessionFilter;
+	getStartedTimeSlotPerDayPhaseMax(): string;
+	setStartedTimeSlotPerDayPhaseMax(value: string): SessionFilter;
+	getStartedTimeSlotPerMinuteMin(): string;
+	setStartedTimeSlotPerMinuteMin(value: string): SessionFilter;
+	getStartedTimeSlotPerMinuteMax(): string;
+	setStartedTimeSlotPerMinuteMax(value: string): SessionFilter;
+	getDurationInSRoundedMin(): number;
+	setDurationInSRoundedMin(value: number): SessionFilter;
+	getDurationInSRoundedMax(): number;
+	setDurationInSRoundedMax(value: number): SessionFilter;
+	clearPlatformsList(): void;
+	getPlatformsList(): Array<ondewo_nlu_intent_pb.Intent.Message.Platform>;
+	setPlatformsList(value: Array<ondewo_nlu_intent_pb.Intent.Message.Platform>): SessionFilter;
+	addPlatforms(
+		value: ondewo_nlu_intent_pb.Intent.Message.Platform,
+		index?: number
+	): ondewo_nlu_intent_pb.Intent.Message.Platform;
+	clearAccountIdsList(): void;
+	getAccountIdsList(): Array<string>;
+	setAccountIdsList(value: Array<string>): SessionFilter;
+	addAccountIds(value: string, index?: number): string;
+	clearPropertyIdsList(): void;
+	getPropertyIdsList(): Array<string>;
+	setPropertyIdsList(value: Array<string>): SessionFilter;
+	addPropertyIds(value: string, index?: number): string;
+	clearDatastreamIdsList(): void;
+	getDatastreamIdsList(): Array<string>;
+	setDatastreamIdsList(value: Array<string>): SessionFilter;
+	addDatastreamIds(value: string, index?: number): string;
+	clearOriginIdsList(): void;
+	getOriginIdsList(): Array<string>;
+	setOriginIdsList(value: Array<string>): SessionFilter;
+	addOriginIds(value: string, index?: number): string;
+	clearIdentifiedUserIdsList(): void;
+	getIdentifiedUserIdsList(): Array<string>;
+	setIdentifiedUserIdsList(value: Array<string>): SessionFilter;
+	addIdentifiedUserIds(value: string, index?: number): string;
+	getDurationInterval60sRoundedMin(): number;
+	setDurationInterval60sRoundedMin(value: number): SessionFilter;
+	getDurationInterval60sRoundedMax(): number;
+	setDurationInterval60sRoundedMax(value: number): SessionFilter;
 
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): SessionFilter.AsObject;
@@ -668,6 +825,38 @@ export namespace SessionFilter {
 		sessionIdsList: Array<string>;
 		inputContextsList: Array<ondewo_nlu_context_pb.Context.AsObject>;
 		outputContextsList: Array<ondewo_nlu_context_pb.Context.AsObject>;
+		durationInSMin: number;
+		durationInSMax: number;
+		durationInMMin: number;
+		durationInMMax: number;
+		durationInMRoundedMin: number;
+		durationInMRoundedMax: number;
+		durationInterval15sRoundedMin: number;
+		durationInterval15sRoundedMax: number;
+		durationInterval30sRoundedMin: number;
+		durationInterval30sRoundedMax: number;
+		durationInterval45sRoundedMin: number;
+		durationInterval45sRoundedMax: number;
+		startedTimeSlotPerHourMin: string;
+		startedTimeSlotPerHourMax: string;
+		startedTimeSlotPerQuarterHourMin: string;
+		startedTimeSlotPerQuarterHourMax: string;
+		startedTimeSlotPerHalfHourMin: string;
+		startedTimeSlotPerHalfHourMax: string;
+		startedTimeSlotPerDayPhaseMin: string;
+		startedTimeSlotPerDayPhaseMax: string;
+		startedTimeSlotPerMinuteMin: string;
+		startedTimeSlotPerMinuteMax: string;
+		durationInSRoundedMin: number;
+		durationInSRoundedMax: number;
+		platformsList: Array<ondewo_nlu_intent_pb.Intent.Message.Platform>;
+		accountIdsList: Array<string>;
+		propertyIdsList: Array<string>;
+		datastreamIdsList: Array<string>;
+		originIdsList: Array<string>;
+		identifiedUserIdsList: Array<string>;
+		durationInterval60sRoundedMin: number;
+		durationInterval60sRoundedMax: number;
 	};
 }
 
@@ -717,6 +906,59 @@ export class SessionInfo extends jspb.Message {
 	getOutputContextStepsList(): Array<SessionInfo.ContextSteps>;
 	setOutputContextStepsList(value: Array<SessionInfo.ContextSteps>): SessionInfo;
 	addOutputContextSteps(value?: SessionInfo.ContextSteps, index?: number): SessionInfo.ContextSteps;
+	getDurationInS(): number;
+	setDurationInS(value: number): SessionInfo;
+	getDurationInM(): number;
+	setDurationInM(value: number): SessionInfo;
+	getDurationInMRounded(): number;
+	setDurationInMRounded(value: number): SessionInfo;
+	getDurationInterval15sRounded(): number;
+	setDurationInterval15sRounded(value: number): SessionInfo;
+	getDurationInterval30sRounded(): number;
+	setDurationInterval30sRounded(value: number): SessionInfo;
+	getDurationInterval45sRounded(): number;
+	setDurationInterval45sRounded(value: number): SessionInfo;
+	getStartedTimeSlotPerHour(): string;
+	setStartedTimeSlotPerHour(value: string): SessionInfo;
+	getStartedTimeSlotPerQuarterHour(): string;
+	setStartedTimeSlotPerQuarterHour(value: string): SessionInfo;
+	getStartedTimeSlotPerHalfHour(): string;
+	setStartedTimeSlotPerHalfHour(value: string): SessionInfo;
+	getStartedTimeSlotPerDayPhase(): string;
+	setStartedTimeSlotPerDayPhase(value: string): SessionInfo;
+	getStartedTimeSlotPerMinute(): string;
+	setStartedTimeSlotPerMinute(value: string): SessionInfo;
+	getDurationInSRounded(): number;
+	setDurationInSRounded(value: number): SessionInfo;
+	clearPlatformsList(): void;
+	getPlatformsList(): Array<ondewo_nlu_intent_pb.Intent.Message.Platform>;
+	setPlatformsList(value: Array<ondewo_nlu_intent_pb.Intent.Message.Platform>): SessionInfo;
+	addPlatforms(
+		value: ondewo_nlu_intent_pb.Intent.Message.Platform,
+		index?: number
+	): ondewo_nlu_intent_pb.Intent.Message.Platform;
+	clearAccountIdsList(): void;
+	getAccountIdsList(): Array<string>;
+	setAccountIdsList(value: Array<string>): SessionInfo;
+	addAccountIds(value: string, index?: number): string;
+	clearPropertyIdsList(): void;
+	getPropertyIdsList(): Array<string>;
+	setPropertyIdsList(value: Array<string>): SessionInfo;
+	addPropertyIds(value: string, index?: number): string;
+	clearDatastreamIdsList(): void;
+	getDatastreamIdsList(): Array<string>;
+	setDatastreamIdsList(value: Array<string>): SessionInfo;
+	addDatastreamIds(value: string, index?: number): string;
+	clearOriginIdsList(): void;
+	getOriginIdsList(): Array<string>;
+	setOriginIdsList(value: Array<string>): SessionInfo;
+	addOriginIds(value: string, index?: number): string;
+	clearIdentifiedUserIdsList(): void;
+	getIdentifiedUserIdsList(): Array<string>;
+	setIdentifiedUserIdsList(value: Array<string>): SessionInfo;
+	addIdentifiedUserIds(value: string, index?: number): string;
+	getDurationInterval60sRounded(): number;
+	setDurationInterval60sRounded(value: number): SessionInfo;
 
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): SessionInfo.AsObject;
@@ -743,6 +985,25 @@ export namespace SessionInfo {
 		intentTagsList: Array<string>;
 		inputContextStepsList: Array<SessionInfo.ContextSteps.AsObject>;
 		outputContextStepsList: Array<SessionInfo.ContextSteps.AsObject>;
+		durationInS: number;
+		durationInM: number;
+		durationInMRounded: number;
+		durationInterval15sRounded: number;
+		durationInterval30sRounded: number;
+		durationInterval45sRounded: number;
+		startedTimeSlotPerHour: string;
+		startedTimeSlotPerQuarterHour: string;
+		startedTimeSlotPerHalfHour: string;
+		startedTimeSlotPerDayPhase: string;
+		startedTimeSlotPerMinute: string;
+		durationInSRounded: number;
+		platformsList: Array<ondewo_nlu_intent_pb.Intent.Message.Platform>;
+		accountIdsList: Array<string>;
+		propertyIdsList: Array<string>;
+		datastreamIdsList: Array<string>;
+		originIdsList: Array<string>;
+		identifiedUserIdsList: Array<string>;
+		durationInterval60sRounded: number;
 	};
 
 	export class ContextSteps extends jspb.Message {
@@ -799,6 +1060,11 @@ export class GetSessionRequest extends jspb.Message {
 	getSessionView(): Session.View;
 	setSessionView(value: Session.View): GetSessionRequest;
 
+	hasFieldMask(): boolean;
+	clearFieldMask(): void;
+	getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+	setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): GetSessionRequest;
+
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): GetSessionRequest.AsObject;
 	static toObject(includeInstance: boolean, msg: GetSessionRequest): GetSessionRequest.AsObject;
@@ -813,6 +1079,7 @@ export namespace GetSessionRequest {
 	export type AsObject = {
 		sessionId: string;
 		sessionView: Session.View;
+		fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject;
 	};
 }
 
@@ -821,6 +1088,14 @@ export class CreateSessionRequest extends jspb.Message {
 	setParent(value: string): CreateSessionRequest;
 	getSessionUuid(): string;
 	setSessionUuid(value: string): CreateSessionRequest;
+	clearLabelsList(): void;
+	getLabelsList(): Array<string>;
+	setLabelsList(value: Array<string>): CreateSessionRequest;
+	addLabels(value: string, index?: number): string;
+	clearContextsList(): void;
+	getContextsList(): Array<ondewo_nlu_context_pb.Context>;
+	setContextsList(value: Array<ondewo_nlu_context_pb.Context>): CreateSessionRequest;
+	addContexts(value?: ondewo_nlu_context_pb.Context, index?: number): ondewo_nlu_context_pb.Context;
 
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): CreateSessionRequest.AsObject;
@@ -836,6 +1111,8 @@ export namespace CreateSessionRequest {
 	export type AsObject = {
 		parent: string;
 		sessionUuid: string;
+		labelsList: Array<string>;
+		contextsList: Array<ondewo_nlu_context_pb.Context.AsObject>;
 	};
 }
 
@@ -895,8 +1172,8 @@ export namespace CreateSessionReviewRequest {
 }
 
 export class SessionReview extends jspb.Message {
-	getSessionReviewId(): string;
-	setSessionReviewId(value: string): SessionReview;
+	getName(): string;
+	setName(value: string): SessionReview;
 	clearSessionReviewStepsList(): void;
 	getSessionReviewStepsList(): Array<SessionReviewStep>;
 	setSessionReviewStepsList(value: Array<SessionReviewStep>): SessionReview;
@@ -914,7 +1191,7 @@ export class SessionReview extends jspb.Message {
 
 export namespace SessionReview {
 	export type AsObject = {
-		sessionReviewId: string;
+		name: string;
 		sessionReviewStepsList: Array<SessionReviewStep.AsObject>;
 	};
 
@@ -926,6 +1203,9 @@ export namespace SessionReview {
 }
 
 export class SessionReviewStep extends jspb.Message {
+	getName(): string;
+	setName(value: string): SessionReviewStep;
+
 	hasAnnotatedUsersays(): boolean;
 	clearAnnotatedUsersays(): void;
 	getAnnotatedUsersays(): ondewo_nlu_intent_pb.Intent.TrainingPhrase | undefined;
@@ -944,6 +1224,20 @@ export class SessionReviewStep extends jspb.Message {
 	getContextsOutList(): Array<ondewo_nlu_context_pb.Context>;
 	setContextsOutList(value: Array<ondewo_nlu_context_pb.Context>): SessionReviewStep;
 	addContextsOut(value?: ondewo_nlu_context_pb.Context, index?: number): ondewo_nlu_context_pb.Context;
+	getQueryTextOriginal(): string;
+	setQueryTextOriginal(value: string): SessionReviewStep;
+	clearPlatformsList(): void;
+	getPlatformsList(): Array<ondewo_nlu_intent_pb.Intent.Message.Platform>;
+	setPlatformsList(value: Array<ondewo_nlu_intent_pb.Intent.Message.Platform>): SessionReviewStep;
+	addPlatforms(
+		value: ondewo_nlu_intent_pb.Intent.Message.Platform,
+		index?: number
+	): ondewo_nlu_intent_pb.Intent.Message.Platform;
+
+	hasTimestamp(): boolean;
+	clearTimestamp(): void;
+	getTimestamp(): google_protobuf_timestamp_pb.Timestamp | undefined;
+	setTimestamp(value?: google_protobuf_timestamp_pb.Timestamp): SessionReviewStep;
 
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): SessionReviewStep.AsObject;
@@ -957,11 +1251,15 @@ export class SessionReviewStep extends jspb.Message {
 
 export namespace SessionReviewStep {
 	export type AsObject = {
+		name: string;
 		annotatedUsersays?: ondewo_nlu_intent_pb.Intent.TrainingPhrase.AsObject;
 		languageCode: string;
 		detectedIntentsList: Array<DetectedIntent.AsObject>;
 		contextsList: Array<ondewo_nlu_context_pb.Context.AsObject>;
 		contextsOutList: Array<ondewo_nlu_context_pb.Context.AsObject>;
+		queryTextOriginal: string;
+		platformsList: Array<ondewo_nlu_intent_pb.Intent.Message.Platform>;
+		timestamp?: google_protobuf_timestamp_pb.Timestamp.AsObject;
 	};
 }
 
@@ -1005,8 +1303,8 @@ export namespace DetectedIntent {
 }
 
 export class ListSessionLabelsRequest extends jspb.Message {
-	getParent(): string;
-	setParent(value: string): ListSessionLabelsRequest;
+	getSessionId(): string;
+	setSessionId(value: string): ListSessionLabelsRequest;
 
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): ListSessionLabelsRequest.AsObject;
@@ -1023,7 +1321,39 @@ export class ListSessionLabelsRequest extends jspb.Message {
 
 export namespace ListSessionLabelsRequest {
 	export type AsObject = {
+		sessionId: string;
+	};
+}
+
+export class ListSessionLabelsOfAllSessionsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): ListSessionLabelsOfAllSessionsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): SessionFilter | undefined;
+	setSessionFilter(value?: SessionFilter): ListSessionLabelsOfAllSessionsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListSessionLabelsOfAllSessionsRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: ListSessionLabelsOfAllSessionsRequest
+	): ListSessionLabelsOfAllSessionsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListSessionLabelsOfAllSessionsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListSessionLabelsOfAllSessionsRequest;
+	static deserializeBinaryFromReader(
+		message: ListSessionLabelsOfAllSessionsRequest,
+		reader: jspb.BinaryReader
+	): ListSessionLabelsOfAllSessionsRequest;
+}
+
+export namespace ListSessionLabelsOfAllSessionsRequest {
+	export type AsObject = {
 		parent: string;
+		sessionFilter?: SessionFilter.AsObject;
 	};
 }
 
@@ -1052,6 +1382,735 @@ export namespace ListSessionLabelsResponse {
 	};
 }
 
+export class ListLanguageCodesOfAllSessionsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): ListLanguageCodesOfAllSessionsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): SessionFilter | undefined;
+	setSessionFilter(value?: SessionFilter): ListLanguageCodesOfAllSessionsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListLanguageCodesOfAllSessionsRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: ListLanguageCodesOfAllSessionsRequest
+	): ListLanguageCodesOfAllSessionsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListLanguageCodesOfAllSessionsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListLanguageCodesOfAllSessionsRequest;
+	static deserializeBinaryFromReader(
+		message: ListLanguageCodesOfAllSessionsRequest,
+		reader: jspb.BinaryReader
+	): ListLanguageCodesOfAllSessionsRequest;
+}
+
+export namespace ListLanguageCodesOfAllSessionsRequest {
+	export type AsObject = {
+		parent: string;
+		sessionFilter?: SessionFilter.AsObject;
+	};
+}
+
+export class ListLanguageCodesResponse extends jspb.Message {
+	clearLanguageCodesList(): void;
+	getLanguageCodesList(): Array<string>;
+	setLanguageCodesList(value: Array<string>): ListLanguageCodesResponse;
+	addLanguageCodes(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListLanguageCodesResponse.AsObject;
+	static toObject(includeInstance: boolean, msg: ListLanguageCodesResponse): ListLanguageCodesResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListLanguageCodesResponse, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListLanguageCodesResponse;
+	static deserializeBinaryFromReader(
+		message: ListLanguageCodesResponse,
+		reader: jspb.BinaryReader
+	): ListLanguageCodesResponse;
+}
+
+export namespace ListLanguageCodesResponse {
+	export type AsObject = {
+		languageCodesList: Array<string>;
+	};
+}
+
+export class ListMatchedIntentsOfAllSessionsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): ListMatchedIntentsOfAllSessionsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): SessionFilter | undefined;
+	setSessionFilter(value?: SessionFilter): ListMatchedIntentsOfAllSessionsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListMatchedIntentsOfAllSessionsRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: ListMatchedIntentsOfAllSessionsRequest
+	): ListMatchedIntentsOfAllSessionsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListMatchedIntentsOfAllSessionsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListMatchedIntentsOfAllSessionsRequest;
+	static deserializeBinaryFromReader(
+		message: ListMatchedIntentsOfAllSessionsRequest,
+		reader: jspb.BinaryReader
+	): ListMatchedIntentsOfAllSessionsRequest;
+}
+
+export namespace ListMatchedIntentsOfAllSessionsRequest {
+	export type AsObject = {
+		parent: string;
+		sessionFilter?: SessionFilter.AsObject;
+	};
+}
+
+export class ListMatchedIntentsResponse extends jspb.Message {
+	clearMatchedIntentsList(): void;
+	getMatchedIntentsList(): Array<string>;
+	setMatchedIntentsList(value: Array<string>): ListMatchedIntentsResponse;
+	addMatchedIntents(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListMatchedIntentsResponse.AsObject;
+	static toObject(includeInstance: boolean, msg: ListMatchedIntentsResponse): ListMatchedIntentsResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListMatchedIntentsResponse, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListMatchedIntentsResponse;
+	static deserializeBinaryFromReader(
+		message: ListMatchedIntentsResponse,
+		reader: jspb.BinaryReader
+	): ListMatchedIntentsResponse;
+}
+
+export namespace ListMatchedIntentsResponse {
+	export type AsObject = {
+		matchedIntentsList: Array<string>;
+	};
+}
+
+export class ListMatchedEntityTypesOfAllSessionsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): ListMatchedEntityTypesOfAllSessionsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): SessionFilter | undefined;
+	setSessionFilter(value?: SessionFilter): ListMatchedEntityTypesOfAllSessionsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListMatchedEntityTypesOfAllSessionsRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: ListMatchedEntityTypesOfAllSessionsRequest
+	): ListMatchedEntityTypesOfAllSessionsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListMatchedEntityTypesOfAllSessionsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListMatchedEntityTypesOfAllSessionsRequest;
+	static deserializeBinaryFromReader(
+		message: ListMatchedEntityTypesOfAllSessionsRequest,
+		reader: jspb.BinaryReader
+	): ListMatchedEntityTypesOfAllSessionsRequest;
+}
+
+export namespace ListMatchedEntityTypesOfAllSessionsRequest {
+	export type AsObject = {
+		parent: string;
+		sessionFilter?: SessionFilter.AsObject;
+	};
+}
+
+export class ListMatchedEntityTypesResponse extends jspb.Message {
+	clearMatchedEntityTypesList(): void;
+	getMatchedEntityTypesList(): Array<string>;
+	setMatchedEntityTypesList(value: Array<string>): ListMatchedEntityTypesResponse;
+	addMatchedEntityTypes(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListMatchedEntityTypesResponse.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: ListMatchedEntityTypesResponse
+	): ListMatchedEntityTypesResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListMatchedEntityTypesResponse, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListMatchedEntityTypesResponse;
+	static deserializeBinaryFromReader(
+		message: ListMatchedEntityTypesResponse,
+		reader: jspb.BinaryReader
+	): ListMatchedEntityTypesResponse;
+}
+
+export namespace ListMatchedEntityTypesResponse {
+	export type AsObject = {
+		matchedEntityTypesList: Array<string>;
+	};
+}
+
+export class ListUserIdsOfAllSessionsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): ListUserIdsOfAllSessionsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): SessionFilter | undefined;
+	setSessionFilter(value?: SessionFilter): ListUserIdsOfAllSessionsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListUserIdsOfAllSessionsRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: ListUserIdsOfAllSessionsRequest
+	): ListUserIdsOfAllSessionsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListUserIdsOfAllSessionsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListUserIdsOfAllSessionsRequest;
+	static deserializeBinaryFromReader(
+		message: ListUserIdsOfAllSessionsRequest,
+		reader: jspb.BinaryReader
+	): ListUserIdsOfAllSessionsRequest;
+}
+
+export namespace ListUserIdsOfAllSessionsRequest {
+	export type AsObject = {
+		parent: string;
+		sessionFilter?: SessionFilter.AsObject;
+	};
+}
+
+export class ListUserIdsResponse extends jspb.Message {
+	clearUserIdsList(): void;
+	getUserIdsList(): Array<string>;
+	setUserIdsList(value: Array<string>): ListUserIdsResponse;
+	addUserIds(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListUserIdsResponse.AsObject;
+	static toObject(includeInstance: boolean, msg: ListUserIdsResponse): ListUserIdsResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListUserIdsResponse, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListUserIdsResponse;
+	static deserializeBinaryFromReader(message: ListUserIdsResponse, reader: jspb.BinaryReader): ListUserIdsResponse;
+}
+
+export namespace ListUserIdsResponse {
+	export type AsObject = {
+		userIdsList: Array<string>;
+	};
+}
+
+export class ListIdentifiedUserIdsOfAllSessionsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): ListIdentifiedUserIdsOfAllSessionsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): SessionFilter | undefined;
+	setSessionFilter(value?: SessionFilter): ListIdentifiedUserIdsOfAllSessionsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListIdentifiedUserIdsOfAllSessionsRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: ListIdentifiedUserIdsOfAllSessionsRequest
+	): ListIdentifiedUserIdsOfAllSessionsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListIdentifiedUserIdsOfAllSessionsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListIdentifiedUserIdsOfAllSessionsRequest;
+	static deserializeBinaryFromReader(
+		message: ListIdentifiedUserIdsOfAllSessionsRequest,
+		reader: jspb.BinaryReader
+	): ListIdentifiedUserIdsOfAllSessionsRequest;
+}
+
+export namespace ListIdentifiedUserIdsOfAllSessionsRequest {
+	export type AsObject = {
+		parent: string;
+		sessionFilter?: SessionFilter.AsObject;
+	};
+}
+
+export class ListIdentifiedUserIdsResponse extends jspb.Message {
+	clearIdentifiedUserIdsList(): void;
+	getIdentifiedUserIdsList(): Array<string>;
+	setIdentifiedUserIdsList(value: Array<string>): ListIdentifiedUserIdsResponse;
+	addIdentifiedUserIds(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListIdentifiedUserIdsResponse.AsObject;
+	static toObject(includeInstance: boolean, msg: ListIdentifiedUserIdsResponse): ListIdentifiedUserIdsResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListIdentifiedUserIdsResponse, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListIdentifiedUserIdsResponse;
+	static deserializeBinaryFromReader(
+		message: ListIdentifiedUserIdsResponse,
+		reader: jspb.BinaryReader
+	): ListIdentifiedUserIdsResponse;
+}
+
+export namespace ListIdentifiedUserIdsResponse {
+	export type AsObject = {
+		identifiedUserIdsList: Array<string>;
+	};
+}
+
+export class ListTagsOfAllSessionsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): ListTagsOfAllSessionsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): SessionFilter | undefined;
+	setSessionFilter(value?: SessionFilter): ListTagsOfAllSessionsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListTagsOfAllSessionsRequest.AsObject;
+	static toObject(includeInstance: boolean, msg: ListTagsOfAllSessionsRequest): ListTagsOfAllSessionsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListTagsOfAllSessionsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListTagsOfAllSessionsRequest;
+	static deserializeBinaryFromReader(
+		message: ListTagsOfAllSessionsRequest,
+		reader: jspb.BinaryReader
+	): ListTagsOfAllSessionsRequest;
+}
+
+export namespace ListTagsOfAllSessionsRequest {
+	export type AsObject = {
+		parent: string;
+		sessionFilter?: SessionFilter.AsObject;
+	};
+}
+
+export class ListTagsResponse extends jspb.Message {
+	clearTagsList(): void;
+	getTagsList(): Array<string>;
+	setTagsList(value: Array<string>): ListTagsResponse;
+	addTags(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListTagsResponse.AsObject;
+	static toObject(includeInstance: boolean, msg: ListTagsResponse): ListTagsResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListTagsResponse, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListTagsResponse;
+	static deserializeBinaryFromReader(message: ListTagsResponse, reader: jspb.BinaryReader): ListTagsResponse;
+}
+
+export namespace ListTagsResponse {
+	export type AsObject = {
+		tagsList: Array<string>;
+	};
+}
+
+export class ListInputContextsOfAllSessionsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): ListInputContextsOfAllSessionsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): SessionFilter | undefined;
+	setSessionFilter(value?: SessionFilter): ListInputContextsOfAllSessionsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListInputContextsOfAllSessionsRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: ListInputContextsOfAllSessionsRequest
+	): ListInputContextsOfAllSessionsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListInputContextsOfAllSessionsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListInputContextsOfAllSessionsRequest;
+	static deserializeBinaryFromReader(
+		message: ListInputContextsOfAllSessionsRequest,
+		reader: jspb.BinaryReader
+	): ListInputContextsOfAllSessionsRequest;
+}
+
+export namespace ListInputContextsOfAllSessionsRequest {
+	export type AsObject = {
+		parent: string;
+		sessionFilter?: SessionFilter.AsObject;
+	};
+}
+
+export class ListInputContextsResponse extends jspb.Message {
+	clearInputContextsList(): void;
+	getInputContextsList(): Array<string>;
+	setInputContextsList(value: Array<string>): ListInputContextsResponse;
+	addInputContexts(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListInputContextsResponse.AsObject;
+	static toObject(includeInstance: boolean, msg: ListInputContextsResponse): ListInputContextsResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListInputContextsResponse, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListInputContextsResponse;
+	static deserializeBinaryFromReader(
+		message: ListInputContextsResponse,
+		reader: jspb.BinaryReader
+	): ListInputContextsResponse;
+}
+
+export namespace ListInputContextsResponse {
+	export type AsObject = {
+		inputContextsList: Array<string>;
+	};
+}
+
+export class ListOutputContextsOfAllSessionsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): ListOutputContextsOfAllSessionsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): SessionFilter | undefined;
+	setSessionFilter(value?: SessionFilter): ListOutputContextsOfAllSessionsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListOutputContextsOfAllSessionsRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: ListOutputContextsOfAllSessionsRequest
+	): ListOutputContextsOfAllSessionsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListOutputContextsOfAllSessionsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListOutputContextsOfAllSessionsRequest;
+	static deserializeBinaryFromReader(
+		message: ListOutputContextsOfAllSessionsRequest,
+		reader: jspb.BinaryReader
+	): ListOutputContextsOfAllSessionsRequest;
+}
+
+export namespace ListOutputContextsOfAllSessionsRequest {
+	export type AsObject = {
+		parent: string;
+		sessionFilter?: SessionFilter.AsObject;
+	};
+}
+
+export class ListOutputContextsResponse extends jspb.Message {
+	clearOutputContextsList(): void;
+	getOutputContextsList(): Array<string>;
+	setOutputContextsList(value: Array<string>): ListOutputContextsResponse;
+	addOutputContexts(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListOutputContextsResponse.AsObject;
+	static toObject(includeInstance: boolean, msg: ListOutputContextsResponse): ListOutputContextsResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListOutputContextsResponse, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListOutputContextsResponse;
+	static deserializeBinaryFromReader(
+		message: ListOutputContextsResponse,
+		reader: jspb.BinaryReader
+	): ListOutputContextsResponse;
+}
+
+export namespace ListOutputContextsResponse {
+	export type AsObject = {
+		outputContextsList: Array<string>;
+	};
+}
+
+export class ListPlatformsOfAllSessionsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): ListPlatformsOfAllSessionsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): SessionFilter | undefined;
+	setSessionFilter(value?: SessionFilter): ListPlatformsOfAllSessionsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListPlatformsOfAllSessionsRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: ListPlatformsOfAllSessionsRequest
+	): ListPlatformsOfAllSessionsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListPlatformsOfAllSessionsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListPlatformsOfAllSessionsRequest;
+	static deserializeBinaryFromReader(
+		message: ListPlatformsOfAllSessionsRequest,
+		reader: jspb.BinaryReader
+	): ListPlatformsOfAllSessionsRequest;
+}
+
+export namespace ListPlatformsOfAllSessionsRequest {
+	export type AsObject = {
+		parent: string;
+		sessionFilter?: SessionFilter.AsObject;
+	};
+}
+
+export class ListPlatformsResponse extends jspb.Message {
+	clearPlatformsList(): void;
+	getPlatformsList(): Array<string>;
+	setPlatformsList(value: Array<string>): ListPlatformsResponse;
+	addPlatforms(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListPlatformsResponse.AsObject;
+	static toObject(includeInstance: boolean, msg: ListPlatformsResponse): ListPlatformsResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListPlatformsResponse, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListPlatformsResponse;
+	static deserializeBinaryFromReader(message: ListPlatformsResponse, reader: jspb.BinaryReader): ListPlatformsResponse;
+}
+
+export namespace ListPlatformsResponse {
+	export type AsObject = {
+		platformsList: Array<string>;
+	};
+}
+
+export class ListAccountIdsOfAllSessionsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): ListAccountIdsOfAllSessionsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): SessionFilter | undefined;
+	setSessionFilter(value?: SessionFilter): ListAccountIdsOfAllSessionsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListAccountIdsOfAllSessionsRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: ListAccountIdsOfAllSessionsRequest
+	): ListAccountIdsOfAllSessionsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListAccountIdsOfAllSessionsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListAccountIdsOfAllSessionsRequest;
+	static deserializeBinaryFromReader(
+		message: ListAccountIdsOfAllSessionsRequest,
+		reader: jspb.BinaryReader
+	): ListAccountIdsOfAllSessionsRequest;
+}
+
+export namespace ListAccountIdsOfAllSessionsRequest {
+	export type AsObject = {
+		parent: string;
+		sessionFilter?: SessionFilter.AsObject;
+	};
+}
+
+export class ListAccountIdsResponse extends jspb.Message {
+	clearAccountIdsList(): void;
+	getAccountIdsList(): Array<string>;
+	setAccountIdsList(value: Array<string>): ListAccountIdsResponse;
+	addAccountIds(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListAccountIdsResponse.AsObject;
+	static toObject(includeInstance: boolean, msg: ListAccountIdsResponse): ListAccountIdsResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListAccountIdsResponse, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListAccountIdsResponse;
+	static deserializeBinaryFromReader(
+		message: ListAccountIdsResponse,
+		reader: jspb.BinaryReader
+	): ListAccountIdsResponse;
+}
+
+export namespace ListAccountIdsResponse {
+	export type AsObject = {
+		accountIdsList: Array<string>;
+	};
+}
+
+export class ListPropertyIdsOfAllSessionsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): ListPropertyIdsOfAllSessionsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): SessionFilter | undefined;
+	setSessionFilter(value?: SessionFilter): ListPropertyIdsOfAllSessionsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListPropertyIdsOfAllSessionsRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: ListPropertyIdsOfAllSessionsRequest
+	): ListPropertyIdsOfAllSessionsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListPropertyIdsOfAllSessionsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListPropertyIdsOfAllSessionsRequest;
+	static deserializeBinaryFromReader(
+		message: ListPropertyIdsOfAllSessionsRequest,
+		reader: jspb.BinaryReader
+	): ListPropertyIdsOfAllSessionsRequest;
+}
+
+export namespace ListPropertyIdsOfAllSessionsRequest {
+	export type AsObject = {
+		parent: string;
+		sessionFilter?: SessionFilter.AsObject;
+	};
+}
+
+export class ListPropertyIdsResponse extends jspb.Message {
+	clearPropertyIdsList(): void;
+	getPropertyIdsList(): Array<string>;
+	setPropertyIdsList(value: Array<string>): ListPropertyIdsResponse;
+	addPropertyIds(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListPropertyIdsResponse.AsObject;
+	static toObject(includeInstance: boolean, msg: ListPropertyIdsResponse): ListPropertyIdsResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListPropertyIdsResponse, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListPropertyIdsResponse;
+	static deserializeBinaryFromReader(
+		message: ListPropertyIdsResponse,
+		reader: jspb.BinaryReader
+	): ListPropertyIdsResponse;
+}
+
+export namespace ListPropertyIdsResponse {
+	export type AsObject = {
+		propertyIdsList: Array<string>;
+	};
+}
+
+export class ListDatastreamIdsOfAllSessionsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): ListDatastreamIdsOfAllSessionsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): SessionFilter | undefined;
+	setSessionFilter(value?: SessionFilter): ListDatastreamIdsOfAllSessionsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListDatastreamIdsOfAllSessionsRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: ListDatastreamIdsOfAllSessionsRequest
+	): ListDatastreamIdsOfAllSessionsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListDatastreamIdsOfAllSessionsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListDatastreamIdsOfAllSessionsRequest;
+	static deserializeBinaryFromReader(
+		message: ListDatastreamIdsOfAllSessionsRequest,
+		reader: jspb.BinaryReader
+	): ListDatastreamIdsOfAllSessionsRequest;
+}
+
+export namespace ListDatastreamIdsOfAllSessionsRequest {
+	export type AsObject = {
+		parent: string;
+		sessionFilter?: SessionFilter.AsObject;
+	};
+}
+
+export class ListDatastreamIdsResponse extends jspb.Message {
+	clearDatastreamIdsList(): void;
+	getDatastreamIdsList(): Array<string>;
+	setDatastreamIdsList(value: Array<string>): ListDatastreamIdsResponse;
+	addDatastreamIds(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListDatastreamIdsResponse.AsObject;
+	static toObject(includeInstance: boolean, msg: ListDatastreamIdsResponse): ListDatastreamIdsResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListDatastreamIdsResponse, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListDatastreamIdsResponse;
+	static deserializeBinaryFromReader(
+		message: ListDatastreamIdsResponse,
+		reader: jspb.BinaryReader
+	): ListDatastreamIdsResponse;
+}
+
+export namespace ListDatastreamIdsResponse {
+	export type AsObject = {
+		datastreamIdsList: Array<string>;
+	};
+}
+
+export class ListOriginIdsOfAllSessionsRequest extends jspb.Message {
+	getParent(): string;
+	setParent(value: string): ListOriginIdsOfAllSessionsRequest;
+
+	hasSessionFilter(): boolean;
+	clearSessionFilter(): void;
+	getSessionFilter(): SessionFilter | undefined;
+	setSessionFilter(value?: SessionFilter): ListOriginIdsOfAllSessionsRequest;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListOriginIdsOfAllSessionsRequest.AsObject;
+	static toObject(
+		includeInstance: boolean,
+		msg: ListOriginIdsOfAllSessionsRequest
+	): ListOriginIdsOfAllSessionsRequest.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListOriginIdsOfAllSessionsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListOriginIdsOfAllSessionsRequest;
+	static deserializeBinaryFromReader(
+		message: ListOriginIdsOfAllSessionsRequest,
+		reader: jspb.BinaryReader
+	): ListOriginIdsOfAllSessionsRequest;
+}
+
+export namespace ListOriginIdsOfAllSessionsRequest {
+	export type AsObject = {
+		parent: string;
+		sessionFilter?: SessionFilter.AsObject;
+	};
+}
+
+export class ListOriginIdsResponse extends jspb.Message {
+	clearOriginIdsList(): void;
+	getOriginIdsList(): Array<string>;
+	setOriginIdsList(value: Array<string>): ListOriginIdsResponse;
+	addOriginIds(value: string, index?: number): string;
+
+	serializeBinary(): Uint8Array;
+	toObject(includeInstance?: boolean): ListOriginIdsResponse.AsObject;
+	static toObject(includeInstance: boolean, msg: ListOriginIdsResponse): ListOriginIdsResponse.AsObject;
+	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
+	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
+	static serializeBinaryToWriter(message: ListOriginIdsResponse, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): ListOriginIdsResponse;
+	static deserializeBinaryFromReader(message: ListOriginIdsResponse, reader: jspb.BinaryReader): ListOriginIdsResponse;
+}
+
+export namespace ListOriginIdsResponse {
+	export type AsObject = {
+		originIdsList: Array<string>;
+	};
+}
+
 export class AddSessionLabelsRequest extends jspb.Message {
 	getSessionId(): string;
 	setSessionId(value: string): AddSessionLabelsRequest;
@@ -1059,8 +2118,6 @@ export class AddSessionLabelsRequest extends jspb.Message {
 	getLabelsList(): Array<string>;
 	setLabelsList(value: Array<string>): AddSessionLabelsRequest;
 	addLabels(value: string, index?: number): string;
-	getSessionView(): Session.View;
-	setSessionView(value: Session.View): AddSessionLabelsRequest;
 
 	serializeBinary(): Uint8Array;
 	toObject(includeInstance?: boolean): AddSessionLabelsRequest.AsObject;
@@ -1079,38 +2136,34 @@ export namespace AddSessionLabelsRequest {
 	export type AsObject = {
 		sessionId: string;
 		labelsList: Array<string>;
-		sessionView: Session.View;
 	};
 }
 
-export class RemoveSessionLabelsRequest extends jspb.Message {
+export class DeleteSessionLabelsRequest extends jspb.Message {
 	getSessionId(): string;
-	setSessionId(value: string): RemoveSessionLabelsRequest;
+	setSessionId(value: string): DeleteSessionLabelsRequest;
 	clearLabelsList(): void;
 	getLabelsList(): Array<string>;
-	setLabelsList(value: Array<string>): RemoveSessionLabelsRequest;
+	setLabelsList(value: Array<string>): DeleteSessionLabelsRequest;
 	addLabels(value: string, index?: number): string;
-	getSessionView(): Session.View;
-	setSessionView(value: Session.View): RemoveSessionLabelsRequest;
 
 	serializeBinary(): Uint8Array;
-	toObject(includeInstance?: boolean): RemoveSessionLabelsRequest.AsObject;
-	static toObject(includeInstance: boolean, msg: RemoveSessionLabelsRequest): RemoveSessionLabelsRequest.AsObject;
+	toObject(includeInstance?: boolean): DeleteSessionLabelsRequest.AsObject;
+	static toObject(includeInstance: boolean, msg: DeleteSessionLabelsRequest): DeleteSessionLabelsRequest.AsObject;
 	static extensions: { [key: number]: jspb.ExtensionFieldInfo<jspb.Message> };
 	static extensionsBinary: { [key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message> };
-	static serializeBinaryToWriter(message: RemoveSessionLabelsRequest, writer: jspb.BinaryWriter): void;
-	static deserializeBinary(bytes: Uint8Array): RemoveSessionLabelsRequest;
+	static serializeBinaryToWriter(message: DeleteSessionLabelsRequest, writer: jspb.BinaryWriter): void;
+	static deserializeBinary(bytes: Uint8Array): DeleteSessionLabelsRequest;
 	static deserializeBinaryFromReader(
-		message: RemoveSessionLabelsRequest,
+		message: DeleteSessionLabelsRequest,
 		reader: jspb.BinaryReader
-	): RemoveSessionLabelsRequest;
+	): DeleteSessionLabelsRequest;
 }
 
-export namespace RemoveSessionLabelsRequest {
+export namespace DeleteSessionLabelsRequest {
 	export type AsObject = {
 		sessionId: string;
 		labelsList: Array<string>;
-		sessionView: Session.View;
 	};
 }
 
@@ -1232,4 +2285,14 @@ export enum AudioEncoding {
 	AUDIO_ENCODING_AMR_WB = 5,
 	AUDIO_ENCODING_OGG_OPUS = 6,
 	AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE = 7
+}
+
+export enum ComparisonOperator {
+	EQUAL = 0,
+	GREATER = 1,
+	GREATER_OR_EQUAL = 2,
+	LESS_OR_EQUAL = 3,
+	CONTAINS = 4,
+	STARTS_WITH = 5,
+	ENDS_WITH = 6
 }

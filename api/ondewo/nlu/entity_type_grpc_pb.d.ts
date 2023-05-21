@@ -19,6 +19,10 @@ interface IEntityTypesService extends grpc.ServiceDefinition<grpc.UntypedService
 	deleteEntityType: IEntityTypesService_IDeleteEntityType;
 	batchUpdateEntityTypes: IEntityTypesService_IBatchUpdateEntityTypes;
 	batchDeleteEntityTypes: IEntityTypesService_IBatchDeleteEntityTypes;
+	getEntity: IEntityTypesService_IGetEntity;
+	createEntity: IEntityTypesService_ICreateEntity;
+	updateEntity: IEntityTypesService_IUpdateEntity;
+	deleteEntity: IEntityTypesService_IDeleteEntity;
 	batchCreateEntities: IEntityTypesService_IBatchCreateEntities;
 	batchUpdateEntities: IEntityTypesService_IBatchUpdateEntities;
 	batchGetEntities: IEntityTypesService_IBatchGetEntities;
@@ -110,6 +114,58 @@ interface IEntityTypesService_IBatchDeleteEntityTypes
 	requestDeserialize: grpc.deserialize<ondewo_nlu_entity_type_pb.BatchDeleteEntityTypesRequest>;
 	responseSerialize: grpc.serialize<ondewo_nlu_operations_pb.Operation>;
 	responseDeserialize: grpc.deserialize<ondewo_nlu_operations_pb.Operation>;
+}
+interface IEntityTypesService_IGetEntity
+	extends grpc.MethodDefinition<
+		ondewo_nlu_entity_type_pb.GetEntityRequest,
+		ondewo_nlu_entity_type_pb.EntityType.Entity
+	> {
+	path: '/ondewo.nlu.EntityTypes/GetEntity';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_entity_type_pb.GetEntityRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_entity_type_pb.GetEntityRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_entity_type_pb.EntityType.Entity>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_entity_type_pb.EntityType.Entity>;
+}
+interface IEntityTypesService_ICreateEntity
+	extends grpc.MethodDefinition<
+		ondewo_nlu_entity_type_pb.CreateEntityRequest,
+		ondewo_nlu_entity_type_pb.EntityType.Entity
+	> {
+	path: '/ondewo.nlu.EntityTypes/CreateEntity';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_entity_type_pb.CreateEntityRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_entity_type_pb.CreateEntityRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_entity_type_pb.EntityType.Entity>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_entity_type_pb.EntityType.Entity>;
+}
+interface IEntityTypesService_IUpdateEntity
+	extends grpc.MethodDefinition<
+		ondewo_nlu_entity_type_pb.UpdateEntityRequest,
+		ondewo_nlu_entity_type_pb.EntityType.Entity
+	> {
+	path: '/ondewo.nlu.EntityTypes/UpdateEntity';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_entity_type_pb.UpdateEntityRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_entity_type_pb.UpdateEntityRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_entity_type_pb.EntityType.Entity>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_entity_type_pb.EntityType.Entity>;
+}
+interface IEntityTypesService_IDeleteEntity
+	extends grpc.MethodDefinition<
+		ondewo_nlu_entity_type_pb.DeleteEntityRequest,
+		ondewo_nlu_entity_type_pb.DeleteEntityStatus
+	> {
+	path: '/ondewo.nlu.EntityTypes/DeleteEntity';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_entity_type_pb.DeleteEntityRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_entity_type_pb.DeleteEntityRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_entity_type_pb.DeleteEntityStatus>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_entity_type_pb.DeleteEntityStatus>;
 }
 interface IEntityTypesService_IBatchCreateEntities
 	extends grpc.MethodDefinition<
@@ -207,6 +263,22 @@ export interface IEntityTypesServer {
 	batchDeleteEntityTypes: grpc.handleUnaryCall<
 		ondewo_nlu_entity_type_pb.BatchDeleteEntityTypesRequest,
 		ondewo_nlu_operations_pb.Operation
+	>;
+	getEntity: grpc.handleUnaryCall<
+		ondewo_nlu_entity_type_pb.GetEntityRequest,
+		ondewo_nlu_entity_type_pb.EntityType.Entity
+	>;
+	createEntity: grpc.handleUnaryCall<
+		ondewo_nlu_entity_type_pb.CreateEntityRequest,
+		ondewo_nlu_entity_type_pb.EntityType.Entity
+	>;
+	updateEntity: grpc.handleUnaryCall<
+		ondewo_nlu_entity_type_pb.UpdateEntityRequest,
+		ondewo_nlu_entity_type_pb.EntityType.Entity
+	>;
+	deleteEntity: grpc.handleUnaryCall<
+		ondewo_nlu_entity_type_pb.DeleteEntityRequest,
+		ondewo_nlu_entity_type_pb.DeleteEntityStatus
 	>;
 	batchCreateEntities: grpc.handleUnaryCall<
 		ondewo_nlu_entity_type_pb.BatchCreateEntitiesRequest,
@@ -335,6 +407,66 @@ export interface IEntityTypesClient {
 		metadata: grpc.Metadata,
 		options: Partial<grpc.CallOptions>,
 		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_operations_pb.Operation) => void
+	): grpc.ClientUnaryCall;
+	getEntity(
+		request: ondewo_nlu_entity_type_pb.GetEntityRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	getEntity(
+		request: ondewo_nlu_entity_type_pb.GetEntityRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	getEntity(
+		request: ondewo_nlu_entity_type_pb.GetEntityRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	createEntity(
+		request: ondewo_nlu_entity_type_pb.CreateEntityRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	createEntity(
+		request: ondewo_nlu_entity_type_pb.CreateEntityRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	createEntity(
+		request: ondewo_nlu_entity_type_pb.CreateEntityRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	updateEntity(
+		request: ondewo_nlu_entity_type_pb.UpdateEntityRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	updateEntity(
+		request: ondewo_nlu_entity_type_pb.UpdateEntityRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	updateEntity(
+		request: ondewo_nlu_entity_type_pb.UpdateEntityRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	deleteEntity(
+		request: ondewo_nlu_entity_type_pb.DeleteEntityRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.DeleteEntityStatus) => void
+	): grpc.ClientUnaryCall;
+	deleteEntity(
+		request: ondewo_nlu_entity_type_pb.DeleteEntityRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.DeleteEntityStatus) => void
+	): grpc.ClientUnaryCall;
+	deleteEntity(
+		request: ondewo_nlu_entity_type_pb.DeleteEntityRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.DeleteEntityStatus) => void
 	): grpc.ClientUnaryCall;
 	batchCreateEntities(
 		request: ondewo_nlu_entity_type_pb.BatchCreateEntitiesRequest,
@@ -519,6 +651,66 @@ export class EntityTypesClient extends grpc.Client implements IEntityTypesClient
 		metadata: grpc.Metadata,
 		options: Partial<grpc.CallOptions>,
 		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_operations_pb.Operation) => void
+	): grpc.ClientUnaryCall;
+	public getEntity(
+		request: ondewo_nlu_entity_type_pb.GetEntityRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	public getEntity(
+		request: ondewo_nlu_entity_type_pb.GetEntityRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	public getEntity(
+		request: ondewo_nlu_entity_type_pb.GetEntityRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	public createEntity(
+		request: ondewo_nlu_entity_type_pb.CreateEntityRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	public createEntity(
+		request: ondewo_nlu_entity_type_pb.CreateEntityRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	public createEntity(
+		request: ondewo_nlu_entity_type_pb.CreateEntityRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	public updateEntity(
+		request: ondewo_nlu_entity_type_pb.UpdateEntityRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	public updateEntity(
+		request: ondewo_nlu_entity_type_pb.UpdateEntityRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	public updateEntity(
+		request: ondewo_nlu_entity_type_pb.UpdateEntityRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.EntityType.Entity) => void
+	): grpc.ClientUnaryCall;
+	public deleteEntity(
+		request: ondewo_nlu_entity_type_pb.DeleteEntityRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.DeleteEntityStatus) => void
+	): grpc.ClientUnaryCall;
+	public deleteEntity(
+		request: ondewo_nlu_entity_type_pb.DeleteEntityRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.DeleteEntityStatus) => void
+	): grpc.ClientUnaryCall;
+	public deleteEntity(
+		request: ondewo_nlu_entity_type_pb.DeleteEntityRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_entity_type_pb.DeleteEntityStatus) => void
 	): grpc.ClientUnaryCall;
 	public batchCreateEntities(
 		request: ondewo_nlu_entity_type_pb.BatchCreateEntitiesRequest,

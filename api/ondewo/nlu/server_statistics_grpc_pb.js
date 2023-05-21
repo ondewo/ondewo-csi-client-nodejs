@@ -55,7 +55,9 @@ function deserialize_ondewo_nlu_StatResponse(buffer_arg) {
 	return ondewo_nlu_common_pb.StatResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+// Server project statistics
 var ServerStatisticsService = (exports.ServerStatisticsService = {
+	// Returns the count of projects in the CAI server
 	getProjectCount: {
 		path: '/ondewo.nlu.ServerStatistics/GetProjectCount',
 		requestStream: false,
@@ -67,6 +69,7 @@ var ServerStatisticsService = (exports.ServerStatisticsService = {
 		responseSerialize: serialize_ondewo_nlu_StatResponse,
 		responseDeserialize: deserialize_ondewo_nlu_StatResponse
 	},
+	// Returns the count of projects of a user
 	getUserProjectCount: {
 		path: '/ondewo.nlu.ServerStatistics/GetUserProjectCount',
 		requestStream: false,
@@ -78,6 +81,7 @@ var ServerStatisticsService = (exports.ServerStatisticsService = {
 		responseSerialize: serialize_ondewo_nlu_StatResponse,
 		responseDeserialize: deserialize_ondewo_nlu_StatResponse
 	},
+	// Returns the users count within a project
 	getUserCount: {
 		path: '/ondewo.nlu.ServerStatistics/GetUserCount',
 		requestStream: false,

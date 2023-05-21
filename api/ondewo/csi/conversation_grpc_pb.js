@@ -1,7 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 // Original file comments:
-// Copyright 2021 ONDEWO GmbH
+// Copyright 2021-2023 ONDEWO GmbH
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -336,6 +336,7 @@ var ConversationsService = (exports.ConversationsService = {
 		responseSerialize: serialize_ondewo_csi_CheckUpstreamHealthResponse,
 		responseDeserialize: deserialize_ondewo_csi_CheckUpstreamHealthResponse
 	},
+	// Get the control stream to control sip, t2s, s2t etc. during a conversation
 	getControlStream: {
 		path: '/ondewo.csi.Conversations/GetControlStream',
 		requestStream: false,
@@ -347,6 +348,7 @@ var ConversationsService = (exports.ConversationsService = {
 		responseSerialize: serialize_ondewo_csi_ControlStreamResponse,
 		responseDeserialize: deserialize_ondewo_csi_ControlStreamResponse
 	},
+	// Send a message on the control stream to control sip, t2s, s2t etc. during a conversation
 	setControlStatus: {
 		path: '/ondewo.csi.Conversations/SetControlStatus',
 		requestStream: false,

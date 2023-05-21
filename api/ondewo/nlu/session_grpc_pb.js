@@ -34,7 +34,9 @@ var grpc = require('@grpc/grpc-js');
 var ondewo_nlu_session_pb = require('../../ondewo/nlu/session_pb.js');
 var google_api_annotations_pb = require('../../google/api/annotations_pb.js');
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
+var google_protobuf_field_mask_pb = require('google-protobuf/google/protobuf/field_mask_pb.js');
 var google_protobuf_struct_pb = require('google-protobuf/google/protobuf/struct_pb.js');
+var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 var google_rpc_status_pb = require('../../google/rpc/status_pb.js');
 var google_type_latlng_pb = require('../../google/type/latlng_pb.js');
 var ondewo_nlu_context_pb = require('../../ondewo/nlu/context_pb.js');
@@ -83,6 +85,17 @@ function serialize_ondewo_nlu_CreateSessionReviewRequest(arg) {
 
 function deserialize_ondewo_nlu_CreateSessionReviewRequest(buffer_arg) {
 	return ondewo_nlu_session_pb.CreateSessionReviewRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_DeleteSessionLabelsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.DeleteSessionLabelsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.DeleteSessionLabelsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_DeleteSessionLabelsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.DeleteSessionLabelsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_DeleteSessionRequest(arg) {
@@ -151,6 +164,259 @@ function deserialize_ondewo_nlu_GetSessionReviewRequest(buffer_arg) {
 	return ondewo_nlu_session_pb.GetSessionReviewRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_ListAccountIdsOfAllSessionsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListAccountIdsOfAllSessionsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListAccountIdsOfAllSessionsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListAccountIdsOfAllSessionsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.ListAccountIdsOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListAccountIdsResponse(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListAccountIdsResponse)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListAccountIdsResponse');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListAccountIdsResponse(buffer_arg) {
+	return ondewo_nlu_session_pb.ListAccountIdsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListDatastreamIdsOfAllSessionsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListDatastreamIdsOfAllSessionsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListDatastreamIdsOfAllSessionsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListDatastreamIdsOfAllSessionsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.ListDatastreamIdsOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListDatastreamIdsResponse(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListDatastreamIdsResponse)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListDatastreamIdsResponse');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListDatastreamIdsResponse(buffer_arg) {
+	return ondewo_nlu_session_pb.ListDatastreamIdsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListIdentifiedUserIdsOfAllSessionsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListIdentifiedUserIdsOfAllSessionsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListIdentifiedUserIdsOfAllSessionsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListIdentifiedUserIdsOfAllSessionsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.ListIdentifiedUserIdsOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListIdentifiedUserIdsResponse(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListIdentifiedUserIdsResponse)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListIdentifiedUserIdsResponse');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListIdentifiedUserIdsResponse(buffer_arg) {
+	return ondewo_nlu_session_pb.ListIdentifiedUserIdsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListInputContextsOfAllSessionsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListInputContextsOfAllSessionsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListInputContextsOfAllSessionsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListInputContextsOfAllSessionsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.ListInputContextsOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListInputContextsResponse(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListInputContextsResponse)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListInputContextsResponse');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListInputContextsResponse(buffer_arg) {
+	return ondewo_nlu_session_pb.ListInputContextsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListLanguageCodesOfAllSessionsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListLanguageCodesOfAllSessionsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListLanguageCodesOfAllSessionsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListLanguageCodesOfAllSessionsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.ListLanguageCodesOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListLanguageCodesResponse(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListLanguageCodesResponse)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListLanguageCodesResponse');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListLanguageCodesResponse(buffer_arg) {
+	return ondewo_nlu_session_pb.ListLanguageCodesResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListMatchedEntityTypesOfAllSessionsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListMatchedEntityTypesOfAllSessionsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListMatchedEntityTypesOfAllSessionsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListMatchedEntityTypesOfAllSessionsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.ListMatchedEntityTypesOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListMatchedEntityTypesResponse(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListMatchedEntityTypesResponse)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListMatchedEntityTypesResponse');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListMatchedEntityTypesResponse(buffer_arg) {
+	return ondewo_nlu_session_pb.ListMatchedEntityTypesResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListMatchedIntentsOfAllSessionsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListMatchedIntentsOfAllSessionsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListMatchedIntentsOfAllSessionsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListMatchedIntentsOfAllSessionsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.ListMatchedIntentsOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListMatchedIntentsResponse(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListMatchedIntentsResponse)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListMatchedIntentsResponse');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListMatchedIntentsResponse(buffer_arg) {
+	return ondewo_nlu_session_pb.ListMatchedIntentsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListOriginIdsOfAllSessionsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListOriginIdsOfAllSessionsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListOriginIdsOfAllSessionsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListOriginIdsOfAllSessionsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.ListOriginIdsOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListOriginIdsResponse(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListOriginIdsResponse)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListOriginIdsResponse');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListOriginIdsResponse(buffer_arg) {
+	return ondewo_nlu_session_pb.ListOriginIdsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListOutputContextsOfAllSessionsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListOutputContextsOfAllSessionsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListOutputContextsOfAllSessionsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListOutputContextsOfAllSessionsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.ListOutputContextsOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListOutputContextsResponse(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListOutputContextsResponse)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListOutputContextsResponse');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListOutputContextsResponse(buffer_arg) {
+	return ondewo_nlu_session_pb.ListOutputContextsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListPlatformsOfAllSessionsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListPlatformsOfAllSessionsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListPlatformsOfAllSessionsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListPlatformsOfAllSessionsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.ListPlatformsOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListPlatformsResponse(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListPlatformsResponse)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListPlatformsResponse');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListPlatformsResponse(buffer_arg) {
+	return ondewo_nlu_session_pb.ListPlatformsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListPropertyIdsOfAllSessionsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListPropertyIdsOfAllSessionsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListPropertyIdsOfAllSessionsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListPropertyIdsOfAllSessionsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.ListPropertyIdsOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListPropertyIdsResponse(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListPropertyIdsResponse)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListPropertyIdsResponse');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListPropertyIdsResponse(buffer_arg) {
+	return ondewo_nlu_session_pb.ListPropertyIdsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListSessionLabelsOfAllSessionsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListSessionLabelsOfAllSessionsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListSessionLabelsOfAllSessionsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListSessionLabelsOfAllSessionsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.ListSessionLabelsOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_ListSessionLabelsRequest(arg) {
 	if (!(arg instanceof ondewo_nlu_session_pb.ListSessionLabelsRequest)) {
 		throw new Error('Expected argument of type ondewo.nlu.ListSessionLabelsRequest');
@@ -217,15 +483,48 @@ function deserialize_ondewo_nlu_ListSessionsResponse(buffer_arg) {
 	return ondewo_nlu_session_pb.ListSessionsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_ondewo_nlu_RemoveSessionLabelsRequest(arg) {
-	if (!(arg instanceof ondewo_nlu_session_pb.RemoveSessionLabelsRequest)) {
-		throw new Error('Expected argument of type ondewo.nlu.RemoveSessionLabelsRequest');
+function serialize_ondewo_nlu_ListTagsOfAllSessionsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListTagsOfAllSessionsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListTagsOfAllSessionsRequest');
 	}
 	return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_ondewo_nlu_RemoveSessionLabelsRequest(buffer_arg) {
-	return ondewo_nlu_session_pb.RemoveSessionLabelsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_ondewo_nlu_ListTagsOfAllSessionsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.ListTagsOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListTagsResponse(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListTagsResponse)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListTagsResponse');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListTagsResponse(buffer_arg) {
+	return ondewo_nlu_session_pb.ListTagsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListUserIdsOfAllSessionsRequest(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListUserIdsOfAllSessionsRequest)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListUserIdsOfAllSessionsRequest');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListUserIdsOfAllSessionsRequest(buffer_arg) {
+	return ondewo_nlu_session_pb.ListUserIdsOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListUserIdsResponse(arg) {
+	if (!(arg instanceof ondewo_nlu_session_pb.ListUserIdsResponse)) {
+		throw new Error('Expected argument of type ondewo.nlu.ListUserIdsResponse');
+	}
+	return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListUserIdsResponse(buffer_arg) {
+	return ondewo_nlu_session_pb.ListUserIdsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_Session(arg) {
@@ -390,6 +689,160 @@ var SessionsService = (exports.SessionsService = {
 		responseSerialize: serialize_ondewo_nlu_ListSessionLabelsResponse,
 		responseDeserialize: deserialize_ondewo_nlu_ListSessionLabelsResponse
 	},
+	listSessionLabelsOfAllSessions: {
+		path: '/ondewo.nlu.Sessions/ListSessionLabelsOfAllSessions',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_session_pb.ListSessionLabelsOfAllSessionsRequest,
+		responseType: ondewo_nlu_session_pb.ListSessionLabelsResponse,
+		requestSerialize: serialize_ondewo_nlu_ListSessionLabelsOfAllSessionsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_ListSessionLabelsOfAllSessionsRequest,
+		responseSerialize: serialize_ondewo_nlu_ListSessionLabelsResponse,
+		responseDeserialize: deserialize_ondewo_nlu_ListSessionLabelsResponse
+	},
+	listLanguageCodesOfAllSessions: {
+		path: '/ondewo.nlu.Sessions/ListLanguageCodesOfAllSessions',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_session_pb.ListLanguageCodesOfAllSessionsRequest,
+		responseType: ondewo_nlu_session_pb.ListLanguageCodesResponse,
+		requestSerialize: serialize_ondewo_nlu_ListLanguageCodesOfAllSessionsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_ListLanguageCodesOfAllSessionsRequest,
+		responseSerialize: serialize_ondewo_nlu_ListLanguageCodesResponse,
+		responseDeserialize: deserialize_ondewo_nlu_ListLanguageCodesResponse
+	},
+	listMatchedIntentsOfAllSessions: {
+		path: '/ondewo.nlu.Sessions/ListMatchedIntentsOfAllSessions',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_session_pb.ListMatchedIntentsOfAllSessionsRequest,
+		responseType: ondewo_nlu_session_pb.ListMatchedIntentsResponse,
+		requestSerialize: serialize_ondewo_nlu_ListMatchedIntentsOfAllSessionsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_ListMatchedIntentsOfAllSessionsRequest,
+		responseSerialize: serialize_ondewo_nlu_ListMatchedIntentsResponse,
+		responseDeserialize: deserialize_ondewo_nlu_ListMatchedIntentsResponse
+	},
+	listMatchedEntityTypesOfAllSessions: {
+		path: '/ondewo.nlu.Sessions/ListMatchedEntityTypesOfAllSessions',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_session_pb.ListMatchedEntityTypesOfAllSessionsRequest,
+		responseType: ondewo_nlu_session_pb.ListMatchedEntityTypesResponse,
+		requestSerialize: serialize_ondewo_nlu_ListMatchedEntityTypesOfAllSessionsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_ListMatchedEntityTypesOfAllSessionsRequest,
+		responseSerialize: serialize_ondewo_nlu_ListMatchedEntityTypesResponse,
+		responseDeserialize: deserialize_ondewo_nlu_ListMatchedEntityTypesResponse
+	},
+	listUserIdsOfAllSessions: {
+		path: '/ondewo.nlu.Sessions/ListUserIdsOfAllSessions',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_session_pb.ListUserIdsOfAllSessionsRequest,
+		responseType: ondewo_nlu_session_pb.ListUserIdsResponse,
+		requestSerialize: serialize_ondewo_nlu_ListUserIdsOfAllSessionsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_ListUserIdsOfAllSessionsRequest,
+		responseSerialize: serialize_ondewo_nlu_ListUserIdsResponse,
+		responseDeserialize: deserialize_ondewo_nlu_ListUserIdsResponse
+	},
+	listIdentifiedUserIdsOfAllSessions: {
+		path: '/ondewo.nlu.Sessions/ListIdentifiedUserIdsOfAllSessions',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_session_pb.ListIdentifiedUserIdsOfAllSessionsRequest,
+		responseType: ondewo_nlu_session_pb.ListIdentifiedUserIdsResponse,
+		requestSerialize: serialize_ondewo_nlu_ListIdentifiedUserIdsOfAllSessionsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_ListIdentifiedUserIdsOfAllSessionsRequest,
+		responseSerialize: serialize_ondewo_nlu_ListIdentifiedUserIdsResponse,
+		responseDeserialize: deserialize_ondewo_nlu_ListIdentifiedUserIdsResponse
+	},
+	listTagsOfAllSessions: {
+		path: '/ondewo.nlu.Sessions/ListTagsOfAllSessions',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_session_pb.ListTagsOfAllSessionsRequest,
+		responseType: ondewo_nlu_session_pb.ListTagsResponse,
+		requestSerialize: serialize_ondewo_nlu_ListTagsOfAllSessionsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_ListTagsOfAllSessionsRequest,
+		responseSerialize: serialize_ondewo_nlu_ListTagsResponse,
+		responseDeserialize: deserialize_ondewo_nlu_ListTagsResponse
+	},
+	listInputContextsOfAllSessions: {
+		path: '/ondewo.nlu.Sessions/ListInputContextsOfAllSessions',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_session_pb.ListInputContextsOfAllSessionsRequest,
+		responseType: ondewo_nlu_session_pb.ListInputContextsResponse,
+		requestSerialize: serialize_ondewo_nlu_ListInputContextsOfAllSessionsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_ListInputContextsOfAllSessionsRequest,
+		responseSerialize: serialize_ondewo_nlu_ListInputContextsResponse,
+		responseDeserialize: deserialize_ondewo_nlu_ListInputContextsResponse
+	},
+	listOutputContextsOfAllSessions: {
+		path: '/ondewo.nlu.Sessions/ListOutputContextsOfAllSessions',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_session_pb.ListOutputContextsOfAllSessionsRequest,
+		responseType: ondewo_nlu_session_pb.ListOutputContextsResponse,
+		requestSerialize: serialize_ondewo_nlu_ListOutputContextsOfAllSessionsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_ListOutputContextsOfAllSessionsRequest,
+		responseSerialize: serialize_ondewo_nlu_ListOutputContextsResponse,
+		responseDeserialize: deserialize_ondewo_nlu_ListOutputContextsResponse
+	},
+	listPlatformsOfAllSessions: {
+		path: '/ondewo.nlu.Sessions/ListPlatformsOfAllSessions',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_session_pb.ListPlatformsOfAllSessionsRequest,
+		responseType: ondewo_nlu_session_pb.ListPlatformsResponse,
+		requestSerialize: serialize_ondewo_nlu_ListPlatformsOfAllSessionsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_ListPlatformsOfAllSessionsRequest,
+		responseSerialize: serialize_ondewo_nlu_ListPlatformsResponse,
+		responseDeserialize: deserialize_ondewo_nlu_ListPlatformsResponse
+	},
+	listAccountIdsOfAllSessions: {
+		path: '/ondewo.nlu.Sessions/ListAccountIdsOfAllSessions',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_session_pb.ListAccountIdsOfAllSessionsRequest,
+		responseType: ondewo_nlu_session_pb.ListAccountIdsResponse,
+		requestSerialize: serialize_ondewo_nlu_ListAccountIdsOfAllSessionsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_ListAccountIdsOfAllSessionsRequest,
+		responseSerialize: serialize_ondewo_nlu_ListAccountIdsResponse,
+		responseDeserialize: deserialize_ondewo_nlu_ListAccountIdsResponse
+	},
+	listPropertyIdsOfAllSessions: {
+		path: '/ondewo.nlu.Sessions/ListPropertyIdsOfAllSessions',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_session_pb.ListPropertyIdsOfAllSessionsRequest,
+		responseType: ondewo_nlu_session_pb.ListPropertyIdsResponse,
+		requestSerialize: serialize_ondewo_nlu_ListPropertyIdsOfAllSessionsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_ListPropertyIdsOfAllSessionsRequest,
+		responseSerialize: serialize_ondewo_nlu_ListPropertyIdsResponse,
+		responseDeserialize: deserialize_ondewo_nlu_ListPropertyIdsResponse
+	},
+	listDatastreamIdsOfAllSessions: {
+		path: '/ondewo.nlu.Sessions/ListDatastreamIdsOfAllSessions',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_session_pb.ListDatastreamIdsOfAllSessionsRequest,
+		responseType: ondewo_nlu_session_pb.ListDatastreamIdsResponse,
+		requestSerialize: serialize_ondewo_nlu_ListDatastreamIdsOfAllSessionsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_ListDatastreamIdsOfAllSessionsRequest,
+		responseSerialize: serialize_ondewo_nlu_ListDatastreamIdsResponse,
+		responseDeserialize: deserialize_ondewo_nlu_ListDatastreamIdsResponse
+	},
+	listOriginIdsOfAllSessions: {
+		path: '/ondewo.nlu.Sessions/ListOriginIdsOfAllSessions',
+		requestStream: false,
+		responseStream: false,
+		requestType: ondewo_nlu_session_pb.ListOriginIdsOfAllSessionsRequest,
+		responseType: ondewo_nlu_session_pb.ListOriginIdsResponse,
+		requestSerialize: serialize_ondewo_nlu_ListOriginIdsOfAllSessionsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_ListOriginIdsOfAllSessionsRequest,
+		responseSerialize: serialize_ondewo_nlu_ListOriginIdsResponse,
+		responseDeserialize: deserialize_ondewo_nlu_ListOriginIdsResponse
+	},
 	addSessionLabels: {
 		path: '/ondewo.nlu.Sessions/AddSessionLabels',
 		requestStream: false,
@@ -401,14 +854,14 @@ var SessionsService = (exports.SessionsService = {
 		responseSerialize: serialize_ondewo_nlu_Session,
 		responseDeserialize: deserialize_ondewo_nlu_Session
 	},
-	removeSessionLabels: {
-		path: '/ondewo.nlu.Sessions/RemoveSessionLabels',
+	deleteSessionLabels: {
+		path: '/ondewo.nlu.Sessions/DeleteSessionLabels',
 		requestStream: false,
 		responseStream: false,
-		requestType: ondewo_nlu_session_pb.RemoveSessionLabelsRequest,
+		requestType: ondewo_nlu_session_pb.DeleteSessionLabelsRequest,
 		responseType: ondewo_nlu_session_pb.Session,
-		requestSerialize: serialize_ondewo_nlu_RemoveSessionLabelsRequest,
-		requestDeserialize: deserialize_ondewo_nlu_RemoveSessionLabelsRequest,
+		requestSerialize: serialize_ondewo_nlu_DeleteSessionLabelsRequest,
+		requestDeserialize: deserialize_ondewo_nlu_DeleteSessionLabelsRequest,
 		responseSerialize: serialize_ondewo_nlu_Session,
 		responseDeserialize: deserialize_ondewo_nlu_Session
 	},

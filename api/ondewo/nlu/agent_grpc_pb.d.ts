@@ -9,12 +9,12 @@ import * as ondewo_nlu_agent_pb from '../../ondewo/nlu/agent_pb';
 import * as google_protobuf_field_mask_pb from 'google-protobuf/google/protobuf/field_mask_pb';
 import * as google_protobuf_empty_pb from 'google-protobuf/google/protobuf/empty_pb';
 import * as google_protobuf_struct_pb from 'google-protobuf/google/protobuf/struct_pb';
-import * as google_protobuf_any_pb from 'google-protobuf/google/protobuf/any_pb';
 import * as ondewo_nlu_common_pb from '../../ondewo/nlu/common_pb';
 import * as ondewo_nlu_intent_pb from '../../ondewo/nlu/intent_pb';
 import * as ondewo_nlu_user_pb from '../../ondewo/nlu/user_pb';
 import * as ondewo_nlu_project_role_pb from '../../ondewo/nlu/project_role_pb';
 import * as ondewo_nlu_operations_pb from '../../ondewo/nlu/operations_pb';
+import * as ondewo_nlu_session_pb from '../../ondewo/nlu/session_pb';
 import * as google_protobuf_timestamp_pb from 'google-protobuf/google/protobuf/timestamp_pb';
 
 interface IAgentsService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
@@ -39,6 +39,7 @@ interface IAgentsService extends grpc.ServiceDefinition<grpc.UntypedServiceImple
 	optimizeRankingMatch: IAgentsService_IOptimizeRankingMatch;
 	restoreAgent: IAgentsService_IRestoreAgent;
 	getAgentStatistics: IAgentsService_IGetAgentStatistics;
+	getSessionsStatistics: IAgentsService_IGetSessionsStatistics;
 	setAgentStatus: IAgentsService_ISetAgentStatus;
 	setResources: IAgentsService_ISetResources;
 	deleteResources: IAgentsService_IDeleteResources;
@@ -277,6 +278,19 @@ interface IAgentsService_IGetAgentStatistics
 	requestDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.GetAgentStatisticsRequest>;
 	responseSerialize: grpc.serialize<ondewo_nlu_agent_pb.GetAgentStatisticsResponse>;
 	responseDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.GetAgentStatisticsResponse>;
+}
+interface IAgentsService_IGetSessionsStatistics
+	extends grpc.MethodDefinition<
+		ondewo_nlu_agent_pb.GetSessionsStatisticsRequest,
+		ondewo_nlu_agent_pb.GetSessionsStatisticsResponse
+	> {
+	path: '/ondewo.nlu.Agents/GetSessionsStatistics';
+	requestStream: false;
+	responseStream: false;
+	requestSerialize: grpc.serialize<ondewo_nlu_agent_pb.GetSessionsStatisticsRequest>;
+	requestDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.GetSessionsStatisticsRequest>;
+	responseSerialize: grpc.serialize<ondewo_nlu_agent_pb.GetSessionsStatisticsResponse>;
+	responseDeserialize: grpc.deserialize<ondewo_nlu_agent_pb.GetSessionsStatisticsResponse>;
 }
 interface IAgentsService_ISetAgentStatus
 	extends grpc.MethodDefinition<ondewo_nlu_agent_pb.SetAgentStatusRequest, ondewo_nlu_agent_pb.Agent> {
@@ -539,6 +553,10 @@ export interface IAgentsServer {
 	getAgentStatistics: grpc.handleUnaryCall<
 		ondewo_nlu_agent_pb.GetAgentStatisticsRequest,
 		ondewo_nlu_agent_pb.GetAgentStatisticsResponse
+	>;
+	getSessionsStatistics: grpc.handleUnaryCall<
+		ondewo_nlu_agent_pb.GetSessionsStatisticsRequest,
+		ondewo_nlu_agent_pb.GetSessionsStatisticsResponse
 	>;
 	setAgentStatus: grpc.handleUnaryCall<ondewo_nlu_agent_pb.SetAgentStatusRequest, ondewo_nlu_agent_pb.Agent>;
 	setResources: grpc.handleUnaryCall<ondewo_nlu_agent_pb.SetResourcesRequest, google_protobuf_empty_pb.Empty>;
@@ -914,6 +932,21 @@ export interface IAgentsClient {
 		metadata: grpc.Metadata,
 		options: Partial<grpc.CallOptions>,
 		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.GetAgentStatisticsResponse) => void
+	): grpc.ClientUnaryCall;
+	getSessionsStatistics(
+		request: ondewo_nlu_agent_pb.GetSessionsStatisticsRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.GetSessionsStatisticsResponse) => void
+	): grpc.ClientUnaryCall;
+	getSessionsStatistics(
+		request: ondewo_nlu_agent_pb.GetSessionsStatisticsRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.GetSessionsStatisticsResponse) => void
+	): grpc.ClientUnaryCall;
+	getSessionsStatistics(
+		request: ondewo_nlu_agent_pb.GetSessionsStatisticsRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.GetSessionsStatisticsResponse) => void
 	): grpc.ClientUnaryCall;
 	setAgentStatus(
 		request: ondewo_nlu_agent_pb.SetAgentStatusRequest,
@@ -1557,6 +1590,21 @@ export class AgentsClient extends grpc.Client implements IAgentsClient {
 		metadata: grpc.Metadata,
 		options: Partial<grpc.CallOptions>,
 		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.GetAgentStatisticsResponse) => void
+	): grpc.ClientUnaryCall;
+	public getSessionsStatistics(
+		request: ondewo_nlu_agent_pb.GetSessionsStatisticsRequest,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.GetSessionsStatisticsResponse) => void
+	): grpc.ClientUnaryCall;
+	public getSessionsStatistics(
+		request: ondewo_nlu_agent_pb.GetSessionsStatisticsRequest,
+		metadata: grpc.Metadata,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.GetSessionsStatisticsResponse) => void
+	): grpc.ClientUnaryCall;
+	public getSessionsStatistics(
+		request: ondewo_nlu_agent_pb.GetSessionsStatisticsRequest,
+		metadata: grpc.Metadata,
+		options: Partial<grpc.CallOptions>,
+		callback: (error: grpc.ServiceError | null, response: ondewo_nlu_agent_pb.GetSessionsStatisticsResponse) => void
 	): grpc.ClientUnaryCall;
 	public setAgentStatus(
 		request: ondewo_nlu_agent_pb.SetAgentStatusRequest,
