@@ -34,6 +34,17 @@ function deserialize_ondewo_nlu_CcaiProject(buffer_arg) {
   return ondewo_nlu_ccai_project_pb.CcaiProject.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_CcaiService(arg) {
+  if (!(arg instanceof ondewo_nlu_ccai_project_pb.CcaiService)) {
+    throw new Error('Expected argument of type ondewo.nlu.CcaiService');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_CcaiService(buffer_arg) {
+  return ondewo_nlu_ccai_project_pb.CcaiService.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_CreateCcaiProjectRequest(arg) {
   if (!(arg instanceof ondewo_nlu_ccai_project_pb.CreateCcaiProjectRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.CreateCcaiProjectRequest');
@@ -89,6 +100,17 @@ function deserialize_ondewo_nlu_GetCcaiProjectRequest(buffer_arg) {
   return ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_GetCcaiServiceRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_ccai_project_pb.GetCcaiServiceRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.GetCcaiServiceRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetCcaiServiceRequest(buffer_arg) {
+  return ondewo_nlu_ccai_project_pb.GetCcaiServiceRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_ListCcaiProjectsRequest(arg) {
   if (!(arg instanceof ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.ListCcaiProjectsRequest');
@@ -134,9 +156,9 @@ function deserialize_ondewo_nlu_UpdateCcaiProjectResponse(buffer_arg) {
 }
 
 
-// Service to manage Call Center AI (CCAI) Projects.
+// Service to manage Call Center AI (CCAI service) Projects.
 var CcaiProjectsService = exports.CcaiProjectsService = {
-  // Retrieves information about a specific CCAI project.
+  // Retrieves information about a specific CCAI service project.
 getCcaiProject: {
     path: '/ondewo.nlu.CcaiProjects/GetCcaiProject',
     requestStream: false,
@@ -148,7 +170,7 @@ getCcaiProject: {
     responseSerialize: serialize_ondewo_nlu_CcaiProject,
     responseDeserialize: deserialize_ondewo_nlu_CcaiProject,
   },
-  // Creates a new CCAI project based on the provided request.
+  // Creates a new CCAI service project based on the provided request.
 createCcaiProject: {
     path: '/ondewo.nlu.CcaiProjects/CreateCcaiProject',
     requestStream: false,
@@ -160,7 +182,7 @@ createCcaiProject: {
     responseSerialize: serialize_ondewo_nlu_CreateCcaiProjectResponse,
     responseDeserialize: deserialize_ondewo_nlu_CreateCcaiProjectResponse,
   },
-  // Deletes a CCAI project identified by the provided request.
+  // Deletes a CCAI service project identified by the provided request.
 deleteCcaiProject: {
     path: '/ondewo.nlu.CcaiProjects/DeleteCcaiProject',
     requestStream: false,
@@ -172,7 +194,7 @@ deleteCcaiProject: {
     responseSerialize: serialize_ondewo_nlu_DeleteCcaiProjectResponse,
     responseDeserialize: deserialize_ondewo_nlu_DeleteCcaiProjectResponse,
   },
-  // Lists all CCAI projects based on the provided request.
+  // Lists all CCAI service projects based on the provided request.
 listCcaiProjects: {
     path: '/ondewo.nlu.CcaiProjects/ListCcaiProjects',
     requestStream: false,
@@ -184,7 +206,7 @@ listCcaiProjects: {
     responseSerialize: serialize_ondewo_nlu_ListCcaiProjectsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListCcaiProjectsResponse,
   },
-  // Updates the information of an existing CCAI project.
+  // Updates the information of an existing CCAI service project.
 updateCcaiProject: {
     path: '/ondewo.nlu.CcaiProjects/UpdateCcaiProject',
     requestStream: false,
@@ -195,6 +217,18 @@ updateCcaiProject: {
     requestDeserialize: deserialize_ondewo_nlu_UpdateCcaiProjectRequest,
     responseSerialize: serialize_ondewo_nlu_UpdateCcaiProjectResponse,
     responseDeserialize: deserialize_ondewo_nlu_UpdateCcaiProjectResponse,
+  },
+  // Retrieves information about a specific CCAI service.
+getCcaiService: {
+    path: '/ondewo.nlu.CcaiProjects/GetCcaiService',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_ccai_project_pb.GetCcaiServiceRequest,
+    responseType: ondewo_nlu_ccai_project_pb.CcaiService,
+    requestSerialize: serialize_ondewo_nlu_GetCcaiServiceRequest,
+    requestDeserialize: deserialize_ondewo_nlu_GetCcaiServiceRequest,
+    responseSerialize: serialize_ondewo_nlu_CcaiService,
+    responseDeserialize: deserialize_ondewo_nlu_CcaiService,
   },
 };
 

@@ -6,8 +6,11 @@
 
 import * as grpc from "grpc";
 import * as ondewo_nlu_aiservices_pb from "../../ondewo/nlu/aiservices_pb";
+import * as google_protobuf_struct_pb from "google-protobuf/google/protobuf/struct_pb";
+import * as ondewo_nlu_ccai_project_pb from "../../ondewo/nlu/ccai_project_pb";
 import * as ondewo_nlu_intent_pb from "../../ondewo/nlu/intent_pb";
 import * as ondewo_nlu_entity_type_pb from "../../ondewo/nlu/entity_type_pb";
+import * as ondewo_nlu_session_pb from "../../ondewo/nlu/session_pb";
 
 interface IAiServicesService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     extractEntities: IAiServicesService_IExtractEntities;
@@ -18,6 +21,9 @@ interface IAiServicesService extends grpc.ServiceDefinition<grpc.UntypedServiceI
     getSynonyms: IAiServicesService_IGetSynonyms;
     classifyIntents: IAiServicesService_IClassifyIntents;
     extractEntitiesFuzzy: IAiServicesService_IExtractEntitiesFuzzy;
+    llmGenerate: IAiServicesService_ILlmGenerate;
+    streamingLlmGenerate: IAiServicesService_IStreamingLlmGenerate;
+    listLlmModels: IAiServicesService_IListLlmModels;
 }
 
 interface IAiServicesService_IExtractEntities extends grpc.MethodDefinition<ondewo_nlu_aiservices_pb.ExtractEntitiesRequest, ondewo_nlu_aiservices_pb.ExtractEntitiesResponse> {
@@ -92,6 +98,33 @@ interface IAiServicesService_IExtractEntitiesFuzzy extends grpc.MethodDefinition
     responseSerialize: grpc.serialize<ondewo_nlu_aiservices_pb.ExtractEntitiesResponse>;
     responseDeserialize: grpc.deserialize<ondewo_nlu_aiservices_pb.ExtractEntitiesResponse>;
 }
+interface IAiServicesService_ILlmGenerate extends grpc.MethodDefinition<ondewo_nlu_aiservices_pb.LlmGenerateRequest, ondewo_nlu_aiservices_pb.LlmGenerateResponse> {
+    path: "/ondewo.nlu.AiServices/LlmGenerate";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_aiservices_pb.LlmGenerateRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_aiservices_pb.LlmGenerateRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_aiservices_pb.LlmGenerateResponse>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_aiservices_pb.LlmGenerateResponse>;
+}
+interface IAiServicesService_IStreamingLlmGenerate extends grpc.MethodDefinition<ondewo_nlu_aiservices_pb.LlmGenerateRequest, ondewo_nlu_aiservices_pb.StreamingLlmGenerateResponse> {
+    path: "/ondewo.nlu.AiServices/StreamingLlmGenerate";
+    requestStream: false;
+    responseStream: true;
+    requestSerialize: grpc.serialize<ondewo_nlu_aiservices_pb.LlmGenerateRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_aiservices_pb.LlmGenerateRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_aiservices_pb.StreamingLlmGenerateResponse>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_aiservices_pb.StreamingLlmGenerateResponse>;
+}
+interface IAiServicesService_IListLlmModels extends grpc.MethodDefinition<ondewo_nlu_aiservices_pb.ListLlmModelsRequest, ondewo_nlu_aiservices_pb.ListLlmModelsResponse> {
+    path: "/ondewo.nlu.AiServices/ListLlmModels";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_aiservices_pb.ListLlmModelsRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_aiservices_pb.ListLlmModelsRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_aiservices_pb.ListLlmModelsResponse>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_aiservices_pb.ListLlmModelsResponse>;
+}
 
 export const AiServicesService: IAiServicesService;
 
@@ -104,6 +137,9 @@ export interface IAiServicesServer {
     getSynonyms: grpc.handleUnaryCall<ondewo_nlu_aiservices_pb.GetSynonymsRequest, ondewo_nlu_aiservices_pb.GetSynonymsResponse>;
     classifyIntents: grpc.handleUnaryCall<ondewo_nlu_aiservices_pb.ClassifyIntentsRequest, ondewo_nlu_aiservices_pb.ClassifyIntentsResponse>;
     extractEntitiesFuzzy: grpc.handleUnaryCall<ondewo_nlu_aiservices_pb.ExtractEntitiesFuzzyRequest, ondewo_nlu_aiservices_pb.ExtractEntitiesResponse>;
+    llmGenerate: grpc.handleUnaryCall<ondewo_nlu_aiservices_pb.LlmGenerateRequest, ondewo_nlu_aiservices_pb.LlmGenerateResponse>;
+    streamingLlmGenerate: grpc.handleServerStreamingCall<ondewo_nlu_aiservices_pb.LlmGenerateRequest, ondewo_nlu_aiservices_pb.StreamingLlmGenerateResponse>;
+    listLlmModels: grpc.handleUnaryCall<ondewo_nlu_aiservices_pb.ListLlmModelsRequest, ondewo_nlu_aiservices_pb.ListLlmModelsResponse>;
 }
 
 export interface IAiServicesClient {
@@ -131,6 +167,14 @@ export interface IAiServicesClient {
     extractEntitiesFuzzy(request: ondewo_nlu_aiservices_pb.ExtractEntitiesFuzzyRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.ExtractEntitiesResponse) => void): grpc.ClientUnaryCall;
     extractEntitiesFuzzy(request: ondewo_nlu_aiservices_pb.ExtractEntitiesFuzzyRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.ExtractEntitiesResponse) => void): grpc.ClientUnaryCall;
     extractEntitiesFuzzy(request: ondewo_nlu_aiservices_pb.ExtractEntitiesFuzzyRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.ExtractEntitiesResponse) => void): grpc.ClientUnaryCall;
+    llmGenerate(request: ondewo_nlu_aiservices_pb.LlmGenerateRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.LlmGenerateResponse) => void): grpc.ClientUnaryCall;
+    llmGenerate(request: ondewo_nlu_aiservices_pb.LlmGenerateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.LlmGenerateResponse) => void): grpc.ClientUnaryCall;
+    llmGenerate(request: ondewo_nlu_aiservices_pb.LlmGenerateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.LlmGenerateResponse) => void): grpc.ClientUnaryCall;
+    streamingLlmGenerate(request: ondewo_nlu_aiservices_pb.LlmGenerateRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<ondewo_nlu_aiservices_pb.StreamingLlmGenerateResponse>;
+    streamingLlmGenerate(request: ondewo_nlu_aiservices_pb.LlmGenerateRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<ondewo_nlu_aiservices_pb.StreamingLlmGenerateResponse>;
+    listLlmModels(request: ondewo_nlu_aiservices_pb.ListLlmModelsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.ListLlmModelsResponse) => void): grpc.ClientUnaryCall;
+    listLlmModels(request: ondewo_nlu_aiservices_pb.ListLlmModelsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.ListLlmModelsResponse) => void): grpc.ClientUnaryCall;
+    listLlmModels(request: ondewo_nlu_aiservices_pb.ListLlmModelsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.ListLlmModelsResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class AiServicesClient extends grpc.Client implements IAiServicesClient {
@@ -159,4 +203,12 @@ export class AiServicesClient extends grpc.Client implements IAiServicesClient {
     public extractEntitiesFuzzy(request: ondewo_nlu_aiservices_pb.ExtractEntitiesFuzzyRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.ExtractEntitiesResponse) => void): grpc.ClientUnaryCall;
     public extractEntitiesFuzzy(request: ondewo_nlu_aiservices_pb.ExtractEntitiesFuzzyRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.ExtractEntitiesResponse) => void): grpc.ClientUnaryCall;
     public extractEntitiesFuzzy(request: ondewo_nlu_aiservices_pb.ExtractEntitiesFuzzyRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.ExtractEntitiesResponse) => void): grpc.ClientUnaryCall;
+    public llmGenerate(request: ondewo_nlu_aiservices_pb.LlmGenerateRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.LlmGenerateResponse) => void): grpc.ClientUnaryCall;
+    public llmGenerate(request: ondewo_nlu_aiservices_pb.LlmGenerateRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.LlmGenerateResponse) => void): grpc.ClientUnaryCall;
+    public llmGenerate(request: ondewo_nlu_aiservices_pb.LlmGenerateRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.LlmGenerateResponse) => void): grpc.ClientUnaryCall;
+    public streamingLlmGenerate(request: ondewo_nlu_aiservices_pb.LlmGenerateRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<ondewo_nlu_aiservices_pb.StreamingLlmGenerateResponse>;
+    public streamingLlmGenerate(request: ondewo_nlu_aiservices_pb.LlmGenerateRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<ondewo_nlu_aiservices_pb.StreamingLlmGenerateResponse>;
+    public listLlmModels(request: ondewo_nlu_aiservices_pb.ListLlmModelsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.ListLlmModelsResponse) => void): grpc.ClientUnaryCall;
+    public listLlmModels(request: ondewo_nlu_aiservices_pb.ListLlmModelsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.ListLlmModelsResponse) => void): grpc.ClientUnaryCall;
+    public listLlmModels(request: ondewo_nlu_aiservices_pb.ListLlmModelsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_aiservices_pb.ListLlmModelsResponse) => void): grpc.ClientUnaryCall;
 }

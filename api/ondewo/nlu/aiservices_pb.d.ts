@@ -5,8 +5,167 @@
 /* eslint-disable */
 
 import * as jspb from "google-protobuf";
+import * as google_protobuf_struct_pb from "google-protobuf/google/protobuf/struct_pb";
+import * as ondewo_nlu_ccai_project_pb from "../../ondewo/nlu/ccai_project_pb";
 import * as ondewo_nlu_intent_pb from "../../ondewo/nlu/intent_pb";
 import * as ondewo_nlu_entity_type_pb from "../../ondewo/nlu/entity_type_pb";
+import * as ondewo_nlu_session_pb from "../../ondewo/nlu/session_pb";
+
+export class ListLlmModelsRequest extends jspb.Message { 
+    getCcaiServiceName(): string;
+    setCcaiServiceName(value: string): ListLlmModelsRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListLlmModelsRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListLlmModelsRequest): ListLlmModelsRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListLlmModelsRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListLlmModelsRequest;
+    static deserializeBinaryFromReader(message: ListLlmModelsRequest, reader: jspb.BinaryReader): ListLlmModelsRequest;
+}
+
+export namespace ListLlmModelsRequest {
+    export type AsObject = {
+        ccaiServiceName: string,
+    }
+}
+
+export class ListLlmModelsResponse extends jspb.Message { 
+    clearLlmModelsList(): void;
+    getLlmModelsList(): Array<LlmModel>;
+    setLlmModelsList(value: Array<LlmModel>): ListLlmModelsResponse;
+    addLlmModels(value?: LlmModel, index?: number): LlmModel;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListLlmModelsResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: ListLlmModelsResponse): ListLlmModelsResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListLlmModelsResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListLlmModelsResponse;
+    static deserializeBinaryFromReader(message: ListLlmModelsResponse, reader: jspb.BinaryReader): ListLlmModelsResponse;
+}
+
+export namespace ListLlmModelsResponse {
+    export type AsObject = {
+        llmModelsList: Array<LlmModel.AsObject>,
+    }
+}
+
+export class LlmModel extends jspb.Message { 
+    getName(): string;
+    setName(value: string): LlmModel;
+    getDisplayName(): string;
+    setDisplayName(value: string): LlmModel;
+    getDescription(): string;
+    setDescription(value: string): LlmModel;
+    getCcaiServiceName(): string;
+    setCcaiServiceName(value: string): LlmModel;
+    getCcaiServiceProvider(): ondewo_nlu_ccai_project_pb.CcaiServiceProvider;
+    setCcaiServiceProvider(value: ondewo_nlu_ccai_project_pb.CcaiServiceProvider): LlmModel;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): LlmModel.AsObject;
+    static toObject(includeInstance: boolean, msg: LlmModel): LlmModel.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: LlmModel, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): LlmModel;
+    static deserializeBinaryFromReader(message: LlmModel, reader: jspb.BinaryReader): LlmModel;
+}
+
+export namespace LlmModel {
+    export type AsObject = {
+        name: string,
+        displayName: string,
+        description: string,
+        ccaiServiceName: string,
+        ccaiServiceProvider: ondewo_nlu_ccai_project_pb.CcaiServiceProvider,
+    }
+}
+
+export class LlmGenerateRequest extends jspb.Message { 
+
+    hasLlmGenerationRequest(): boolean;
+    clearLlmGenerationRequest(): void;
+    getLlmGenerationRequest(): google_protobuf_struct_pb.Struct | undefined;
+    setLlmGenerationRequest(value?: google_protobuf_struct_pb.Struct): LlmGenerateRequest;
+    getCcaiServiceName(): string;
+    setCcaiServiceName(value: string): LlmGenerateRequest;
+    clearFileResourcesList(): void;
+    getFileResourcesList(): Array<ondewo_nlu_session_pb.FileResource>;
+    setFileResourcesList(value: Array<ondewo_nlu_session_pb.FileResource>): LlmGenerateRequest;
+    addFileResources(value?: ondewo_nlu_session_pb.FileResource, index?: number): ondewo_nlu_session_pb.FileResource;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): LlmGenerateRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: LlmGenerateRequest): LlmGenerateRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: LlmGenerateRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): LlmGenerateRequest;
+    static deserializeBinaryFromReader(message: LlmGenerateRequest, reader: jspb.BinaryReader): LlmGenerateRequest;
+}
+
+export namespace LlmGenerateRequest {
+    export type AsObject = {
+        llmGenerationRequest?: google_protobuf_struct_pb.Struct.AsObject,
+        ccaiServiceName: string,
+        fileResourcesList: Array<ondewo_nlu_session_pb.FileResource.AsObject>,
+    }
+}
+
+export class LlmGenerateResponse extends jspb.Message { 
+
+    hasLlmGenerationResponse(): boolean;
+    clearLlmGenerationResponse(): void;
+    getLlmGenerationResponse(): google_protobuf_struct_pb.Struct | undefined;
+    setLlmGenerationResponse(value?: google_protobuf_struct_pb.Struct): LlmGenerateResponse;
+    clearFileResourcesList(): void;
+    getFileResourcesList(): Array<ondewo_nlu_session_pb.FileResource>;
+    setFileResourcesList(value: Array<ondewo_nlu_session_pb.FileResource>): LlmGenerateResponse;
+    addFileResources(value?: ondewo_nlu_session_pb.FileResource, index?: number): ondewo_nlu_session_pb.FileResource;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): LlmGenerateResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: LlmGenerateResponse): LlmGenerateResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: LlmGenerateResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): LlmGenerateResponse;
+    static deserializeBinaryFromReader(message: LlmGenerateResponse, reader: jspb.BinaryReader): LlmGenerateResponse;
+}
+
+export namespace LlmGenerateResponse {
+    export type AsObject = {
+        llmGenerationResponse?: google_protobuf_struct_pb.Struct.AsObject,
+        fileResourcesList: Array<ondewo_nlu_session_pb.FileResource.AsObject>,
+    }
+}
+
+export class StreamingLlmGenerateResponse extends jspb.Message { 
+
+    hasLlmGenerationStreamResponse(): boolean;
+    clearLlmGenerationStreamResponse(): void;
+    getLlmGenerationStreamResponse(): google_protobuf_struct_pb.Struct | undefined;
+    setLlmGenerationStreamResponse(value?: google_protobuf_struct_pb.Struct): StreamingLlmGenerateResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): StreamingLlmGenerateResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: StreamingLlmGenerateResponse): StreamingLlmGenerateResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: StreamingLlmGenerateResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): StreamingLlmGenerateResponse;
+    static deserializeBinaryFromReader(message: StreamingLlmGenerateResponse, reader: jspb.BinaryReader): StreamingLlmGenerateResponse;
+}
+
+export namespace StreamingLlmGenerateResponse {
+    export type AsObject = {
+        llmGenerationStreamResponse?: google_protobuf_struct_pb.Struct.AsObject,
+    }
+}
 
 export class ExtractEntitiesRequest extends jspb.Message { 
     getParent(): string;
@@ -584,6 +743,11 @@ export class DataEnrichmentConfig extends jspb.Message {
     getXlnetEnrichment(): XLNetAugEnrichmentConfig | undefined;
     setXlnetEnrichment(value?: XLNetAugEnrichmentConfig): DataEnrichmentConfig;
 
+    hasLlmEnrichment(): boolean;
+    clearLlmEnrichment(): void;
+    getLlmEnrichment(): LlmEnrichmentConfig | undefined;
+    setLlmEnrichment(value?: LlmEnrichmentConfig): DataEnrichmentConfig;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): DataEnrichmentConfig.AsObject;
     static toObject(includeInstance: boolean, msg: DataEnrichmentConfig): DataEnrichmentConfig.AsObject;
@@ -604,6 +768,7 @@ export namespace DataEnrichmentConfig {
         gloveEnrichment?: GloVeEnrichmentConfig.AsObject,
         bertEnrichment?: BertAugEnrichmentConfig.AsObject,
         xlnetEnrichment?: XLNetAugEnrichmentConfig.AsObject,
+        llmEnrichment?: LlmEnrichmentConfig.AsObject,
     }
 }
 
@@ -812,6 +977,35 @@ export namespace XLNetAugEnrichmentConfig {
         isActive: boolean,
         enrichmentFactor: number,
         executionOrder: number,
+    }
+}
+
+export class LlmEnrichmentConfig extends jspb.Message { 
+    getIsActive(): boolean;
+    setIsActive(value: boolean): LlmEnrichmentConfig;
+    getEnrichmentFactor(): number;
+    setEnrichmentFactor(value: number): LlmEnrichmentConfig;
+    getExecutionOrder(): number;
+    setExecutionOrder(value: number): LlmEnrichmentConfig;
+    getCcaiServiceName(): string;
+    setCcaiServiceName(value: string): LlmEnrichmentConfig;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): LlmEnrichmentConfig.AsObject;
+    static toObject(includeInstance: boolean, msg: LlmEnrichmentConfig): LlmEnrichmentConfig.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: LlmEnrichmentConfig, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): LlmEnrichmentConfig;
+    static deserializeBinaryFromReader(message: LlmEnrichmentConfig, reader: jspb.BinaryReader): LlmEnrichmentConfig;
+}
+
+export namespace LlmEnrichmentConfig {
+    export type AsObject = {
+        isActive: boolean,
+        enrichmentFactor: number,
+        executionOrder: number,
+        ccaiServiceName: string,
     }
 }
 

@@ -19,8 +19,11 @@
 var grpc = require('@grpc/grpc-js');
 var ondewo_nlu_aiservices_pb = require('../../ondewo/nlu/aiservices_pb.js');
 var google_api_annotations_pb = require('../../google/api/annotations_pb.js');
+var google_protobuf_struct_pb = require('google-protobuf/google/protobuf/struct_pb.js');
+var ondewo_nlu_ccai_project_pb = require('../../ondewo/nlu/ccai_project_pb.js');
 var ondewo_nlu_intent_pb = require('../../ondewo/nlu/intent_pb.js');
 var ondewo_nlu_entity_type_pb = require('../../ondewo/nlu/entity_type_pb.js');
+var ondewo_nlu_session_pb = require('../../ondewo/nlu/session_pb.js');
 
 function serialize_ondewo_nlu_ClassifyIntentsRequest(arg) {
   if (!(arg instanceof ondewo_nlu_aiservices_pb.ClassifyIntentsRequest)) {
@@ -187,6 +190,61 @@ function deserialize_ondewo_nlu_GetSynonymsResponse(buffer_arg) {
   return ondewo_nlu_aiservices_pb.GetSynonymsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_ListLlmModelsRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_aiservices_pb.ListLlmModelsRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.ListLlmModelsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListLlmModelsRequest(buffer_arg) {
+  return ondewo_nlu_aiservices_pb.ListLlmModelsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListLlmModelsResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_aiservices_pb.ListLlmModelsResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.ListLlmModelsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListLlmModelsResponse(buffer_arg) {
+  return ondewo_nlu_aiservices_pb.ListLlmModelsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_LlmGenerateRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_aiservices_pb.LlmGenerateRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.LlmGenerateRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_LlmGenerateRequest(buffer_arg) {
+  return ondewo_nlu_aiservices_pb.LlmGenerateRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_LlmGenerateResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_aiservices_pb.LlmGenerateResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.LlmGenerateResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_LlmGenerateResponse(buffer_arg) {
+  return ondewo_nlu_aiservices_pb.LlmGenerateResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_StreamingLlmGenerateResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_aiservices_pb.StreamingLlmGenerateResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.StreamingLlmGenerateResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_StreamingLlmGenerateResponse(buffer_arg) {
+  return ondewo_nlu_aiservices_pb.StreamingLlmGenerateResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 
 // The Central class defining the ondewo ai services
 var AiServicesService = exports.AiServicesService = {
@@ -285,6 +343,48 @@ extractEntitiesFuzzy: {
     requestDeserialize: deserialize_ondewo_nlu_ExtractEntitiesFuzzyRequest,
     responseSerialize: serialize_ondewo_nlu_ExtractEntitiesResponse,
     responseDeserialize: deserialize_ondewo_nlu_ExtractEntitiesResponse,
+  },
+  // Generates a single response from a Large Language Model (LLM).
+// This RPC method allows a client to make a request to the LLM and receive
+// a single complete response based on the input parameters provided.
+llmGenerate: {
+    path: '/ondewo.nlu.AiServices/LlmGenerate',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_aiservices_pb.LlmGenerateRequest,
+    responseType: ondewo_nlu_aiservices_pb.LlmGenerateResponse,
+    requestSerialize: serialize_ondewo_nlu_LlmGenerateRequest,
+    requestDeserialize: deserialize_ondewo_nlu_LlmGenerateRequest,
+    responseSerialize: serialize_ondewo_nlu_LlmGenerateResponse,
+    responseDeserialize: deserialize_ondewo_nlu_LlmGenerateResponse,
+  },
+  // Generates a response from the LLM in a streaming format.
+// This RPC allows continuous streaming of responses from the model,
+// which is useful for real-time applications or large outputs.
+streamingLlmGenerate: {
+    path: '/ondewo.nlu.AiServices/StreamingLlmGenerate',
+    requestStream: false,
+    responseStream: true,
+    requestType: ondewo_nlu_aiservices_pb.LlmGenerateRequest,
+    responseType: ondewo_nlu_aiservices_pb.StreamingLlmGenerateResponse,
+    requestSerialize: serialize_ondewo_nlu_LlmGenerateRequest,
+    requestDeserialize: deserialize_ondewo_nlu_LlmGenerateRequest,
+    responseSerialize: serialize_ondewo_nlu_StreamingLlmGenerateResponse,
+    responseDeserialize: deserialize_ondewo_nlu_StreamingLlmGenerateResponse,
+  },
+  // Lists available Large Language Models (LLMs) for a specified CCAI service.
+// This RPC method allows clients to retrieve metadata about all LLM models associated
+// with a particular service within a project, including model names, descriptions, and providers.
+listLlmModels: {
+    path: '/ondewo.nlu.AiServices/ListLlmModels',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_aiservices_pb.ListLlmModelsRequest,
+    responseType: ondewo_nlu_aiservices_pb.ListLlmModelsResponse,
+    requestSerialize: serialize_ondewo_nlu_ListLlmModelsRequest,
+    requestDeserialize: deserialize_ondewo_nlu_ListLlmModelsRequest,
+    responseSerialize: serialize_ondewo_nlu_ListLlmModelsResponse,
+    responseDeserialize: deserialize_ondewo_nlu_ListLlmModelsResponse,
   },
 };
 

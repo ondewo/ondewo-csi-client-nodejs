@@ -17,6 +17,7 @@ interface ICcaiProjectsService extends grpc.ServiceDefinition<grpc.UntypedServic
     deleteCcaiProject: ICcaiProjectsService_IDeleteCcaiProject;
     listCcaiProjects: ICcaiProjectsService_IListCcaiProjects;
     updateCcaiProject: ICcaiProjectsService_IUpdateCcaiProject;
+    getCcaiService: ICcaiProjectsService_IGetCcaiService;
 }
 
 interface ICcaiProjectsService_IGetCcaiProject extends grpc.MethodDefinition<ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest, ondewo_nlu_ccai_project_pb.CcaiProject> {
@@ -64,6 +65,15 @@ interface ICcaiProjectsService_IUpdateCcaiProject extends grpc.MethodDefinition<
     responseSerialize: grpc.serialize<ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse>;
     responseDeserialize: grpc.deserialize<ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse>;
 }
+interface ICcaiProjectsService_IGetCcaiService extends grpc.MethodDefinition<ondewo_nlu_ccai_project_pb.GetCcaiServiceRequest, ondewo_nlu_ccai_project_pb.CcaiService> {
+    path: "/ondewo.nlu.CcaiProjects/GetCcaiService";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_ccai_project_pb.GetCcaiServiceRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_ccai_project_pb.GetCcaiServiceRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_ccai_project_pb.CcaiService>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_ccai_project_pb.CcaiService>;
+}
 
 export const CcaiProjectsService: ICcaiProjectsService;
 
@@ -73,6 +83,7 @@ export interface ICcaiProjectsServer {
     deleteCcaiProject: grpc.handleUnaryCall<ondewo_nlu_ccai_project_pb.DeleteCcaiProjectRequest, ondewo_nlu_ccai_project_pb.DeleteCcaiProjectResponse>;
     listCcaiProjects: grpc.handleUnaryCall<ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest, ondewo_nlu_ccai_project_pb.ListCcaiProjectsResponse>;
     updateCcaiProject: grpc.handleUnaryCall<ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse>;
+    getCcaiService: grpc.handleUnaryCall<ondewo_nlu_ccai_project_pb.GetCcaiServiceRequest, ondewo_nlu_ccai_project_pb.CcaiService>;
 }
 
 export interface ICcaiProjectsClient {
@@ -91,6 +102,9 @@ export interface ICcaiProjectsClient {
     updateCcaiProject(request: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
     updateCcaiProject(request: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
     updateCcaiProject(request: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
+    getCcaiService(request: ondewo_nlu_ccai_project_pb.GetCcaiServiceRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CcaiService) => void): grpc.ClientUnaryCall;
+    getCcaiService(request: ondewo_nlu_ccai_project_pb.GetCcaiServiceRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CcaiService) => void): grpc.ClientUnaryCall;
+    getCcaiService(request: ondewo_nlu_ccai_project_pb.GetCcaiServiceRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CcaiService) => void): grpc.ClientUnaryCall;
 }
 
 export class CcaiProjectsClient extends grpc.Client implements ICcaiProjectsClient {
@@ -110,4 +124,7 @@ export class CcaiProjectsClient extends grpc.Client implements ICcaiProjectsClie
     public updateCcaiProject(request: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
     public updateCcaiProject(request: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
     public updateCcaiProject(request: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
+    public getCcaiService(request: ondewo_nlu_ccai_project_pb.GetCcaiServiceRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CcaiService) => void): grpc.ClientUnaryCall;
+    public getCcaiService(request: ondewo_nlu_ccai_project_pb.GetCcaiServiceRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CcaiService) => void): grpc.ClientUnaryCall;
+    public getCcaiService(request: ondewo_nlu_ccai_project_pb.GetCcaiServiceRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CcaiService) => void): grpc.ClientUnaryCall;
 }

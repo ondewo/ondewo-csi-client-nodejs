@@ -143,6 +143,17 @@ function deserialize_ondewo_nlu_CreateSessionReviewRequest(buffer_arg) {
   return ondewo_nlu_session_pb.CreateSessionReviewRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_CreateSessionStepRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.CreateSessionStepRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.CreateSessionStepRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_CreateSessionStepRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.CreateSessionStepRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_DeleteAudioFilesRequest(arg) {
   if (!(arg instanceof ondewo_nlu_session_pb.DeleteAudioFilesRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.DeleteAudioFilesRequest');
@@ -196,6 +207,17 @@ function serialize_ondewo_nlu_DeleteSessionRequest(arg) {
 
 function deserialize_ondewo_nlu_DeleteSessionRequest(buffer_arg) {
   return ondewo_nlu_session_pb.DeleteSessionRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_DeleteSessionStepRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.DeleteSessionStepRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.DeleteSessionStepRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_DeleteSessionStepRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.DeleteSessionStepRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_DetectIntentRequest(arg) {
@@ -284,6 +306,17 @@ function serialize_ondewo_nlu_GetSessionReviewRequest(arg) {
 
 function deserialize_ondewo_nlu_GetSessionReviewRequest(buffer_arg) {
   return ondewo_nlu_session_pb.GetSessionReviewRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_GetSessionStepRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.GetSessionStepRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.GetSessionStepRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetSessionStepRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.GetSessionStepRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_ListAccountIdsOfAllSessionsRequest(arg) {
@@ -715,6 +748,17 @@ function deserialize_ondewo_nlu_SessionReview(buffer_arg) {
   return ondewo_nlu_session_pb.SessionReview.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_SessionStep(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.SessionStep)) {
+    throw new Error('Expected argument of type ondewo.nlu.SessionStep');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_SessionStep(buffer_arg) {
+  return ondewo_nlu_session_pb.SessionStep.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_StreamingDetectIntentRequest(arg) {
   if (!(arg instanceof ondewo_nlu_session_pb.StreamingDetectIntentRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.StreamingDetectIntentRequest');
@@ -737,17 +781,6 @@ function deserialize_ondewo_nlu_StreamingDetectIntentResponse(buffer_arg) {
   return ondewo_nlu_session_pb.StreamingDetectIntentResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_ondewo_nlu_TrackSessionStepRequest(arg) {
-  if (!(arg instanceof ondewo_nlu_session_pb.TrackSessionStepRequest)) {
-    throw new Error('Expected argument of type ondewo.nlu.TrackSessionStepRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_ondewo_nlu_TrackSessionStepRequest(buffer_arg) {
-  return ondewo_nlu_session_pb.TrackSessionStepRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_ondewo_nlu_UpdateSessionCommentsRequest(arg) {
   if (!(arg instanceof ondewo_nlu_session_pb.UpdateSessionCommentsRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.UpdateSessionCommentsRequest');
@@ -757,6 +790,17 @@ function serialize_ondewo_nlu_UpdateSessionCommentsRequest(arg) {
 
 function deserialize_ondewo_nlu_UpdateSessionCommentsRequest(buffer_arg) {
   return ondewo_nlu_session_pb.UpdateSessionCommentsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_UpdateSessionStepRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.UpdateSessionStepRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.UpdateSessionStepRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_UpdateSessionStepRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.UpdateSessionStepRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 
@@ -831,17 +875,53 @@ createSession: {
     responseSerialize: serialize_ondewo_nlu_Session,
     responseDeserialize: deserialize_ondewo_nlu_Session,
   },
-  // TrackSessionStep: append to an existing session; creates it if not existing
-trackSessionStep: {
-    path: '/ondewo.nlu.Sessions/TrackSessionStep',
+  // CreateSessionStep: creates a new session step for a session
+createSessionStep: {
+    path: '/ondewo.nlu.Sessions/CreateSessionStep',
     requestStream: false,
     responseStream: false,
-    requestType: ondewo_nlu_session_pb.TrackSessionStepRequest,
-    responseType: ondewo_nlu_session_pb.Session,
-    requestSerialize: serialize_ondewo_nlu_TrackSessionStepRequest,
-    requestDeserialize: deserialize_ondewo_nlu_TrackSessionStepRequest,
-    responseSerialize: serialize_ondewo_nlu_Session,
-    responseDeserialize: deserialize_ondewo_nlu_Session,
+    requestType: ondewo_nlu_session_pb.CreateSessionStepRequest,
+    responseType: ondewo_nlu_session_pb.SessionStep,
+    requestSerialize: serialize_ondewo_nlu_CreateSessionStepRequest,
+    requestDeserialize: deserialize_ondewo_nlu_CreateSessionStepRequest,
+    responseSerialize: serialize_ondewo_nlu_SessionStep,
+    responseDeserialize: deserialize_ondewo_nlu_SessionStep,
+  },
+  // GetSessionStep: gets an existing session step of a session
+getSessionStep: {
+    path: '/ondewo.nlu.Sessions/GetSessionStep',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.GetSessionStepRequest,
+    responseType: ondewo_nlu_session_pb.SessionStep,
+    requestSerialize: serialize_ondewo_nlu_GetSessionStepRequest,
+    requestDeserialize: deserialize_ondewo_nlu_GetSessionStepRequest,
+    responseSerialize: serialize_ondewo_nlu_SessionStep,
+    responseDeserialize: deserialize_ondewo_nlu_SessionStep,
+  },
+  // UpdateSessionStep: updates an existing session step in a session
+updateSessionStep: {
+    path: '/ondewo.nlu.Sessions/UpdateSessionStep',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.UpdateSessionStepRequest,
+    responseType: ondewo_nlu_session_pb.SessionStep,
+    requestSerialize: serialize_ondewo_nlu_UpdateSessionStepRequest,
+    requestDeserialize: deserialize_ondewo_nlu_UpdateSessionStepRequest,
+    responseSerialize: serialize_ondewo_nlu_SessionStep,
+    responseDeserialize: deserialize_ondewo_nlu_SessionStep,
+  },
+  // DeleteSessionStep: deletes an existing session step from the session
+deleteSessionStep: {
+    path: '/ondewo.nlu.Sessions/DeleteSessionStep',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.DeleteSessionStepRequest,
+    responseType: google_protobuf_empty_pb.Empty,
+    requestSerialize: serialize_ondewo_nlu_DeleteSessionStepRequest,
+    requestDeserialize: deserialize_ondewo_nlu_DeleteSessionStepRequest,
+    responseSerialize: serialize_google_protobuf_Empty,
+    responseDeserialize: deserialize_google_protobuf_Empty,
   },
   // DeleteSession: delete a session(=conversation) from ondewo-kb (for testing only)
 deleteSession: {

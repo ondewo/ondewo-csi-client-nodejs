@@ -48,7 +48,6 @@ var ondewo_nlu_user_pb = require('../../ondewo/nlu/user_pb.js');
 var ondewo_nlu_project_role_pb = require('../../ondewo/nlu/project_role_pb.js');
 var ondewo_nlu_operations_pb = require('../../ondewo/nlu/operations_pb.js');
 var ondewo_nlu_session_pb = require('../../ondewo/nlu/session_pb.js');
-var ondewo_nlu_ccai_project_pb = require('../../ondewo/nlu/ccai_project_pb.js');
 
 function serialize_google_protobuf_Empty(arg) {
   if (!(arg instanceof google_protobuf_empty_pb.Empty)) {
@@ -94,17 +93,6 @@ function deserialize_ondewo_nlu_BuildCacheRequest(buffer_arg) {
   return ondewo_nlu_agent_pb.BuildCacheRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_ondewo_nlu_CcaiProject(arg) {
-  if (!(arg instanceof ondewo_nlu_ccai_project_pb.CcaiProject)) {
-    throw new Error('Expected argument of type ondewo.nlu.CcaiProject');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_ondewo_nlu_CcaiProject(buffer_arg) {
-  return ondewo_nlu_ccai_project_pb.CcaiProject.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_ondewo_nlu_CreateAgentRequest(arg) {
   if (!(arg instanceof ondewo_nlu_agent_pb.CreateAgentRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.CreateAgentRequest');
@@ -116,28 +104,6 @@ function deserialize_ondewo_nlu_CreateAgentRequest(buffer_arg) {
   return ondewo_nlu_agent_pb.CreateAgentRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_ondewo_nlu_CreateCcaiProjectRequest(arg) {
-  if (!(arg instanceof ondewo_nlu_ccai_project_pb.CreateCcaiProjectRequest)) {
-    throw new Error('Expected argument of type ondewo.nlu.CreateCcaiProjectRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_ondewo_nlu_CreateCcaiProjectRequest(buffer_arg) {
-  return ondewo_nlu_ccai_project_pb.CreateCcaiProjectRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_ondewo_nlu_CreateCcaiProjectResponse(arg) {
-  if (!(arg instanceof ondewo_nlu_ccai_project_pb.CreateCcaiProjectResponse)) {
-    throw new Error('Expected argument of type ondewo.nlu.CreateCcaiProjectResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_ondewo_nlu_CreateCcaiProjectResponse(buffer_arg) {
-  return ondewo_nlu_ccai_project_pb.CreateCcaiProjectResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_ondewo_nlu_DeleteAgentRequest(arg) {
   if (!(arg instanceof ondewo_nlu_agent_pb.DeleteAgentRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.DeleteAgentRequest');
@@ -147,28 +113,6 @@ function serialize_ondewo_nlu_DeleteAgentRequest(arg) {
 
 function deserialize_ondewo_nlu_DeleteAgentRequest(buffer_arg) {
   return ondewo_nlu_agent_pb.DeleteAgentRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_ondewo_nlu_DeleteCcaiProjectRequest(arg) {
-  if (!(arg instanceof ondewo_nlu_ccai_project_pb.DeleteCcaiProjectRequest)) {
-    throw new Error('Expected argument of type ondewo.nlu.DeleteCcaiProjectRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_ondewo_nlu_DeleteCcaiProjectRequest(buffer_arg) {
-  return ondewo_nlu_ccai_project_pb.DeleteCcaiProjectRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_ondewo_nlu_DeleteCcaiProjectResponse(arg) {
-  if (!(arg instanceof ondewo_nlu_ccai_project_pb.DeleteCcaiProjectResponse)) {
-    throw new Error('Expected argument of type ondewo.nlu.DeleteCcaiProjectResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_ondewo_nlu_DeleteCcaiProjectResponse(buffer_arg) {
-  return ondewo_nlu_ccai_project_pb.DeleteCcaiProjectResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_DeleteResourcesRequest(arg) {
@@ -380,17 +324,6 @@ function deserialize_ondewo_nlu_GetAgentStatisticsResponse(buffer_arg) {
   return ondewo_nlu_agent_pb.GetAgentStatisticsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_ondewo_nlu_GetCcaiProjectRequest(arg) {
-  if (!(arg instanceof ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest)) {
-    throw new Error('Expected argument of type ondewo.nlu.GetCcaiProjectRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_ondewo_nlu_GetCcaiProjectRequest(buffer_arg) {
-  return ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_ondewo_nlu_GetModelStatusesRequest(arg) {
   if (!(arg instanceof ondewo_nlu_agent_pb.GetModelStatusesRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.GetModelStatusesRequest');
@@ -499,28 +432,6 @@ function serialize_ondewo_nlu_ListAgentsResponse(arg) {
 
 function deserialize_ondewo_nlu_ListAgentsResponse(buffer_arg) {
   return ondewo_nlu_agent_pb.ListAgentsResponse.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_ondewo_nlu_ListCcaiProjectsRequest(arg) {
-  if (!(arg instanceof ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest)) {
-    throw new Error('Expected argument of type ondewo.nlu.ListCcaiProjectsRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_ondewo_nlu_ListCcaiProjectsRequest(buffer_arg) {
-  return ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_ondewo_nlu_ListCcaiProjectsResponse(arg) {
-  if (!(arg instanceof ondewo_nlu_ccai_project_pb.ListCcaiProjectsResponse)) {
-    throw new Error('Expected argument of type ondewo.nlu.ListCcaiProjectsResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_ondewo_nlu_ListCcaiProjectsResponse(buffer_arg) {
-  return ondewo_nlu_ccai_project_pb.ListCcaiProjectsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_ListProjectPermissionsRequest(arg) {
@@ -675,28 +586,6 @@ function serialize_ondewo_nlu_UpdateAgentRequest(arg) {
 
 function deserialize_ondewo_nlu_UpdateAgentRequest(buffer_arg) {
   return ondewo_nlu_agent_pb.UpdateAgentRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_ondewo_nlu_UpdateCcaiProjectRequest(arg) {
-  if (!(arg instanceof ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest)) {
-    throw new Error('Expected argument of type ondewo.nlu.UpdateCcaiProjectRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_ondewo_nlu_UpdateCcaiProjectRequest(buffer_arg) {
-  return ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_ondewo_nlu_UpdateCcaiProjectResponse(arg) {
-  if (!(arg instanceof ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse)) {
-    throw new Error('Expected argument of type ondewo.nlu.UpdateCcaiProjectResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_ondewo_nlu_UpdateCcaiProjectResponse(buffer_arg) {
-  return ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 
@@ -1391,66 +1280,6 @@ reindexAgent: {
     requestDeserialize: deserialize_ondewo_nlu_ReindexAgentRequest,
     responseSerialize: serialize_ondewo_nlu_Operation,
     responseDeserialize: deserialize_ondewo_nlu_Operation,
-  },
-  // RPC to create a new CCAI project
-createCcaiProject: {
-    path: '/ondewo.nlu.Agents/CreateCcaiProject',
-    requestStream: false,
-    responseStream: false,
-    requestType: ondewo_nlu_ccai_project_pb.CreateCcaiProjectRequest,
-    responseType: ondewo_nlu_ccai_project_pb.CreateCcaiProjectResponse,
-    requestSerialize: serialize_ondewo_nlu_CreateCcaiProjectRequest,
-    requestDeserialize: deserialize_ondewo_nlu_CreateCcaiProjectRequest,
-    responseSerialize: serialize_ondewo_nlu_CreateCcaiProjectResponse,
-    responseDeserialize: deserialize_ondewo_nlu_CreateCcaiProjectResponse,
-  },
-  // RPC to delete an existing CCAI project
-deleteCcaiProject: {
-    path: '/ondewo.nlu.Agents/DeleteCcaiProject',
-    requestStream: false,
-    responseStream: false,
-    requestType: ondewo_nlu_ccai_project_pb.DeleteCcaiProjectRequest,
-    responseType: ondewo_nlu_ccai_project_pb.DeleteCcaiProjectResponse,
-    requestSerialize: serialize_ondewo_nlu_DeleteCcaiProjectRequest,
-    requestDeserialize: deserialize_ondewo_nlu_DeleteCcaiProjectRequest,
-    responseSerialize: serialize_ondewo_nlu_DeleteCcaiProjectResponse,
-    responseDeserialize: deserialize_ondewo_nlu_DeleteCcaiProjectResponse,
-  },
-  // RPC to get details of an existing CCAI project
-getCcaiProject: {
-    path: '/ondewo.nlu.Agents/GetCcaiProject',
-    requestStream: false,
-    responseStream: false,
-    requestType: ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest,
-    responseType: ondewo_nlu_ccai_project_pb.CcaiProject,
-    requestSerialize: serialize_ondewo_nlu_GetCcaiProjectRequest,
-    requestDeserialize: deserialize_ondewo_nlu_GetCcaiProjectRequest,
-    responseSerialize: serialize_ondewo_nlu_CcaiProject,
-    responseDeserialize: deserialize_ondewo_nlu_CcaiProject,
-  },
-  // RPC to list all available CCAI projects
-listCcaiProjects: {
-    path: '/ondewo.nlu.Agents/ListCcaiProjects',
-    requestStream: false,
-    responseStream: false,
-    requestType: ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest,
-    responseType: ondewo_nlu_ccai_project_pb.ListCcaiProjectsResponse,
-    requestSerialize: serialize_ondewo_nlu_ListCcaiProjectsRequest,
-    requestDeserialize: deserialize_ondewo_nlu_ListCcaiProjectsRequest,
-    responseSerialize: serialize_ondewo_nlu_ListCcaiProjectsResponse,
-    responseDeserialize: deserialize_ondewo_nlu_ListCcaiProjectsResponse,
-  },
-  // RPC to update an existing CCAI project
-updateCcaiProject: {
-    path: '/ondewo.nlu.Agents/UpdateCcaiProject',
-    requestStream: false,
-    responseStream: false,
-    requestType: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest,
-    responseType: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse,
-    requestSerialize: serialize_ondewo_nlu_UpdateCcaiProjectRequest,
-    requestDeserialize: deserialize_ondewo_nlu_UpdateCcaiProjectRequest,
-    responseSerialize: serialize_ondewo_nlu_UpdateCcaiProjectResponse,
-    responseDeserialize: deserialize_ondewo_nlu_UpdateCcaiProjectResponse,
   },
 };
 

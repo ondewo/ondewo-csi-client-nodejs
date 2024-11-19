@@ -16,7 +16,6 @@ import * as ondewo_nlu_user_pb from "../../ondewo/nlu/user_pb";
 import * as ondewo_nlu_project_role_pb from "../../ondewo/nlu/project_role_pb";
 import * as ondewo_nlu_operations_pb from "../../ondewo/nlu/operations_pb";
 import * as ondewo_nlu_session_pb from "../../ondewo/nlu/session_pb";
-import * as ondewo_nlu_ccai_project_pb from "../../ondewo/nlu/ccai_project_pb";
 
 interface IAgentsService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     createAgent: IAgentsService_ICreateAgent;
@@ -59,11 +58,6 @@ interface IAgentsService extends grpc.ServiceDefinition<grpc.UntypedServiceImple
     getFullTextSearchIntentResponse: IAgentsService_IGetFullTextSearchIntentResponse;
     getFullTextSearchIntentParameters: IAgentsService_IGetFullTextSearchIntentParameters;
     reindexAgent: IAgentsService_IReindexAgent;
-    createCcaiProject: IAgentsService_ICreateCcaiProject;
-    deleteCcaiProject: IAgentsService_IDeleteCcaiProject;
-    getCcaiProject: IAgentsService_IGetCcaiProject;
-    listCcaiProjects: IAgentsService_IListCcaiProjects;
-    updateCcaiProject: IAgentsService_IUpdateCcaiProject;
 }
 
 interface IAgentsService_ICreateAgent extends grpc.MethodDefinition<ondewo_nlu_agent_pb.CreateAgentRequest, ondewo_nlu_agent_pb.Agent> {
@@ -426,51 +420,6 @@ interface IAgentsService_IReindexAgent extends grpc.MethodDefinition<ondewo_nlu_
     responseSerialize: grpc.serialize<ondewo_nlu_operations_pb.Operation>;
     responseDeserialize: grpc.deserialize<ondewo_nlu_operations_pb.Operation>;
 }
-interface IAgentsService_ICreateCcaiProject extends grpc.MethodDefinition<ondewo_nlu_ccai_project_pb.CreateCcaiProjectRequest, ondewo_nlu_ccai_project_pb.CreateCcaiProjectResponse> {
-    path: "/ondewo.nlu.Agents/CreateCcaiProject";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<ondewo_nlu_ccai_project_pb.CreateCcaiProjectRequest>;
-    requestDeserialize: grpc.deserialize<ondewo_nlu_ccai_project_pb.CreateCcaiProjectRequest>;
-    responseSerialize: grpc.serialize<ondewo_nlu_ccai_project_pb.CreateCcaiProjectResponse>;
-    responseDeserialize: grpc.deserialize<ondewo_nlu_ccai_project_pb.CreateCcaiProjectResponse>;
-}
-interface IAgentsService_IDeleteCcaiProject extends grpc.MethodDefinition<ondewo_nlu_ccai_project_pb.DeleteCcaiProjectRequest, ondewo_nlu_ccai_project_pb.DeleteCcaiProjectResponse> {
-    path: "/ondewo.nlu.Agents/DeleteCcaiProject";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<ondewo_nlu_ccai_project_pb.DeleteCcaiProjectRequest>;
-    requestDeserialize: grpc.deserialize<ondewo_nlu_ccai_project_pb.DeleteCcaiProjectRequest>;
-    responseSerialize: grpc.serialize<ondewo_nlu_ccai_project_pb.DeleteCcaiProjectResponse>;
-    responseDeserialize: grpc.deserialize<ondewo_nlu_ccai_project_pb.DeleteCcaiProjectResponse>;
-}
-interface IAgentsService_IGetCcaiProject extends grpc.MethodDefinition<ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest, ondewo_nlu_ccai_project_pb.CcaiProject> {
-    path: "/ondewo.nlu.Agents/GetCcaiProject";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest>;
-    requestDeserialize: grpc.deserialize<ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest>;
-    responseSerialize: grpc.serialize<ondewo_nlu_ccai_project_pb.CcaiProject>;
-    responseDeserialize: grpc.deserialize<ondewo_nlu_ccai_project_pb.CcaiProject>;
-}
-interface IAgentsService_IListCcaiProjects extends grpc.MethodDefinition<ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest, ondewo_nlu_ccai_project_pb.ListCcaiProjectsResponse> {
-    path: "/ondewo.nlu.Agents/ListCcaiProjects";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest>;
-    requestDeserialize: grpc.deserialize<ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest>;
-    responseSerialize: grpc.serialize<ondewo_nlu_ccai_project_pb.ListCcaiProjectsResponse>;
-    responseDeserialize: grpc.deserialize<ondewo_nlu_ccai_project_pb.ListCcaiProjectsResponse>;
-}
-interface IAgentsService_IUpdateCcaiProject extends grpc.MethodDefinition<ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse> {
-    path: "/ondewo.nlu.Agents/UpdateCcaiProject";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest>;
-    requestDeserialize: grpc.deserialize<ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest>;
-    responseSerialize: grpc.serialize<ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse>;
-    responseDeserialize: grpc.deserialize<ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse>;
-}
 
 export const AgentsService: IAgentsService;
 
@@ -515,11 +464,6 @@ export interface IAgentsServer {
     getFullTextSearchIntentResponse: grpc.handleUnaryCall<ondewo_nlu_agent_pb.FullTextSearchRequest, ondewo_nlu_agent_pb.FullTextSearchResponseIntentResponse>;
     getFullTextSearchIntentParameters: grpc.handleUnaryCall<ondewo_nlu_agent_pb.FullTextSearchRequest, ondewo_nlu_agent_pb.FullTextSearchResponseIntentParameters>;
     reindexAgent: grpc.handleUnaryCall<ondewo_nlu_agent_pb.ReindexAgentRequest, ondewo_nlu_operations_pb.Operation>;
-    createCcaiProject: grpc.handleUnaryCall<ondewo_nlu_ccai_project_pb.CreateCcaiProjectRequest, ondewo_nlu_ccai_project_pb.CreateCcaiProjectResponse>;
-    deleteCcaiProject: grpc.handleUnaryCall<ondewo_nlu_ccai_project_pb.DeleteCcaiProjectRequest, ondewo_nlu_ccai_project_pb.DeleteCcaiProjectResponse>;
-    getCcaiProject: grpc.handleUnaryCall<ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest, ondewo_nlu_ccai_project_pb.CcaiProject>;
-    listCcaiProjects: grpc.handleUnaryCall<ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest, ondewo_nlu_ccai_project_pb.ListCcaiProjectsResponse>;
-    updateCcaiProject: grpc.handleUnaryCall<ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse>;
 }
 
 export interface IAgentsClient {
@@ -643,21 +587,6 @@ export interface IAgentsClient {
     reindexAgent(request: ondewo_nlu_agent_pb.ReindexAgentRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_operations_pb.Operation) => void): grpc.ClientUnaryCall;
     reindexAgent(request: ondewo_nlu_agent_pb.ReindexAgentRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_operations_pb.Operation) => void): grpc.ClientUnaryCall;
     reindexAgent(request: ondewo_nlu_agent_pb.ReindexAgentRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_operations_pb.Operation) => void): grpc.ClientUnaryCall;
-    createCcaiProject(request: ondewo_nlu_ccai_project_pb.CreateCcaiProjectRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CreateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    createCcaiProject(request: ondewo_nlu_ccai_project_pb.CreateCcaiProjectRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CreateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    createCcaiProject(request: ondewo_nlu_ccai_project_pb.CreateCcaiProjectRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CreateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    deleteCcaiProject(request: ondewo_nlu_ccai_project_pb.DeleteCcaiProjectRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.DeleteCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    deleteCcaiProject(request: ondewo_nlu_ccai_project_pb.DeleteCcaiProjectRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.DeleteCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    deleteCcaiProject(request: ondewo_nlu_ccai_project_pb.DeleteCcaiProjectRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.DeleteCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    getCcaiProject(request: ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CcaiProject) => void): grpc.ClientUnaryCall;
-    getCcaiProject(request: ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CcaiProject) => void): grpc.ClientUnaryCall;
-    getCcaiProject(request: ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CcaiProject) => void): grpc.ClientUnaryCall;
-    listCcaiProjects(request: ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.ListCcaiProjectsResponse) => void): grpc.ClientUnaryCall;
-    listCcaiProjects(request: ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.ListCcaiProjectsResponse) => void): grpc.ClientUnaryCall;
-    listCcaiProjects(request: ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.ListCcaiProjectsResponse) => void): grpc.ClientUnaryCall;
-    updateCcaiProject(request: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    updateCcaiProject(request: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    updateCcaiProject(request: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class AgentsClient extends grpc.Client implements IAgentsClient {
@@ -782,19 +711,4 @@ export class AgentsClient extends grpc.Client implements IAgentsClient {
     public reindexAgent(request: ondewo_nlu_agent_pb.ReindexAgentRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_operations_pb.Operation) => void): grpc.ClientUnaryCall;
     public reindexAgent(request: ondewo_nlu_agent_pb.ReindexAgentRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_operations_pb.Operation) => void): grpc.ClientUnaryCall;
     public reindexAgent(request: ondewo_nlu_agent_pb.ReindexAgentRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_operations_pb.Operation) => void): grpc.ClientUnaryCall;
-    public createCcaiProject(request: ondewo_nlu_ccai_project_pb.CreateCcaiProjectRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CreateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    public createCcaiProject(request: ondewo_nlu_ccai_project_pb.CreateCcaiProjectRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CreateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    public createCcaiProject(request: ondewo_nlu_ccai_project_pb.CreateCcaiProjectRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CreateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    public deleteCcaiProject(request: ondewo_nlu_ccai_project_pb.DeleteCcaiProjectRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.DeleteCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    public deleteCcaiProject(request: ondewo_nlu_ccai_project_pb.DeleteCcaiProjectRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.DeleteCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    public deleteCcaiProject(request: ondewo_nlu_ccai_project_pb.DeleteCcaiProjectRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.DeleteCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    public getCcaiProject(request: ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CcaiProject) => void): grpc.ClientUnaryCall;
-    public getCcaiProject(request: ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CcaiProject) => void): grpc.ClientUnaryCall;
-    public getCcaiProject(request: ondewo_nlu_ccai_project_pb.GetCcaiProjectRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.CcaiProject) => void): grpc.ClientUnaryCall;
-    public listCcaiProjects(request: ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.ListCcaiProjectsResponse) => void): grpc.ClientUnaryCall;
-    public listCcaiProjects(request: ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.ListCcaiProjectsResponse) => void): grpc.ClientUnaryCall;
-    public listCcaiProjects(request: ondewo_nlu_ccai_project_pb.ListCcaiProjectsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.ListCcaiProjectsResponse) => void): grpc.ClientUnaryCall;
-    public updateCcaiProject(request: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    public updateCcaiProject(request: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
-    public updateCcaiProject(request: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_ccai_project_pb.UpdateCcaiProjectResponse) => void): grpc.ClientUnaryCall;
 }

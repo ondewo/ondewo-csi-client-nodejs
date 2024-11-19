@@ -465,6 +465,7 @@ export namespace ControlMessage {
 export enum ControlStatus {
     OK = 0,
     EMERGENCY_STOP = 1,
+    VAD_START_OF_SPEECH = 2,
 }
 
 export enum ControlMessageServiceName {
@@ -473,6 +474,9 @@ export enum ControlMessageServiceName {
     ONDEWO_T2S = 2,
     ONDEWO_NLU = 3,
     ONDEWO_SIP = 4,
+    ONDEWO_VTSI = 5,
+    ONDEWO_CSI = 6,
+    ONDEWO_SURVEY = 7,
 }
 
 export enum ControlMessageServiceMethod {

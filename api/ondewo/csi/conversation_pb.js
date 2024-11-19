@@ -3494,7 +3494,8 @@ proto.ondewo.csi.ControlMessage.prototype.hasParameters = function() {
  */
 proto.ondewo.csi.ControlStatus = {
   OK: 0,
-  EMERGENCY_STOP: 1
+  EMERGENCY_STOP: 1,
+  VAD_START_OF_SPEECH: 2
 };
 
 /**
@@ -3505,7 +3506,10 @@ proto.ondewo.csi.ControlMessageServiceName = {
   ONDEWO_S2T: 1,
   ONDEWO_T2S: 2,
   ONDEWO_NLU: 3,
-  ONDEWO_SIP: 4
+  ONDEWO_SIP: 4,
+  ONDEWO_VTSI: 5,
+  ONDEWO_CSI: 6,
+  ONDEWO_SURVEY: 7
 };
 
 /**
