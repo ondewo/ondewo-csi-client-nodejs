@@ -193,6 +193,30 @@ nodeTest('tokenExpirationInS stops the refresh loop before the next refresh woul
 	}
 });
 
+nodeTest('a bound that comfortably fits the next refresh still lets the loop refresh', async (): Promise<void> => {
+	const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
+	timers.enable({ apis: ['setTimeout'] });
+	try {
+		const stub: FetchStub = makeFetchStub([
+			{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 300) },
+			{ ok: true, status: 200, bodyText: tokenBody('access-2', 'offline-2', 300) }
+		]);
+		// Bound far above the 270 s first-refresh point → fireAt < deadline, so the loop
+		// must NOT stop (exercises the false side of the deadline AND-guard).
+		const provider: OfflineTokenProvider = await doLogin({
+			refreshSkewInS: 30,
+			tokenExpirationInS: 10000,
+			fetchFn: stub.fetchFn
+		});
+		timers.tick(270 * 1000);
+		await waitForToken(provider, 'access-2');
+		assert.equal(stub.requests.length, 2);
+		provider.stop();
+	} finally {
+		timers.reset();
+	}
+});
+
 nodeTest('forceRefresh re-acquires immediately (e.g. after UNAUTHENTICATED)', async (): Promise<void> => {
 	const stub: FetchStub = makeFetchStub([
 		{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 300) },
@@ -258,6 +282,189 @@ nodeTest('a transport-level fetch failure surfaces as OfflineTokenError', async 
 			return true;
 		}
 	);
+});
+
+nodeTest('a non-Error transport rejection is stringified into the OfflineTokenError', async (): Promise<void> => {
+	// Covers the String(cause) branch of the catch when the thrown value is not an Error.
+	// eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors -- exercising the non-Error cause path on purpose.
+	const fetchFn: FetchFn = (): Promise<FetchResponseLike> => Promise.reject('boom-string');
+	await assert.rejects(
+		(): Promise<OfflineTokenProvider> => doLogin({ fetchFn }),
+		(thrown: unknown): boolean => {
+			assert.ok(thrown instanceof OfflineTokenError);
+			assert.match(thrown.message, /boom-string/);
+			return true;
+		}
+	);
+});
+
+interface GrpcMetadataReadback {
+	get(key: string): unknown[];
+}
+
+nodeTest('getAuthMetadata yields @grpc/grpc-js metadata carrying the Bearer authorization', async (): Promise<void> => {
+	const stub: FetchStub = makeFetchStub([{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 300) }]);
+	const provider: OfflineTokenProvider = await doLogin({ fetchFn: stub.fetchFn });
+	try {
+		// eslint-disable-next-line @typescript-eslint/no-require-imports
+		const grpc: { Metadata: new () => GrpcMetadataReadback } = require('@grpc/grpc-js') as {
+			Metadata: new () => GrpcMetadataReadback;
+		};
+		const metadata: GrpcMetadataReadback = provider.getAuthMetadata() as unknown as GrpcMetadataReadback;
+		assert.ok(metadata instanceof grpc.Metadata);
+		assert.deepEqual(metadata.get('authorization'), ['Bearer access-1']);
+	} finally {
+		provider.stop();
+	}
+});
+
+nodeTest('login falls back to the global fetch and Date.now when neither is injected', async (): Promise<void> => {
+	const globalRef: { fetch?: FetchFn } = globalThis as { fetch?: FetchFn };
+	const previousFetch: FetchFn | undefined = globalRef.fetch;
+	const recorded: string[] = [];
+	globalRef.fetch = (url: string, init: FetchInit): Promise<FetchResponseLike> => {
+		recorded.push(url);
+		return Promise.resolve({
+			ok: true,
+			status: 200,
+			text: (): Promise<string> => Promise.resolve(tokenBody('access-global', 'offline-global', 300))
+		});
+	};
+	try {
+		// Omit both fetchFn (-> defaultFetch -> globalThis.fetch) and nowFn (-> Date.now).
+		const provider: OfflineTokenProvider = await login(BASE_OPTIONS);
+		try {
+			assert.equal(recorded.length, 1);
+			assert.equal(recorded[0], TOKEN_ENDPOINT);
+			assert.equal(provider.getAccessToken(), 'access-global');
+		} finally {
+			provider.stop();
+		}
+	} finally {
+		globalRef.fetch = previousFetch;
+	}
+});
+
+nodeTest('login throws OfflineTokenError when no fetchFn is given and no global fetch exists', async (): Promise<void> => {
+	const globalRef: { fetch?: FetchFn } = globalThis as { fetch?: FetchFn };
+	const previousFetch: FetchFn | undefined = globalRef.fetch;
+	delete (globalThis as { fetch?: FetchFn }).fetch;
+	try {
+		await assert.rejects(
+			(): Promise<OfflineTokenProvider> => login(BASE_OPTIONS),
+			(thrown: unknown): boolean => {
+				assert.ok(thrown instanceof OfflineTokenError);
+				assert.match(thrown.message, /No global fetch available/);
+				return true;
+			}
+		);
+	} finally {
+		globalRef.fetch = previousFetch;
+	}
+});
+
+nodeTest('login throws OfflineTokenError when access_token is missing', async (): Promise<void> => {
+	const stub: FetchStub = makeFetchStub([
+		{ ok: true, status: 200, bodyText: JSON.stringify({ refresh_token: 'r', expires_in: 300 }) }
+	]);
+	await assert.rejects(
+		(): Promise<OfflineTokenProvider> => doLogin({ fetchFn: stub.fetchFn }),
+		(thrown: unknown): boolean => {
+			assert.ok(thrown instanceof OfflineTokenError);
+			assert.match(thrown.message, /access_token/);
+			return true;
+		}
+	);
+});
+
+nodeTest('login throws OfflineTokenError when the body is valid JSON but not an object', async (): Promise<void> => {
+	const stub: FetchStub = makeFetchStub([{ ok: true, status: 200, bodyText: 'null' }]);
+	await assert.rejects(
+		(): Promise<OfflineTokenProvider> => doLogin({ fetchFn: stub.fetchFn }),
+		(thrown: unknown): boolean => {
+			assert.ok(thrown instanceof OfflineTokenError);
+			assert.match(thrown.message, /not an object/);
+			return true;
+		}
+	);
+});
+
+nodeTest('login throws OfflineTokenError when expires_in is not a number', async (): Promise<void> => {
+	const stub: FetchStub = makeFetchStub([
+		{ ok: true, status: 200, bodyText: JSON.stringify({ access_token: 'a', refresh_token: 'r', expires_in: 'soon' }) }
+	]);
+	await assert.rejects(
+		(): Promise<OfflineTokenProvider> => doLogin({ fetchFn: stub.fetchFn }),
+		(thrown: unknown): boolean => {
+			assert.ok(thrown instanceof OfflineTokenError);
+			assert.match(thrown.message, /expires_in/);
+			return true;
+		}
+	);
+});
+
+nodeTest('concurrent forceRefresh calls share a single in-flight refresh request', async (): Promise<void> => {
+	let releaseRefresh: () => void = (): void => undefined;
+	const gate: Promise<void> = new Promise<void>((resolve: () => void): void => {
+		releaseRefresh = resolve;
+	});
+	const requests: string[] = [];
+	let callIndex: number = 0;
+	const fetchFn: FetchFn = (_url: string, init: FetchInit): Promise<FetchResponseLike> => {
+		const form: URLSearchParams = new URLSearchParams(init.body);
+		requests.push(form.get('grant_type') ?? '');
+		const current: number = callIndex++;
+		const body: string = tokenBody(`access-${current}`, `offline-${current}`, 300);
+		const reply: FetchResponseLike = {
+			ok: true,
+			status: 200,
+			text: (): Promise<string> => Promise.resolve(body)
+		};
+		// The login (first) call resolves immediately; the refresh call waits on the gate.
+		if (current === 0) {
+			return Promise.resolve(reply);
+		}
+		return gate.then((): FetchResponseLike => reply);
+	};
+	const provider: OfflineTokenProvider = await doLogin({ fetchFn });
+	try {
+		// Two overlapping refreshes: the second must await the first's in-flight promise,
+		// so only ONE extra token request is issued.
+		const first: Promise<string> = provider.forceRefresh();
+		const second: Promise<string> = provider.forceRefresh();
+		releaseRefresh();
+		const [a, b]: [string, string] = await Promise.all([first, second]);
+		assert.equal(a, 'access-1');
+		assert.equal(b, 'access-1');
+		// 1 login + exactly 1 refresh (shared), not 2 refreshes.
+		assert.deepEqual(requests, ['password', 'refresh_token']);
+	} finally {
+		provider.stop();
+	}
+});
+
+nodeTest('forceRefresh after stop() refreshes once but does not reschedule a timer', async (): Promise<void> => {
+	const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
+	timers.enable({ apis: ['setTimeout'] });
+	try {
+		const stub: FetchStub = makeFetchStub([
+			{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 300) },
+			{ ok: true, status: 200, bodyText: tokenBody('access-2', 'offline-2', 300) }
+		]);
+		const provider: OfflineTokenProvider = await doLogin({ refreshSkewInS: 30, fetchFn: stub.fetchFn });
+		// stop() clears the active login-scheduled timer (exercises the clearTimeout branch).
+		provider.stop();
+		// A forced refresh still succeeds, but scheduleRefresh must early-return on `stopped`.
+		const refreshed: string = await provider.forceRefresh();
+		assert.equal(refreshed, 'access-2');
+		// No new timer was scheduled, so ticking past the would-be refresh fires nothing.
+		timers.tick(10 * 60 * 1000);
+		await Promise.resolve();
+		assert.equal(stub.requests.length, 2, 'no background refresh after stop()');
+		assert.equal(provider.getAccessToken(), 'access-2');
+	} finally {
+		timers.reset();
+	}
 });
 
 /**

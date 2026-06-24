@@ -205,6 +205,7 @@ export class OfflineTokenProvider {
 			void this.refreshOnce();
 		}, delayMs);
 		// Do not keep the process alive solely for the refresh timer.
+		/* c8 ignore next 3 -- Node's Timeout always has unref(); the no-unref else-path is unreachable here. */
 		if (typeof this.refreshTimer.unref === 'function') {
 			this.refreshTimer.unref();
 		}
@@ -233,6 +234,7 @@ export class OfflineTokenProvider {
 		const response: KeycloakTokenResponse = await postForm(this.fetchFn, this.tokenEndpoint, form);
 		this.accessToken = response.access_token;
 		// Keycloak may rotate the (offline) refresh token; keep the newest.
+		/* c8 ignore next 3 -- parseTokenResponse rejects an empty refresh_token, so the length===0 else-path is unreachable. */
 		if (response.refresh_token.length > 0) {
 			this.refreshToken = response.refresh_token;
 		}

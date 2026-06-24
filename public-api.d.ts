@@ -1,3 +1,4 @@
+export * from './api/auth/offlineTokenProvider.d';
 export * from './api/ondewo/csi/conversation_pb.d';
 export * from './api/ondewo/csi/conversation_grpc_pb.d';
 export * from './api/ondewo/nlu/utility_grpc_pb.d';
