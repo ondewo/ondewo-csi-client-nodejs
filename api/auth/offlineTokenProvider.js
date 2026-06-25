@@ -13,9 +13,13 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 exports.login = exports.OfflineTokenProvider = exports.OfflineTokenError = void 0;
 
+/** Path segment between the Keycloak base URL and the realm name. */
 var TOKEN_PATH_PREFIX = '/realms/';
+/** Path segment after the realm name pointing at the OIDC token endpoint. */
 var TOKEN_PATH_SUFFIX = '/protocol/openid-connect/token';
+/** Default seconds-before-expiry at which a proactive refresh fires. */
 var DEFAULT_REFRESH_SKEW_IN_S = 30;
+/** OAuth scope requesting an offline (long-lived) refresh token alongside the OIDC token. */
 var SCOPE_OFFLINE_ACCESS = 'openid offline_access';
 
 /**
@@ -23,6 +27,10 @@ var SCOPE_OFFLINE_ACCESS = 'openid offline_access';
  * offline session, network error, malformed response). Callers may re-login.
  */
 class OfflineTokenError extends Error {
+	/**
+	 * @param {string} message human-readable failure description.
+	 * @param {number} [status] optional HTTP status from the Keycloak token endpoint.
+	 */
 	constructor(message, status) {
 		super(message);
 		this.name = 'OfflineTokenError';
@@ -37,6 +45,12 @@ exports.OfflineTokenError = OfflineTokenError;
  * Construct via login(), not directly.
  */
 class OfflineTokenProvider {
+	/**
+	 * @internal Use login().
+	 *
+	 * @param {object} options the validated login + refresh configuration.
+	 * @param {object} initialResponse the parsed token-endpoint response from the initial ROPC login.
+	 */
 	constructor(options, initialResponse) {
 		var trimmedUrl = options.keycloakUrl.replace(/\/+$/, '');
 		this.tokenEndpoint = trimmedUrl + TOKEN_PATH_PREFIX + options.realm + TOKEN_PATH_SUFFIX;
@@ -57,14 +71,29 @@ class OfflineTokenProvider {
 		this.scheduleRefresh(initialResponse.expires_in);
 	}
 
+	/**
+	 * The current access token (a Keycloak JWT).
+	 *
+	 * @returns {string} the live access token string.
+	 */
 	getAccessToken() {
 		return this.accessToken;
 	}
 
+	/**
+	 * The value for the HTTP/gRPC `Authorization` header: `Bearer <jwt>`.
+	 *
+	 * @returns {string} the `Authorization` header value.
+	 */
 	getAuthorizationHeader() {
 		return 'Bearer ' + this.accessToken;
 	}
 
+	/**
+	 * gRPC metadata carrying `authorization: Bearer <jwt>` (decision D5). Lazily loads `@grpc/grpc-js`.
+	 *
+	 * @returns {object} a `@grpc/grpc-js` `Metadata` instance with the `authorization` entry set.
+	 */
 	getAuthMetadata() {
 		var grpc = require('@grpc/grpc-js');
 		var metadata = new grpc.Metadata();
@@ -72,11 +101,18 @@ class OfflineTokenProvider {
 		return metadata;
 	}
 
+	/**
+	 * Force an immediate refresh from the offline token (e.g. after an UNAUTHENTICATED).
+	 * Concurrent calls share a single in-flight request.
+	 *
+	 * @returns {Promise<string>} the freshly acquired access token.
+	 */
 	async forceRefresh() {
 		await this.refreshOnce();
 		return this.accessToken;
 	}
 
+	/** Stop the background refresh loop and release the timer. */
 	stop() {
 		this.stopped = true;
 		if (this.refreshTimer !== undefined) {
@@ -85,6 +121,14 @@ class OfflineTokenProvider {
 		}
 	}
 
+	/**
+	 * Arm a one-shot timer to refresh the access token `refreshSkewInS` seconds
+	 * before it expires. No-ops when stopped, and self-stops when the next refresh
+	 * would fire past the deadline.
+	 *
+	 * @param {number} expiresInS lifetime, in seconds, of the access token just received.
+	 * @returns {void}
+	 */
 	scheduleRefresh(expiresInS) {
 		if (this.stopped) {
 			return;
@@ -106,6 +150,12 @@ class OfflineTokenProvider {
 		}
 	}
 
+	/**
+	 * Run exactly one refresh, coalescing overlapping callers onto a single
+	 * in-flight request.
+	 *
+	 * @returns {Promise<void>} resolves once the (shared) refresh has settled.
+	 */
 	async refreshOnce() {
 		if (this.inFlightRefresh !== undefined) {
 			await this.inFlightRefresh;
@@ -120,6 +170,13 @@ class OfflineTokenProvider {
 		}
 	}
 
+	/**
+	 * Exchange the offline refresh token for a fresh access token, persist the
+	 * (possibly rotated) refresh token, and re-arm the background refresh.
+	 *
+	 * @returns {Promise<void>} resolves once the new token has been stored and the next refresh scheduled.
+	 * @throws {OfflineTokenError} if the refresh request fails or the response is malformed.
+	 */
 	async performRefresh() {
 		var form = {
 			grant_type: 'refresh_token',
@@ -139,6 +196,10 @@ exports.OfflineTokenProvider = OfflineTokenProvider;
 /**
  * Perform the one-time ROPC + offline_access login and return a started
  * OfflineTokenProvider that auto-refreshes the access token.
+ *
+ * @param {object} options login + refresh configuration.
+ * @returns {Promise<OfflineTokenProvider>} a provider whose getAuthMetadata() yields `Authorization: Bearer`.
+ * @throws {OfflineTokenError} if the credentials are rejected or the response is malformed.
  */
 async function login(options) {
 	var fetchFn = options.fetchFn != null ? options.fetchFn : defaultFetch;
@@ -156,6 +217,14 @@ async function login(options) {
 }
 exports.login = login;
 
+/**
+ * Default fetch layer: delegate to the global `fetch` (Node >= 18).
+ *
+ * @param {string} input the request URL.
+ * @param {object} init the request method, headers, and body.
+ * @returns {Promise<object>} the fetch response promise.
+ * @throws {OfflineTokenError} if no global `fetch` exists and none was injected.
+ */
 function defaultFetch(input, init) {
 	var globalFetch = globalThis.fetch;
 	if (globalFetch === undefined) {
@@ -164,6 +233,15 @@ function defaultFetch(input, init) {
 	return globalFetch(input, init);
 }
 
+/**
+ * POST a URL-encoded form to the Keycloak token endpoint and parse the response.
+ *
+ * @param {Function} fetchFn the HTTP layer to use.
+ * @param {string} endpoint the fully-qualified token endpoint URL.
+ * @param {object} form the URL-encoded field map (grant, client, credentials).
+ * @returns {Promise<object>} the validated token-endpoint response.
+ * @throws {OfflineTokenError} on transport failure, a non-2xx status, or a malformed body.
+ */
 async function postForm(fetchFn, endpoint, form) {
 	var body = new URLSearchParams(form).toString();
 	var response;
@@ -184,6 +262,13 @@ async function postForm(fetchFn, endpoint, form) {
 	return parseTokenResponse(raw);
 }
 
+/**
+ * Parse and validate a raw token-endpoint body into a token response object.
+ *
+ * @param {string} raw the response body text.
+ * @returns {object} the validated token fields (`access_token`, `refresh_token`, `expires_in`).
+ * @throws {OfflineTokenError} if the body is not JSON, is not an object, or is missing/mistyped any required field.
+ */
 function parseTokenResponse(raw) {
 	var parsed;
 	try {

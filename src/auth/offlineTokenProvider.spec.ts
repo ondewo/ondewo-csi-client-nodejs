@@ -11,42 +11,66 @@ import assert from 'node:assert/strict';
 import { login, OfflineTokenError, OfflineTokenProvider } from './offlineTokenProvider';
 import type { FetchInit, FetchResponseLike } from './offlineTokenProvider';
 
+/** Shape of the injected fetch double the tests pass into {@link login}. */
 interface FetchFn {
 	(url: string, init: FetchInit): Promise<FetchResponseLike>;
 }
 
+/** One request captured by the fetch stub, with its URL-decoded form fields. */
 interface RecordedRequest {
+	/** The endpoint URL the provider POSTed to. */
 	url: string;
+	/** The request method, headers, and raw body. */
 	init: FetchInit;
+	/** The request body parsed as URL-encoded form fields. */
 	form: URLSearchParams;
 }
 
+/** A queued, canned reply for the fetch stub to return for one request. */
 interface StubReply {
+	/** Whether the response models a 2xx success. */
 	ok: boolean;
+	/** The HTTP status code to surface. */
 	status: number;
+	/** The raw response body text. */
 	bodyText: string;
 }
 
+/** The fetch double plus the live list of requests it has recorded. */
 interface FetchStub {
+	/** The injectable fetch function. */
 	fetchFn: FetchFn;
+	/** Requests captured so far, in call order. */
 	requests: RecordedRequest[];
 }
 
+/** Per-test overrides layered onto {@link BASE_OPTIONS} by {@link doLogin}. */
 interface LoginOverrides {
+	/** Optional Keycloak base URL override (e.g. to test trailing-slash normalisation). */
 	keycloakUrl?: string;
+	/** Optional proactive-refresh skew in seconds. */
 	refreshSkewInS?: number;
+	/** Optional upper bound, in seconds, on the background refresh loop. */
 	tokenExpirationInS?: number;
+	/** The fetch double to inject (always provided). */
 	fetchFn: FetchFn;
 }
 
+/** The shared, complete set of login options reused across tests. */
 interface BaseOptions {
+	/** Keycloak base URL. */
 	keycloakUrl: string;
+	/** Realm name. */
 	realm: string;
+	/** Public ROPC client id. */
 	clientId: string;
+	/** Technical-user username/email. */
 	username: string;
+	/** Technical-user password. */
 	password: string;
 }
 
+/** Canonical login options shared by every test (overridable via {@link doLogin}). */
 const BASE_OPTIONS: BaseOptions = {
 	keycloakUrl: 'https://auth.example.com/auth',
 	realm: 'ondewo-ccai-platform',
@@ -55,10 +79,16 @@ const BASE_OPTIONS: BaseOptions = {
 	password: 'super-secret'
 };
 
+/** The token endpoint the provider must derive from {@link BASE_OPTIONS}. */
 const TOKEN_ENDPOINT: string =
 	'https://auth.example.com/auth/realms/ondewo-ccai-platform/protocol/openid-connect/token';
 
-/** Build a fetch stub that returns queued replies and records every request. */
+/**
+ * Build a fetch stub that returns queued replies and records every request.
+ *
+ * @param replies the canned replies to return, one per request in order.
+ * @returns the fetch double and the live list of recorded requests.
+ */
 function makeFetchStub(replies: StubReply[]): FetchStub {
 	const requests: RecordedRequest[] = [];
 	const queue: StubReply[] = [...replies];
@@ -78,10 +108,25 @@ function makeFetchStub(replies: StubReply[]): FetchStub {
 	return { fetchFn, requests };
 }
 
+/**
+ * Serialise a well-formed Keycloak token-endpoint JSON body.
+ *
+ * @param accessToken the `access_token` field value.
+ * @param refreshToken the `refresh_token` field value.
+ * @param expiresIn the `expires_in` field value, in seconds.
+ * @returns the JSON-encoded token response body.
+ */
 function tokenBody(accessToken: string, refreshToken: string, expiresIn: number): string {
 	return JSON.stringify({ access_token: accessToken, refresh_token: refreshToken, expires_in: expiresIn });
 }
 
+/**
+ * Invoke {@link login} with {@link BASE_OPTIONS} plus per-test overrides and a
+ * fixed clock (`nowFn` returning 0) so timer scheduling is deterministic.
+ *
+ * @param overrides the fetch double and optional login/refresh overrides.
+ * @returns the started provider promise.
+ */
 function doLogin(overrides: LoginOverrides): Promise<OfflineTokenProvider> {
 	return login({
 		...BASE_OPTIONS,
@@ -93,6 +138,7 @@ function doLogin(overrides: LoginOverrides): Promise<OfflineTokenProvider> {
 	});
 }
 
+/** The initial login issues a ROPC + `offline_access` request to the public client and sends no `client_secret` (Q1). */
 nodeTest('login performs ROPC + offline_access against the public client (no secret)', async (): Promise<void> => {
 	const stub: FetchStub = makeFetchStub([{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 300) }]);
 	const provider: OfflineTokenProvider = await doLogin({ fetchFn: stub.fetchFn });
@@ -116,6 +162,7 @@ nodeTest('login performs ROPC + offline_access against the public client (no sec
 	}
 });
 
+/** Trailing slashes on `keycloakUrl` are stripped so the derived token endpoint is canonical. */
 nodeTest('login normalises a trailing slash in keycloakUrl', async (): Promise<void> => {
 	const stub: FetchStub = makeFetchStub([{ ok: true, status: 200, bodyText: tokenBody('a', 'r', 300) }]);
 	const provider: OfflineTokenProvider = await doLogin({
@@ -126,6 +173,7 @@ nodeTest('login normalises a trailing slash in keycloakUrl', async (): Promise<v
 	assert.equal(stub.requests[0].url, TOKEN_ENDPOINT);
 });
 
+/** The background timer fires `skew` seconds before expiry and refreshes the access token from the offline token. */
 nodeTest('the background loop refreshes the access token from the offline token before expiry', async (): Promise<void> => {
 	const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
 	timers.enable({ apis: ['setTimeout'] });
@@ -150,6 +198,7 @@ nodeTest('the background loop refreshes the access token from the offline token 
 	}
 });
 
+/** When Keycloak rotates the offline refresh token, the newest one is used on the subsequent refresh. */
 nodeTest('a rotated offline refresh token is used for the next refresh', async (): Promise<void> => {
 	const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
 	timers.enable({ apis: ['setTimeout'] });
@@ -173,6 +222,7 @@ nodeTest('a rotated offline refresh token is used for the next refresh', async (
 	}
 });
 
+/** A `tokenExpirationInS` bound below the first-refresh point stops the loop so no refresh ever fires. */
 nodeTest('tokenExpirationInS stops the refresh loop before the next refresh would fire', async (): Promise<void> => {
 	const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
 	timers.enable({ apis: ['setTimeout'] });
@@ -193,6 +243,7 @@ nodeTest('tokenExpirationInS stops the refresh loop before the next refresh woul
 	}
 });
 
+/** A `tokenExpirationInS` bound well above the first-refresh point leaves the loop running (false side of the deadline guard). */
 nodeTest('a bound that comfortably fits the next refresh still lets the loop refresh', async (): Promise<void> => {
 	const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
 	timers.enable({ apis: ['setTimeout'] });
@@ -217,6 +268,7 @@ nodeTest('a bound that comfortably fits the next refresh still lets the loop ref
 	}
 });
 
+/** {@link OfflineTokenProvider.forceRefresh} synchronously re-acquires a token via the refresh grant. */
 nodeTest('forceRefresh re-acquires immediately (e.g. after UNAUTHENTICATED)', async (): Promise<void> => {
 	const stub: FetchStub = makeFetchStub([
 		{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 300) },
@@ -233,6 +285,7 @@ nodeTest('forceRefresh re-acquires immediately (e.g. after UNAUTHENTICATED)', as
 	}
 });
 
+/** A non-2xx token response raises {@link OfflineTokenError} carrying the HTTP status. */
 nodeTest('login throws OfflineTokenError with status on invalid credentials', async (): Promise<void> => {
 	const stub: FetchStub = makeFetchStub([{ ok: false, status: 401, bodyText: JSON.stringify({ error: 'invalid_grant' }) }]);
 	await assert.rejects(
@@ -246,6 +299,7 @@ nodeTest('login throws OfflineTokenError with status on invalid credentials', as
 	);
 });
 
+/** A 2xx response lacking `refresh_token` (offline scope not granted) raises {@link OfflineTokenError}. */
 nodeTest('login throws OfflineTokenError when offline refresh token is absent', async (): Promise<void> => {
 	const stub: FetchStub = makeFetchStub([
 		{ ok: true, status: 200, bodyText: JSON.stringify({ access_token: 'a', expires_in: 300 }) }
@@ -260,6 +314,7 @@ nodeTest('login throws OfflineTokenError when offline refresh token is absent', 
 	);
 });
 
+/** A non-JSON response body raises {@link OfflineTokenError}. */
 nodeTest('login throws OfflineTokenError on a non-JSON body', async (): Promise<void> => {
 	const stub: FetchStub = makeFetchStub([{ ok: true, status: 200, bodyText: '<html>not json</html>' }]);
 	await assert.rejects(
@@ -272,6 +327,7 @@ nodeTest('login throws OfflineTokenError on a non-JSON body', async (): Promise<
 	);
 });
 
+/** An `Error` rejection from the fetch layer is wrapped in {@link OfflineTokenError} preserving its message. */
 nodeTest('a transport-level fetch failure surfaces as OfflineTokenError', async (): Promise<void> => {
 	const fetchFn: FetchFn = (): Promise<FetchResponseLike> => Promise.reject(new Error('ECONNREFUSED'));
 	await assert.rejects(
@@ -284,6 +340,7 @@ nodeTest('a transport-level fetch failure surfaces as OfflineTokenError', async 
 	);
 });
 
+/** A non-`Error` rejection from the fetch layer is `String()`-coerced into the {@link OfflineTokenError} message. */
 nodeTest('a non-Error transport rejection is stringified into the OfflineTokenError', async (): Promise<void> => {
 	// Covers the String(cause) branch of the catch when the thrown value is not an Error.
 	// eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors -- exercising the non-Error cause path on purpose.
@@ -298,10 +355,12 @@ nodeTest('a non-Error transport rejection is stringified into the OfflineTokenEr
 	);
 });
 
+/** Read side of `@grpc/grpc-js` `Metadata` used to assert what {@link OfflineTokenProvider.getAuthMetadata} set. */
 interface GrpcMetadataReadback {
 	get(key: string): unknown[];
 }
 
+/** {@link OfflineTokenProvider.getAuthMetadata} returns real `@grpc/grpc-js` metadata with the `authorization` Bearer entry set. */
 nodeTest('getAuthMetadata yields @grpc/grpc-js metadata carrying the Bearer authorization', async (): Promise<void> => {
 	const stub: FetchStub = makeFetchStub([{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 300) }]);
 	const provider: OfflineTokenProvider = await doLogin({ fetchFn: stub.fetchFn });
@@ -318,6 +377,7 @@ nodeTest('getAuthMetadata yields @grpc/grpc-js metadata carrying the Bearer auth
 	}
 });
 
+/** Omitting both `fetchFn` and `nowFn` makes {@link login} fall back to the global `fetch` and `Date.now`. */
 nodeTest('login falls back to the global fetch and Date.now when neither is injected', async (): Promise<void> => {
 	const globalRef: { fetch?: FetchFn } = globalThis as { fetch?: FetchFn };
 	const previousFetch: FetchFn | undefined = globalRef.fetch;
@@ -345,6 +405,7 @@ nodeTest('login falls back to the global fetch and Date.now when neither is inje
 	}
 });
 
+/** With neither an injected nor a global `fetch`, {@link login} raises {@link OfflineTokenError}. */
 nodeTest('login throws OfflineTokenError when no fetchFn is given and no global fetch exists', async (): Promise<void> => {
 	const globalRef: { fetch?: FetchFn } = globalThis as { fetch?: FetchFn };
 	const previousFetch: FetchFn | undefined = globalRef.fetch;
@@ -363,6 +424,7 @@ nodeTest('login throws OfflineTokenError when no fetchFn is given and no global 
 	}
 });
 
+/** A 2xx response lacking `access_token` raises {@link OfflineTokenError}. */
 nodeTest('login throws OfflineTokenError when access_token is missing', async (): Promise<void> => {
 	const stub: FetchStub = makeFetchStub([
 		{ ok: true, status: 200, bodyText: JSON.stringify({ refresh_token: 'r', expires_in: 300 }) }
@@ -377,6 +439,7 @@ nodeTest('login throws OfflineTokenError when access_token is missing', async ()
 	);
 });
 
+/** A body that is valid JSON but not an object (e.g. `null`) raises {@link OfflineTokenError}. */
 nodeTest('login throws OfflineTokenError when the body is valid JSON but not an object', async (): Promise<void> => {
 	const stub: FetchStub = makeFetchStub([{ ok: true, status: 200, bodyText: 'null' }]);
 	await assert.rejects(
@@ -389,6 +452,7 @@ nodeTest('login throws OfflineTokenError when the body is valid JSON but not an 
 	);
 });
 
+/** A non-numeric `expires_in` raises {@link OfflineTokenError}. */
 nodeTest('login throws OfflineTokenError when expires_in is not a number', async (): Promise<void> => {
 	const stub: FetchStub = makeFetchStub([
 		{ ok: true, status: 200, bodyText: JSON.stringify({ access_token: 'a', refresh_token: 'r', expires_in: 'soon' }) }
@@ -403,6 +467,7 @@ nodeTest('login throws OfflineTokenError when expires_in is not a number', async
 	);
 });
 
+/** Overlapping {@link OfflineTokenProvider.forceRefresh} calls coalesce onto one in-flight request, not two. */
 nodeTest('concurrent forceRefresh calls share a single in-flight refresh request', async (): Promise<void> => {
 	let releaseRefresh: () => void = (): void => undefined;
 	const gate: Promise<void> = new Promise<void>((resolve: () => void): void => {
@@ -443,6 +508,7 @@ nodeTest('concurrent forceRefresh calls share a single in-flight refresh request
 	}
 });
 
+/** After {@link OfflineTokenProvider.stop}, a forced refresh still succeeds but the loop never re-arms a timer. */
 nodeTest('forceRefresh after stop() refreshes once but does not reschedule a timer', async (): Promise<void> => {
 	const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
 	timers.enable({ apis: ['setTimeout'] });
