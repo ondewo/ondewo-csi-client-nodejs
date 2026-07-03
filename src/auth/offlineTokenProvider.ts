@@ -203,7 +203,7 @@ export class OfflineTokenProvider {
 			Metadata: new () => BearerMetadata;
 		};
 		const metadata: BearerMetadata = new grpc.Metadata();
-		metadata.set('authorization', this.getAuthorizationHeader());
+		metadata.set('Authorization', this.getAuthorizationHeader());
 		return metadata;
 	}
 

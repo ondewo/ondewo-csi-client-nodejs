@@ -371,7 +371,7 @@ nodeTest('getAuthMetadata yields @grpc/grpc-js metadata carrying the Bearer auth
 		};
 		const metadata: GrpcMetadataReadback = provider.getAuthMetadata() as unknown as GrpcMetadataReadback;
 		assert.ok(metadata instanceof grpc.Metadata);
-		assert.deepEqual(metadata.get('authorization'), ['Bearer access-1']);
+		assert.deepEqual(metadata.get('Authorization'), ['Bearer access-1']);
 	} finally {
 		provider.stop();
 	}

@@ -97,7 +97,7 @@ class OfflineTokenProvider {
 	getAuthMetadata() {
 		var grpc = require('@grpc/grpc-js');
 		var metadata = new grpc.Metadata();
-		metadata.set('authorization', this.getAuthorizationHeader());
+		metadata.set('Authorization', this.getAuthorizationHeader());
 		return metadata;
 	}
 
