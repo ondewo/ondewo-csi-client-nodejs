@@ -7,7 +7,7 @@
 // Auth: `login(...)` performs a one-time Resource-Owner-Password-Credentials
 // login against a public Keycloak client and keeps a short-lived access token
 // warm; `provider.getAuthMetadata()` yields the `authorization: Bearer <jwt>`
-// gRPC metadata passed on every call. There is no cai-token / HTTP-basic /
+// gRPC metadata passed on every call. There is no legacy per-request token / HTTP-basic /
 // users.login() credential check anymore.
 //
 // A published consumer imports everything from the package root, e.g.:

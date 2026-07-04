@@ -10,7 +10,7 @@ offline-token flow) and call the CSI `Conversations.ListS2sPipelines` unary RPC.
 Auth is a one-time `login(...)` (Resource-Owner-Password-Credentials against a
 public Keycloak client) that keeps a short-lived access token warm;
 `provider.getAuthMetadata()` yields the `authorization: Bearer <jwt>` gRPC
-metadata attached to every call. There is no cai-token / HTTP-basic /
+metadata attached to every call. There is no legacy per-request token / HTTP-basic /
 `users.login()` credential check anymore.
 
 Run against a reachable CSI server:
