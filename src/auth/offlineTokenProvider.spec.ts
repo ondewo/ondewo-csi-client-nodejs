@@ -268,6 +268,33 @@ nodeTest('a bound that comfortably fits the next refresh still lets the loop ref
 	}
 });
 
+/** With `expires_in <= skew` and no deadline, the refresh delay is floored at 1 s so the loop never busy-spins. */
+nodeTest('a sub-skew expires_in floors the refresh delay at 1 s instead of busy-looping', async (): Promise<void> => {
+	const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
+	timers.enable({ apis: ['setTimeout'] });
+	try {
+		const stub: FetchStub = makeFetchStub([
+			{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 10) },
+			{ ok: true, status: 200, bodyText: tokenBody('access-2', 'offline-2', 300) }
+		]);
+		// expires_in 10 <= skew 30 → without the floor delayMs would be 0 (hot loop); it must be 1000.
+		const provider: OfflineTokenProvider = await doLogin({ refreshSkewInS: 30, fetchFn: stub.fetchFn });
+		assert.equal(provider.getAccessToken(), 'access-1');
+		// Just below the 1 s floor: nothing fires yet (a 0 ms delay would already have refreshed).
+		timers.tick(999);
+		await Promise.resolve();
+		assert.equal(stub.requests.length, 1, 'refresh must not fire before the 1 s floor');
+		assert.equal(provider.getAccessToken(), 'access-1');
+		// At the floor the refresh fires exactly once.
+		timers.tick(1);
+		await waitForToken(provider, 'access-2');
+		assert.equal(stub.requests.length, 2);
+		provider.stop();
+	} finally {
+		timers.reset();
+	}
+});
+
 /** {@link OfflineTokenProvider.forceRefresh} synchronously re-acquires a token via the refresh grant. */
 nodeTest('forceRefresh re-acquires immediately (e.g. after UNAUTHENTICATED)', async (): Promise<void> => {
 	const stub: FetchStub = makeFetchStub([
@@ -355,24 +382,37 @@ nodeTest('a non-Error transport rejection is stringified into the OfflineTokenEr
 	);
 });
 
-/** Read side of `@grpc/grpc-js` `Metadata` used to assert what {@link OfflineTokenProvider.getAuthMetadata} set. */
+/** Read/spy side of `@grpc/grpc-js` `Metadata` used to assert what {@link OfflineTokenProvider.getAuthMetadata} set. */
 interface GrpcMetadataReadback {
 	get(key: string): unknown[];
+	set(key: string, value: string): void;
 }
 
-/** {@link OfflineTokenProvider.getAuthMetadata} returns real `@grpc/grpc-js` metadata with the `authorization` Bearer entry set. */
-nodeTest('getAuthMetadata yields @grpc/grpc-js metadata carrying the Bearer authorization', async (): Promise<void> => {
+/**
+ * {@link OfflineTokenProvider.getAuthMetadata} returns real `@grpc/grpc-js` metadata whose bearer entry is set
+ * under the **lowercase** `authorization` key. grpc-js normalises the key on `set`, so `get`/`getMap` cannot tell
+ * the source casing apart — we therefore spy on `Metadata.prototype.set` to capture the raw key the provider passes,
+ * which must be lowercase (native grpc-python peers reject a non-lowercase key at call time).
+ */
+nodeTest('getAuthMetadata sets the bearer entry under the lowercase authorization key', async (): Promise<void> => {
 	const stub: FetchStub = makeFetchStub([{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 300) }]);
 	const provider: OfflineTokenProvider = await doLogin({ fetchFn: stub.fetchFn });
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
+	const grpc: { Metadata: { prototype: GrpcMetadataReadback; new (): GrpcMetadataReadback } } = require('@grpc/grpc-js');
+	const originalSet: (key: string, value: string) => void = grpc.Metadata.prototype.set;
+	const rawKeys: string[] = [];
+	grpc.Metadata.prototype.set = function (key: string, value: string): void {
+		rawKeys.push(key);
+		originalSet.call(this, key, value);
+	};
 	try {
-		// eslint-disable-next-line @typescript-eslint/no-require-imports
-		const grpc: { Metadata: new () => GrpcMetadataReadback } = require('@grpc/grpc-js') as {
-			Metadata: new () => GrpcMetadataReadback;
-		};
 		const metadata: GrpcMetadataReadback = provider.getAuthMetadata() as unknown as GrpcMetadataReadback;
 		assert.ok(metadata instanceof grpc.Metadata);
-		assert.deepEqual(metadata.get('Authorization'), ['Bearer access-1']);
+		// The raw key the provider handed to grpc-js must be exactly lowercase 'authorization'.
+		assert.deepEqual(rawKeys, ['authorization']);
+		assert.deepEqual(metadata.get('authorization'), ['Bearer access-1']);
 	} finally {
+		grpc.Metadata.prototype.set = originalSet;
 		provider.stop();
 	}
 });

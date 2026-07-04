@@ -19,6 +19,8 @@ var TOKEN_PATH_PREFIX = '/realms/';
 var TOKEN_PATH_SUFFIX = '/protocol/openid-connect/token';
 /** Default seconds-before-expiry at which a proactive refresh fires. */
 var DEFAULT_REFRESH_SKEW_IN_S = 30;
+/** Floor, in seconds, on the scheduled refresh delay so a short-lived token never busy-loops the endpoint. */
+var MIN_REFRESH_DELAY_IN_S = 1;
 /** OAuth scope requesting an offline (long-lived) refresh token alongside the OIDC token. */
 var SCOPE_OFFLINE_ACCESS = 'openid offline_access';
 
@@ -97,7 +99,10 @@ class OfflineTokenProvider {
 	getAuthMetadata() {
 		var grpc = require('@grpc/grpc-js');
 		var metadata = new grpc.Metadata();
-		metadata.set('Authorization', this.getAuthorizationHeader());
+		// Lowercase 'authorization' is mandatory: native gRPC (grpc-python peers)
+		// rejects a non-lowercase metadata key at call time (grpc-js would normalise
+		// it, but the key must match the other clients on the wire).
+		metadata.set('authorization', this.getAuthorizationHeader());
 		return metadata;
 	}
 
@@ -135,7 +140,7 @@ class OfflineTokenProvider {
 		}
 		var lifetimeS = Math.max(expiresInS, 0);
 		var skewS = Math.min(this.refreshSkewInS, lifetimeS);
-		var delayMs = Math.max((lifetimeS - skewS) * 1000, 0);
+		var delayMs = Math.max((lifetimeS - skewS) * 1000, MIN_REFRESH_DELAY_IN_S * 1000);
 		var fireAtMs = this.nowFn() + delayMs;
 		if (this.deadlineMs !== undefined && fireAtMs >= this.deadlineMs) {
 			this.stop();
