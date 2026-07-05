@@ -60,7 +60,7 @@ class OfflineTokenProvider {
 		this.username = options.username;
 		this.password = options.password;
 		this.refreshSkewInS = options.refreshSkewInS != null ? options.refreshSkewInS : DEFAULT_REFRESH_SKEW_IN_S;
-		this.fetchFn = options.fetchFn != null ? options.fetchFn : defaultFetch;
+		this.fetchFn = options.fetchFn != null ? options.fetchFn : createDefaultFetch(options.keycloakVerifySsl !== false);
 		this.nowFn = options.nowFn != null ? options.nowFn : Date.now;
 		this.deadlineMs =
 			options.tokenExpirationInS === undefined ? undefined : this.nowFn() + options.tokenExpirationInS * 1000;
@@ -207,7 +207,7 @@ exports.OfflineTokenProvider = OfflineTokenProvider;
  * @throws {OfflineTokenError} if the credentials are rejected or the response is malformed.
  */
 async function login(options) {
-	var fetchFn = options.fetchFn != null ? options.fetchFn : defaultFetch;
+	var fetchFn = options.fetchFn != null ? options.fetchFn : createDefaultFetch(options.keycloakVerifySsl !== false);
 	var form = {
 		grant_type: 'password',
 		client_id: options.clientId,
@@ -223,19 +223,31 @@ async function login(options) {
 exports.login = login;
 
 /**
- * Default fetch layer: delegate to the global `fetch` (Node >= 18).
+ * Build the default fetch layer: delegate to the global `fetch` (Node >= 18).
  *
- * @param {string} input the request URL.
- * @param {object} init the request method, headers, and body.
- * @returns {Promise<object>} the fetch response promise.
+ * When `verifySsl` is `false`, a cached undici `Agent` with `rejectUnauthorized:
+ * false` is attached to every request as its `dispatcher`, so the Keycloak token
+ * call skips TLS certificate verification (opt-in insecure; Node-only). The
+ * dispatcher is built once here and reused for all requests this transport makes;
+ * the secure default never loads undici.
+ *
+ * @param {boolean} verifySsl whether to verify the Keycloak server's TLS certificate.
+ * @returns {Function} a fetch layer bound to the chosen TLS-verification behaviour.
  * @throws {OfflineTokenError} if no global `fetch` exists and none was injected.
  */
-function defaultFetch(input, init) {
-	var globalFetch = globalThis.fetch;
-	if (globalFetch === undefined) {
-		throw new OfflineTokenError('No global fetch available; pass options.fetchFn explicitly.');
+function createDefaultFetch(verifySsl) {
+	var dispatcher;
+	if (!verifySsl) {
+		var Agent = require('undici').Agent;
+		dispatcher = new Agent({ connect: { rejectUnauthorized: false } });
 	}
-	return globalFetch(input, init);
+	return function (input, init) {
+		var globalFetch = globalThis.fetch;
+		if (globalFetch === undefined) {
+			throw new OfflineTokenError('No global fetch available; pass options.fetchFn explicitly.');
+		}
+		return globalFetch(input, dispatcher === undefined ? init : Object.assign({}, init, { dispatcher: dispatcher }));
+	};
 }
 
 /**

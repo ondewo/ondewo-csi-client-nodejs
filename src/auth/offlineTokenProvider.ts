@@ -34,6 +34,13 @@ export interface FetchInit {
 	method: string;
 	headers: Record<string, string>;
 	body: string;
+	/**
+	 * Optional undici dispatcher (Node's non-standard `fetch` extension). Set only
+	 * on the default transport when `keycloakVerifySsl` is `false`; carries an
+	 * `Agent({ connect: { rejectUnauthorized: false } })` so the token request skips
+	 * TLS certificate verification. Left `undefined` on the secure default path.
+	 */
+	dispatcher?: unknown;
 }
 
 /** Minimal subset of `Response` the provider relies on. */
@@ -70,6 +77,14 @@ export interface OfflineTokenLoginOptions {
 	refreshSkewInS?: number;
 	/** Injectable HTTP layer; defaults to the global `fetch`. */
 	fetchFn?: FetchLike;
+	/**
+	 * When `false`, DISABLE TLS certificate verification on the Keycloak token
+	 * request (opt-in insecure, for a self-signed local Envoy at
+	 * `https://localhost:12001/auth`). Defaults to `true` (verify — secure, unchanged
+	 * behaviour). Ignored when a custom `fetchFn` is injected. Node-only: implemented
+	 * via an undici dispatcher, so it is a no-op in a browser bundle.
+	 */
+	keycloakVerifySsl?: boolean;
 	/** Injectable clock returning epoch milliseconds; defaults to `Date.now`. */
 	nowFn?: () => number;
 }
@@ -162,7 +177,7 @@ export class OfflineTokenProvider {
 		this.username = options.username;
 		this.password = options.password;
 		this.refreshSkewInS = options.refreshSkewInS ?? DEFAULT_REFRESH_SKEW_IN_S;
-		this.fetchFn = options.fetchFn ?? defaultFetch;
+		this.fetchFn = options.fetchFn ?? createDefaultFetch(options.keycloakVerifySsl ?? true);
 		this.nowFn = options.nowFn ?? Date.now;
 		this.deadlineMs =
 			options.tokenExpirationInS === undefined ? undefined : this.nowFn() + options.tokenExpirationInS * 1000;
@@ -316,7 +331,7 @@ export class OfflineTokenProvider {
  * @throws {OfflineTokenError} if the credentials are rejected or the response is malformed.
  */
 export async function login(options: OfflineTokenLoginOptions): Promise<OfflineTokenProvider> {
-	const fetchFn: FetchLike = options.fetchFn ?? defaultFetch;
+	const fetchFn: FetchLike = options.fetchFn ?? createDefaultFetch(options.keycloakVerifySsl ?? true);
 	const form: Record<string, string> = {
 		grant_type: 'password',
 		client_id: options.clientId,
@@ -331,19 +346,33 @@ export async function login(options: OfflineTokenLoginOptions): Promise<OfflineT
 }
 
 /**
- * Default {@link FetchLike}: delegate to the global `fetch` (Node >= 18).
+ * Build the default {@link FetchLike}: delegate to the global `fetch` (Node >= 18).
  *
- * @param input the request URL.
- * @param init the request method, headers, and body.
- * @returns the fetch response promise.
+ * When `verifySsl` is `false`, a cached undici `Agent` with
+ * `rejectUnauthorized: false` is attached to every request as its `dispatcher`, so
+ * the Keycloak token call skips TLS certificate verification (opt-in insecure;
+ * Node-only). The dispatcher is built once here and reused for all requests this
+ * transport makes (login + refreshes); the secure default never loads undici.
+ *
+ * @param verifySsl whether to verify the Keycloak server's TLS certificate.
+ * @returns a fetch layer bound to the chosen TLS-verification behaviour.
  * @throws {OfflineTokenError} if no global `fetch` exists and none was injected.
  */
-function defaultFetch(input: string, init: FetchInit): Promise<FetchResponseLike> {
-	const globalFetch: FetchLike | undefined = (globalThis as { fetch?: FetchLike }).fetch;
-	if (globalFetch === undefined) {
-		throw new OfflineTokenError('No global fetch available; pass options.fetchFn explicitly.');
+function createDefaultFetch(verifySsl: boolean): FetchLike {
+	let dispatcher: unknown;
+	if (!verifySsl) {
+		// Lazy require keeps undici out of the default (secure) code path.
+		// eslint-disable-next-line @typescript-eslint/no-require-imports
+		const { Agent } = require('undici') as { Agent: new (options: unknown) => unknown };
+		dispatcher = new Agent({ connect: { rejectUnauthorized: false } });
 	}
-	return globalFetch(input, init);
+	return (input: string, init: FetchInit): Promise<FetchResponseLike> => {
+		const globalFetch: FetchLike | undefined = (globalThis as { fetch?: FetchLike }).fetch;
+		if (globalFetch === undefined) {
+			throw new OfflineTokenError('No global fetch available; pass options.fetchFn explicitly.');
+		}
+		return globalFetch(input, dispatcher === undefined ? init : { ...init, dispatcher });
+	};
 }
 
 /**

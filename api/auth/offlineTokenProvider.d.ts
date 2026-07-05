@@ -15,6 +15,11 @@ export interface FetchInit {
 	headers: Record<string, string>;
 	/** URL-encoded request body. */
 	body: string;
+	/**
+	 * Optional undici dispatcher (Node's non-standard `fetch` extension); set only on the
+	 * default transport when `keycloakVerifySsl` is `false` to skip TLS verification.
+	 */
+	dispatcher?: unknown;
 }
 
 /** Minimal subset of Response the provider relies on. */
@@ -51,6 +56,12 @@ export interface OfflineTokenLoginOptions {
 	refreshSkewInS?: number;
 	/** Injectable HTTP layer; defaults to the global `fetch`. */
 	fetchFn?: FetchLike;
+	/**
+	 * When `false`, disable TLS certificate verification on the Keycloak token request
+	 * (opt-in insecure, for a self-signed local Envoy). Defaults to `true` (secure).
+	 * Ignored when a custom `fetchFn` is injected. Node-only (undici dispatcher).
+	 */
+	keycloakVerifySsl?: boolean;
 	/** Injectable clock returning epoch milliseconds; defaults to `Date.now`. */
 	nowFn?: () => number;
 }
