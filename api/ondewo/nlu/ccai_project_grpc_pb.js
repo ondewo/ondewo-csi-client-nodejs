@@ -232,4 +232,4 @@ getCcaiService: {
   },
 };
 
-exports.CcaiProjectsClient = grpc.makeGenericClientConstructor(CcaiProjectsService);
+exports.CcaiProjectsClient = grpc.makeGenericClientConstructor(CcaiProjectsService, 'CcaiProjects');

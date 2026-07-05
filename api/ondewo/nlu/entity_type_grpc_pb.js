@@ -543,4 +543,4 @@ listEntities: {
   },
 };
 
-exports.EntityTypesClient = grpc.makeGenericClientConstructor(EntityTypesService);
+exports.EntityTypesClient = grpc.makeGenericClientConstructor(EntityTypesService, 'EntityTypes');

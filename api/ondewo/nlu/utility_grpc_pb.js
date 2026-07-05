@@ -304,4 +304,4 @@ addTrainingPhrasesFromCSV: {
   },
 };
 
-exports.UtilitiesClient = grpc.makeGenericClientConstructor(UtilitiesService);
+exports.UtilitiesClient = grpc.makeGenericClientConstructor(UtilitiesService, 'Utilities');

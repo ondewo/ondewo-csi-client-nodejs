@@ -430,4 +430,4 @@ trainUserLanguageModel: {
   },
 };
 
-exports.Speech2TextClient = grpc.makeGenericClientConstructor(Speech2TextService);
+exports.Speech2TextClient = grpc.makeGenericClientConstructor(Speech2TextService, 'Speech2Text');

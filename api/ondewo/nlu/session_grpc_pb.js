@@ -1292,4 +1292,4 @@ listAudioFiles: {
   },
 };
 
-exports.SessionsClient = grpc.makeGenericClientConstructor(SessionsService);
+exports.SessionsClient = grpc.makeGenericClientConstructor(SessionsService, 'Sessions');

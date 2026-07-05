@@ -388,4 +388,4 @@ listLlmModels: {
   },
 };
 
-exports.AiServicesClient = grpc.makeGenericClientConstructor(AiServicesService);
+exports.AiServicesClient = grpc.makeGenericClientConstructor(AiServicesService, 'AiServices');

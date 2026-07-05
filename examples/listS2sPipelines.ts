@@ -94,13 +94,11 @@ export function listS2sPipelines(
 						return;
 					}
 					resolve(
-						response.getPipelinesList().map(
-							(pipeline: S2sPipelineLike): S2sPipelineSummary => ({
-								id: pipeline.getId(),
-								nluProjectId: pipeline.getNluProjectId(),
-								nluLanguageCode: pipeline.getNluLanguageCode()
-							})
-						)
+						response.getPipelinesList().map((pipeline: S2sPipelineLike): S2sPipelineSummary => ({
+							id: pipeline.getId(),
+							nluProjectId: pipeline.getNluProjectId(),
+							nluLanguageCode: pipeline.getNluLanguageCode()
+						}))
 					);
 				}
 			);
