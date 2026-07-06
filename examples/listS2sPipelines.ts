@@ -19,12 +19,10 @@
 // pure request/response logic in `listS2sPipelines` stays fully typed and unit-
 // testable with a mocked client — see listS2sPipelines.spec.ts.
 //
-// Run (against a reachable CSI server):
-//   ONDEWO_KEYCLOAK_URL=https://auth.example.com/auth \
-//   ONDEWO_KEYCLOAK_REALM=ondewo-ccai-platform \
-//   ONDEWO_KEYCLOAK_CLIENT_ID=ondewo-nlu-cai-sdk-public \
-//   ONDEWO_USERNAME=tech-user@example.com ONDEWO_PASSWORD=... \
-//   ONDEWO_CSI_HOST=localhost:50055 \
+// Configuration is read from examples/environment.env (loaded via dotenv,
+// script-relative so the working directory does not matter). Copy that template,
+// fill in your Keycloak credentials and CSI host, then run against a reachable
+// CSI server:
 //   node examples/listS2sPipelines.js
 
 /** The `authorization: Bearer <jwt>` gRPC metadata produced by the auth provider. */
@@ -119,6 +117,7 @@ interface LoginOptions {
 	clientId: string;
 	username: string;
 	password: string;
+	keycloakVerifySsl: boolean;
 }
 
 /** The subset of the package's public API `main` loads at runtime. */
@@ -130,7 +129,10 @@ interface CsiSdkModule {
 
 /** The subset of `@grpc/grpc-js` `main` loads at runtime. */
 interface GrpcCredentialsModule {
-	credentials: { createInsecure(): unknown };
+	credentials: {
+		createInsecure(): unknown;
+		createSsl(rootCerts?: Buffer | null): unknown;
+	};
 }
 
 /**
@@ -148,29 +150,70 @@ function requireEnv(name: string): string {
 }
 
 /**
+ * Read an optional boolean environment variable, defaulting when unset/blank.
+ *
+ * @param name the environment variable name.
+ * @param fallback the value to use when the variable is unset or empty.
+ * @returns `true` only for a case-insensitive `"true"`, `false` for `"false"`.
+ */
+function envBool(name: string, fallback: boolean): boolean {
+	const value: string | undefined = process.env[name];
+	if (value === undefined || value.length === 0) {
+		return fallback;
+	}
+	return value.toLowerCase() === 'true';
+}
+
+/**
  * Wire the real generated client + auth provider and print the pipelines.
  *
  * @returns a promise that settles once the RPC has completed.
  */
 async function main(): Promise<void> {
 	// eslint-disable-next-line @typescript-eslint/no-require-imports
+	const path: typeof import('path') = require('path') as typeof import('path');
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
+	const dotenv: typeof import('dotenv') = require('dotenv') as typeof import('dotenv');
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
+	const fs: typeof import('fs') = require('fs') as typeof import('fs');
+	// Load examples/environment.env relative to this script so the cwd does not matter.
+	dotenv.config({ path: path.join(__dirname, 'environment.env') });
+
+	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	const sdk: CsiSdkModule = require('@ondewo/csi-client-nodejs') as CsiSdkModule;
 	// eslint-disable-next-line @typescript-eslint/no-require-imports
 	const grpc: GrpcCredentialsModule = require('@grpc/grpc-js') as GrpcCredentialsModule;
 
+	const host: string = requireEnv('ONDEWO_HOST');
+	const port: string = requireEnv('ONDEWO_PORT');
+	const address: string = `${host}:${port}`;
+	const useSecureChannel: boolean = envBool('ONDEWO_USE_SECURE_CHANNEL', false);
+
+	console.log(`START: authenticating against Keycloak at ${requireEnv('KEYCLOAK_URL')} ...`);
 	const provider: OfflineTokenProviderHandle = await sdk.login({
-		keycloakUrl: requireEnv('ONDEWO_KEYCLOAK_URL'),
-		realm: requireEnv('ONDEWO_KEYCLOAK_REALM'),
-		clientId: requireEnv('ONDEWO_KEYCLOAK_CLIENT_ID'),
-		username: requireEnv('ONDEWO_USERNAME'),
-		password: requireEnv('ONDEWO_PASSWORD')
+		keycloakUrl: requireEnv('KEYCLOAK_URL'),
+		realm: requireEnv('KEYCLOAK_REALM'),
+		clientId: requireEnv('KEYCLOAK_CLIENT_ID'),
+		username: requireEnv('KEYCLOAK_USER_NAME'),
+		password: requireEnv('KEYCLOAK_PASSWORD'),
+		keycloakVerifySsl: envBool('KEYCLOAK_VERIFY_SSL', true)
 	});
+	console.log('DONE: obtained bearer token.');
 	try {
-		const host: string = process.env.ONDEWO_CSI_HOST ?? 'localhost:50055';
-		const client: ConversationsClientLike = new sdk.ConversationsClient(host, grpc.credentials.createInsecure());
+		let channelCredentials: unknown;
+		if (useSecureChannel) {
+			const certPath: string | undefined = process.env.ONDEWO_GRPC_CERT;
+			const rootCerts: Buffer | null = certPath !== undefined && certPath.length > 0 ? fs.readFileSync(certPath) : null;
+			channelCredentials = grpc.credentials.createSsl(rootCerts);
+			console.log(`START: calling ListS2sPipelines over a secure channel at ${address} ...`);
+		} else {
+			channelCredentials = grpc.credentials.createInsecure();
+			console.log(`START: calling ListS2sPipelines over an insecure channel at ${address} ...`);
+		}
+		const client: ConversationsClientLike = new sdk.ConversationsClient(address, channelCredentials);
 		const request: object = new sdk.ListS2sPipelinesRequest();
 		const pipelines: S2sPipelineSummary[] = await listS2sPipelines(client, request, provider.getAuthMetadata());
-		console.log(`Found ${pipelines.length} S2S pipeline(s):`, pipelines);
+		console.log(`DONE: found ${pipelines.length} S2S pipeline(s):`, pipelines);
 	} finally {
 		provider.stop();
 	}
@@ -179,7 +222,13 @@ async function main(): Promise<void> {
 // Only run when executed directly (`node examples/listS2sPipelines.js`), never on import.
 if (require.main === module) {
 	main().catch((error: unknown): void => {
-		console.error(error);
-		process.exitCode = 1;
+		const serviceError: ServiceErrorLike = error as ServiceErrorLike;
+		if (serviceError.code !== undefined) {
+			// gRPC failure surfaced by @grpc/grpc-js: log its status code and details.
+			console.error(`ERROR: ListS2sPipelines RPC failed (gRPC code ${serviceError.code}): ${serviceError.message}`);
+		} else {
+			console.error('ERROR: listS2sPipelines example failed:', error);
+		}
+		process.exit(1);
 	});
 }

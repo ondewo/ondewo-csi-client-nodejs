@@ -13,17 +13,19 @@ public Keycloak client) that keeps a short-lived access token warm;
 metadata attached to every call. There is no legacy per-request token / HTTP-basic /
 `users.login()` credential check anymore.
 
-Run against a reachable CSI server:
+Configuration is read from [`environment.env`](environment.env) (loaded via
+`dotenv`, script-relative so the working directory does not matter). Copy that
+template, fill in your Keycloak credentials and CSI host, then run against a
+reachable CSI server:
 
 ```shell
-ONDEWO_KEYCLOAK_URL=https://auth.example.com/auth \
-ONDEWO_KEYCLOAK_REALM=ondewo-ccai-platform \
-ONDEWO_KEYCLOAK_CLIENT_ID=ondewo-nlu-cai-sdk-public \
-ONDEWO_USERNAME=tech-user@example.com \
-ONDEWO_PASSWORD=... \
-ONDEWO_CSI_HOST=localhost:50055 \
 node examples/listS2sPipelines.js
 ```
+
+The variables follow the canonical ONDEWO env-var scheme (`ONDEWO_HOST`,
+`ONDEWO_PORT`, `ONDEWO_USE_SECURE_CHANNEL`, `ONDEWO_GRPC_CERT`, `KEYCLOAK_URL`,
+`KEYCLOAK_REALM`, `KEYCLOAK_CLIENT_ID`, `KEYCLOAK_USER_NAME`, `KEYCLOAK_PASSWORD`,
+`KEYCLOAK_VERIFY_SSL`).
 
 The pure request/response logic (`listS2sPipelines`) is decoupled from the
 generated gRPC stubs and unit-tested with a mocked client in
