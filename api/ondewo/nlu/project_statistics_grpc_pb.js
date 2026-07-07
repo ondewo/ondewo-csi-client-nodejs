@@ -179,4 +179,4 @@ getEntitySynonymCount: {
   },
 };
 
-exports.ProjectStatisticsClient = grpc.makeGenericClientConstructor(ProjectStatisticsService);
+exports.ProjectStatisticsClient = grpc.makeGenericClientConstructor(ProjectStatisticsService, 'ProjectStatistics');

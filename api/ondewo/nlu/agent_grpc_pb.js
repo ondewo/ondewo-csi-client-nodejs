@@ -1283,4 +1283,4 @@ reindexAgent: {
   },
 };
 
-exports.AgentsClient = grpc.makeGenericClientConstructor(AgentsService);
+exports.AgentsClient = grpc.makeGenericClientConstructor(AgentsService, 'Agents');

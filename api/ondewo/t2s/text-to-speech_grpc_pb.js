@@ -496,4 +496,4 @@ listCustomPhonemizer: {
   },
 };
 
-exports.Text2SpeechClient = grpc.makeGenericClientConstructor(Text2SpeechService);
+exports.Text2SpeechClient = grpc.makeGenericClientConstructor(Text2SpeechService, 'Text2Speech');

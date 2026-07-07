@@ -635,4 +635,4 @@ deleteAllUserPreferences: {
   },
 };
 
-exports.UsersClient = grpc.makeGenericClientConstructor(UsersService);
+exports.UsersClient = grpc.makeGenericClientConstructor(UsersService, 'Users');

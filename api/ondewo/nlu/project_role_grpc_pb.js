@@ -176,4 +176,4 @@ listProjectRoles: {
   },
 };
 
-exports.ProjectRolesClient = grpc.makeGenericClientConstructor(ProjectRolesService);
+exports.ProjectRolesClient = grpc.makeGenericClientConstructor(ProjectRolesService, 'ProjectRoles');

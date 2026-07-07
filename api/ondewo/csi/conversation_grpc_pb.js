@@ -161,9 +161,9 @@ function deserialize_ondewo_csi_SetControlStatusResponse(buffer_arg) {
 }
 
 
-// endpoints of csi service
+// <p>Endpoints of CSI service.</p>
 var ConversationsService = exports.ConversationsService = {
-  // Create the S2S pipeline specified in the request message. The pipeline with the specified ID must not exist.
+  // <p>Create the S2S pipeline specified in the request message. The pipeline with the specified ID must not exist.</p>
 //
 // <p>Examples:</p>
 //
@@ -188,7 +188,7 @@ createS2sPipeline: {
     responseSerialize: serialize_google_protobuf_Empty,
     responseDeserialize: deserialize_google_protobuf_Empty,
   },
-  // Retrieve the S2S pipeline with the ID specified in the request message.
+  // <p>Retrieve the S2S pipeline with the ID specified in the request message.</p>
 //
 // <p>Examples:</p>
 //
@@ -214,7 +214,7 @@ getS2sPipeline: {
     responseSerialize: serialize_ondewo_csi_S2sPipeline,
     responseDeserialize: deserialize_ondewo_csi_S2sPipeline,
   },
-  // Update the S2S pipeline specified in the request message. The pipeline must exist.
+  // <p>Update the S2S pipeline specified in the request message. The pipeline must exist.</p>
 //
 // <p>Examples:</p>
 //
@@ -239,7 +239,7 @@ updateS2sPipeline: {
     responseSerialize: serialize_google_protobuf_Empty,
     responseDeserialize: deserialize_google_protobuf_Empty,
   },
-  // Delete the S2S pipeline with the ID specified in the request message. The pipeline must exist.
+  // <p>Delete the S2S pipeline with the ID specified in the request message. The pipeline must exist.</p>
 //
 // <p>Examples:</p>
 //
@@ -258,7 +258,7 @@ deleteS2sPipeline: {
     responseSerialize: serialize_google_protobuf_Empty,
     responseDeserialize: deserialize_google_protobuf_Empty,
   },
-  // List all S2S pipelines of the server.
+  // <p>List all S2S pipelines of the server.</p>
 //
 // <p>Examples:</p>
 //
@@ -287,8 +287,7 @@ listS2sPipelines: {
     responseSerialize: serialize_ondewo_csi_ListS2sPipelinesResponse,
     responseDeserialize: deserialize_ondewo_csi_ListS2sPipelinesResponse,
   },
-  // Processes a natural language query in audio format in a streaming fashion
-// and returns structured, actionable data as a result.
+  // <p>Processes a natural language query in audio format in a streaming fashion and returns structured, actionable data as a result.</p>
 s2sStream: {
     path: '/ondewo.csi.Conversations/S2sStream',
     requestStream: true,
@@ -300,7 +299,7 @@ s2sStream: {
     responseSerialize: serialize_ondewo_csi_S2sStreamResponse,
     responseDeserialize: deserialize_ondewo_csi_S2sStreamResponse,
   },
-  // Check the health of S2T, NLU and T2S servers
+  // <p>Check the health of S2T, NLU and T2S servers.</p>
 //
 // <p>Examples:</p>
 //
@@ -337,7 +336,7 @@ checkUpstreamHealth: {
     responseSerialize: serialize_ondewo_csi_CheckUpstreamHealthResponse,
     responseDeserialize: deserialize_ondewo_csi_CheckUpstreamHealthResponse,
   },
-  // Get the control stream to control sip, t2s, s2t etc. during a conversation
+  // <p>Get the control stream to control sip, t2s, s2t etc. during a conversation.</p>
 getControlStream: {
     path: '/ondewo.csi.Conversations/GetControlStream',
     requestStream: false,
@@ -349,7 +348,7 @@ getControlStream: {
     responseSerialize: serialize_ondewo_csi_ControlStreamResponse,
     responseDeserialize: deserialize_ondewo_csi_ControlStreamResponse,
   },
-  // Send a message on the control stream to control sip, t2s, s2t etc. during a conversation
+  // <p>Send a message on the control stream to control sip, t2s, s2t etc. during a conversation.</p>
 setControlStatus: {
     path: '/ondewo.csi.Conversations/SetControlStatus',
     requestStream: false,
@@ -363,4 +362,4 @@ setControlStatus: {
   },
 };
 
-exports.ConversationsClient = grpc.makeGenericClientConstructor(ConversationsService);
+exports.ConversationsClient = grpc.makeGenericClientConstructor(ConversationsService, 'Conversations');

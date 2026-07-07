@@ -229,4 +229,4 @@ deleteAllContexts: {
   },
 };
 
-exports.ContextsClient = grpc.makeGenericClientConstructor(ContextsService);
+exports.ContextsClient = grpc.makeGenericClientConstructor(ContextsService, 'Contexts');

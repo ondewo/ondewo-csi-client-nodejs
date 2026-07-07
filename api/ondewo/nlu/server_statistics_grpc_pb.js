@@ -96,4 +96,4 @@ getUserCount: {
   },
 };
 
-exports.ServerStatisticsClient = grpc.makeGenericClientConstructor(ServerStatisticsService);
+exports.ServerStatisticsClient = grpc.makeGenericClientConstructor(ServerStatisticsService, 'ServerStatistics');

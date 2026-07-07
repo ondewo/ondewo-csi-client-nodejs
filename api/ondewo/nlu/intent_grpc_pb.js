@@ -872,4 +872,4 @@ listTrainingPhrasesofIntentsWithEnrichment: {
   },
 };
 
-exports.IntentsClient = grpc.makeGenericClientConstructor(IntentsService);
+exports.IntentsClient = grpc.makeGenericClientConstructor(IntentsService, 'Intents');

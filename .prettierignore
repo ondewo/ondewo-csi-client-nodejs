@@ -11,3 +11,10 @@ src/
 ondewo-proto-compiler
 
 ondewo-csi-api
+package-lock.json
+package.json
+npm/
+dist/
+.test-build/
+.test-build-examples/
+*.env

@@ -236,4 +236,4 @@ deleteSessionEntityType: {
   },
 };
 
-exports.WebhookClient = grpc.makeGenericClientConstructor(WebhookService);
+exports.WebhookClient = grpc.makeGenericClientConstructor(WebhookService, 'Webhook');
