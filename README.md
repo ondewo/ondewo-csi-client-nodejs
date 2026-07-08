@@ -139,15 +139,20 @@ The repository is published to GitHub and NPM by the Automated Release Process o
 TODO after PR merge:
 
 - checkout master
+
   ```shell
   git checkout master
   ```
+
 - pull newest state
+
   ```shell
   git pull
   ```
+
 - Adjust `ONDEWO_CSI_VERSION` in the `Makefile` <br><br>
 - Add new Release Notes to `src/RELEASE.md` in following format:
+
   ```
   ## Release ONDEWO CSI Nodejs Client X.X.X    <----- Beginning of Notes
 
@@ -155,7 +160,9 @@ TODO after PR merge:
 
   *****************                             <----- End of Notes
   ```
+
 - release
+
   ```shell
   make ondewo_release
   ```
