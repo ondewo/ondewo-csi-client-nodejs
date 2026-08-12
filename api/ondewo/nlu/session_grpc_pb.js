@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// Modifications Copyright 2020-2023 ONDEWO GmbH
+// Modifications Copyright 2020-2026 ONDEWO GmbH
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -39,10 +39,12 @@ var google_protobuf_struct_pb = require('google-protobuf/google/protobuf/struct_
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 var google_rpc_status_pb = require('../../google/rpc/status_pb.js');
 var google_type_latlng_pb = require('../../google/type/latlng_pb.js');
+var ondewo_nlu_ccai_project_pb = require('../../ondewo/nlu/ccai_project_pb.js');
 var ondewo_nlu_common_pb = require('../../ondewo/nlu/common_pb.js');
 var ondewo_nlu_context_pb = require('../../ondewo/nlu/context_pb.js');
-var ondewo_nlu_intent_pb = require('../../ondewo/nlu/intent_pb.js');
 var ondewo_nlu_entity_type_pb = require('../../ondewo/nlu/entity_type_pb.js');
+var ondewo_nlu_intent_pb = require('../../ondewo/nlu/intent_pb.js');
+var ondewo_nlu_llm_evaluation_pb = require('../../ondewo/nlu/llm_evaluation_pb.js');
 
 function serialize_google_protobuf_Empty(arg) {
   if (!(arg instanceof google_protobuf_empty_pb.Empty)) {
@@ -88,6 +90,17 @@ function deserialize_ondewo_nlu_AddSessionCommentRequest(buffer_arg) {
   return ondewo_nlu_session_pb.AddSessionCommentRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_AddSessionFeedbackRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.AddSessionFeedbackRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.AddSessionFeedbackRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_AddSessionFeedbackRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.AddSessionFeedbackRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_AddSessionLabelsRequest(arg) {
   if (!(arg instanceof ondewo_nlu_session_pb.AddSessionLabelsRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.AddSessionLabelsRequest');
@@ -97,6 +110,17 @@ function serialize_ondewo_nlu_AddSessionLabelsRequest(arg) {
 
 function deserialize_ondewo_nlu_AddSessionLabelsRequest(buffer_arg) {
   return ondewo_nlu_session_pb.AddSessionLabelsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_AddSessionStepFeedbackRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.AddSessionStepFeedbackRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.AddSessionStepFeedbackRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_AddSessionStepFeedbackRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.AddSessionStepFeedbackRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_AudioFileResource(arg) {
@@ -187,6 +211,17 @@ function deserialize_ondewo_nlu_DeleteSessionCommentsRequest(buffer_arg) {
   return ondewo_nlu_session_pb.DeleteSessionCommentsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_DeleteSessionFeedbackRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.DeleteSessionFeedbackRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.DeleteSessionFeedbackRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_DeleteSessionFeedbackRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.DeleteSessionFeedbackRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_DeleteSessionLabelsRequest(arg) {
   if (!(arg instanceof ondewo_nlu_session_pb.DeleteSessionLabelsRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.DeleteSessionLabelsRequest');
@@ -275,6 +310,50 @@ function deserialize_ondewo_nlu_GetAudioFilesResponse(buffer_arg) {
   return ondewo_nlu_session_pb.GetAudioFilesResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_GetFeedbackStatisticsRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.GetFeedbackStatisticsRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.GetFeedbackStatisticsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetFeedbackStatisticsRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.GetFeedbackStatisticsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_GetFeedbackStatisticsResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.GetFeedbackStatisticsResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.GetFeedbackStatisticsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetFeedbackStatisticsResponse(buffer_arg) {
+  return ondewo_nlu_session_pb.GetFeedbackStatisticsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_GetFeedbackStatisticsTimeSeriesRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.GetFeedbackStatisticsTimeSeriesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetFeedbackStatisticsTimeSeriesRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_GetFeedbackStatisticsTimeSeriesResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.GetFeedbackStatisticsTimeSeriesResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetFeedbackStatisticsTimeSeriesResponse(buffer_arg) {
+  return ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_GetLatestSessionReviewRequest(arg) {
   if (!(arg instanceof ondewo_nlu_session_pb.GetLatestSessionReviewRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.GetLatestSessionReviewRequest');
@@ -284,6 +363,17 @@ function serialize_ondewo_nlu_GetLatestSessionReviewRequest(arg) {
 
 function deserialize_ondewo_nlu_GetLatestSessionReviewRequest(buffer_arg) {
   return ondewo_nlu_session_pb.GetLatestSessionReviewRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_GetSessionFeedbackRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.GetSessionFeedbackRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.GetSessionFeedbackRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetSessionFeedbackRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.GetSessionFeedbackRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_GetSessionRequest(arg) {
@@ -583,6 +673,17 @@ function deserialize_ondewo_nlu_ListPropertyIdsResponse(buffer_arg) {
   return ondewo_nlu_session_pb.ListPropertyIdsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_ListSessionCommentsOfAllSessionsRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.ListSessionCommentsOfAllSessionsRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.ListSessionCommentsOfAllSessionsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListSessionCommentsOfAllSessionsRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.ListSessionCommentsOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_ListSessionCommentsRequest(arg) {
   if (!(arg instanceof ondewo_nlu_session_pb.ListSessionCommentsRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.ListSessionCommentsRequest');
@@ -603,6 +704,39 @@ function serialize_ondewo_nlu_ListSessionCommentsResponse(arg) {
 
 function deserialize_ondewo_nlu_ListSessionCommentsResponse(buffer_arg) {
   return ondewo_nlu_session_pb.ListSessionCommentsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListSessionFeedbackOfAllSessionsRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.ListSessionFeedbackOfAllSessionsRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.ListSessionFeedbackOfAllSessionsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListSessionFeedbackOfAllSessionsRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.ListSessionFeedbackOfAllSessionsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListSessionFeedbackRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.ListSessionFeedbackRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.ListSessionFeedbackRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListSessionFeedbackRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.ListSessionFeedbackRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListSessionFeedbackResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.ListSessionFeedbackResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.ListSessionFeedbackResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListSessionFeedbackResponse(buffer_arg) {
+  return ondewo_nlu_session_pb.ListSessionFeedbackResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_ListSessionLabelsOfAllSessionsRequest(arg) {
@@ -737,6 +871,17 @@ function deserialize_ondewo_nlu_Session(buffer_arg) {
   return ondewo_nlu_session_pb.Session.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_SessionFeedback(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.SessionFeedback)) {
+    throw new Error('Expected argument of type ondewo.nlu.SessionFeedback');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_SessionFeedback(buffer_arg) {
+  return ondewo_nlu_session_pb.SessionFeedback.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_SessionReview(arg) {
   if (!(arg instanceof ondewo_nlu_session_pb.SessionReview)) {
     throw new Error('Expected argument of type ondewo.nlu.SessionReview');
@@ -792,6 +937,17 @@ function deserialize_ondewo_nlu_UpdateSessionCommentsRequest(buffer_arg) {
   return ondewo_nlu_session_pb.UpdateSessionCommentsRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_UpdateSessionFeedbackRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.UpdateSessionFeedbackRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.UpdateSessionFeedbackRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_UpdateSessionFeedbackRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.UpdateSessionFeedbackRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_UpdateSessionStepRequest(arg) {
   if (!(arg instanceof ondewo_nlu_session_pb.UpdateSessionStepRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.UpdateSessionStepRequest');
@@ -804,10 +960,7 @@ function deserialize_ondewo_nlu_UpdateSessionStepRequest(buffer_arg) {
 }
 
 
-// A session represents an interaction with a user. You retrieve user input
-// and pass it to the [DetectIntent][google.cloud.dialogflow.v2.Sessions.DetectIntent] (or
-// [StreamingDetectIntent][google.cloud.dialogflow.v2.Sessions.StreamingDetectIntent]) method to determine
-// user intent and respond.
+// A session represents an interaction with a user. You retrieve user input and pass it to the <a href="index.html#ondewo.nlu.Sessions.DetectIntent">DetectIntent</a> (or <a href="index.html#ondewo.nlu.Sessions.StreamingDetectIntent">StreamingDetectIntent</a>) method to determine user intent and respond.
 var SessionsService = exports.SessionsService = {
   // Processes a natural language query and returns structured, actionable data
 // as a result. This method is not idempotent, because it may cause contexts
@@ -839,6 +992,7 @@ streamingDetectIntent: {
     responseDeserialize: deserialize_ondewo_nlu_StreamingDetectIntentResponse,
   },
   // *** SESSION RELATED ENDPOINTS *** //
+//
 // ListSessions: returns list of sessions from ondewo-kb; by default returns only session IDs
 listSessions: {
     path: '/ondewo.nlu.Sessions/ListSessions',
@@ -936,6 +1090,8 @@ deleteSession: {
     responseDeserialize: deserialize_google_protobuf_Empty,
   },
   // *** SESSION-LABEL RELATED ENDPOINTS *** //
+//
+// Returns the list of labels attached to a single session.
 listSessionLabels: {
     path: '/ondewo.nlu.Sessions/ListSessionLabels',
     requestStream: false,
@@ -947,7 +1103,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListSessionLabelsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListSessionLabelsResponse,
   },
-  listSessionLabelsOfAllSessions: {
+  // Returns the distinct set of labels observed across all sessions of the agent, optionally narrowed by a SessionFilter.
+listSessionLabelsOfAllSessions: {
     path: '/ondewo.nlu.Sessions/ListSessionLabelsOfAllSessions',
     requestStream: false,
     responseStream: false,
@@ -958,7 +1115,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListSessionLabelsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListSessionLabelsResponse,
   },
-  listLanguageCodesOfAllSessions: {
+  // Returns the distinct set of language codes observed across all sessions of the agent, optionally narrowed by a SessionFilter.
+listLanguageCodesOfAllSessions: {
     path: '/ondewo.nlu.Sessions/ListLanguageCodesOfAllSessions',
     requestStream: false,
     responseStream: false,
@@ -969,7 +1127,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListLanguageCodesResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListLanguageCodesResponse,
   },
-  listMatchedIntentsOfAllSessions: {
+  // Returns the distinct set of intents matched across all sessions of the agent, optionally narrowed by a SessionFilter.
+listMatchedIntentsOfAllSessions: {
     path: '/ondewo.nlu.Sessions/ListMatchedIntentsOfAllSessions',
     requestStream: false,
     responseStream: false,
@@ -980,7 +1139,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListMatchedIntentsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListMatchedIntentsResponse,
   },
-  listMatchedEntityTypesOfAllSessions: {
+  // Returns the distinct set of entity types recognised across all sessions of the agent, optionally narrowed by a SessionFilter.
+listMatchedEntityTypesOfAllSessions: {
     path: '/ondewo.nlu.Sessions/ListMatchedEntityTypesOfAllSessions',
     requestStream: false,
     responseStream: false,
@@ -991,7 +1151,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListMatchedEntityTypesResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListMatchedEntityTypesResponse,
   },
-  listUserIdsOfAllSessions: {
+  // Returns the distinct set of <code>user_id</code> values observed across all sessions of the agent, optionally narrowed by a SessionFilter.
+listUserIdsOfAllSessions: {
     path: '/ondewo.nlu.Sessions/ListUserIdsOfAllSessions',
     requestStream: false,
     responseStream: false,
@@ -1002,7 +1163,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListUserIdsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListUserIdsResponse,
   },
-  listIdentifiedUserIdsOfAllSessions: {
+  // Returns the distinct set of <code>identified_user_id</code> values observed across all sessions of the agent, optionally narrowed by a SessionFilter.
+listIdentifiedUserIdsOfAllSessions: {
     path: '/ondewo.nlu.Sessions/ListIdentifiedUserIdsOfAllSessions',
     requestStream: false,
     responseStream: false,
@@ -1013,7 +1175,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListIdentifiedUserIdsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListIdentifiedUserIdsResponse,
   },
-  listTagsOfAllSessions: {
+  // Returns the distinct set of intent tags observed across all sessions of the agent, optionally narrowed by a SessionFilter.
+listTagsOfAllSessions: {
     path: '/ondewo.nlu.Sessions/ListTagsOfAllSessions',
     requestStream: false,
     responseStream: false,
@@ -1024,7 +1187,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListTagsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListTagsResponse,
   },
-  listInputContextsOfAllSessions: {
+  // Returns the distinct set of input contexts observed across all sessions of the agent, optionally narrowed by a SessionFilter.
+listInputContextsOfAllSessions: {
     path: '/ondewo.nlu.Sessions/ListInputContextsOfAllSessions',
     requestStream: false,
     responseStream: false,
@@ -1035,7 +1199,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListInputContextsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListInputContextsResponse,
   },
-  listOutputContextsOfAllSessions: {
+  // Returns the distinct set of output contexts observed across all sessions of the agent, optionally narrowed by a SessionFilter.
+listOutputContextsOfAllSessions: {
     path: '/ondewo.nlu.Sessions/ListOutputContextsOfAllSessions',
     requestStream: false,
     responseStream: false,
@@ -1046,7 +1211,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListOutputContextsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListOutputContextsResponse,
   },
-  listPlatformsOfAllSessions: {
+  // Returns the distinct set of <code>Intent.Message.Platform</code> values observed across all sessions of the agent, optionally narrowed by a SessionFilter.
+listPlatformsOfAllSessions: {
     path: '/ondewo.nlu.Sessions/ListPlatformsOfAllSessions',
     requestStream: false,
     responseStream: false,
@@ -1057,7 +1223,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListPlatformsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListPlatformsResponse,
   },
-  listAccountIdsOfAllSessions: {
+  // Returns the distinct set of <code>account_id</code> values observed across all sessions of the agent, optionally narrowed by a SessionFilter.
+listAccountIdsOfAllSessions: {
     path: '/ondewo.nlu.Sessions/ListAccountIdsOfAllSessions',
     requestStream: false,
     responseStream: false,
@@ -1068,7 +1235,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListAccountIdsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListAccountIdsResponse,
   },
-  listPropertyIdsOfAllSessions: {
+  // Returns the distinct set of <code>property_id</code> values observed across all sessions of the agent, optionally narrowed by a SessionFilter.
+listPropertyIdsOfAllSessions: {
     path: '/ondewo.nlu.Sessions/ListPropertyIdsOfAllSessions',
     requestStream: false,
     responseStream: false,
@@ -1079,7 +1247,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListPropertyIdsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListPropertyIdsResponse,
   },
-  listDatastreamIdsOfAllSessions: {
+  // Returns the distinct set of <code>datastream_id</code> values observed across all sessions of the agent, optionally narrowed by a SessionFilter.
+listDatastreamIdsOfAllSessions: {
     path: '/ondewo.nlu.Sessions/ListDatastreamIdsOfAllSessions',
     requestStream: false,
     responseStream: false,
@@ -1090,7 +1259,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListDatastreamIdsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListDatastreamIdsResponse,
   },
-  listOriginIdsOfAllSessions: {
+  // Returns the distinct set of <code>origin_id</code> values observed across all sessions of the agent, optionally narrowed by a SessionFilter.
+listOriginIdsOfAllSessions: {
     path: '/ondewo.nlu.Sessions/ListOriginIdsOfAllSessions',
     requestStream: false,
     responseStream: false,
@@ -1101,7 +1271,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListOriginIdsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListOriginIdsResponse,
   },
-  addSessionLabels: {
+  // Attaches the supplied labels to a session and returns the updated session.
+addSessionLabels: {
     path: '/ondewo.nlu.Sessions/AddSessionLabels',
     requestStream: false,
     responseStream: false,
@@ -1112,7 +1283,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_Session,
     responseDeserialize: deserialize_ondewo_nlu_Session,
   },
-  deleteSessionLabels: {
+  // Removes the supplied labels from a session and returns the updated session.
+deleteSessionLabels: {
     path: '/ondewo.nlu.Sessions/DeleteSessionLabels',
     requestStream: false,
     responseStream: false,
@@ -1123,7 +1295,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_Session,
     responseDeserialize: deserialize_ondewo_nlu_Session,
   },
-  addSessionComment: {
+  // Appends a comment to a session and returns the persisted comment.
+addSessionComment: {
     path: '/ondewo.nlu.Sessions/AddSessionComment',
     requestStream: false,
     responseStream: false,
@@ -1134,7 +1307,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_Comment,
     responseDeserialize: deserialize_ondewo_nlu_Comment,
   },
-  deleteSessionComments: {
+  // Removes the comments named in the request from a session and returns the updated session.
+deleteSessionComments: {
     path: '/ondewo.nlu.Sessions/DeleteSessionComments',
     requestStream: false,
     responseStream: false,
@@ -1145,7 +1319,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_Session,
     responseDeserialize: deserialize_ondewo_nlu_Session,
   },
-  updateSessionComments: {
+  // Updates an existing comment on a session and returns the updated session.
+updateSessionComments: {
     path: '/ondewo.nlu.Sessions/UpdateSessionComments',
     requestStream: false,
     responseStream: false,
@@ -1156,7 +1331,8 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_Session,
     responseDeserialize: deserialize_ondewo_nlu_Session,
   },
-  listSessionComments: {
+  // Lists the comments attached to a session with pagination support, optionally narrowed by resolved status.
+listSessionComments: {
     path: '/ondewo.nlu.Sessions/ListSessionComments',
     requestStream: false,
     responseStream: false,
@@ -1167,7 +1343,135 @@ listSessionLabels: {
     responseSerialize: serialize_ondewo_nlu_ListSessionCommentsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListSessionCommentsResponse,
   },
+  // Lists the comments attached to all sessions of the agent with pagination support,
+// optionally narrowed by a SessionFilter and by resolved status.
+listSessionCommentsOfAllSessions: {
+    path: '/ondewo.nlu.Sessions/ListSessionCommentsOfAllSessions',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.ListSessionCommentsOfAllSessionsRequest,
+    responseType: ondewo_nlu_session_pb.ListSessionCommentsResponse,
+    requestSerialize: serialize_ondewo_nlu_ListSessionCommentsOfAllSessionsRequest,
+    requestDeserialize: deserialize_ondewo_nlu_ListSessionCommentsOfAllSessionsRequest,
+    responseSerialize: serialize_ondewo_nlu_ListSessionCommentsResponse,
+    responseDeserialize: deserialize_ondewo_nlu_ListSessionCommentsResponse,
+  },
+  // *** SESSION-FEEDBACK RELATED ENDPOINTS *** //
+//
+// Records user feedback (thumbs up/down + optional comment + optional score/categorical value) about a
+// whole session and returns the persisted feedback. Works for authenticated reviewers/test users and,
+// where enabled, anonymous production end-users (webchat/webphone).
+addSessionFeedback: {
+    path: '/ondewo.nlu.Sessions/AddSessionFeedback',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.AddSessionFeedbackRequest,
+    responseType: ondewo_nlu_session_pb.SessionFeedback,
+    requestSerialize: serialize_ondewo_nlu_AddSessionFeedbackRequest,
+    requestDeserialize: deserialize_ondewo_nlu_AddSessionFeedbackRequest,
+    responseSerialize: serialize_ondewo_nlu_SessionFeedback,
+    responseDeserialize: deserialize_ondewo_nlu_SessionFeedback,
+  },
+  // Records user feedback about a single session step (turn), pinned to the exact response, and returns
+// the persisted feedback.
+addSessionStepFeedback: {
+    path: '/ondewo.nlu.Sessions/AddSessionStepFeedback',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.AddSessionStepFeedbackRequest,
+    responseType: ondewo_nlu_session_pb.SessionFeedback,
+    requestSerialize: serialize_ondewo_nlu_AddSessionStepFeedbackRequest,
+    requestDeserialize: deserialize_ondewo_nlu_AddSessionStepFeedbackRequest,
+    responseSerialize: serialize_ondewo_nlu_SessionFeedback,
+    responseDeserialize: deserialize_ondewo_nlu_SessionFeedback,
+  },
+  // Returns a single session/step feedback by its resource name.
+getSessionFeedback: {
+    path: '/ondewo.nlu.Sessions/GetSessionFeedback',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.GetSessionFeedbackRequest,
+    responseType: ondewo_nlu_session_pb.SessionFeedback,
+    requestSerialize: serialize_ondewo_nlu_GetSessionFeedbackRequest,
+    requestDeserialize: deserialize_ondewo_nlu_GetSessionFeedbackRequest,
+    responseSerialize: serialize_ondewo_nlu_SessionFeedback,
+    responseDeserialize: deserialize_ondewo_nlu_SessionFeedback,
+  },
+  // Updates an existing feedback (a user revising their thumbs / comment) and returns it.
+updateSessionFeedback: {
+    path: '/ondewo.nlu.Sessions/UpdateSessionFeedback',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.UpdateSessionFeedbackRequest,
+    responseType: ondewo_nlu_session_pb.SessionFeedback,
+    requestSerialize: serialize_ondewo_nlu_UpdateSessionFeedbackRequest,
+    requestDeserialize: deserialize_ondewo_nlu_UpdateSessionFeedbackRequest,
+    responseSerialize: serialize_ondewo_nlu_SessionFeedback,
+    responseDeserialize: deserialize_ondewo_nlu_SessionFeedback,
+  },
+  // Deletes a feedback (a user withdrawing their feedback).
+deleteSessionFeedback: {
+    path: '/ondewo.nlu.Sessions/DeleteSessionFeedback',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.DeleteSessionFeedbackRequest,
+    responseType: google_protobuf_empty_pb.Empty,
+    requestSerialize: serialize_ondewo_nlu_DeleteSessionFeedbackRequest,
+    requestDeserialize: deserialize_ondewo_nlu_DeleteSessionFeedbackRequest,
+    responseSerialize: serialize_google_protobuf_Empty,
+    responseDeserialize: deserialize_google_protobuf_Empty,
+  },
+  // Lists all feedback (session-level and step-level) attached to a session with pagination support.
+listSessionFeedback: {
+    path: '/ondewo.nlu.Sessions/ListSessionFeedback',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.ListSessionFeedbackRequest,
+    responseType: ondewo_nlu_session_pb.ListSessionFeedbackResponse,
+    requestSerialize: serialize_ondewo_nlu_ListSessionFeedbackRequest,
+    requestDeserialize: deserialize_ondewo_nlu_ListSessionFeedbackRequest,
+    responseSerialize: serialize_ondewo_nlu_ListSessionFeedbackResponse,
+    responseDeserialize: deserialize_ondewo_nlu_ListSessionFeedbackResponse,
+  },
+  // Lists feedback across all sessions of the agent, optionally narrowed by a SessionFilter.
+listSessionFeedbackOfAllSessions: {
+    path: '/ondewo.nlu.Sessions/ListSessionFeedbackOfAllSessions',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.ListSessionFeedbackOfAllSessionsRequest,
+    responseType: ondewo_nlu_session_pb.ListSessionFeedbackResponse,
+    requestSerialize: serialize_ondewo_nlu_ListSessionFeedbackOfAllSessionsRequest,
+    requestDeserialize: deserialize_ondewo_nlu_ListSessionFeedbackOfAllSessionsRequest,
+    responseSerialize: serialize_ondewo_nlu_ListSessionFeedbackResponse,
+    responseDeserialize: deserialize_ondewo_nlu_ListSessionFeedbackResponse,
+  },
+  // Returns aggregated feedback statistics for an agent (thumbs up/down counts + breakdowns), optionally
+// rolling up existing session reviews and comments as additional quality signals.
+getFeedbackStatistics: {
+    path: '/ondewo.nlu.Sessions/GetFeedbackStatistics',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.GetFeedbackStatisticsRequest,
+    responseType: ondewo_nlu_session_pb.GetFeedbackStatisticsResponse,
+    requestSerialize: serialize_ondewo_nlu_GetFeedbackStatisticsRequest,
+    requestDeserialize: deserialize_ondewo_nlu_GetFeedbackStatisticsRequest,
+    responseSerialize: serialize_ondewo_nlu_GetFeedbackStatisticsResponse,
+    responseDeserialize: deserialize_ondewo_nlu_GetFeedbackStatisticsResponse,
+  },
+  // Returns feedback statistics bucketed over time for trend charts.
+getFeedbackStatisticsTimeSeries: {
+    path: '/ondewo.nlu.Sessions/GetFeedbackStatisticsTimeSeries',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesRequest,
+    responseType: ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesResponse,
+    requestSerialize: serialize_ondewo_nlu_GetFeedbackStatisticsTimeSeriesRequest,
+    requestDeserialize: deserialize_ondewo_nlu_GetFeedbackStatisticsTimeSeriesRequest,
+    responseSerialize: serialize_ondewo_nlu_GetFeedbackStatisticsTimeSeriesResponse,
+    responseDeserialize: deserialize_ondewo_nlu_GetFeedbackStatisticsTimeSeriesResponse,
+  },
   // *** SESSION-REVIEW RELATED ENDPOINTS *** //
+//
 // ListSessionReviews:
 // returns list of session reviews from ondewo-kb; by default only returns session review IDs
 listSessionReviews: {

@@ -12,10 +12,12 @@ import * as google_protobuf_struct_pb from "google-protobuf/google/protobuf/stru
 import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/timestamp_pb";
 import * as google_rpc_status_pb from "../../google/rpc/status_pb";
 import * as google_type_latlng_pb from "../../google/type/latlng_pb";
+import * as ondewo_nlu_ccai_project_pb from "../../ondewo/nlu/ccai_project_pb";
 import * as ondewo_nlu_common_pb from "../../ondewo/nlu/common_pb";
 import * as ondewo_nlu_context_pb from "../../ondewo/nlu/context_pb";
-import * as ondewo_nlu_intent_pb from "../../ondewo/nlu/intent_pb";
 import * as ondewo_nlu_entity_type_pb from "../../ondewo/nlu/entity_type_pb";
+import * as ondewo_nlu_intent_pb from "../../ondewo/nlu/intent_pb";
+import * as ondewo_nlu_llm_evaluation_pb from "../../ondewo/nlu/llm_evaluation_pb";
 
 interface ISessionsService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     detectIntent: ISessionsService_IDetectIntent;
@@ -49,6 +51,16 @@ interface ISessionsService extends grpc.ServiceDefinition<grpc.UntypedServiceImp
     deleteSessionComments: ISessionsService_IDeleteSessionComments;
     updateSessionComments: ISessionsService_IUpdateSessionComments;
     listSessionComments: ISessionsService_IListSessionComments;
+    listSessionCommentsOfAllSessions: ISessionsService_IListSessionCommentsOfAllSessions;
+    addSessionFeedback: ISessionsService_IAddSessionFeedback;
+    addSessionStepFeedback: ISessionsService_IAddSessionStepFeedback;
+    getSessionFeedback: ISessionsService_IGetSessionFeedback;
+    updateSessionFeedback: ISessionsService_IUpdateSessionFeedback;
+    deleteSessionFeedback: ISessionsService_IDeleteSessionFeedback;
+    listSessionFeedback: ISessionsService_IListSessionFeedback;
+    listSessionFeedbackOfAllSessions: ISessionsService_IListSessionFeedbackOfAllSessions;
+    getFeedbackStatistics: ISessionsService_IGetFeedbackStatistics;
+    getFeedbackStatisticsTimeSeries: ISessionsService_IGetFeedbackStatisticsTimeSeries;
     listSessionReviews: ISessionsService_IListSessionReviews;
     getSessionReview: ISessionsService_IGetSessionReview;
     getLatestSessionReview: ISessionsService_IGetLatestSessionReview;
@@ -339,6 +351,96 @@ interface ISessionsService_IListSessionComments extends grpc.MethodDefinition<on
     responseSerialize: grpc.serialize<ondewo_nlu_session_pb.ListSessionCommentsResponse>;
     responseDeserialize: grpc.deserialize<ondewo_nlu_session_pb.ListSessionCommentsResponse>;
 }
+interface ISessionsService_IListSessionCommentsOfAllSessions extends grpc.MethodDefinition<ondewo_nlu_session_pb.ListSessionCommentsOfAllSessionsRequest, ondewo_nlu_session_pb.ListSessionCommentsResponse> {
+    path: "/ondewo.nlu.Sessions/ListSessionCommentsOfAllSessions";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_session_pb.ListSessionCommentsOfAllSessionsRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_session_pb.ListSessionCommentsOfAllSessionsRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_session_pb.ListSessionCommentsResponse>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_session_pb.ListSessionCommentsResponse>;
+}
+interface ISessionsService_IAddSessionFeedback extends grpc.MethodDefinition<ondewo_nlu_session_pb.AddSessionFeedbackRequest, ondewo_nlu_session_pb.SessionFeedback> {
+    path: "/ondewo.nlu.Sessions/AddSessionFeedback";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_session_pb.AddSessionFeedbackRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_session_pb.AddSessionFeedbackRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_session_pb.SessionFeedback>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_session_pb.SessionFeedback>;
+}
+interface ISessionsService_IAddSessionStepFeedback extends grpc.MethodDefinition<ondewo_nlu_session_pb.AddSessionStepFeedbackRequest, ondewo_nlu_session_pb.SessionFeedback> {
+    path: "/ondewo.nlu.Sessions/AddSessionStepFeedback";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_session_pb.AddSessionStepFeedbackRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_session_pb.AddSessionStepFeedbackRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_session_pb.SessionFeedback>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_session_pb.SessionFeedback>;
+}
+interface ISessionsService_IGetSessionFeedback extends grpc.MethodDefinition<ondewo_nlu_session_pb.GetSessionFeedbackRequest, ondewo_nlu_session_pb.SessionFeedback> {
+    path: "/ondewo.nlu.Sessions/GetSessionFeedback";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_session_pb.GetSessionFeedbackRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_session_pb.GetSessionFeedbackRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_session_pb.SessionFeedback>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_session_pb.SessionFeedback>;
+}
+interface ISessionsService_IUpdateSessionFeedback extends grpc.MethodDefinition<ondewo_nlu_session_pb.UpdateSessionFeedbackRequest, ondewo_nlu_session_pb.SessionFeedback> {
+    path: "/ondewo.nlu.Sessions/UpdateSessionFeedback";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_session_pb.UpdateSessionFeedbackRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_session_pb.UpdateSessionFeedbackRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_session_pb.SessionFeedback>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_session_pb.SessionFeedback>;
+}
+interface ISessionsService_IDeleteSessionFeedback extends grpc.MethodDefinition<ondewo_nlu_session_pb.DeleteSessionFeedbackRequest, google_protobuf_empty_pb.Empty> {
+    path: "/ondewo.nlu.Sessions/DeleteSessionFeedback";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_session_pb.DeleteSessionFeedbackRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_session_pb.DeleteSessionFeedbackRequest>;
+    responseSerialize: grpc.serialize<google_protobuf_empty_pb.Empty>;
+    responseDeserialize: grpc.deserialize<google_protobuf_empty_pb.Empty>;
+}
+interface ISessionsService_IListSessionFeedback extends grpc.MethodDefinition<ondewo_nlu_session_pb.ListSessionFeedbackRequest, ondewo_nlu_session_pb.ListSessionFeedbackResponse> {
+    path: "/ondewo.nlu.Sessions/ListSessionFeedback";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_session_pb.ListSessionFeedbackRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_session_pb.ListSessionFeedbackRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_session_pb.ListSessionFeedbackResponse>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_session_pb.ListSessionFeedbackResponse>;
+}
+interface ISessionsService_IListSessionFeedbackOfAllSessions extends grpc.MethodDefinition<ondewo_nlu_session_pb.ListSessionFeedbackOfAllSessionsRequest, ondewo_nlu_session_pb.ListSessionFeedbackResponse> {
+    path: "/ondewo.nlu.Sessions/ListSessionFeedbackOfAllSessions";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_session_pb.ListSessionFeedbackOfAllSessionsRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_session_pb.ListSessionFeedbackOfAllSessionsRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_session_pb.ListSessionFeedbackResponse>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_session_pb.ListSessionFeedbackResponse>;
+}
+interface ISessionsService_IGetFeedbackStatistics extends grpc.MethodDefinition<ondewo_nlu_session_pb.GetFeedbackStatisticsRequest, ondewo_nlu_session_pb.GetFeedbackStatisticsResponse> {
+    path: "/ondewo.nlu.Sessions/GetFeedbackStatistics";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_session_pb.GetFeedbackStatisticsRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_session_pb.GetFeedbackStatisticsRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_session_pb.GetFeedbackStatisticsResponse>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_session_pb.GetFeedbackStatisticsResponse>;
+}
+interface ISessionsService_IGetFeedbackStatisticsTimeSeries extends grpc.MethodDefinition<ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesRequest, ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesResponse> {
+    path: "/ondewo.nlu.Sessions/GetFeedbackStatisticsTimeSeries";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesResponse>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesResponse>;
+}
 interface ISessionsService_IListSessionReviews extends grpc.MethodDefinition<ondewo_nlu_session_pb.ListSessionReviewsRequest, ondewo_nlu_session_pb.ListSessionReviewsResponse> {
     path: "/ondewo.nlu.Sessions/ListSessionReviews";
     requestStream: false;
@@ -455,6 +557,16 @@ export interface ISessionsServer {
     deleteSessionComments: grpc.handleUnaryCall<ondewo_nlu_session_pb.DeleteSessionCommentsRequest, ondewo_nlu_session_pb.Session>;
     updateSessionComments: grpc.handleUnaryCall<ondewo_nlu_session_pb.UpdateSessionCommentsRequest, ondewo_nlu_session_pb.Session>;
     listSessionComments: grpc.handleUnaryCall<ondewo_nlu_session_pb.ListSessionCommentsRequest, ondewo_nlu_session_pb.ListSessionCommentsResponse>;
+    listSessionCommentsOfAllSessions: grpc.handleUnaryCall<ondewo_nlu_session_pb.ListSessionCommentsOfAllSessionsRequest, ondewo_nlu_session_pb.ListSessionCommentsResponse>;
+    addSessionFeedback: grpc.handleUnaryCall<ondewo_nlu_session_pb.AddSessionFeedbackRequest, ondewo_nlu_session_pb.SessionFeedback>;
+    addSessionStepFeedback: grpc.handleUnaryCall<ondewo_nlu_session_pb.AddSessionStepFeedbackRequest, ondewo_nlu_session_pb.SessionFeedback>;
+    getSessionFeedback: grpc.handleUnaryCall<ondewo_nlu_session_pb.GetSessionFeedbackRequest, ondewo_nlu_session_pb.SessionFeedback>;
+    updateSessionFeedback: grpc.handleUnaryCall<ondewo_nlu_session_pb.UpdateSessionFeedbackRequest, ondewo_nlu_session_pb.SessionFeedback>;
+    deleteSessionFeedback: grpc.handleUnaryCall<ondewo_nlu_session_pb.DeleteSessionFeedbackRequest, google_protobuf_empty_pb.Empty>;
+    listSessionFeedback: grpc.handleUnaryCall<ondewo_nlu_session_pb.ListSessionFeedbackRequest, ondewo_nlu_session_pb.ListSessionFeedbackResponse>;
+    listSessionFeedbackOfAllSessions: grpc.handleUnaryCall<ondewo_nlu_session_pb.ListSessionFeedbackOfAllSessionsRequest, ondewo_nlu_session_pb.ListSessionFeedbackResponse>;
+    getFeedbackStatistics: grpc.handleUnaryCall<ondewo_nlu_session_pb.GetFeedbackStatisticsRequest, ondewo_nlu_session_pb.GetFeedbackStatisticsResponse>;
+    getFeedbackStatisticsTimeSeries: grpc.handleUnaryCall<ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesRequest, ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesResponse>;
     listSessionReviews: grpc.handleUnaryCall<ondewo_nlu_session_pb.ListSessionReviewsRequest, ondewo_nlu_session_pb.ListSessionReviewsResponse>;
     getSessionReview: grpc.handleUnaryCall<ondewo_nlu_session_pb.GetSessionReviewRequest, ondewo_nlu_session_pb.SessionReview>;
     getLatestSessionReview: grpc.handleUnaryCall<ondewo_nlu_session_pb.GetLatestSessionReviewRequest, ondewo_nlu_session_pb.SessionReview>;
@@ -560,6 +672,36 @@ export interface ISessionsClient {
     listSessionComments(request: ondewo_nlu_session_pb.ListSessionCommentsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionCommentsResponse) => void): grpc.ClientUnaryCall;
     listSessionComments(request: ondewo_nlu_session_pb.ListSessionCommentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionCommentsResponse) => void): grpc.ClientUnaryCall;
     listSessionComments(request: ondewo_nlu_session_pb.ListSessionCommentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionCommentsResponse) => void): grpc.ClientUnaryCall;
+    listSessionCommentsOfAllSessions(request: ondewo_nlu_session_pb.ListSessionCommentsOfAllSessionsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionCommentsResponse) => void): grpc.ClientUnaryCall;
+    listSessionCommentsOfAllSessions(request: ondewo_nlu_session_pb.ListSessionCommentsOfAllSessionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionCommentsResponse) => void): grpc.ClientUnaryCall;
+    listSessionCommentsOfAllSessions(request: ondewo_nlu_session_pb.ListSessionCommentsOfAllSessionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionCommentsResponse) => void): grpc.ClientUnaryCall;
+    addSessionFeedback(request: ondewo_nlu_session_pb.AddSessionFeedbackRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    addSessionFeedback(request: ondewo_nlu_session_pb.AddSessionFeedbackRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    addSessionFeedback(request: ondewo_nlu_session_pb.AddSessionFeedbackRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    addSessionStepFeedback(request: ondewo_nlu_session_pb.AddSessionStepFeedbackRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    addSessionStepFeedback(request: ondewo_nlu_session_pb.AddSessionStepFeedbackRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    addSessionStepFeedback(request: ondewo_nlu_session_pb.AddSessionStepFeedbackRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    getSessionFeedback(request: ondewo_nlu_session_pb.GetSessionFeedbackRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    getSessionFeedback(request: ondewo_nlu_session_pb.GetSessionFeedbackRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    getSessionFeedback(request: ondewo_nlu_session_pb.GetSessionFeedbackRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    updateSessionFeedback(request: ondewo_nlu_session_pb.UpdateSessionFeedbackRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    updateSessionFeedback(request: ondewo_nlu_session_pb.UpdateSessionFeedbackRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    updateSessionFeedback(request: ondewo_nlu_session_pb.UpdateSessionFeedbackRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    deleteSessionFeedback(request: ondewo_nlu_session_pb.DeleteSessionFeedbackRequest, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
+    deleteSessionFeedback(request: ondewo_nlu_session_pb.DeleteSessionFeedbackRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
+    deleteSessionFeedback(request: ondewo_nlu_session_pb.DeleteSessionFeedbackRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
+    listSessionFeedback(request: ondewo_nlu_session_pb.ListSessionFeedbackRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionFeedbackResponse) => void): grpc.ClientUnaryCall;
+    listSessionFeedback(request: ondewo_nlu_session_pb.ListSessionFeedbackRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionFeedbackResponse) => void): grpc.ClientUnaryCall;
+    listSessionFeedback(request: ondewo_nlu_session_pb.ListSessionFeedbackRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionFeedbackResponse) => void): grpc.ClientUnaryCall;
+    listSessionFeedbackOfAllSessions(request: ondewo_nlu_session_pb.ListSessionFeedbackOfAllSessionsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionFeedbackResponse) => void): grpc.ClientUnaryCall;
+    listSessionFeedbackOfAllSessions(request: ondewo_nlu_session_pb.ListSessionFeedbackOfAllSessionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionFeedbackResponse) => void): grpc.ClientUnaryCall;
+    listSessionFeedbackOfAllSessions(request: ondewo_nlu_session_pb.ListSessionFeedbackOfAllSessionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionFeedbackResponse) => void): grpc.ClientUnaryCall;
+    getFeedbackStatistics(request: ondewo_nlu_session_pb.GetFeedbackStatisticsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.GetFeedbackStatisticsResponse) => void): grpc.ClientUnaryCall;
+    getFeedbackStatistics(request: ondewo_nlu_session_pb.GetFeedbackStatisticsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.GetFeedbackStatisticsResponse) => void): grpc.ClientUnaryCall;
+    getFeedbackStatistics(request: ondewo_nlu_session_pb.GetFeedbackStatisticsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.GetFeedbackStatisticsResponse) => void): grpc.ClientUnaryCall;
+    getFeedbackStatisticsTimeSeries(request: ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesResponse) => void): grpc.ClientUnaryCall;
+    getFeedbackStatisticsTimeSeries(request: ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesResponse) => void): grpc.ClientUnaryCall;
+    getFeedbackStatisticsTimeSeries(request: ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesResponse) => void): grpc.ClientUnaryCall;
     listSessionReviews(request: ondewo_nlu_session_pb.ListSessionReviewsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionReviewsResponse) => void): grpc.ClientUnaryCall;
     listSessionReviews(request: ondewo_nlu_session_pb.ListSessionReviewsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionReviewsResponse) => void): grpc.ClientUnaryCall;
     listSessionReviews(request: ondewo_nlu_session_pb.ListSessionReviewsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionReviewsResponse) => void): grpc.ClientUnaryCall;
@@ -683,6 +825,36 @@ export class SessionsClient extends grpc.Client implements ISessionsClient {
     public listSessionComments(request: ondewo_nlu_session_pb.ListSessionCommentsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionCommentsResponse) => void): grpc.ClientUnaryCall;
     public listSessionComments(request: ondewo_nlu_session_pb.ListSessionCommentsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionCommentsResponse) => void): grpc.ClientUnaryCall;
     public listSessionComments(request: ondewo_nlu_session_pb.ListSessionCommentsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionCommentsResponse) => void): grpc.ClientUnaryCall;
+    public listSessionCommentsOfAllSessions(request: ondewo_nlu_session_pb.ListSessionCommentsOfAllSessionsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionCommentsResponse) => void): grpc.ClientUnaryCall;
+    public listSessionCommentsOfAllSessions(request: ondewo_nlu_session_pb.ListSessionCommentsOfAllSessionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionCommentsResponse) => void): grpc.ClientUnaryCall;
+    public listSessionCommentsOfAllSessions(request: ondewo_nlu_session_pb.ListSessionCommentsOfAllSessionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionCommentsResponse) => void): grpc.ClientUnaryCall;
+    public addSessionFeedback(request: ondewo_nlu_session_pb.AddSessionFeedbackRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    public addSessionFeedback(request: ondewo_nlu_session_pb.AddSessionFeedbackRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    public addSessionFeedback(request: ondewo_nlu_session_pb.AddSessionFeedbackRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    public addSessionStepFeedback(request: ondewo_nlu_session_pb.AddSessionStepFeedbackRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    public addSessionStepFeedback(request: ondewo_nlu_session_pb.AddSessionStepFeedbackRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    public addSessionStepFeedback(request: ondewo_nlu_session_pb.AddSessionStepFeedbackRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    public getSessionFeedback(request: ondewo_nlu_session_pb.GetSessionFeedbackRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    public getSessionFeedback(request: ondewo_nlu_session_pb.GetSessionFeedbackRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    public getSessionFeedback(request: ondewo_nlu_session_pb.GetSessionFeedbackRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    public updateSessionFeedback(request: ondewo_nlu_session_pb.UpdateSessionFeedbackRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    public updateSessionFeedback(request: ondewo_nlu_session_pb.UpdateSessionFeedbackRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    public updateSessionFeedback(request: ondewo_nlu_session_pb.UpdateSessionFeedbackRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.SessionFeedback) => void): grpc.ClientUnaryCall;
+    public deleteSessionFeedback(request: ondewo_nlu_session_pb.DeleteSessionFeedbackRequest, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
+    public deleteSessionFeedback(request: ondewo_nlu_session_pb.DeleteSessionFeedbackRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
+    public deleteSessionFeedback(request: ondewo_nlu_session_pb.DeleteSessionFeedbackRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
+    public listSessionFeedback(request: ondewo_nlu_session_pb.ListSessionFeedbackRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionFeedbackResponse) => void): grpc.ClientUnaryCall;
+    public listSessionFeedback(request: ondewo_nlu_session_pb.ListSessionFeedbackRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionFeedbackResponse) => void): grpc.ClientUnaryCall;
+    public listSessionFeedback(request: ondewo_nlu_session_pb.ListSessionFeedbackRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionFeedbackResponse) => void): grpc.ClientUnaryCall;
+    public listSessionFeedbackOfAllSessions(request: ondewo_nlu_session_pb.ListSessionFeedbackOfAllSessionsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionFeedbackResponse) => void): grpc.ClientUnaryCall;
+    public listSessionFeedbackOfAllSessions(request: ondewo_nlu_session_pb.ListSessionFeedbackOfAllSessionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionFeedbackResponse) => void): grpc.ClientUnaryCall;
+    public listSessionFeedbackOfAllSessions(request: ondewo_nlu_session_pb.ListSessionFeedbackOfAllSessionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionFeedbackResponse) => void): grpc.ClientUnaryCall;
+    public getFeedbackStatistics(request: ondewo_nlu_session_pb.GetFeedbackStatisticsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.GetFeedbackStatisticsResponse) => void): grpc.ClientUnaryCall;
+    public getFeedbackStatistics(request: ondewo_nlu_session_pb.GetFeedbackStatisticsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.GetFeedbackStatisticsResponse) => void): grpc.ClientUnaryCall;
+    public getFeedbackStatistics(request: ondewo_nlu_session_pb.GetFeedbackStatisticsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.GetFeedbackStatisticsResponse) => void): grpc.ClientUnaryCall;
+    public getFeedbackStatisticsTimeSeries(request: ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesResponse) => void): grpc.ClientUnaryCall;
+    public getFeedbackStatisticsTimeSeries(request: ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesResponse) => void): grpc.ClientUnaryCall;
+    public getFeedbackStatisticsTimeSeries(request: ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.GetFeedbackStatisticsTimeSeriesResponse) => void): grpc.ClientUnaryCall;
     public listSessionReviews(request: ondewo_nlu_session_pb.ListSessionReviewsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionReviewsResponse) => void): grpc.ClientUnaryCall;
     public listSessionReviews(request: ondewo_nlu_session_pb.ListSessionReviewsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionReviewsResponse) => void): grpc.ClientUnaryCall;
     public listSessionReviews(request: ondewo_nlu_session_pb.ListSessionReviewsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionReviewsResponse) => void): grpc.ClientUnaryCall;

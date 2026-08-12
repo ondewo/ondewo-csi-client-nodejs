@@ -161,6 +161,11 @@ export class GetUserRequest extends jspb.Message {
     getUserEmail(): string;
     setUserEmail(value: string): GetUserRequest;
 
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): GetUserRequest;
+
     getUserIdentifierCase(): GetUserRequest.UserIdentifierCase;
 
     serializeBinary(): Uint8Array;
@@ -177,6 +182,7 @@ export namespace GetUserRequest {
     export type AsObject = {
         userId: string,
         userEmail: string,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 
     export enum UserIdentifierCase {
@@ -211,6 +217,11 @@ export class ListUsersRequest extends jspb.Message {
     getPageToken(): string;
     setPageToken(value: string): ListUsersRequest;
 
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): ListUsersRequest;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListUsersRequest.AsObject;
     static toObject(includeInstance: boolean, msg: ListUsersRequest): ListUsersRequest.AsObject;
@@ -224,6 +235,7 @@ export class ListUsersRequest extends jspb.Message {
 export namespace ListUsersRequest {
     export type AsObject = {
         pageToken: string,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -407,6 +419,11 @@ export class GetServerRoleRequest extends jspb.Message {
     getRoleName(): string;
     setRoleName(value: string): GetServerRoleRequest;
 
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): GetServerRoleRequest;
+
     getServerRoleIdentifierCase(): GetServerRoleRequest.ServerRoleIdentifierCase;
 
     serializeBinary(): Uint8Array;
@@ -423,6 +440,7 @@ export namespace GetServerRoleRequest {
     export type AsObject = {
         roleId: number,
         roleName: string,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 
     export enum ServerRoleIdentifierCase {
@@ -437,6 +455,11 @@ export class ListServerRolesRequest extends jspb.Message {
     getPageToken(): string;
     setPageToken(value: string): ListServerRolesRequest;
 
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): ListServerRolesRequest;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListServerRolesRequest.AsObject;
     static toObject(includeInstance: boolean, msg: ListServerRolesRequest): ListServerRolesRequest.AsObject;
@@ -450,6 +473,7 @@ export class ListServerRolesRequest extends jspb.Message {
 export namespace ListServerRolesRequest {
     export type AsObject = {
         pageToken: string,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -482,6 +506,11 @@ export class ListServerPermissionsRequest extends jspb.Message {
     getPageToken(): string;
     setPageToken(value: string): ListServerPermissionsRequest;
 
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): ListServerPermissionsRequest;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListServerPermissionsRequest.AsObject;
     static toObject(includeInstance: boolean, msg: ListServerPermissionsRequest): ListServerPermissionsRequest.AsObject;
@@ -495,6 +524,7 @@ export class ListServerPermissionsRequest extends jspb.Message {
 export namespace ListServerPermissionsRequest {
     export type AsObject = {
         pageToken: string,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -523,55 +553,6 @@ export namespace ListServerPermissionsResponse {
     }
 }
 
-export class LoginRequest extends jspb.Message { 
-    getUserEmail(): string;
-    setUserEmail(value: string): LoginRequest;
-    getPassword(): string;
-    setPassword(value: string): LoginRequest;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): LoginRequest.AsObject;
-    static toObject(includeInstance: boolean, msg: LoginRequest): LoginRequest.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: LoginRequest, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): LoginRequest;
-    static deserializeBinaryFromReader(message: LoginRequest, reader: jspb.BinaryReader): LoginRequest;
-}
-
-export namespace LoginRequest {
-    export type AsObject = {
-        userEmail: string,
-        password: string,
-    }
-}
-
-export class LoginResponse extends jspb.Message { 
-
-    hasUser(): boolean;
-    clearUser(): void;
-    getUser(): User | undefined;
-    setUser(value?: User): LoginResponse;
-    getAuthToken(): string;
-    setAuthToken(value: string): LoginResponse;
-
-    serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): LoginResponse.AsObject;
-    static toObject(includeInstance: boolean, msg: LoginResponse): LoginResponse.AsObject;
-    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
-    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: LoginResponse, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): LoginResponse;
-    static deserializeBinaryFromReader(message: LoginResponse, reader: jspb.BinaryReader): LoginResponse;
-}
-
-export namespace LoginResponse {
-    export type AsObject = {
-        user?: User.AsObject,
-        authToken: string,
-    }
-}
-
 export class GetUserPreferencesRequest extends jspb.Message { 
     getUserName(): string;
     setUserName(value: string): GetUserPreferencesRequest;
@@ -581,6 +562,11 @@ export class GetUserPreferencesRequest extends jspb.Message {
     addKeys(value: string, index?: number): string;
     getRegexInclude(): string;
     setRegexInclude(value: string): GetUserPreferencesRequest;
+
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): GetUserPreferencesRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetUserPreferencesRequest.AsObject;
@@ -597,6 +583,7 @@ export namespace GetUserPreferencesRequest {
         userName: string,
         keysList: Array<string>,
         regexInclude: string,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -766,6 +753,11 @@ export class ListUserPreferencesRequest extends jspb.Message {
     getRegexFilter(): string;
     setRegexFilter(value: string): ListUserPreferencesRequest;
 
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): ListUserPreferencesRequest;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListUserPreferencesRequest.AsObject;
     static toObject(includeInstance: boolean, msg: ListUserPreferencesRequest): ListUserPreferencesRequest.AsObject;
@@ -780,6 +772,7 @@ export namespace ListUserPreferencesRequest {
     export type AsObject = {
         userName: string,
         regexFilter: string,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 

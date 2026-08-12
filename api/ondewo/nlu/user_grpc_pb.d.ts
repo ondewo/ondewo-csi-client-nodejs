@@ -26,11 +26,15 @@ interface IUsersService extends grpc.ServiceDefinition<grpc.UntypedServiceImplem
     updateServerRole: IUsersService_IUpdateServerRole;
     listServerRoles: IUsersService_IListServerRoles;
     listServerPermissions: IUsersService_IListServerPermissions;
-    login: IUsersService_ILogin;
     checkLogin: IUsersService_ICheckLogin;
     listNotifications: IUsersService_IListNotifications;
     setNotificationsFlaggedStatus: IUsersService_ISetNotificationsFlaggedStatus;
     setNotificationsReadStatus: IUsersService_ISetNotificationsReadStatus;
+    addNotifications: IUsersService_IAddNotifications;
+    getNotification: IUsersService_IGetNotification;
+    updateNotification: IUsersService_IUpdateNotification;
+    deleteNotifications: IUsersService_IDeleteNotifications;
+    streamNotifications: IUsersService_IStreamNotifications;
     getUserPreferences: IUsersService_IGetUserPreferences;
     setUserPreferences: IUsersService_ISetUserPreferences;
     deleteUserPreferences: IUsersService_IDeleteUserPreferences;
@@ -154,15 +158,6 @@ interface IUsersService_IListServerPermissions extends grpc.MethodDefinition<ond
     responseSerialize: grpc.serialize<ondewo_nlu_user_pb.ListServerPermissionsResponse>;
     responseDeserialize: grpc.deserialize<ondewo_nlu_user_pb.ListServerPermissionsResponse>;
 }
-interface IUsersService_ILogin extends grpc.MethodDefinition<ondewo_nlu_user_pb.LoginRequest, ondewo_nlu_user_pb.LoginResponse> {
-    path: "/ondewo.nlu.Users/Login";
-    requestStream: false;
-    responseStream: false;
-    requestSerialize: grpc.serialize<ondewo_nlu_user_pb.LoginRequest>;
-    requestDeserialize: grpc.deserialize<ondewo_nlu_user_pb.LoginRequest>;
-    responseSerialize: grpc.serialize<ondewo_nlu_user_pb.LoginResponse>;
-    responseDeserialize: grpc.deserialize<ondewo_nlu_user_pb.LoginResponse>;
-}
 interface IUsersService_ICheckLogin extends grpc.MethodDefinition<google_protobuf_empty_pb.Empty, google_protobuf_empty_pb.Empty> {
     path: "/ondewo.nlu.Users/CheckLogin";
     requestStream: false;
@@ -198,6 +193,51 @@ interface IUsersService_ISetNotificationsReadStatus extends grpc.MethodDefinitio
     requestDeserialize: grpc.deserialize<ondewo_nlu_common_pb.SetNotificationsReadStatusRequest>;
     responseSerialize: grpc.serialize<ondewo_nlu_common_pb.ListNotificationsResponse>;
     responseDeserialize: grpc.deserialize<ondewo_nlu_common_pb.ListNotificationsResponse>;
+}
+interface IUsersService_IAddNotifications extends grpc.MethodDefinition<ondewo_nlu_common_pb.AddNotificationsRequest, ondewo_nlu_common_pb.AddNotificationsResponse> {
+    path: "/ondewo.nlu.Users/AddNotifications";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_common_pb.AddNotificationsRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_common_pb.AddNotificationsRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_common_pb.AddNotificationsResponse>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_common_pb.AddNotificationsResponse>;
+}
+interface IUsersService_IGetNotification extends grpc.MethodDefinition<ondewo_nlu_common_pb.GetNotificationRequest, ondewo_nlu_common_pb.Notification> {
+    path: "/ondewo.nlu.Users/GetNotification";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_common_pb.GetNotificationRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_common_pb.GetNotificationRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_common_pb.Notification>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_common_pb.Notification>;
+}
+interface IUsersService_IUpdateNotification extends grpc.MethodDefinition<ondewo_nlu_common_pb.UpdateNotificationRequest, ondewo_nlu_common_pb.Notification> {
+    path: "/ondewo.nlu.Users/UpdateNotification";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_common_pb.UpdateNotificationRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_common_pb.UpdateNotificationRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_common_pb.Notification>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_common_pb.Notification>;
+}
+interface IUsersService_IDeleteNotifications extends grpc.MethodDefinition<ondewo_nlu_common_pb.DeleteNotificationsRequest, google_protobuf_empty_pb.Empty> {
+    path: "/ondewo.nlu.Users/DeleteNotifications";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_common_pb.DeleteNotificationsRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_common_pb.DeleteNotificationsRequest>;
+    responseSerialize: grpc.serialize<google_protobuf_empty_pb.Empty>;
+    responseDeserialize: grpc.deserialize<google_protobuf_empty_pb.Empty>;
+}
+interface IUsersService_IStreamNotifications extends grpc.MethodDefinition<ondewo_nlu_common_pb.StreamNotificationsRequest, ondewo_nlu_common_pb.Notification> {
+    path: "/ondewo.nlu.Users/StreamNotifications";
+    requestStream: false;
+    responseStream: true;
+    requestSerialize: grpc.serialize<ondewo_nlu_common_pb.StreamNotificationsRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_common_pb.StreamNotificationsRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_common_pb.Notification>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_common_pb.Notification>;
 }
 interface IUsersService_IGetUserPreferences extends grpc.MethodDefinition<ondewo_nlu_user_pb.GetUserPreferencesRequest, ondewo_nlu_user_pb.GetUserPreferencesResponse> {
     path: "/ondewo.nlu.Users/GetUserPreferences";
@@ -252,11 +292,15 @@ export interface IUsersServer {
     updateServerRole: grpc.handleUnaryCall<ondewo_nlu_user_pb.UpdateServerRoleRequest, ondewo_nlu_user_pb.ServerRole>;
     listServerRoles: grpc.handleUnaryCall<ondewo_nlu_user_pb.ListServerRolesRequest, ondewo_nlu_user_pb.ListServerRolesResponse>;
     listServerPermissions: grpc.handleUnaryCall<ondewo_nlu_user_pb.ListServerPermissionsRequest, ondewo_nlu_user_pb.ListServerPermissionsResponse>;
-    login: grpc.handleUnaryCall<ondewo_nlu_user_pb.LoginRequest, ondewo_nlu_user_pb.LoginResponse>;
     checkLogin: grpc.handleUnaryCall<google_protobuf_empty_pb.Empty, google_protobuf_empty_pb.Empty>;
     listNotifications: grpc.handleUnaryCall<ondewo_nlu_common_pb.ListNotificationsRequest, ondewo_nlu_common_pb.ListNotificationsResponse>;
     setNotificationsFlaggedStatus: grpc.handleUnaryCall<ondewo_nlu_common_pb.SetNotificationsFlaggedStatusRequest, ondewo_nlu_common_pb.ListNotificationsResponse>;
     setNotificationsReadStatus: grpc.handleUnaryCall<ondewo_nlu_common_pb.SetNotificationsReadStatusRequest, ondewo_nlu_common_pb.ListNotificationsResponse>;
+    addNotifications: grpc.handleUnaryCall<ondewo_nlu_common_pb.AddNotificationsRequest, ondewo_nlu_common_pb.AddNotificationsResponse>;
+    getNotification: grpc.handleUnaryCall<ondewo_nlu_common_pb.GetNotificationRequest, ondewo_nlu_common_pb.Notification>;
+    updateNotification: grpc.handleUnaryCall<ondewo_nlu_common_pb.UpdateNotificationRequest, ondewo_nlu_common_pb.Notification>;
+    deleteNotifications: grpc.handleUnaryCall<ondewo_nlu_common_pb.DeleteNotificationsRequest, google_protobuf_empty_pb.Empty>;
+    streamNotifications: grpc.handleServerStreamingCall<ondewo_nlu_common_pb.StreamNotificationsRequest, ondewo_nlu_common_pb.Notification>;
     getUserPreferences: grpc.handleUnaryCall<ondewo_nlu_user_pb.GetUserPreferencesRequest, ondewo_nlu_user_pb.GetUserPreferencesResponse>;
     setUserPreferences: grpc.handleUnaryCall<ondewo_nlu_user_pb.SetUserPreferencesRequest, ondewo_nlu_user_pb.SetUserPreferencesResponse>;
     deleteUserPreferences: grpc.handleUnaryCall<ondewo_nlu_user_pb.DeleteUserPreferencesRequest, ondewo_nlu_user_pb.DeleteUserPreferencesResponse>;
@@ -303,9 +347,6 @@ export interface IUsersClient {
     listServerPermissions(request: ondewo_nlu_user_pb.ListServerPermissionsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.ListServerPermissionsResponse) => void): grpc.ClientUnaryCall;
     listServerPermissions(request: ondewo_nlu_user_pb.ListServerPermissionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.ListServerPermissionsResponse) => void): grpc.ClientUnaryCall;
     listServerPermissions(request: ondewo_nlu_user_pb.ListServerPermissionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.ListServerPermissionsResponse) => void): grpc.ClientUnaryCall;
-    login(request: ondewo_nlu_user_pb.LoginRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.LoginResponse) => void): grpc.ClientUnaryCall;
-    login(request: ondewo_nlu_user_pb.LoginRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.LoginResponse) => void): grpc.ClientUnaryCall;
-    login(request: ondewo_nlu_user_pb.LoginRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.LoginResponse) => void): grpc.ClientUnaryCall;
     checkLogin(request: google_protobuf_empty_pb.Empty, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
     checkLogin(request: google_protobuf_empty_pb.Empty, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
     checkLogin(request: google_protobuf_empty_pb.Empty, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
@@ -318,6 +359,20 @@ export interface IUsersClient {
     setNotificationsReadStatus(request: ondewo_nlu_common_pb.SetNotificationsReadStatusRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.ListNotificationsResponse) => void): grpc.ClientUnaryCall;
     setNotificationsReadStatus(request: ondewo_nlu_common_pb.SetNotificationsReadStatusRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.ListNotificationsResponse) => void): grpc.ClientUnaryCall;
     setNotificationsReadStatus(request: ondewo_nlu_common_pb.SetNotificationsReadStatusRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.ListNotificationsResponse) => void): grpc.ClientUnaryCall;
+    addNotifications(request: ondewo_nlu_common_pb.AddNotificationsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.AddNotificationsResponse) => void): grpc.ClientUnaryCall;
+    addNotifications(request: ondewo_nlu_common_pb.AddNotificationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.AddNotificationsResponse) => void): grpc.ClientUnaryCall;
+    addNotifications(request: ondewo_nlu_common_pb.AddNotificationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.AddNotificationsResponse) => void): grpc.ClientUnaryCall;
+    getNotification(request: ondewo_nlu_common_pb.GetNotificationRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.Notification) => void): grpc.ClientUnaryCall;
+    getNotification(request: ondewo_nlu_common_pb.GetNotificationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.Notification) => void): grpc.ClientUnaryCall;
+    getNotification(request: ondewo_nlu_common_pb.GetNotificationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.Notification) => void): grpc.ClientUnaryCall;
+    updateNotification(request: ondewo_nlu_common_pb.UpdateNotificationRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.Notification) => void): grpc.ClientUnaryCall;
+    updateNotification(request: ondewo_nlu_common_pb.UpdateNotificationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.Notification) => void): grpc.ClientUnaryCall;
+    updateNotification(request: ondewo_nlu_common_pb.UpdateNotificationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.Notification) => void): grpc.ClientUnaryCall;
+    deleteNotifications(request: ondewo_nlu_common_pb.DeleteNotificationsRequest, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
+    deleteNotifications(request: ondewo_nlu_common_pb.DeleteNotificationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
+    deleteNotifications(request: ondewo_nlu_common_pb.DeleteNotificationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
+    streamNotifications(request: ondewo_nlu_common_pb.StreamNotificationsRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<ondewo_nlu_common_pb.Notification>;
+    streamNotifications(request: ondewo_nlu_common_pb.StreamNotificationsRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<ondewo_nlu_common_pb.Notification>;
     getUserPreferences(request: ondewo_nlu_user_pb.GetUserPreferencesRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.GetUserPreferencesResponse) => void): grpc.ClientUnaryCall;
     getUserPreferences(request: ondewo_nlu_user_pb.GetUserPreferencesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.GetUserPreferencesResponse) => void): grpc.ClientUnaryCall;
     getUserPreferences(request: ondewo_nlu_user_pb.GetUserPreferencesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.GetUserPreferencesResponse) => void): grpc.ClientUnaryCall;
@@ -373,9 +428,6 @@ export class UsersClient extends grpc.Client implements IUsersClient {
     public listServerPermissions(request: ondewo_nlu_user_pb.ListServerPermissionsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.ListServerPermissionsResponse) => void): grpc.ClientUnaryCall;
     public listServerPermissions(request: ondewo_nlu_user_pb.ListServerPermissionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.ListServerPermissionsResponse) => void): grpc.ClientUnaryCall;
     public listServerPermissions(request: ondewo_nlu_user_pb.ListServerPermissionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.ListServerPermissionsResponse) => void): grpc.ClientUnaryCall;
-    public login(request: ondewo_nlu_user_pb.LoginRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.LoginResponse) => void): grpc.ClientUnaryCall;
-    public login(request: ondewo_nlu_user_pb.LoginRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.LoginResponse) => void): grpc.ClientUnaryCall;
-    public login(request: ondewo_nlu_user_pb.LoginRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.LoginResponse) => void): grpc.ClientUnaryCall;
     public checkLogin(request: google_protobuf_empty_pb.Empty, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
     public checkLogin(request: google_protobuf_empty_pb.Empty, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
     public checkLogin(request: google_protobuf_empty_pb.Empty, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
@@ -388,6 +440,20 @@ export class UsersClient extends grpc.Client implements IUsersClient {
     public setNotificationsReadStatus(request: ondewo_nlu_common_pb.SetNotificationsReadStatusRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.ListNotificationsResponse) => void): grpc.ClientUnaryCall;
     public setNotificationsReadStatus(request: ondewo_nlu_common_pb.SetNotificationsReadStatusRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.ListNotificationsResponse) => void): grpc.ClientUnaryCall;
     public setNotificationsReadStatus(request: ondewo_nlu_common_pb.SetNotificationsReadStatusRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.ListNotificationsResponse) => void): grpc.ClientUnaryCall;
+    public addNotifications(request: ondewo_nlu_common_pb.AddNotificationsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.AddNotificationsResponse) => void): grpc.ClientUnaryCall;
+    public addNotifications(request: ondewo_nlu_common_pb.AddNotificationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.AddNotificationsResponse) => void): grpc.ClientUnaryCall;
+    public addNotifications(request: ondewo_nlu_common_pb.AddNotificationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.AddNotificationsResponse) => void): grpc.ClientUnaryCall;
+    public getNotification(request: ondewo_nlu_common_pb.GetNotificationRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.Notification) => void): grpc.ClientUnaryCall;
+    public getNotification(request: ondewo_nlu_common_pb.GetNotificationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.Notification) => void): grpc.ClientUnaryCall;
+    public getNotification(request: ondewo_nlu_common_pb.GetNotificationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.Notification) => void): grpc.ClientUnaryCall;
+    public updateNotification(request: ondewo_nlu_common_pb.UpdateNotificationRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.Notification) => void): grpc.ClientUnaryCall;
+    public updateNotification(request: ondewo_nlu_common_pb.UpdateNotificationRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.Notification) => void): grpc.ClientUnaryCall;
+    public updateNotification(request: ondewo_nlu_common_pb.UpdateNotificationRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_common_pb.Notification) => void): grpc.ClientUnaryCall;
+    public deleteNotifications(request: ondewo_nlu_common_pb.DeleteNotificationsRequest, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
+    public deleteNotifications(request: ondewo_nlu_common_pb.DeleteNotificationsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
+    public deleteNotifications(request: ondewo_nlu_common_pb.DeleteNotificationsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: google_protobuf_empty_pb.Empty) => void): grpc.ClientUnaryCall;
+    public streamNotifications(request: ondewo_nlu_common_pb.StreamNotificationsRequest, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<ondewo_nlu_common_pb.Notification>;
+    public streamNotifications(request: ondewo_nlu_common_pb.StreamNotificationsRequest, metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientReadableStream<ondewo_nlu_common_pb.Notification>;
     public getUserPreferences(request: ondewo_nlu_user_pb.GetUserPreferencesRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.GetUserPreferencesResponse) => void): grpc.ClientUnaryCall;
     public getUserPreferences(request: ondewo_nlu_user_pb.GetUserPreferencesRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.GetUserPreferencesResponse) => void): grpc.ClientUnaryCall;
     public getUserPreferences(request: ondewo_nlu_user_pb.GetUserPreferencesRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_user_pb.GetUserPreferencesResponse) => void): grpc.ClientUnaryCall;

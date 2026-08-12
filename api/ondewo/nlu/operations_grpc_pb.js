@@ -1,7 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 // Original file comments:
-// Copyright 2020-2023 ONDEWO GmbH
+// Copyright 2020-2026 ONDEWO GmbH
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,9 +21,11 @@ var ondewo_nlu_operations_pb = require('../../ondewo/nlu/operations_pb.js');
 var google_api_annotations_pb = require('../../google/api/annotations_pb.js');
 var google_protobuf_any_pb = require('google-protobuf/google/protobuf/any_pb.js');
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
+var google_protobuf_field_mask_pb = require('google-protobuf/google/protobuf/field_mask_pb.js');
 var google_rpc_status_pb = require('../../google/rpc/status_pb.js');
 var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 var ondewo_nlu_operation_metadata_pb = require('../../ondewo/nlu/operation_metadata_pb.js');
+var ondewo_nlu_common_pb = require('../../ondewo/nlu/common_pb.js');
 
 function serialize_google_protobuf_Empty(arg) {
   if (!(arg instanceof google_protobuf_empty_pb.Empty)) {
@@ -69,6 +71,39 @@ function deserialize_ondewo_nlu_GetOperationRequest(buffer_arg) {
   return ondewo_nlu_operations_pb.GetOperationRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_GetRemoteOperationContainerLogsRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_operations_pb.GetRemoteOperationContainerLogsRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.GetRemoteOperationContainerLogsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetRemoteOperationContainerLogsRequest(buffer_arg) {
+  return ondewo_nlu_operations_pb.GetRemoteOperationContainerLogsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_GetRemoteOperationContainerLogsResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_operations_pb.GetRemoteOperationContainerLogsResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.GetRemoteOperationContainerLogsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetRemoteOperationContainerLogsResponse(buffer_arg) {
+  return ondewo_nlu_operations_pb.GetRemoteOperationContainerLogsResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_GetRemoteOperationContainerStatusRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_operations_pb.GetRemoteOperationContainerStatusRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.GetRemoteOperationContainerStatusRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetRemoteOperationContainerStatusRequest(buffer_arg) {
+  return ondewo_nlu_operations_pb.GetRemoteOperationContainerStatusRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_ListOperationsRequest(arg) {
   if (!(arg instanceof ondewo_nlu_operations_pb.ListOperationsRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.ListOperationsRequest');
@@ -91,6 +126,28 @@ function deserialize_ondewo_nlu_ListOperationsResponse(buffer_arg) {
   return ondewo_nlu_operations_pb.ListOperationsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_ListRemoteOperationContainersRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_operations_pb.ListRemoteOperationContainersRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.ListRemoteOperationContainersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListRemoteOperationContainersRequest(buffer_arg) {
+  return ondewo_nlu_operations_pb.ListRemoteOperationContainersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListRemoteOperationContainersResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_operations_pb.ListRemoteOperationContainersResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.ListRemoteOperationContainersResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListRemoteOperationContainersResponse(buffer_arg) {
+  return ondewo_nlu_operations_pb.ListRemoteOperationContainersResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_Operation(arg) {
   if (!(arg instanceof ondewo_nlu_operations_pb.Operation)) {
     throw new Error('Expected argument of type ondewo.nlu.Operation');
@@ -102,22 +159,49 @@ function deserialize_ondewo_nlu_Operation(buffer_arg) {
   return ondewo_nlu_operations_pb.Operation.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_RemoteOperationContainerLogLine(arg) {
+  if (!(arg instanceof ondewo_nlu_operations_pb.RemoteOperationContainerLogLine)) {
+    throw new Error('Expected argument of type ondewo.nlu.RemoteOperationContainerLogLine');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_RemoteOperationContainerLogLine(buffer_arg) {
+  return ondewo_nlu_operations_pb.RemoteOperationContainerLogLine.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_RemoteOperationContainerStatus(arg) {
+  if (!(arg instanceof ondewo_nlu_operations_pb.RemoteOperationContainerStatus)) {
+    throw new Error('Expected argument of type ondewo.nlu.RemoteOperationContainerStatus');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_RemoteOperationContainerStatus(buffer_arg) {
+  return ondewo_nlu_operations_pb.RemoteOperationContainerStatus.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_StreamRemoteOperationContainerLogsRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_operations_pb.StreamRemoteOperationContainerLogsRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.StreamRemoteOperationContainerLogsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_StreamRemoteOperationContainerLogsRequest(buffer_arg) {
+  return ondewo_nlu_operations_pb.StreamRemoteOperationContainerLogsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 
 // Manages long-running operations with an API service.
 //
-// When an API method normally takes long time to complete, it can be designed
-// to return [Operation][ondewo.nlu.Operation] to the client, and the client can use this
-// interface to receive the real response asynchronously by polling the
-// operation resource, or pass the operation resource to another API (such as
-// Google Cloud Pub/Sub API) to receive the response.  Any API service that
-// returns long-running operations should implement the `Operations` interface
-// so developers can have a consistent client experience.
+// When an API method normally takes long time to complete, it can be designed to return <a href="index.html#ondewo.nlu.Operation">Operation</a> to the client, and the client can use this interface to receive the real response asynchronously by polling the operation resource, or pass the operation resource to another API (such as Google Cloud Pub/Sub API) to receive the response.  Any API service that returns long-running operations should implement the <code>Operations</code> interface so developers can have a consistent client experience.
 var OperationsService = exports.OperationsService = {
   // Lists operations that match the specified filter in the request. If the
-// server doesn't support this method, it returns `UNIMPLEMENTED`.
-//
-// NOTE: the `name` binding below allows API services to override the binding
-// to use different resource name schemes, such as `users/*/operations`.
+// server doesn&apos;t support this method, it returns <code>UNIMPLEMENTED</code>.
+// <br>
+// NOTE: the <code>name</code> binding below allows API services to override the binding
+// to use different resource name schemes, such as <code>users/*/operations</code>.
 listOperations: {
     path: '/ondewo.nlu.Operations/ListOperations',
     requestStream: false,
@@ -145,8 +229,8 @@ getOperation: {
   },
   // Deletes a long-running operation. This method indicates that the client is
 // no longer interested in the operation result. It does not cancel the
-// operation. If the server doesn't support this method, it returns
-// `google.rpc.Code.UNIMPLEMENTED`.
+// operation. If the server doesn&apos;t support this method, it returns
+// <code>google.rpc.Code.UNIMPLEMENTED</code>
 deleteOperation: {
     path: '/ondewo.nlu.Operations/DeleteOperation',
     requestStream: false,
@@ -160,14 +244,14 @@ deleteOperation: {
   },
   // Starts asynchronous cancellation on a long-running operation.  The server
 // makes a best effort to cancel the operation, but success is not
-// guaranteed.  If the server doesn't support this method, it returns
-// `google.rpc.Code.UNIMPLEMENTED`.  Clients can use
-// [Operations.GetOperation][ondewo.nlu.Operations.GetOperation] or
+// guaranteed.  If the server doesn&apos;t support this method, it returns
+// <code>google.rpc.Code.UNIMPLEMENTED</code>.  Clients can use
+// <a href="index.html#ondewo.nlu.Operations.GetOperation">Operations.GetOperation</a> or
 // other methods to verify whether the cancellation succeeded or whether the
 // operation completed despite cancellation. On successful cancellation,
 // the operation is not deleted; instead, it becomes an operation with
-// an [Operation.error][ondewo.nlu.Operation.error] value with a [google.rpc.Status.code][google.rpc.Status.code]
-// of 1, corresponding to `Code.CANCELLED`.
+// an <a href="index.html#ondewo.nlu.Operation">Operation.error</a> value with a <a href="https://developers.google.com/actions-center/reference/grpc-api/status_codes">google.rpc.Status.code</a>
+// of 1, corresponding to <code>Code.CANCELLED</code>.
 cancelOperation: {
     path: '/ondewo.nlu.Operations/CancelOperation',
     requestStream: false,
@@ -178,6 +262,65 @@ cancelOperation: {
     requestDeserialize: deserialize_ondewo_nlu_CancelOperationRequest,
     responseSerialize: serialize_google_protobuf_Empty,
     responseDeserialize: deserialize_google_protobuf_Empty,
+  },
+  // Streams the live container logs of a remote-operation container (LLM evaluation, simulation,
+// crawl, training) as they are produced, in the manner of <code>docker logs --follow</code>.
+// The stream stays open until the container exits or the client disconnects. Each message is a
+// single parsed log line. Secrets in the log text are redacted server-side before streaming.
+streamRemoteOperationContainerLogs: {
+    path: '/ondewo.nlu.Operations/StreamRemoteOperationContainerLogs',
+    requestStream: false,
+    responseStream: true,
+    requestType: ondewo_nlu_operations_pb.StreamRemoteOperationContainerLogsRequest,
+    responseType: ondewo_nlu_operations_pb.RemoteOperationContainerLogLine,
+    requestSerialize: serialize_ondewo_nlu_StreamRemoteOperationContainerLogsRequest,
+    requestDeserialize: deserialize_ondewo_nlu_StreamRemoteOperationContainerLogsRequest,
+    responseSerialize: serialize_ondewo_nlu_RemoteOperationContainerLogLine,
+    responseDeserialize: deserialize_ondewo_nlu_RemoteOperationContainerLogLine,
+  },
+  // Returns a bounded, filtered snapshot of a remote-operation container&apos;s logs. Supports a
+// time window (<code>start_time</code> / <code>end_time</code>), a minimum loguru log level,
+// a regular-expression match on the message, and a cap on the number of returned lines. Secrets
+// in the log text are redacted server-side before the response is returned.
+getRemoteOperationContainerLogs: {
+    path: '/ondewo.nlu.Operations/GetRemoteOperationContainerLogs',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_operations_pb.GetRemoteOperationContainerLogsRequest,
+    responseType: ondewo_nlu_operations_pb.GetRemoteOperationContainerLogsResponse,
+    requestSerialize: serialize_ondewo_nlu_GetRemoteOperationContainerLogsRequest,
+    requestDeserialize: deserialize_ondewo_nlu_GetRemoteOperationContainerLogsRequest,
+    responseSerialize: serialize_ondewo_nlu_GetRemoteOperationContainerLogsResponse,
+    responseDeserialize: deserialize_ondewo_nlu_GetRemoteOperationContainerLogsResponse,
+  },
+  // Returns the health and lifecycle status of a remote-operation container: whether it still
+// exists, whether it is running/exited, its exit code, OOM-kill flag and Docker health status.
+getRemoteOperationContainerStatus: {
+    path: '/ondewo.nlu.Operations/GetRemoteOperationContainerStatus',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_operations_pb.GetRemoteOperationContainerStatusRequest,
+    responseType: ondewo_nlu_operations_pb.RemoteOperationContainerStatus,
+    requestSerialize: serialize_ondewo_nlu_GetRemoteOperationContainerStatusRequest,
+    requestDeserialize: deserialize_ondewo_nlu_GetRemoteOperationContainerStatusRequest,
+    responseSerialize: serialize_ondewo_nlu_RemoteOperationContainerStatus,
+    responseDeserialize: deserialize_ondewo_nlu_RemoteOperationContainerStatus,
+  },
+  // Lists every docker container that a remote operation started (a single operation may run several
+// containers sequentially, e.g. hardware-check, GPU pre-allocation, build-cache and one training
+// container per algorithm). When <code>include_sub_operations</code> is set, the containers of the
+// operation&apos;s sub-operations are included as well. Each entry carries the container id + name,
+// its host, lifecycle state and whether logs are still available (live or persisted).
+listRemoteOperationContainers: {
+    path: '/ondewo.nlu.Operations/ListRemoteOperationContainers',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_operations_pb.ListRemoteOperationContainersRequest,
+    responseType: ondewo_nlu_operations_pb.ListRemoteOperationContainersResponse,
+    requestSerialize: serialize_ondewo_nlu_ListRemoteOperationContainersRequest,
+    requestDeserialize: deserialize_ondewo_nlu_ListRemoteOperationContainersRequest,
+    responseSerialize: serialize_ondewo_nlu_ListRemoteOperationContainersResponse,
+    responseDeserialize: deserialize_ondewo_nlu_ListRemoteOperationContainersResponse,
   },
 };
 

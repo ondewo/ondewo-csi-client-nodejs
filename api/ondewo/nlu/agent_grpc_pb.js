@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// Modifications Copyright 2020-2023 ONDEWO GmbH
+// Modifications Copyright 2020-2026 ONDEWO GmbH
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -31,9 +31,9 @@
 //
 // File-level comment for <code>ondewo/nlu/agent.proto</code>.
 //
-// This file contains a single service <a href="#ondewo.nlu.Agents">Agents</a>.
+// This file contains a single service <a href="index.html#ondewo.nlu.Agents">Agents</a>.
 //
-// The most important messages is <a href="#ondewo.nlu.Agent">Agent</a> and its most complicated field is <code>configs</code>.
+// The most important messages is <a href="index.html#ondewo.nlu.Agent">Agent</a> and its most complicated field is <code>configs</code>.
 'use strict';
 var grpc = require('@grpc/grpc-js');
 var ondewo_nlu_agent_pb = require('../../ondewo/nlu/agent_pb.js');
@@ -48,6 +48,7 @@ var ondewo_nlu_user_pb = require('../../ondewo/nlu/user_pb.js');
 var ondewo_nlu_project_role_pb = require('../../ondewo/nlu/project_role_pb.js');
 var ondewo_nlu_operations_pb = require('../../ondewo/nlu/operations_pb.js');
 var ondewo_nlu_session_pb = require('../../ondewo/nlu/session_pb.js');
+var ondewo_nlu_ccai_project_pb = require('../../ondewo/nlu/ccai_project_pb.js');
 
 function serialize_google_protobuf_Empty(arg) {
   if (!(arg instanceof google_protobuf_empty_pb.Empty)) {
@@ -104,6 +105,28 @@ function deserialize_ondewo_nlu_CreateAgentRequest(buffer_arg) {
   return ondewo_nlu_agent_pb.CreateAgentRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_CreateProjectTechnicalUserRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_agent_pb.CreateProjectTechnicalUserRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.CreateProjectTechnicalUserRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_CreateProjectTechnicalUserRequest(buffer_arg) {
+  return ondewo_nlu_agent_pb.CreateProjectTechnicalUserRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_CreateProjectTechnicalUserResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_agent_pb.CreateProjectTechnicalUserResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.CreateProjectTechnicalUserResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_CreateProjectTechnicalUserResponse(buffer_arg) {
+  return ondewo_nlu_agent_pb.CreateProjectTechnicalUserResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_DeleteAgentRequest(arg) {
   if (!(arg instanceof ondewo_nlu_agent_pb.DeleteAgentRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.DeleteAgentRequest');
@@ -113,6 +136,17 @@ function serialize_ondewo_nlu_DeleteAgentRequest(arg) {
 
 function deserialize_ondewo_nlu_DeleteAgentRequest(buffer_arg) {
   return ondewo_nlu_agent_pb.DeleteAgentRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_DeleteProjectTechnicalUserRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_agent_pb.DeleteProjectTechnicalUserRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.DeleteProjectTechnicalUserRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_DeleteProjectTechnicalUserRequest(buffer_arg) {
+  return ondewo_nlu_agent_pb.DeleteProjectTechnicalUserRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_DeleteResourcesRequest(arg) {
@@ -390,6 +424,28 @@ function deserialize_ondewo_nlu_GetSessionsStatisticsResponse(buffer_arg) {
   return ondewo_nlu_agent_pb.GetSessionsStatisticsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_GetSessionsStatisticsTimeSeriesRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_agent_pb.GetSessionsStatisticsTimeSeriesRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.GetSessionsStatisticsTimeSeriesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetSessionsStatisticsTimeSeriesRequest(buffer_arg) {
+  return ondewo_nlu_agent_pb.GetSessionsStatisticsTimeSeriesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_GetSessionsStatisticsTimeSeriesResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_agent_pb.GetSessionsStatisticsTimeSeriesResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.GetSessionsStatisticsTimeSeriesResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetSessionsStatisticsTimeSeriesResponse(buffer_arg) {
+  return ondewo_nlu_agent_pb.GetSessionsStatisticsTimeSeriesResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_ImportAgentRequest(arg) {
   if (!(arg instanceof ondewo_nlu_agent_pb.ImportAgentRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.ImportAgentRequest');
@@ -456,6 +512,28 @@ function deserialize_ondewo_nlu_ListProjectPermissionsResponse(buffer_arg) {
   return ondewo_nlu_agent_pb.ListProjectPermissionsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_ListProjectTechnicalUsersRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_agent_pb.ListProjectTechnicalUsersRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.ListProjectTechnicalUsersRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListProjectTechnicalUsersRequest(buffer_arg) {
+  return ondewo_nlu_agent_pb.ListProjectTechnicalUsersRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_ListProjectTechnicalUsersResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_agent_pb.ListProjectTechnicalUsersResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.ListProjectTechnicalUsersResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_ListProjectTechnicalUsersResponse(buffer_arg) {
+  return ondewo_nlu_agent_pb.ListProjectTechnicalUsersResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_ListUsersInProjectRequest(arg) {
   if (!(arg instanceof ondewo_nlu_agent_pb.ListUsersInProjectRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.ListUsersInProjectRequest');
@@ -476,6 +554,17 @@ function serialize_ondewo_nlu_ListUsersInProjectResponse(arg) {
 
 function deserialize_ondewo_nlu_ListUsersInProjectResponse(buffer_arg) {
   return ondewo_nlu_agent_pb.ListUsersInProjectResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_MigrateAgentRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_agent_pb.MigrateAgentRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.MigrateAgentRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_MigrateAgentRequest(buffer_arg) {
+  return ondewo_nlu_agent_pb.MigrateAgentRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_Operation(arg) {
@@ -544,6 +633,28 @@ function deserialize_ondewo_nlu_RestoreAgentRequest(buffer_arg) {
   return ondewo_nlu_agent_pb.RestoreAgentRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_RotateProjectTechnicalUserPasswordRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_agent_pb.RotateProjectTechnicalUserPasswordRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.RotateProjectTechnicalUserPasswordRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_RotateProjectTechnicalUserPasswordRequest(buffer_arg) {
+  return ondewo_nlu_agent_pb.RotateProjectTechnicalUserPasswordRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_RotateProjectTechnicalUserPasswordResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_agent_pb.RotateProjectTechnicalUserPasswordResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.RotateProjectTechnicalUserPasswordResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_RotateProjectTechnicalUserPasswordResponse(buffer_arg) {
+  return ondewo_nlu_agent_pb.RotateProjectTechnicalUserPasswordResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_SetAgentStatusRequest(arg) {
   if (!(arg instanceof ondewo_nlu_agent_pb.SetAgentStatusRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.SetAgentStatusRequest');
@@ -591,22 +702,22 @@ function deserialize_ondewo_nlu_UpdateAgentRequest(buffer_arg) {
 
 // Agents are best described as Natural Language Understanding (NLU) modules that transform user requests into actionable data. You can include agents in your app, product, or service to determine user intent and respond to the user in a natural way.
 //
-// After you create an agent, you can add [Intents][google.cloud.dialogflow.v2.Intents], [Contexts][google.cloud.dialogflow.v2.Contexts], [Entity Types][google.cloud.dialogflow.v2.EntityTypes], [Webhooks][google.cloud.dialogflow.v2.WebhookRequest], and so on to manage the flow of a conversation and match user input to predefined intents and actions.
+// After you create an agent, you can add <a href="index.html#ondewo.nlu.Intent">Intents</a>, <a href="index.html#ondewo.nlu.Context">Contexts</a>, <a href="index.html#ondewo.nlu.EntityType">Entity Types</a>, <a href="index.html#ondewo.nlu.WebhookRequest">Webhooks</a>, and so on to manage the flow of a conversation and match user input to predefined intents and actions.
 //
-// You can create an agent using both Dialogflow Standard Edition and Dialogflow Enterprise Edition. For details, see [Dialogflow Editions](/dialogflow-enterprise/docs/editions).
+// You can create an agent using both Dialogflow Standard Edition and Dialogflow Enterprise Edition. For details, see <a href="https://docs.cloud.google.com/dialogflow/docs/editions">Dialogflow Editions</a>.
 //
-// You can save your agent for backup or versioning by exporting the agent by using the [ExportAgent][google.cloud.dialogflow.v2.Agents.ExportAgent] method. You can import a saved agent by using the [ImportAgent][google.cloud.dialogflow.v2.Agents.ImportAgent] method.
+// You can save your agent for backup or versioning by exporting the agent by using the <a href="index.html#ondewo.nlu.Agents.ExportAgent">ExportAgent</a> method. You can import a saved agent by using the <a href="index.html#ondewo.nlu.Agents.ImportAgent">ImportAgent</a> method.
 //
-// Dialogflow provides several [prebuilt agents](https://dialogflow.com/docs/prebuilt-agents) for common conversation scenarios such as determining a date and time, converting currency, and so on.
+// Dialogflow provides several <a href="https://dialogflow.com/docs/prebuilt-agents">prebuilt agents</a> for common conversation scenarios such as determining a date and time, converting currency, and so on.
 //
-// For more information about agents, see the [Dialogflow documentation](https://dialogflow.com/docs/agents).
+// For more information about agents, see the <a href="https://dialogflow.com/docs/agents">Dialogflow documentation</a>.
 var AgentsService = exports.AgentsService = {
   // Creates the specified agent.
 //
-// <p>Examples:</p>
+// Examples:
 //
 // <pre>
-// grpcurl -plaintext -H 'cai-token: aimp' -d '{
+// grpcurl -plaintext -H 'Authorization: Bearer <jwt>' -d '{
 //   "agent": {
 //     "display_name": "My Pizza Bot",
 //     "default_language_code": "en",
@@ -642,10 +753,10 @@ createAgent: {
   },
   // Updates the specified agent.
 //
-// <p>Examples:</p>
+// Examples:
 //
 // <pre>
-// grpcurl -plaintext -H 'cai-token: aimp' -d '{
+// grpcurl -plaintext -H 'Authorization: Bearer <jwt>' -d '{
 //   "agent": {
 //     "parent": "projects/76aaf4f3-a1f6-4fda-b4b3-351c64e65bc4/agent",
 //     "display_name": "Pizza Bot 2",
@@ -686,10 +797,10 @@ updateAgent: {
   },
   // Retrieves the specified agent.
 //
-// <p>Examples:</p>
+// Examples:
 //
 // <pre>
-// grpcurl -plaintext -H 'cai-token: aimp' -d '{
+// grpcurl -plaintext -H 'Authorization: Bearer <jwt>' -d '{
 //   "parent": "projects/76aaf4f3-a1f6-4fda-b4b3-351c64e65bc4/agent"
 // }' localhost:50055 ondewo.nlu.Agents.GetAgent
 // </pre>
@@ -720,10 +831,10 @@ getAgent: {
   },
   // Deletes the specified agent.
 //
-// <p>Examples:</p>
+// Examples:
 //
 // <pre>
-// grpcurl -plaintext -H 'cai-token: aimp' -d '{
+// grpcurl -plaintext -H 'Authorization: Bearer <jwt>' -d '{
 //   "parent": "projects/76aaf4f3-a1f6-4fda-b4b3-351c64e65bc4/agent"
 // }' localhost:50055 ondewo.nlu.Agents.DeleteAgent
 // </pre>
@@ -741,10 +852,10 @@ deleteAgent: {
   },
   // Deletes all agents in the server (for development purposes only).
 //
-// <p>Examples:</p>
+// Examples:
 //
 // <pre>
-// grpcurl -plaintext -H 'cai-token: aimp' localhost:50055 ondewo.nlu.Agents.DeleteAllAgents
+// grpcurl -plaintext -H 'Authorization: Bearer <jwt>' localhost:50055 ondewo.nlu.Agents.DeleteAllAgents
 // </pre>
 // <samp>{}</samp>
 deleteAllAgents: {
@@ -760,10 +871,10 @@ deleteAllAgents: {
   },
   // Lists agents in the server associated to the current user
 //
-// <p>Examples:</p>
+// Examples:
 //
 // <pre>
-// grpcurl -plaintext -H 'cai-token: aimp' localhost:50055 ondewo.nlu.Agents.ListAgents
+// grpcurl -plaintext -H 'Authorization: Bearer <jwt>' localhost:50055 ondewo.nlu.Agents.ListAgents
 // </pre>
 // <samp>{
 //   "agents_with_owners": [
@@ -797,10 +908,10 @@ listAgents: {
   },
   // Lists agents in the server associated to the given user
 //
-// <p>Examples:</p>
+// Examples:
 //
 // <pre>
-// grpcurl -plaintext -H 'cai-token: aimp' localhost:50055 ondewo.nlu.Agents.ListAgentsOfUser
+// grpcurl -plaintext -H 'Authorization: Bearer <jwt>' localhost:50055 ondewo.nlu.Agents.ListAgentsOfUser
 // </pre>
 // <samp>{
 //   "agents_of_user_with_owners": [
@@ -840,10 +951,10 @@ listAgentsOfUser: {
   },
   // Lists all agents in the server
 //
-// <p>Examples:</p>
+// Examples:
 //
 // <pre>
-// grpcurl -plaintext -H 'cai-token: aimp' localhost:50055 ondewo.nlu.Agents.ListAllAgents
+// grpcurl -plaintext -H 'Authorization: Bearer <jwt>' localhost:50055 ondewo.nlu.Agents.ListAllAgents
 // </pre>
 // <samp>{
 //   "agents_with_owners": [
@@ -912,6 +1023,9 @@ listUsersInProject: {
     responseDeserialize: deserialize_ondewo_nlu_ListUsersInProjectResponse,
   },
   // Gets information from the platform
+// <br>
+// Request parameter:
+// <a href="https://protobuf.dev/reference/protobuf/google.protobuf/#empty">google.protobuf.Empty</a>
 getPlatformInfo: {
     path: '/ondewo.nlu.Agents/GetPlatformInfo',
     requestStream: false,
@@ -937,8 +1051,8 @@ listProjectPermissions: {
   },
   // Trains the specified agent.
 //
-// Operation <response: [google.protobuf.Empty][google.protobuf.Empty],
-//            metadata: [google.protobuf.Struct][google.protobuf.Struct]>
+// Operation &lt;response: <a href="https://protobuf.dev/reference/protobuf/google.protobuf/#empty">google.protobuf.Empty</a>,
+//            metadata: <a href="https://protobuf.dev/reference/protobuf/google.protobuf/#struct">google.protobuf.Struct</a>&gt;
 trainAgent: {
     path: '/ondewo.nlu.Agents/TrainAgent',
     requestStream: false,
@@ -952,8 +1066,8 @@ trainAgent: {
   },
   // Builds cache for the specified agent.
 //
-// Operation <response: [google.protobuf.Empty][google.protobuf.Empty],
-//            metadata: [google.protobuf.Struct][google.protobuf.Struct]>
+// Operation &lt;response: <a href="https://protobuf.dev/reference/protobuf/google.protobuf/#empty">google.protobuf.Empty</a>,
+//            metadata: <a href="https://protobuf.dev/reference/protobuf/google.protobuf/#struct">google.protobuf.Struct</a>&gt;
 buildCache: {
     path: '/ondewo.nlu.Agents/BuildCache',
     requestStream: false,
@@ -966,9 +1080,9 @@ buildCache: {
     responseDeserialize: deserialize_ondewo_nlu_Operation,
   },
   // Exports the specified agent to a ZIP file.
-//
-// Operation <response: [ExportAgentResponse][google.cloud.dialogflow.v2.ExportAgentResponse],
-//            metadata: [google.protobuf.Struct][google.protobuf.Struct]>
+// <br>
+// Operation &lt;response: <a href="index.html#ondewo.nlu.ExportAgentResponse">ExportAgentResponse</a>,
+//            metadata: <a href="https://protobuf.dev/reference/protobuf/google.protobuf/#struct">google.protobuf.Struct</a>&gt;
 exportAgent: {
     path: '/ondewo.nlu.Agents/ExportAgent',
     requestStream: false,
@@ -994,13 +1108,13 @@ exportBenchmarkAgent: {
     responseDeserialize: deserialize_ondewo_nlu_Operation,
   },
   // Imports the specified agent from a ZIP file.
-//
+// <br>
 // Uploads new intents and entity types without deleting the existing ones.
 // Intents and entity types with the same name are replaced with the new
 // versions from ImportAgentRequest.
-//
-// Operation <response: [google.protobuf.Empty][google.protobuf.Empty],
-//            metadata: [google.protobuf.Struct][google.protobuf.Struct]>
+// <br>
+// Operation &lt;response: <a href="https://protobuf.dev/reference/protobuf/google.protobuf/#empty">google.protobuf.Empty</a>,
+//            metadata: <a href="https://protobuf.dev/reference/protobuf/google.protobuf/#struct">google.protobuf.Struct</a>&gt;
 importAgent: {
     path: '/ondewo.nlu.Agents/ImportAgent',
     requestStream: false,
@@ -1012,8 +1126,18 @@ importAgent: {
     responseSerialize: serialize_ondewo_nlu_Operation,
     responseDeserialize: deserialize_ondewo_nlu_Operation,
   },
-  // Runs optimize ranking match
-optimizeRankingMatch: {
+  migrateAgent: {
+    path: '/ondewo.nlu.Agents/MigrateAgent',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_agent_pb.MigrateAgentRequest,
+    responseType: ondewo_nlu_operations_pb.Operation,
+    requestSerialize: serialize_ondewo_nlu_MigrateAgentRequest,
+    requestDeserialize: deserialize_ondewo_nlu_MigrateAgentRequest,
+    responseSerialize: serialize_ondewo_nlu_Operation,
+    responseDeserialize: deserialize_ondewo_nlu_Operation,
+  },
+  optimizeRankingMatch: {
     path: '/ondewo.nlu.Agents/OptimizeRankingMatch',
     requestStream: false,
     responseStream: false,
@@ -1025,12 +1149,12 @@ optimizeRankingMatch: {
     responseDeserialize: deserialize_ondewo_nlu_Operation,
   },
   // Restores the specified agent from a ZIP file.
-//
+// <br>
 // Replaces the current agent version with a new one. All the intents and
 // entity types in the older version are deleted.
-//
-// Operation <response: [google.protobuf.Empty][google.protobuf.Empty],
-//            metadata: [google.protobuf.Struct][google.protobuf.Struct]>
+// <br>
+// Operation &lt;response: <a href="https://protobuf.dev/reference/protobuf/google.protobuf/#empty">google.protobuf.Empty</a>,
+//            metadata: <a href="https://protobuf.dev/reference/protobuf/google.protobuf/#struct">google.protobuf.Struct</a>&gt;
 restoreAgent: {
     path: '/ondewo.nlu.Agents/RestoreAgent',
     requestStream: false,
@@ -1064,6 +1188,19 @@ getAgentStatistics: {
     requestDeserialize: deserialize_ondewo_nlu_GetSessionsStatisticsRequest,
     responseSerialize: serialize_ondewo_nlu_GetSessionsStatisticsResponse,
     responseDeserialize: deserialize_ondewo_nlu_GetSessionsStatisticsResponse,
+  },
+  // Gets LLM telemetry statistics for sessions bucketed over time (time series).
+// Supports LLM-typed report types (SESSION_LLM_*) only.
+getSessionsStatisticsTimeSeries: {
+    path: '/ondewo.nlu.Agents/GetSessionsStatisticsTimeSeries',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_agent_pb.GetSessionsStatisticsTimeSeriesRequest,
+    responseType: ondewo_nlu_agent_pb.GetSessionsStatisticsTimeSeriesResponse,
+    requestSerialize: serialize_ondewo_nlu_GetSessionsStatisticsTimeSeriesRequest,
+    requestDeserialize: deserialize_ondewo_nlu_GetSessionsStatisticsTimeSeriesRequest,
+    responseSerialize: serialize_ondewo_nlu_GetSessionsStatisticsTimeSeriesResponse,
+    responseDeserialize: deserialize_ondewo_nlu_GetSessionsStatisticsTimeSeriesResponse,
   },
   // Sets status for the agent
 setAgentStatus: {
@@ -1280,6 +1417,59 @@ reindexAgent: {
     requestDeserialize: deserialize_ondewo_nlu_ReindexAgentRequest,
     responseSerialize: serialize_ondewo_nlu_Operation,
     responseDeserialize: deserialize_ondewo_nlu_Operation,
+  },
+  // Creates a project-scoped technical user (a normal, 2FA-exempt account holding
+// PROJECT_EXECUTOR on this one project) for headless/machine access (e.g.
+// ondewo-sip/csi/vtsi) via the ROPC login bridge. The generated password is
+// returned ONCE in the response and is not retrievable afterwards.
+createProjectTechnicalUser: {
+    path: '/ondewo.nlu.Agents/CreateProjectTechnicalUser',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_agent_pb.CreateProjectTechnicalUserRequest,
+    responseType: ondewo_nlu_agent_pb.CreateProjectTechnicalUserResponse,
+    requestSerialize: serialize_ondewo_nlu_CreateProjectTechnicalUserRequest,
+    requestDeserialize: deserialize_ondewo_nlu_CreateProjectTechnicalUserRequest,
+    responseSerialize: serialize_ondewo_nlu_CreateProjectTechnicalUserResponse,
+    responseDeserialize: deserialize_ondewo_nlu_CreateProjectTechnicalUserResponse,
+  },
+  // Lists the project-scoped technical users of the project (agent).
+listProjectTechnicalUsers: {
+    path: '/ondewo.nlu.Agents/ListProjectTechnicalUsers',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_agent_pb.ListProjectTechnicalUsersRequest,
+    responseType: ondewo_nlu_agent_pb.ListProjectTechnicalUsersResponse,
+    requestSerialize: serialize_ondewo_nlu_ListProjectTechnicalUsersRequest,
+    requestDeserialize: deserialize_ondewo_nlu_ListProjectTechnicalUsersRequest,
+    responseSerialize: serialize_ondewo_nlu_ListProjectTechnicalUsersResponse,
+    responseDeserialize: deserialize_ondewo_nlu_ListProjectTechnicalUsersResponse,
+  },
+  // Deletes a project-scoped technical user (removes the Keycloak user and the
+// project membership/projection rows).
+deleteProjectTechnicalUser: {
+    path: '/ondewo.nlu.Agents/DeleteProjectTechnicalUser',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_agent_pb.DeleteProjectTechnicalUserRequest,
+    responseType: google_protobuf_empty_pb.Empty,
+    requestSerialize: serialize_ondewo_nlu_DeleteProjectTechnicalUserRequest,
+    requestDeserialize: deserialize_ondewo_nlu_DeleteProjectTechnicalUserRequest,
+    responseSerialize: serialize_google_protobuf_Empty,
+    responseDeserialize: deserialize_google_protobuf_Empty,
+  },
+  // Rotates the password of a project-scoped technical user. Invalidates the old
+// password and returns the new generated password ONCE in the response.
+rotateProjectTechnicalUserPassword: {
+    path: '/ondewo.nlu.Agents/RotateProjectTechnicalUserPassword',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_agent_pb.RotateProjectTechnicalUserPasswordRequest,
+    responseType: ondewo_nlu_agent_pb.RotateProjectTechnicalUserPasswordResponse,
+    requestSerialize: serialize_ondewo_nlu_RotateProjectTechnicalUserPasswordRequest,
+    requestDeserialize: deserialize_ondewo_nlu_RotateProjectTechnicalUserPasswordRequest,
+    responseSerialize: serialize_ondewo_nlu_RotateProjectTechnicalUserPasswordResponse,
+    responseDeserialize: deserialize_ondewo_nlu_RotateProjectTechnicalUserPasswordResponse,
   },
 };
 

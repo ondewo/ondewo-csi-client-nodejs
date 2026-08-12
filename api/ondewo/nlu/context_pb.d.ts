@@ -17,7 +17,10 @@ export class Context extends jspb.Message {
 
     getParametersMap(): jspb.Map<string, Context.Parameter>;
     clearParametersMap(): void;
-    getLifespanTime(): number;
+
+    hasLifespanTime(): boolean;
+    clearLifespanTime(): void;
+    getLifespanTime(): number | undefined;
     setLifespanTime(value: number): Context;
 
     hasCreatedAt(): boolean;
@@ -50,7 +53,7 @@ export namespace Context {
         lifespanCount: number,
 
         parametersMap: Array<[string, Context.Parameter.AsObject]>,
-        lifespanTime: number,
+        lifespanTime?: number,
         createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         createdBy: string,

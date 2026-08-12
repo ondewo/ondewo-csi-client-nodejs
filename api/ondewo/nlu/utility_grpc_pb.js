@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// Modifications Copyright 2020-2023 ONDEWO GmbH
+// Modifications Copyright 2020-2026 ONDEWO GmbH
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -201,9 +201,7 @@ function deserialize_ondewo_nlu_ValidateRegexResponse(buffer_arg) {
 }
 
 
-// This is collection of utility endpoints, intended to language-independent operations,
-// such as code checks, regex checks, etc.
-// Holds a collection of utility functions
+// This is collection of utility endpoints, intended to language-independent operations, such as code checks, regex checks, etc. Holds a collection of utility functions
 var UtilitiesService = exports.UtilitiesService = {
   // Validates the validity of python regexes
 validateRegex: {

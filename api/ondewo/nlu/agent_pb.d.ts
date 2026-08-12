@@ -15,6 +15,7 @@ import * as ondewo_nlu_user_pb from "../../ondewo/nlu/user_pb";
 import * as ondewo_nlu_project_role_pb from "../../ondewo/nlu/project_role_pb";
 import * as ondewo_nlu_operations_pb from "../../ondewo/nlu/operations_pb";
 import * as ondewo_nlu_session_pb from "../../ondewo/nlu/session_pb";
+import * as ondewo_nlu_ccai_project_pb from "../../ondewo/nlu/ccai_project_pb";
 
 export class Agent extends jspb.Message { 
     getParent(): string;
@@ -228,6 +229,11 @@ export class GetAgentRequest extends jspb.Message {
     getAgentView(): AgentView;
     setAgentView(value: AgentView): GetAgentRequest;
 
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): GetAgentRequest;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetAgentRequest.AsObject;
     static toObject(includeInstance: boolean, msg: GetAgentRequest): GetAgentRequest.AsObject;
@@ -242,6 +248,7 @@ export namespace GetAgentRequest {
     export type AsObject = {
         parent: string,
         agentView: AgentView,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -255,6 +262,11 @@ export class ListAgentsRequest extends jspb.Message {
     clearSortByField(): void;
     getSortByField(): AgentSorting | undefined;
     setSortByField(value?: AgentSorting): ListAgentsRequest;
+
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): ListAgentsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListAgentsRequest.AsObject;
@@ -271,6 +283,7 @@ export namespace ListAgentsRequest {
         agentView: AgentView,
         pageToken: string,
         sortByField?: AgentSorting.AsObject,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -678,6 +691,28 @@ export namespace RestoreAgentRequest {
 
 }
 
+export class MigrateAgentRequest extends jspb.Message { 
+    getAgentContent(): Uint8Array | string;
+    getAgentContent_asU8(): Uint8Array;
+    getAgentContent_asB64(): string;
+    setAgentContent(value: Uint8Array | string): MigrateAgentRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MigrateAgentRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: MigrateAgentRequest): MigrateAgentRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MigrateAgentRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MigrateAgentRequest;
+    static deserializeBinaryFromReader(message: MigrateAgentRequest, reader: jspb.BinaryReader): MigrateAgentRequest;
+}
+
+export namespace MigrateAgentRequest {
+    export type AsObject = {
+        agentContent: Uint8Array | string,
+    }
+}
+
 export class GetAgentStatisticsRequest extends jspb.Message { 
     getParent(): string;
     setParent(value: string): GetAgentStatisticsRequest;
@@ -687,6 +722,31 @@ export class GetAgentStatisticsRequest extends jspb.Message {
     setLanguageCode(value: string): GetAgentStatisticsRequest;
     getType(): ReportType;
     setType(value: ReportType): GetAgentStatisticsRequest;
+    clearLlmModelFilterList(): void;
+    getLlmModelFilterList(): Array<string>;
+    setLlmModelFilterList(value: Array<string>): GetAgentStatisticsRequest;
+    addLlmModelFilter(value: string, index?: number): string;
+    clearLlmProviderFilterList(): void;
+    getLlmProviderFilterList(): Array<string>;
+    setLlmProviderFilterList(value: Array<string>): GetAgentStatisticsRequest;
+    addLlmProviderFilter(value: string, index?: number): string;
+    clearLlmAgentNameFilterList(): void;
+    getLlmAgentNameFilterList(): Array<string>;
+    setLlmAgentNameFilterList(value: Array<string>): GetAgentStatisticsRequest;
+    addLlmAgentNameFilter(value: string, index?: number): string;
+    clearLlmGroupBysList(): void;
+    getLlmGroupBysList(): Array<string>;
+    setLlmGroupBysList(value: Array<string>): GetAgentStatisticsRequest;
+    addLlmGroupBys(value: string, index?: number): string;
+
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): GetAgentStatisticsRequest;
+    clearLlmCcaiServiceProviderFilterList(): void;
+    getLlmCcaiServiceProviderFilterList(): Array<ondewo_nlu_ccai_project_pb.CcaiServiceProvider>;
+    setLlmCcaiServiceProviderFilterList(value: Array<ondewo_nlu_ccai_project_pb.CcaiServiceProvider>): GetAgentStatisticsRequest;
+    addLlmCcaiServiceProviderFilter(value: ondewo_nlu_ccai_project_pb.CcaiServiceProvider, index?: number): ondewo_nlu_ccai_project_pb.CcaiServiceProvider;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetAgentStatisticsRequest.AsObject;
@@ -704,6 +764,12 @@ export namespace GetAgentStatisticsRequest {
         format: ReportFormat,
         languageCode: string,
         type: ReportType,
+        llmModelFilterList: Array<string>,
+        llmProviderFilterList: Array<string>,
+        llmAgentNameFilterList: Array<string>,
+        llmGroupBysList: Array<string>,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
+        llmCcaiServiceProviderFilterList: Array<ondewo_nlu_ccai_project_pb.CcaiServiceProvider>,
     }
 }
 
@@ -716,6 +782,11 @@ export class GetAgentStatisticsResponse extends jspb.Message {
     setFormat(value: ReportFormat): GetAgentStatisticsResponse;
     getType(): ReportType;
     setType(value: ReportType): GetAgentStatisticsResponse;
+
+    hasLlmTelemetryReport(): boolean;
+    clearLlmTelemetryReport(): void;
+    getLlmTelemetryReport(): ondewo_nlu_session_pb.LlmTelemetryReport | undefined;
+    setLlmTelemetryReport(value?: ondewo_nlu_session_pb.LlmTelemetryReport): GetAgentStatisticsResponse;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetAgentStatisticsResponse.AsObject;
@@ -732,6 +803,7 @@ export namespace GetAgentStatisticsResponse {
         reports: Uint8Array | string,
         format: ReportFormat,
         type: ReportType,
+        llmTelemetryReport?: ondewo_nlu_session_pb.LlmTelemetryReport.AsObject,
     }
 }
 
@@ -768,6 +840,26 @@ export class GetSessionsStatisticsRequest extends jspb.Message {
     setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): GetSessionsStatisticsRequest;
     getSqlQuery(): string;
     setSqlQuery(value: string): GetSessionsStatisticsRequest;
+    clearLlmModelFilterList(): void;
+    getLlmModelFilterList(): Array<string>;
+    setLlmModelFilterList(value: Array<string>): GetSessionsStatisticsRequest;
+    addLlmModelFilter(value: string, index?: number): string;
+    clearLlmProviderFilterList(): void;
+    getLlmProviderFilterList(): Array<string>;
+    setLlmProviderFilterList(value: Array<string>): GetSessionsStatisticsRequest;
+    addLlmProviderFilter(value: string, index?: number): string;
+    clearLlmAgentNameFilterList(): void;
+    getLlmAgentNameFilterList(): Array<string>;
+    setLlmAgentNameFilterList(value: Array<string>): GetSessionsStatisticsRequest;
+    addLlmAgentNameFilter(value: string, index?: number): string;
+    clearLlmToolNameFilterList(): void;
+    getLlmToolNameFilterList(): Array<string>;
+    setLlmToolNameFilterList(value: Array<string>): GetSessionsStatisticsRequest;
+    addLlmToolNameFilter(value: string, index?: number): string;
+    clearLlmCcaiServiceProviderFilterList(): void;
+    getLlmCcaiServiceProviderFilterList(): Array<ondewo_nlu_ccai_project_pb.CcaiServiceProvider>;
+    setLlmCcaiServiceProviderFilterList(value: Array<ondewo_nlu_ccai_project_pb.CcaiServiceProvider>): GetSessionsStatisticsRequest;
+    addLlmCcaiServiceProviderFilter(value: ondewo_nlu_ccai_project_pb.CcaiServiceProvider, index?: number): ondewo_nlu_ccai_project_pb.CcaiServiceProvider;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetSessionsStatisticsRequest.AsObject;
@@ -791,6 +883,11 @@ export namespace GetSessionsStatisticsRequest {
         orderBysList: Array<string>,
         fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
         sqlQuery: string,
+        llmModelFilterList: Array<string>,
+        llmProviderFilterList: Array<string>,
+        llmAgentNameFilterList: Array<string>,
+        llmToolNameFilterList: Array<string>,
+        llmCcaiServiceProviderFilterList: Array<ondewo_nlu_ccai_project_pb.CcaiServiceProvider>,
     }
 }
 
@@ -803,6 +900,11 @@ export class GetSessionsStatisticsResponse extends jspb.Message {
     setFormat(value: ReportFormat): GetSessionsStatisticsResponse;
     getType(): SessionsReportType;
     setType(value: SessionsReportType): GetSessionsStatisticsResponse;
+
+    hasLlmTelemetryReport(): boolean;
+    clearLlmTelemetryReport(): void;
+    getLlmTelemetryReport(): ondewo_nlu_session_pb.LlmTelemetryReport | undefined;
+    setLlmTelemetryReport(value?: ondewo_nlu_session_pb.LlmTelemetryReport): GetSessionsStatisticsResponse;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetSessionsStatisticsResponse.AsObject;
@@ -819,6 +921,133 @@ export namespace GetSessionsStatisticsResponse {
         reports: Uint8Array | string,
         format: ReportFormat,
         type: SessionsReportType,
+        llmTelemetryReport?: ondewo_nlu_session_pb.LlmTelemetryReport.AsObject,
+    }
+}
+
+export class GetSessionsStatisticsTimeSeriesRequest extends jspb.Message { 
+    getParent(): string;
+    setParent(value: string): GetSessionsStatisticsTimeSeriesRequest;
+    getType(): SessionsReportType;
+    setType(value: SessionsReportType): GetSessionsStatisticsTimeSeriesRequest;
+
+    hasSessionFilter(): boolean;
+    clearSessionFilter(): void;
+    getSessionFilter(): ondewo_nlu_session_pb.SessionFilter | undefined;
+    setSessionFilter(value?: ondewo_nlu_session_pb.SessionFilter): GetSessionsStatisticsTimeSeriesRequest;
+    getBucketWidthSeconds(): number;
+    setBucketWidthSeconds(value: number): GetSessionsStatisticsTimeSeriesRequest;
+    getMaxBuckets(): number;
+    setMaxBuckets(value: number): GetSessionsStatisticsTimeSeriesRequest;
+    clearLlmModelFilterList(): void;
+    getLlmModelFilterList(): Array<string>;
+    setLlmModelFilterList(value: Array<string>): GetSessionsStatisticsTimeSeriesRequest;
+    addLlmModelFilter(value: string, index?: number): string;
+    clearLlmProviderFilterList(): void;
+    getLlmProviderFilterList(): Array<string>;
+    setLlmProviderFilterList(value: Array<string>): GetSessionsStatisticsTimeSeriesRequest;
+    addLlmProviderFilter(value: string, index?: number): string;
+    clearLlmAgentNameFilterList(): void;
+    getLlmAgentNameFilterList(): Array<string>;
+    setLlmAgentNameFilterList(value: Array<string>): GetSessionsStatisticsTimeSeriesRequest;
+    addLlmAgentNameFilter(value: string, index?: number): string;
+    clearLlmToolNameFilterList(): void;
+    getLlmToolNameFilterList(): Array<string>;
+    setLlmToolNameFilterList(value: Array<string>): GetSessionsStatisticsTimeSeriesRequest;
+    addLlmToolNameFilter(value: string, index?: number): string;
+    clearLlmCcaiServiceProviderFilterList(): void;
+    getLlmCcaiServiceProviderFilterList(): Array<ondewo_nlu_ccai_project_pb.CcaiServiceProvider>;
+    setLlmCcaiServiceProviderFilterList(value: Array<ondewo_nlu_ccai_project_pb.CcaiServiceProvider>): GetSessionsStatisticsTimeSeriesRequest;
+    addLlmCcaiServiceProviderFilter(value: ondewo_nlu_ccai_project_pb.CcaiServiceProvider, index?: number): ondewo_nlu_ccai_project_pb.CcaiServiceProvider;
+
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): GetSessionsStatisticsTimeSeriesRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetSessionsStatisticsTimeSeriesRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetSessionsStatisticsTimeSeriesRequest): GetSessionsStatisticsTimeSeriesRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetSessionsStatisticsTimeSeriesRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetSessionsStatisticsTimeSeriesRequest;
+    static deserializeBinaryFromReader(message: GetSessionsStatisticsTimeSeriesRequest, reader: jspb.BinaryReader): GetSessionsStatisticsTimeSeriesRequest;
+}
+
+export namespace GetSessionsStatisticsTimeSeriesRequest {
+    export type AsObject = {
+        parent: string,
+        type: SessionsReportType,
+        sessionFilter?: ondewo_nlu_session_pb.SessionFilter.AsObject,
+        bucketWidthSeconds: number,
+        maxBuckets: number,
+        llmModelFilterList: Array<string>,
+        llmProviderFilterList: Array<string>,
+        llmAgentNameFilterList: Array<string>,
+        llmToolNameFilterList: Array<string>,
+        llmCcaiServiceProviderFilterList: Array<ondewo_nlu_ccai_project_pb.CcaiServiceProvider>,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
+    }
+}
+
+export class LlmTelemetryTimeSeriesBucket extends jspb.Message { 
+
+    hasBucketStart(): boolean;
+    clearBucketStart(): void;
+    getBucketStart(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setBucketStart(value?: google_protobuf_timestamp_pb.Timestamp): LlmTelemetryTimeSeriesBucket;
+
+    hasBucketEnd(): boolean;
+    clearBucketEnd(): void;
+    getBucketEnd(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setBucketEnd(value?: google_protobuf_timestamp_pb.Timestamp): LlmTelemetryTimeSeriesBucket;
+
+    hasLlmTelemetryReport(): boolean;
+    clearLlmTelemetryReport(): void;
+    getLlmTelemetryReport(): ondewo_nlu_session_pb.LlmTelemetryReport | undefined;
+    setLlmTelemetryReport(value?: ondewo_nlu_session_pb.LlmTelemetryReport): LlmTelemetryTimeSeriesBucket;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): LlmTelemetryTimeSeriesBucket.AsObject;
+    static toObject(includeInstance: boolean, msg: LlmTelemetryTimeSeriesBucket): LlmTelemetryTimeSeriesBucket.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: LlmTelemetryTimeSeriesBucket, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): LlmTelemetryTimeSeriesBucket;
+    static deserializeBinaryFromReader(message: LlmTelemetryTimeSeriesBucket, reader: jspb.BinaryReader): LlmTelemetryTimeSeriesBucket;
+}
+
+export namespace LlmTelemetryTimeSeriesBucket {
+    export type AsObject = {
+        bucketStart?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        bucketEnd?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        llmTelemetryReport?: ondewo_nlu_session_pb.LlmTelemetryReport.AsObject,
+    }
+}
+
+export class GetSessionsStatisticsTimeSeriesResponse extends jspb.Message { 
+    clearLlmTelemetryTimeSeriesBucketsList(): void;
+    getLlmTelemetryTimeSeriesBucketsList(): Array<LlmTelemetryTimeSeriesBucket>;
+    setLlmTelemetryTimeSeriesBucketsList(value: Array<LlmTelemetryTimeSeriesBucket>): GetSessionsStatisticsTimeSeriesResponse;
+    addLlmTelemetryTimeSeriesBuckets(value?: LlmTelemetryTimeSeriesBucket, index?: number): LlmTelemetryTimeSeriesBucket;
+    getBucketWidthSeconds(): number;
+    setBucketWidthSeconds(value: number): GetSessionsStatisticsTimeSeriesResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetSessionsStatisticsTimeSeriesResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: GetSessionsStatisticsTimeSeriesResponse): GetSessionsStatisticsTimeSeriesResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetSessionsStatisticsTimeSeriesResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetSessionsStatisticsTimeSeriesResponse;
+    static deserializeBinaryFromReader(message: GetSessionsStatisticsTimeSeriesResponse, reader: jspb.BinaryReader): GetSessionsStatisticsTimeSeriesResponse;
+}
+
+export namespace GetSessionsStatisticsTimeSeriesResponse {
+    export type AsObject = {
+        llmTelemetryTimeSeriesBucketsList: Array<LlmTelemetryTimeSeriesBucket.AsObject>,
+        bucketWidthSeconds: number,
     }
 }
 
@@ -877,6 +1106,11 @@ export class ListUsersInProjectRequest extends jspb.Message {
     getPageToken(): string;
     setPageToken(value: string): ListUsersInProjectRequest;
 
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): ListUsersInProjectRequest;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListUsersInProjectRequest.AsObject;
     static toObject(includeInstance: boolean, msg: ListUsersInProjectRequest): ListUsersInProjectRequest.AsObject;
@@ -891,6 +1125,7 @@ export namespace ListUsersInProjectRequest {
     export type AsObject = {
         parent: string,
         pageToken: string,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -975,6 +1210,11 @@ export class ListProjectPermissionsRequest extends jspb.Message {
     getPageToken(): string;
     setPageToken(value: string): ListProjectPermissionsRequest;
 
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): ListProjectPermissionsRequest;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListProjectPermissionsRequest.AsObject;
     static toObject(includeInstance: boolean, msg: ListProjectPermissionsRequest): ListProjectPermissionsRequest.AsObject;
@@ -988,6 +1228,7 @@ export class ListProjectPermissionsRequest extends jspb.Message {
 export namespace ListProjectPermissionsRequest {
     export type AsObject = {
         pageToken: string,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -2419,6 +2660,207 @@ export namespace ReindexAgentRequest {
     }
 }
 
+export class CreateProjectTechnicalUserRequest extends jspb.Message { 
+    getParent(): string;
+    setParent(value: string): CreateProjectTechnicalUserRequest;
+    getName(): string;
+    setName(value: string): CreateProjectTechnicalUserRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): CreateProjectTechnicalUserRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: CreateProjectTechnicalUserRequest): CreateProjectTechnicalUserRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: CreateProjectTechnicalUserRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): CreateProjectTechnicalUserRequest;
+    static deserializeBinaryFromReader(message: CreateProjectTechnicalUserRequest, reader: jspb.BinaryReader): CreateProjectTechnicalUserRequest;
+}
+
+export namespace CreateProjectTechnicalUserRequest {
+    export type AsObject = {
+        parent: string,
+        name: string,
+    }
+}
+
+export class CreateProjectTechnicalUserResponse extends jspb.Message { 
+    getUserId(): string;
+    setUserId(value: string): CreateProjectTechnicalUserResponse;
+    getUsername(): string;
+    setUsername(value: string): CreateProjectTechnicalUserResponse;
+    getPassword(): string;
+    setPassword(value: string): CreateProjectTechnicalUserResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): CreateProjectTechnicalUserResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: CreateProjectTechnicalUserResponse): CreateProjectTechnicalUserResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: CreateProjectTechnicalUserResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): CreateProjectTechnicalUserResponse;
+    static deserializeBinaryFromReader(message: CreateProjectTechnicalUserResponse, reader: jspb.BinaryReader): CreateProjectTechnicalUserResponse;
+}
+
+export namespace CreateProjectTechnicalUserResponse {
+    export type AsObject = {
+        userId: string,
+        username: string,
+        password: string,
+    }
+}
+
+export class ListProjectTechnicalUsersRequest extends jspb.Message { 
+    getParent(): string;
+    setParent(value: string): ListProjectTechnicalUsersRequest;
+    getPageToken(): string;
+    setPageToken(value: string): ListProjectTechnicalUsersRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListProjectTechnicalUsersRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListProjectTechnicalUsersRequest): ListProjectTechnicalUsersRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListProjectTechnicalUsersRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListProjectTechnicalUsersRequest;
+    static deserializeBinaryFromReader(message: ListProjectTechnicalUsersRequest, reader: jspb.BinaryReader): ListProjectTechnicalUsersRequest;
+}
+
+export namespace ListProjectTechnicalUsersRequest {
+    export type AsObject = {
+        parent: string,
+        pageToken: string,
+    }
+}
+
+export class ProjectTechnicalUser extends jspb.Message { 
+    getUserId(): string;
+    setUserId(value: string): ProjectTechnicalUser;
+    getUsername(): string;
+    setUsername(value: string): ProjectTechnicalUser;
+
+    hasCreatedAt(): boolean;
+    clearCreatedAt(): void;
+    getCreatedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setCreatedAt(value?: google_protobuf_timestamp_pb.Timestamp): ProjectTechnicalUser;
+    getCreatedBy(): string;
+    setCreatedBy(value: string): ProjectTechnicalUser;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ProjectTechnicalUser.AsObject;
+    static toObject(includeInstance: boolean, msg: ProjectTechnicalUser): ProjectTechnicalUser.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ProjectTechnicalUser, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ProjectTechnicalUser;
+    static deserializeBinaryFromReader(message: ProjectTechnicalUser, reader: jspb.BinaryReader): ProjectTechnicalUser;
+}
+
+export namespace ProjectTechnicalUser {
+    export type AsObject = {
+        userId: string,
+        username: string,
+        createdAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        createdBy: string,
+    }
+}
+
+export class ListProjectTechnicalUsersResponse extends jspb.Message { 
+    clearTechnicalUsersList(): void;
+    getTechnicalUsersList(): Array<ProjectTechnicalUser>;
+    setTechnicalUsersList(value: Array<ProjectTechnicalUser>): ListProjectTechnicalUsersResponse;
+    addTechnicalUsers(value?: ProjectTechnicalUser, index?: number): ProjectTechnicalUser;
+    getNextPageToken(): string;
+    setNextPageToken(value: string): ListProjectTechnicalUsersResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListProjectTechnicalUsersResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: ListProjectTechnicalUsersResponse): ListProjectTechnicalUsersResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListProjectTechnicalUsersResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListProjectTechnicalUsersResponse;
+    static deserializeBinaryFromReader(message: ListProjectTechnicalUsersResponse, reader: jspb.BinaryReader): ListProjectTechnicalUsersResponse;
+}
+
+export namespace ListProjectTechnicalUsersResponse {
+    export type AsObject = {
+        technicalUsersList: Array<ProjectTechnicalUser.AsObject>,
+        nextPageToken: string,
+    }
+}
+
+export class DeleteProjectTechnicalUserRequest extends jspb.Message { 
+    getParent(): string;
+    setParent(value: string): DeleteProjectTechnicalUserRequest;
+    getUserId(): string;
+    setUserId(value: string): DeleteProjectTechnicalUserRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DeleteProjectTechnicalUserRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: DeleteProjectTechnicalUserRequest): DeleteProjectTechnicalUserRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DeleteProjectTechnicalUserRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DeleteProjectTechnicalUserRequest;
+    static deserializeBinaryFromReader(message: DeleteProjectTechnicalUserRequest, reader: jspb.BinaryReader): DeleteProjectTechnicalUserRequest;
+}
+
+export namespace DeleteProjectTechnicalUserRequest {
+    export type AsObject = {
+        parent: string,
+        userId: string,
+    }
+}
+
+export class RotateProjectTechnicalUserPasswordRequest extends jspb.Message { 
+    getParent(): string;
+    setParent(value: string): RotateProjectTechnicalUserPasswordRequest;
+    getUserId(): string;
+    setUserId(value: string): RotateProjectTechnicalUserPasswordRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): RotateProjectTechnicalUserPasswordRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: RotateProjectTechnicalUserPasswordRequest): RotateProjectTechnicalUserPasswordRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: RotateProjectTechnicalUserPasswordRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): RotateProjectTechnicalUserPasswordRequest;
+    static deserializeBinaryFromReader(message: RotateProjectTechnicalUserPasswordRequest, reader: jspb.BinaryReader): RotateProjectTechnicalUserPasswordRequest;
+}
+
+export namespace RotateProjectTechnicalUserPasswordRequest {
+    export type AsObject = {
+        parent: string,
+        userId: string,
+    }
+}
+
+export class RotateProjectTechnicalUserPasswordResponse extends jspb.Message { 
+    getUserId(): string;
+    setUserId(value: string): RotateProjectTechnicalUserPasswordResponse;
+    getUsername(): string;
+    setUsername(value: string): RotateProjectTechnicalUserPasswordResponse;
+    getPassword(): string;
+    setPassword(value: string): RotateProjectTechnicalUserPasswordResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): RotateProjectTechnicalUserPasswordResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: RotateProjectTechnicalUserPasswordResponse): RotateProjectTechnicalUserPasswordResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: RotateProjectTechnicalUserPasswordResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): RotateProjectTechnicalUserPasswordResponse;
+    static deserializeBinaryFromReader(message: RotateProjectTechnicalUserPasswordResponse, reader: jspb.BinaryReader): RotateProjectTechnicalUserPasswordResponse;
+}
+
+export namespace RotateProjectTechnicalUserPasswordResponse {
+    export type AsObject = {
+        userId: string,
+        username: string,
+        password: string,
+    }
+}
+
 export enum AgentView {
     AGENT_VIEW_UNSPECIFIED = 0,
     AGENT_VIEW_FULL = 1,
@@ -2438,6 +2880,27 @@ export enum ReportType {
     ENTITY_PER_LANGUAGE = 2,
     ENTITY_COLLISION = 3,
     INTENT_GENERAL = 4,
+    AGENT_LLM_TOKEN_USAGE = 5,
+    AGENT_LLM_MODELS_USED = 6,
+    AGENT_LLM_PROVIDERS_USED = 7,
+    AGENT_LLM_CCAI_SERVICES_USED = 8,
+    AGENT_LLM_AGENTS_USED = 9,
+    AGENT_LLM_ERRORS = 10,
+    AGENT_LLM_CACHE_EFFICIENCY = 11,
+    AGENT_LLM_REASONING_EFFORT = 12,
+    AGENT_LLM_TOP_X_TOOLS = 13,
+    AGENT_LLM_LEAST_X_TOOLS = 14,
+    AGENT_LLM_LATENCY = 15,
+    AGENT_LLM_FINISH_REASONS = 16,
+    AGENT_LLM_TOTAL_STATISTICS = 17,
+    AGENT_LLM_INPUT_TOKEN_USAGE = 18,
+    AGENT_LLM_OUTPUT_TOKEN_USAGE = 19,
+    AGENT_LLM_THINKING_TOKEN_USAGE = 20,
+    AGENT_LLM_TOOL_CALL_TOKEN_USAGE = 21,
+    AGENT_LLM_TOP_X_MODELS = 22,
+    AGENT_LLM_TOP_X_CCAI_SERVICE_PROVIDERS = 23,
+    AGENT_LLM_TOP_X_AGENT_NAMES = 24,
+    AGENT_LLM_SAFETY = 25,
 }
 
 export enum SessionsReportType {
@@ -2459,6 +2922,30 @@ export enum SessionsReportType {
     SESSION_LEAST_X_LABELS = 15,
     SESSION_LEAST_X_TAGS = 16,
     TOTAL_STATISTICS = 17,
+    SESSION_LLM_TOKEN_USAGE = 18,
+    SESSION_LLM_TOOL_CALLS = 19,
+    SESSION_LLM_THINKING = 20,
+    SESSION_LLM_FINISH_REASONS = 21,
+    SESSION_LLM_LATENCY = 22,
+    SESSION_LLM_RAG_METRICS = 23,
+    SESSION_LLM_MODELS_USED = 24,
+    SESSION_LLM_PROVIDERS_USED = 25,
+    SESSION_LLM_CCAI_SERVICES_USED = 26,
+    SESSION_LLM_AGENTS_USED = 27,
+    SESSION_LLM_ERRORS = 28,
+    SESSION_LLM_CACHE_EFFICIENCY = 29,
+    SESSION_LLM_REASONING_EFFORT = 30,
+    SESSION_LLM_TOP_X_TOOLS = 31,
+    SESSION_LLM_LEAST_X_TOOLS = 32,
+    SESSION_LLM_TOTAL_STATISTICS = 33,
+    SESSION_LLM_INPUT_TOKEN_USAGE = 34,
+    SESSION_LLM_OUTPUT_TOKEN_USAGE = 35,
+    SESSION_LLM_THINKING_TOKEN_USAGE = 36,
+    SESSION_LLM_TOOL_CALL_TOKEN_USAGE = 37,
+    SESSION_LLM_TOP_X_MODELS = 38,
+    SESSION_LLM_TOP_X_CCAI_SERVICE_PROVIDERS = 39,
+    SESSION_LLM_TOP_X_AGENT_NAMES = 40,
+    SESSION_LLM_SAFETY = 41,
 }
 
 export enum ReportFormat {

@@ -1,7 +1,7 @@
 // GENERATED CODE -- DO NOT EDIT!
 
 // Original file comments:
-// Copyright 2020-2023 ONDEWO GmbH
+// Copyright 2020-2025 ONDEWO GmbH
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -34,6 +34,28 @@ function serialize_google_protobuf_Empty(arg) {
 
 function deserialize_google_protobuf_Empty(buffer_arg) {
   return google_protobuf_empty_pb.Empty.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_AddNotificationsRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_common_pb.AddNotificationsRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.AddNotificationsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_AddNotificationsRequest(buffer_arg) {
+  return ondewo_nlu_common_pb.AddNotificationsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_AddNotificationsResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_common_pb.AddNotificationsResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.AddNotificationsResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_AddNotificationsResponse(buffer_arg) {
+  return ondewo_nlu_common_pb.AddNotificationsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_CreateServerRoleRequest(arg) {
@@ -69,6 +91,17 @@ function deserialize_ondewo_nlu_DeleteAllUserPreferencesRequest(buffer_arg) {
   return ondewo_nlu_user_pb.DeleteAllUserPreferencesRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_DeleteNotificationsRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_common_pb.DeleteNotificationsRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.DeleteNotificationsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_DeleteNotificationsRequest(buffer_arg) {
+  return ondewo_nlu_common_pb.DeleteNotificationsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_DeleteServerRoleRequest(arg) {
   if (!(arg instanceof ondewo_nlu_user_pb.DeleteServerRoleRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.DeleteServerRoleRequest');
@@ -100,6 +133,17 @@ function serialize_ondewo_nlu_DeleteUserPreferencesResponse(arg) {
 
 function deserialize_ondewo_nlu_DeleteUserPreferencesResponse(buffer_arg) {
   return ondewo_nlu_user_pb.DeleteUserPreferencesResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_GetNotificationRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_common_pb.GetNotificationRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.GetNotificationRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetNotificationRequest(buffer_arg) {
+  return ondewo_nlu_common_pb.GetNotificationRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_GetServerRoleRequest(arg) {
@@ -245,26 +289,15 @@ function deserialize_ondewo_nlu_ListUsersResponse(buffer_arg) {
   return ondewo_nlu_user_pb.ListUsersResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
-function serialize_ondewo_nlu_LoginRequest(arg) {
-  if (!(arg instanceof ondewo_nlu_user_pb.LoginRequest)) {
-    throw new Error('Expected argument of type ondewo.nlu.LoginRequest');
+function serialize_ondewo_nlu_Notification(arg) {
+  if (!(arg instanceof ondewo_nlu_common_pb.Notification)) {
+    throw new Error('Expected argument of type ondewo.nlu.Notification');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_ondewo_nlu_LoginRequest(buffer_arg) {
-  return ondewo_nlu_user_pb.LoginRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_ondewo_nlu_LoginResponse(arg) {
-  if (!(arg instanceof ondewo_nlu_user_pb.LoginResponse)) {
-    throw new Error('Expected argument of type ondewo.nlu.LoginResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_ondewo_nlu_LoginResponse(buffer_arg) {
-  return ondewo_nlu_user_pb.LoginResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_ondewo_nlu_Notification(buffer_arg) {
+  return ondewo_nlu_common_pb.Notification.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_ServerRole(arg) {
@@ -320,6 +353,28 @@ function serialize_ondewo_nlu_SetUserPreferencesResponse(arg) {
 
 function deserialize_ondewo_nlu_SetUserPreferencesResponse(buffer_arg) {
   return ondewo_nlu_user_pb.SetUserPreferencesResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_StreamNotificationsRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_common_pb.StreamNotificationsRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.StreamNotificationsRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_StreamNotificationsRequest(buffer_arg) {
+  return ondewo_nlu_common_pb.StreamNotificationsRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_UpdateNotificationRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_common_pb.UpdateNotificationRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.UpdateNotificationRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_UpdateNotificationRequest(buffer_arg) {
+  return ondewo_nlu_common_pb.UpdateNotificationRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_nlu_UpdateServerRoleRequest(arg) {
@@ -525,18 +580,6 @@ listServerPermissions: {
     responseSerialize: serialize_ondewo_nlu_ListServerPermissionsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListServerPermissionsResponse,
   },
-  // Requests login.
-login: {
-    path: '/ondewo.nlu.Users/Login',
-    requestStream: false,
-    responseStream: false,
-    requestType: ondewo_nlu_user_pb.LoginRequest,
-    responseType: ondewo_nlu_user_pb.LoginResponse,
-    requestSerialize: serialize_ondewo_nlu_LoginRequest,
-    requestDeserialize: deserialize_ondewo_nlu_LoginRequest,
-    responseSerialize: serialize_ondewo_nlu_LoginResponse,
-    responseDeserialize: deserialize_ondewo_nlu_LoginResponse,
-  },
   // Checks login.
 checkLogin: {
     path: '/ondewo.nlu.Users/CheckLogin',
@@ -584,6 +627,70 @@ setNotificationsReadStatus: {
     requestDeserialize: deserialize_ondewo_nlu_SetNotificationsReadStatusRequest,
     responseSerialize: serialize_ondewo_nlu_ListNotificationsResponse,
     responseDeserialize: deserialize_ondewo_nlu_ListNotificationsResponse,
+  },
+  // Adds one or more notifications.
+addNotifications: {
+    path: '/ondewo.nlu.Users/AddNotifications',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_common_pb.AddNotificationsRequest,
+    responseType: ondewo_nlu_common_pb.AddNotificationsResponse,
+    requestSerialize: serialize_ondewo_nlu_AddNotificationsRequest,
+    requestDeserialize: deserialize_ondewo_nlu_AddNotificationsRequest,
+    responseSerialize: serialize_ondewo_nlu_AddNotificationsResponse,
+    responseDeserialize: deserialize_ondewo_nlu_AddNotificationsResponse,
+  },
+  // Retrieves a single notification by its resource name.
+getNotification: {
+    path: '/ondewo.nlu.Users/GetNotification',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_common_pb.GetNotificationRequest,
+    responseType: ondewo_nlu_common_pb.Notification,
+    requestSerialize: serialize_ondewo_nlu_GetNotificationRequest,
+    requestDeserialize: deserialize_ondewo_nlu_GetNotificationRequest,
+    responseSerialize: serialize_ondewo_nlu_Notification,
+    responseDeserialize: deserialize_ondewo_nlu_Notification,
+  },
+  // Updates a single notification, applying only the fields named in the update mask.
+updateNotification: {
+    path: '/ondewo.nlu.Users/UpdateNotification',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_common_pb.UpdateNotificationRequest,
+    responseType: ondewo_nlu_common_pb.Notification,
+    requestSerialize: serialize_ondewo_nlu_UpdateNotificationRequest,
+    requestDeserialize: deserialize_ondewo_nlu_UpdateNotificationRequest,
+    responseSerialize: serialize_ondewo_nlu_Notification,
+    responseDeserialize: deserialize_ondewo_nlu_Notification,
+  },
+  // Deletes one or more notifications by their resource names.
+deleteNotifications: {
+    path: '/ondewo.nlu.Users/DeleteNotifications',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_common_pb.DeleteNotificationsRequest,
+    responseType: google_protobuf_empty_pb.Empty,
+    requestSerialize: serialize_ondewo_nlu_DeleteNotificationsRequest,
+    requestDeserialize: deserialize_ondewo_nlu_DeleteNotificationsRequest,
+    responseSerialize: serialize_google_protobuf_Empty,
+    responseDeserialize: deserialize_google_protobuf_Empty,
+  },
+  // Streams notifications for the authenticated caller in real time: each newly-added notification that
+// matches the request filter is pushed to the client as it is created (backed server-side by a
+// Postgres LISTEN/NOTIFY channel). The stream stays open until the client disconnects. When
+// <code>include_existing</code> is set the currently-stored matching notifications are replayed first
+// (newest last) before switching to the live tail.
+streamNotifications: {
+    path: '/ondewo.nlu.Users/StreamNotifications',
+    requestStream: false,
+    responseStream: true,
+    requestType: ondewo_nlu_common_pb.StreamNotificationsRequest,
+    responseType: ondewo_nlu_common_pb.Notification,
+    requestSerialize: serialize_ondewo_nlu_StreamNotificationsRequest,
+    requestDeserialize: deserialize_ondewo_nlu_StreamNotificationsRequest,
+    responseSerialize: serialize_ondewo_nlu_Notification,
+    responseDeserialize: deserialize_ondewo_nlu_Notification,
   },
   // Retrieves user preferences based on the provided request.
 getUserPreferences: {

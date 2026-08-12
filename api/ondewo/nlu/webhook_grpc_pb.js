@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// Modifications Copyright 2020-2023 ONDEWO GmbH
+// Modifications Copyright 2020-2026 ONDEWO GmbH
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -157,7 +157,7 @@ responseRefinement: {
     responseDeserialize: deserialize_ondewo_nlu_WebhookResponse,
   },
   // send a request for /slot_filling/ to the webhook server
-// parameter values can be provided &
+// parameter values can be provided &amp;
 // context information can be changed by the webhook server
 slotFilling: {
     path: '/ondewo.nlu.Webhook/SlotFilling',
@@ -188,7 +188,7 @@ ping: {
 // If the specified session entity type already exists, overrides the session
 // entity type.
 //
-// This method doesn't work with Google Assistant integration.
+// This method doesn&apos;t work with Google Assistant integration.
 // Contact Dialogflow support if you need to use session entities
 // with Google Assistant integration.
 createSessionEntityType: {
@@ -204,7 +204,7 @@ createSessionEntityType: {
   },
   // Updates the specified session entity type.
 //
-// This method doesn't work with Google Assistant integration.
+// This method doesn&apos;t work with Google Assistant integration.
 // Contact Dialogflow support if you need to use session entities
 // with Google Assistant integration.
 updateSessionEntityType: {
@@ -220,7 +220,7 @@ updateSessionEntityType: {
   },
   // Deletes the specified session entity type.
 //
-// This method doesn't work with Google Assistant integration.
+// This method doesn&apos;t work with Google Assistant integration.
 // Contact Dialogflow support if you need to use session entities
 // with Google Assistant integration.
 deleteSessionEntityType: {

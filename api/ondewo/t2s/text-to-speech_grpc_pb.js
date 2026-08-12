@@ -142,6 +142,28 @@ function deserialize_ondewo_t2s_ListT2sLanguagesResponse(buffer_arg) {
   return ondewo_t2s_text$to$speech_pb.ListT2sLanguagesResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_t2s_ListT2sNormalizationPipelinesRequest(arg) {
+  if (!(arg instanceof ondewo_t2s_text$to$speech_pb.ListT2sNormalizationPipelinesRequest)) {
+    throw new Error('Expected argument of type ondewo.t2s.ListT2sNormalizationPipelinesRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_t2s_ListT2sNormalizationPipelinesRequest(buffer_arg) {
+  return ondewo_t2s_text$to$speech_pb.ListT2sNormalizationPipelinesRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_t2s_ListT2sNormalizationPipelinesResponse(arg) {
+  if (!(arg instanceof ondewo_t2s_text$to$speech_pb.ListT2sNormalizationPipelinesResponse)) {
+    throw new Error('Expected argument of type ondewo.t2s.ListT2sNormalizationPipelinesResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_t2s_ListT2sNormalizationPipelinesResponse(buffer_arg) {
+  return ondewo_t2s_text$to$speech_pb.ListT2sNormalizationPipelinesResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_t2s_ListT2sPipelinesRequest(arg) {
   if (!(arg instanceof ondewo_t2s_text$to$speech_pb.ListT2sPipelinesRequest)) {
     throw new Error('Expected argument of type ondewo.t2s.ListT2sPipelinesRequest');
@@ -195,6 +217,28 @@ function serialize_ondewo_t2s_PhonemizerId(arg) {
 
 function deserialize_ondewo_t2s_PhonemizerId(buffer_arg) {
   return ondewo_t2s_text$to$speech_pb.PhonemizerId.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_t2s_StreamingSynthesizeRequest(arg) {
+  if (!(arg instanceof ondewo_t2s_text$to$speech_pb.StreamingSynthesizeRequest)) {
+    throw new Error('Expected argument of type ondewo.t2s.StreamingSynthesizeRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_t2s_StreamingSynthesizeRequest(buffer_arg) {
+  return ondewo_t2s_text$to$speech_pb.StreamingSynthesizeRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_t2s_StreamingSynthesizeResponse(arg) {
+  if (!(arg instanceof ondewo_t2s_text$to$speech_pb.StreamingSynthesizeResponse)) {
+    throw new Error('Expected argument of type ondewo.t2s.StreamingSynthesizeResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_t2s_StreamingSynthesizeResponse(buffer_arg) {
+  return ondewo_t2s_text$to$speech_pb.StreamingSynthesizeResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_t2s_SynthesizeRequest(arg) {
@@ -263,13 +307,22 @@ function deserialize_ondewo_t2s_UpdateCustomPhonemizerRequest(buffer_arg) {
   return ondewo_t2s_text$to$speech_pb.UpdateCustomPhonemizerRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_t2s_VoiceCloningRequest(arg) {
+  if (!(arg instanceof ondewo_t2s_text$to$speech_pb.VoiceCloningRequest)) {
+    throw new Error('Expected argument of type ondewo.t2s.VoiceCloningRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
 
-// Text2Speech service provides endpoints for text-to-speech generation.
+function deserialize_ondewo_t2s_VoiceCloningRequest(buffer_arg) {
+  return ondewo_t2s_text$to$speech_pb.VoiceCloningRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+
+// <p>Text2Speech service provides endpoints for text-to-speech generation.</p>
 var Text2SpeechService = exports.Text2SpeechService = {
-  // Synthesize RPC
-//
-// Synthesizes a specific text sent in the request with the provided configuration requirements
-// and retrieves a response that includes the synthesized text as audio and the requested configuration.
+  // <p>Synthesizes a specific text sent in the request with the provided configuration requirements
+// and retrieves a response that includes the synthesized text as audio and the requested configuration.</p>
 synthesize: {
     path: '/ondewo.t2s.Text2Speech/Synthesize',
     requestStream: false,
@@ -281,10 +334,8 @@ synthesize: {
     responseSerialize: serialize_ondewo_t2s_SynthesizeResponse,
     responseDeserialize: deserialize_ondewo_t2s_SynthesizeResponse,
   },
-  // BatchSynthesize RPC
-//
-// Performs batch synthesis by accepting a batch of synthesis requests and returning a batch response.
-// This can be more efficient for generating predictions on the AI model in bulk.
+  // <p>Performs batch synthesis by accepting a batch of synthesis requests and returning a batch response.
+// This can be more efficient for generating predictions on the AI model in bulk.</p>
 batchSynthesize: {
     path: '/ondewo.t2s.Text2Speech/BatchSynthesize',
     requestStream: false,
@@ -296,9 +347,19 @@ batchSynthesize: {
     responseSerialize: serialize_ondewo_t2s_BatchSynthesizeResponse,
     responseDeserialize: deserialize_ondewo_t2s_BatchSynthesizeResponse,
   },
-  // NormalizeText RPC
-//
-// Normalizes a text according to the specific pipeline's normalization rules.
+  // <p>Performs streaming synthesis by accepting stream of input text and returning a stream of generated audio.</p>
+streamingSynthesize: {
+    path: '/ondewo.t2s.Text2Speech/StreamingSynthesize',
+    requestStream: true,
+    responseStream: true,
+    requestType: ondewo_t2s_text$to$speech_pb.StreamingSynthesizeRequest,
+    responseType: ondewo_t2s_text$to$speech_pb.StreamingSynthesizeResponse,
+    requestSerialize: serialize_ondewo_t2s_StreamingSynthesizeRequest,
+    requestDeserialize: deserialize_ondewo_t2s_StreamingSynthesizeRequest,
+    responseSerialize: serialize_ondewo_t2s_StreamingSynthesizeResponse,
+    responseDeserialize: deserialize_ondewo_t2s_StreamingSynthesizeResponse,
+  },
+  // <p>Normalizes a text according to the specific pipeline&apos;s normalization rules.</p>
 normalizeText: {
     path: '/ondewo.t2s.Text2Speech/NormalizeText',
     requestStream: false,
@@ -310,9 +371,7 @@ normalizeText: {
     responseSerialize: serialize_ondewo_t2s_NormalizeTextResponse,
     responseDeserialize: deserialize_ondewo_t2s_NormalizeTextResponse,
   },
-  // GetT2sPipeline RPC
-//
-// Retrieves the configuration of the specified text-to-speech pipeline.
+  // <p>Retrieves the configuration of the specified text-to-speech pipeline.</p>
 getT2sPipeline: {
     path: '/ondewo.t2s.Text2Speech/GetT2sPipeline',
     requestStream: false,
@@ -324,9 +383,7 @@ getT2sPipeline: {
     responseSerialize: serialize_ondewo_t2s_Text2SpeechConfig,
     responseDeserialize: deserialize_ondewo_t2s_Text2SpeechConfig,
   },
-  // CreateT2sPipeline RPC
-//
-// Creates a new text-to-speech pipeline with the provided configuration and returns its pipeline ID.
+  // <p>Creates a new text-to-speech pipeline with the provided configuration and returns its pipeline ID.</p>
 createT2sPipeline: {
     path: '/ondewo.t2s.Text2Speech/CreateT2sPipeline',
     requestStream: false,
@@ -338,9 +395,7 @@ createT2sPipeline: {
     responseSerialize: serialize_ondewo_t2s_T2sPipelineId,
     responseDeserialize: deserialize_ondewo_t2s_T2sPipelineId,
   },
-  // DeleteT2sPipeline RPC
-//
-// Deletes the specified text-to-speech pipeline.
+  // <p>Deletes the specified text-to-speech pipeline.</p>
 deleteT2sPipeline: {
     path: '/ondewo.t2s.Text2Speech/DeleteT2sPipeline',
     requestStream: false,
@@ -352,9 +407,7 @@ deleteT2sPipeline: {
     responseSerialize: serialize_google_protobuf_Empty,
     responseDeserialize: deserialize_google_protobuf_Empty,
   },
-  // UpdateT2sPipeline RPC
-//
-// Updates the specified text-to-speech pipeline with the given configuration.
+  // <p>Updates the specified text-to-speech pipeline with the given configuration.</p>
 updateT2sPipeline: {
     path: '/ondewo.t2s.Text2Speech/UpdateT2sPipeline',
     requestStream: false,
@@ -366,9 +419,7 @@ updateT2sPipeline: {
     responseSerialize: serialize_google_protobuf_Empty,
     responseDeserialize: deserialize_google_protobuf_Empty,
   },
-  // ListT2sPipelines RPC
-//
-// Retrieves a list of text-to-speech pipelines based on specific requirements.
+  // <p>Retrieves a list of text-to-speech pipelines based on specific requirements.</p>
 listT2sPipelines: {
     path: '/ondewo.t2s.Text2Speech/ListT2sPipelines',
     requestStream: false,
@@ -380,9 +431,7 @@ listT2sPipelines: {
     responseSerialize: serialize_ondewo_t2s_ListT2sPipelinesResponse,
     responseDeserialize: deserialize_ondewo_t2s_ListT2sPipelinesResponse,
   },
-  // ListT2sLanguages RPC
-//
-// Retrieves a list of languages available based on specific configuration requirements.
+  // <p>Retrieves a list of languages available based on specific configuration requirements.</p>
 listT2sLanguages: {
     path: '/ondewo.t2s.Text2Speech/ListT2sLanguages',
     requestStream: false,
@@ -394,9 +443,7 @@ listT2sLanguages: {
     responseSerialize: serialize_ondewo_t2s_ListT2sLanguagesResponse,
     responseDeserialize: deserialize_ondewo_t2s_ListT2sLanguagesResponse,
   },
-  // ListT2sDomains RPC
-//
-// Retrieves a list of domains available based on specific configuration requirements.
+  // <p>Retrieves a list of domains available based on specific configuration requirements.</p>
 listT2sDomains: {
     path: '/ondewo.t2s.Text2Speech/ListT2sDomains',
     requestStream: false,
@@ -408,9 +455,19 @@ listT2sDomains: {
     responseSerialize: serialize_ondewo_t2s_ListT2sDomainsResponse,
     responseDeserialize: deserialize_ondewo_t2s_ListT2sDomainsResponse,
   },
-  // GetServiceInfo RPC
-//
-// Retrieves the version information of the running text-to-speech server.
+  // <p>Retrieves a list of normalization pipelines based on specific requirements.</p>
+listT2sNormalizationPipelines: {
+    path: '/ondewo.t2s.Text2Speech/ListT2sNormalizationPipelines',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_t2s_text$to$speech_pb.ListT2sNormalizationPipelinesRequest,
+    responseType: ondewo_t2s_text$to$speech_pb.ListT2sNormalizationPipelinesResponse,
+    requestSerialize: serialize_ondewo_t2s_ListT2sNormalizationPipelinesRequest,
+    requestDeserialize: deserialize_ondewo_t2s_ListT2sNormalizationPipelinesRequest,
+    responseSerialize: serialize_ondewo_t2s_ListT2sNormalizationPipelinesResponse,
+    responseDeserialize: deserialize_ondewo_t2s_ListT2sNormalizationPipelinesResponse,
+  },
+  // <p>Retrieves the version information of the running text-to-speech server.</p>
 getServiceInfo: {
     path: '/ondewo.t2s.Text2Speech/GetServiceInfo',
     requestStream: false,
@@ -422,9 +479,7 @@ getServiceInfo: {
     responseSerialize: serialize_ondewo_t2s_T2SGetServiceInfoResponse,
     responseDeserialize: deserialize_ondewo_t2s_T2SGetServiceInfoResponse,
   },
-  // GetCustomPhonemizer RPC
-//
-// Retrieves a custom phonemizer based on the provided PhonemizerId.
+  // <p>Retrieves a custom phonemizer based on the provided PhonemizerId.</p>
 getCustomPhonemizer: {
     path: '/ondewo.t2s.Text2Speech/GetCustomPhonemizer',
     requestStream: false,
@@ -436,10 +491,8 @@ getCustomPhonemizer: {
     responseSerialize: serialize_ondewo_t2s_CustomPhonemizerProto,
     responseDeserialize: deserialize_ondewo_t2s_CustomPhonemizerProto,
   },
-  // CreateCustomPhonemizer RPC
-//
-// Creates a custom phonemizer based on the provided CreateCustomPhonemizerRequest.
-// Returns the PhonemizerId associated with the created custom phonemizer.
+  // <p>Creates a custom phonemizer based on the provided CreateCustomPhonemizerRequest.
+// Returns the PhonemizerId associated with the created custom phonemizer.</p>
 createCustomPhonemizer: {
     path: '/ondewo.t2s.Text2Speech/CreateCustomPhonemizer',
     requestStream: false,
@@ -451,10 +504,8 @@ createCustomPhonemizer: {
     responseSerialize: serialize_ondewo_t2s_PhonemizerId,
     responseDeserialize: deserialize_ondewo_t2s_PhonemizerId,
   },
-  // DeleteCustomPhonemizer RPC
-//
-// Deletes a custom phonemizer based on the provided PhonemizerId.
-// Returns an Empty response upon successful deletion.
+  // <p>Deletes a custom phonemizer based on the provided PhonemizerId.
+// Returns an Empty response upon successful deletion.</p>
 deleteCustomPhonemizer: {
     path: '/ondewo.t2s.Text2Speech/DeleteCustomPhonemizer',
     requestStream: false,
@@ -466,9 +517,7 @@ deleteCustomPhonemizer: {
     responseSerialize: serialize_google_protobuf_Empty,
     responseDeserialize: deserialize_google_protobuf_Empty,
   },
-  // UpdateCustomPhonemizer RPC
-//
-// Updates the specified custom phonemizer with the provided configuration.
+  // <p>Updates the specified custom phonemizer with the provided configuration.</p>
 updateCustomPhonemizer: {
     path: '/ondewo.t2s.Text2Speech/UpdateCustomPhonemizer',
     requestStream: false,
@@ -480,9 +529,7 @@ updateCustomPhonemizer: {
     responseSerialize: serialize_ondewo_t2s_CustomPhonemizerProto,
     responseDeserialize: deserialize_ondewo_t2s_CustomPhonemizerProto,
   },
-  // ListCustomPhonemizer RPC
-//
-// Retrieves a list of custom phonemizers based on specific requirements.
+  // <p>Retrieves a list of custom phonemizers based on specific requirements.</p>
 listCustomPhonemizer: {
     path: '/ondewo.t2s.Text2Speech/ListCustomPhonemizer',
     requestStream: false,
@@ -493,6 +540,19 @@ listCustomPhonemizer: {
     requestDeserialize: deserialize_ondewo_t2s_ListCustomPhonemizerRequest,
     responseSerialize: serialize_ondewo_t2s_ListCustomPhonemizerResponse,
     responseDeserialize: deserialize_ondewo_t2s_ListCustomPhonemizerResponse,
+  },
+  // <p>Clones a voice based on a sample audio of the speaker and its transcription.
+// The cloned voice can afterwards be used for synthesis by referencing the given speaker name.</p>
+voiceCloning: {
+    path: '/ondewo.t2s.Text2Speech/VoiceCloning',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_t2s_text$to$speech_pb.VoiceCloningRequest,
+    responseType: google_protobuf_empty_pb.Empty,
+    requestSerialize: serialize_ondewo_t2s_VoiceCloningRequest,
+    requestDeserialize: deserialize_ondewo_t2s_VoiceCloningRequest,
+    responseSerialize: serialize_google_protobuf_Empty,
+    responseDeserialize: deserialize_google_protobuf_Empty,
   },
 };
 

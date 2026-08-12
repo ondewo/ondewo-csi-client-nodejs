@@ -386,8 +386,8 @@ proto.ondewo.nlu.Context.serializeBinaryToWriter = function(message, writer) {
   if (f && f.getLength() > 0) {
     f.serializeBinary(3, writer, jspb.BinaryWriter.prototype.writeString, jspb.BinaryWriter.prototype.writeMessage, proto.ondewo.nlu.Context.Parameter.serializeBinaryToWriter);
   }
-  f = message.getLifespanTime();
-  if (f !== 0.0) {
+  f = /** @type {number} */ (jspb.Message.getField(message, 4));
+  if (f != null) {
     writer.writeFloat(
       4,
       f
@@ -880,7 +880,25 @@ proto.ondewo.nlu.Context.prototype.getLifespanTime = function() {
  * @return {!proto.ondewo.nlu.Context} returns this
  */
 proto.ondewo.nlu.Context.prototype.setLifespanTime = function(value) {
-  return jspb.Message.setProto3FloatField(this, 4, value);
+  return jspb.Message.setField(this, 4, value);
+};
+
+
+/**
+ * Clears the field making it undefined.
+ * @return {!proto.ondewo.nlu.Context} returns this
+ */
+proto.ondewo.nlu.Context.prototype.clearLifespanTime = function() {
+  return jspb.Message.setField(this, 4, undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.ondewo.nlu.Context.prototype.hasLifespanTime = function() {
+  return jspb.Message.getField(this, 4) != null;
 };
 
 

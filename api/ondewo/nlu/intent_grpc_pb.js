@@ -15,7 +15,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-// Modifications Copyright 2020-2023 ONDEWO GmbH
+// Modifications Copyright 2020-2026 ONDEWO GmbH
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -504,37 +504,19 @@ function deserialize_ondewo_nlu_UpdateIntentRequest(buffer_arg) {
 }
 
 
-// An intent represents a mapping between input from a user and an action to
-// be taken by your application. When you pass user input to the
-// [DetectIntent][google.cloud.dialogflow.v2.Sessions.DetectIntent] (or
-// [StreamingDetectIntent][google.cloud.dialogflow.v2.Sessions.StreamingDetectIntent]) method, the
-// Dialogflow API analyzes the input and searches
-// for a matching intent. If no match is found, the Dialogflow API returns a
-// fallback intent (`is_fallback` = true).
+// An intent represents a mapping between input from a user and an action to be taken by your application. When you pass user input to the <a href="index.html#ondewo.nlu.Sessions.DetectIntent">DetectIntent</a> (or <a href="index.html#ondewo.nlu.Sessions.StreamingDetectIntent">StreamingDetectIntent</a>) method, the Dialogflow API analyzes the input and searches for a matching intent. If no match is found, the Dialogflow API returns a fallback intent (<code>is_fallback</code> = true).
 //
-// You can provide additional information for the Dialogflow API to use to
-// match user input to an intent by adding the following to your intent.
+// You can provide additional information for the Dialogflow API to use to match user input to an intent by adding the following to your intent.
 //
-// *   **Contexts** - provide additional context for intent analysis. For
-//     example, if an intent is related to an object in your application that
-//     plays music, you can provide a context to determine when to match the
-//     intent if the user input is “turn it off”.  You can include a context
-//     that matches the intent when there is previous user input of
-//     "play music", and not when there is previous user input of
-//     "turn on the light".
+// <ul>
+//   <li><strong>Contexts</strong> - provide additional context for intent analysis. For example, if an intent is related to an object in your application that plays music, you can provide a context to determine when to match the intent if the user input is &quot;turn it off&quot;.  You can include a context that matches the intent when there is previous user input of &quot;play music&quot;, and not when there is previous user input of &quot;turn on the light&quot;.</li>
 //
-// *   **Events** - allow for matching an intent by using an event name
-//     instead of user input. Your application can provide an event name and
-//     related parameters to the Dialogflow API to match an intent. For
-//     example, when your application starts, you can send a welcome event
-//     with a user name parameter to the Dialogflow API to match an intent with
-//     a personalized welcome message for the user.
+//   <li><strong>Events</strong> - allow for matching an intent by using an event name instead of user input. Your application can provide an event name and related parameters to the Dialogflow API to match an intent. For example, when your application starts, you can send a welcome event with a user name parameter to the Dialogflow API to match an intent with a personalized welcome message for the user.</li>
 //
-// *   **Training phrases** - provide examples of user input to train the
-//     Dialogflow API agent to better match intents.
+//   <li><strong>Training phrases</strong> - provide examples of user input to train the Dialogflow API agent to better match intents.</li>
+// </ul>
 //
-// For more information about intents, see the
-// [Dialogflow documentation](https://dialogflow.com/docs/intents).
+// For more information about intents, see the <a href="https://dialogflow.com/docs/intents">Dialogflow documentation</a>.
 var IntentsService = exports.IntentsService = {
   // Returns the list of all intents in the specified agent.
 listIntents: {
@@ -598,7 +580,7 @@ deleteIntent: {
   },
   // Updates/Creates multiple intents in the specified agent.
 //
-// Operation <response: [BatchUpdateIntentsResponse][google.cloud.dialogflow.v2.BatchUpdateIntentsResponse]>
+// Operation &lt;response: <a href="index.html#ondewo.nlu.BatchUpdateIntentsResponse">BatchUpdateIntentsResponse</a>&gt;
 batchUpdateIntents: {
     path: '/ondewo.nlu.Intents/BatchUpdateIntents',
     requestStream: false,
@@ -611,8 +593,8 @@ batchUpdateIntents: {
     responseDeserialize: deserialize_ondewo_nlu_BatchUpdateIntentsResponse,
   },
   // Deletes intents in the specified agent.
-//
-// Operation <response: [google.protobuf.Empty][google.protobuf.Empty]>
+// <br>
+// Operation &lt;response: <a href="https://protobuf.dev/reference/protobuf/google.protobuf/#empty">google.protobuf.Empty</a>&gt;
 batchDeleteIntents: {
     path: '/ondewo.nlu.Intents/BatchDeleteIntents',
     requestStream: false,

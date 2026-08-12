@@ -372,7 +372,13 @@ export class UtteranceDetectionOptions extends jspb.Message {
     getNextChunkTimeout(): number;
     setNextChunkTimeout(value: number): UtteranceDetectionOptions;
 
+    hasTurnDetection(): boolean;
+    clearTurnDetection(): void;
+    getTurnDetection(): TurnDetectionOptions | undefined;
+    setTurnDetection(value?: TurnDetectionOptions): UtteranceDetectionOptions;
+
     getOneofTranscribeNotFinalCase(): UtteranceDetectionOptions.OneofTranscribeNotFinalCase;
+    getOneofTurnDetectionCase(): UtteranceDetectionOptions.OneofTurnDetectionCase;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): UtteranceDetectionOptions.AsObject;
@@ -388,11 +394,17 @@ export namespace UtteranceDetectionOptions {
     export type AsObject = {
         transcribeNotFinal: boolean,
         nextChunkTimeout: number,
+        turnDetection?: TurnDetectionOptions.AsObject,
     }
 
     export enum OneofTranscribeNotFinalCase {
         ONEOF_TRANSCRIBE_NOT_FINAL_NOT_SET = 0,
         TRANSCRIBE_NOT_FINAL = 1,
+    }
+
+    export enum OneofTurnDetectionCase {
+        ONEOF_TURN_DETECTION_NOT_SET = 0,
+        TURN_DETECTION = 3,
     }
 
 }
@@ -407,6 +419,8 @@ export class PostProcessingOptions extends jspb.Message {
     clearConfig(): void;
     getConfig(): PostProcessing | undefined;
     setConfig(value?: PostProcessing): PostProcessingOptions;
+    getLlmPostProcessing(): boolean;
+    setLlmPostProcessing(value: boolean): PostProcessingOptions;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostProcessingOptions.AsObject;
@@ -423,6 +437,7 @@ export namespace PostProcessingOptions {
         spellingCorrection: boolean,
         normalize: boolean,
         config?: PostProcessing.AsObject,
+        llmPostProcessing: boolean,
     }
 }
 
@@ -865,21 +880,21 @@ export namespace ListS2tDomainsResponse {
     }
 }
 
-export class S2TGetServiceInfoResponse extends jspb.Message { 
+export class S2tGetServiceInfoResponse extends jspb.Message { 
     getVersion(): string;
-    setVersion(value: string): S2TGetServiceInfoResponse;
+    setVersion(value: string): S2tGetServiceInfoResponse;
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): S2TGetServiceInfoResponse.AsObject;
-    static toObject(includeInstance: boolean, msg: S2TGetServiceInfoResponse): S2TGetServiceInfoResponse.AsObject;
+    toObject(includeInstance?: boolean): S2tGetServiceInfoResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: S2tGetServiceInfoResponse): S2tGetServiceInfoResponse.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: S2TGetServiceInfoResponse, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): S2TGetServiceInfoResponse;
-    static deserializeBinaryFromReader(message: S2TGetServiceInfoResponse, reader: jspb.BinaryReader): S2TGetServiceInfoResponse;
+    static serializeBinaryToWriter(message: S2tGetServiceInfoResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): S2tGetServiceInfoResponse;
+    static deserializeBinaryFromReader(message: S2tGetServiceInfoResponse, reader: jspb.BinaryReader): S2tGetServiceInfoResponse;
 }
 
-export namespace S2TGetServiceInfoResponse {
+export namespace S2tGetServiceInfoResponse {
     export type AsObject = {
         version: string,
     }
@@ -891,15 +906,15 @@ export class Speech2TextConfig extends jspb.Message {
 
     hasDescription(): boolean;
     clearDescription(): void;
-    getDescription(): S2TDescription | undefined;
-    setDescription(value?: S2TDescription): Speech2TextConfig;
+    getDescription(): S2tDescription | undefined;
+    setDescription(value?: S2tDescription): Speech2TextConfig;
     getActive(): boolean;
     setActive(value: boolean): Speech2TextConfig;
 
     hasInference(): boolean;
     clearInference(): void;
-    getInference(): S2TInference | undefined;
-    setInference(value?: S2TInference): Speech2TextConfig;
+    getInference(): S2tInference | undefined;
+    setInference(value?: S2tInference): Speech2TextConfig;
 
     hasStreamingServer(): boolean;
     clearStreamingServer(): void;
@@ -934,9 +949,9 @@ export class Speech2TextConfig extends jspb.Message {
 export namespace Speech2TextConfig {
     export type AsObject = {
         id: string,
-        description?: S2TDescription.AsObject,
+        description?: S2tDescription.AsObject,
         active: boolean,
-        inference?: S2TInference.AsObject,
+        inference?: S2tInference.AsObject,
         streamingServer?: StreamingServer.AsObject,
         voiceActivityDetection?: VoiceActivityDetection.AsObject,
         postProcessing?: PostProcessing.AsObject,
@@ -944,27 +959,27 @@ export namespace Speech2TextConfig {
     }
 }
 
-export class S2TDescription extends jspb.Message { 
+export class S2tDescription extends jspb.Message { 
     getLanguage(): string;
-    setLanguage(value: string): S2TDescription;
+    setLanguage(value: string): S2tDescription;
     getPipelineOwner(): string;
-    setPipelineOwner(value: string): S2TDescription;
+    setPipelineOwner(value: string): S2tDescription;
     getDomain(): string;
-    setDomain(value: string): S2TDescription;
+    setDomain(value: string): S2tDescription;
     getComments(): string;
-    setComments(value: string): S2TDescription;
+    setComments(value: string): S2tDescription;
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): S2TDescription.AsObject;
-    static toObject(includeInstance: boolean, msg: S2TDescription): S2TDescription.AsObject;
+    toObject(includeInstance?: boolean): S2tDescription.AsObject;
+    static toObject(includeInstance: boolean, msg: S2tDescription): S2tDescription.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: S2TDescription, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): S2TDescription;
-    static deserializeBinaryFromReader(message: S2TDescription, reader: jspb.BinaryReader): S2TDescription;
+    static serializeBinaryToWriter(message: S2tDescription, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): S2tDescription;
+    static deserializeBinaryFromReader(message: S2tDescription, reader: jspb.BinaryReader): S2tDescription;
 }
 
-export namespace S2TDescription {
+export namespace S2tDescription {
     export type AsObject = {
         language: string,
         pipelineOwner: string,
@@ -973,31 +988,31 @@ export namespace S2TDescription {
     }
 }
 
-export class S2TInference extends jspb.Message { 
+export class S2tInference extends jspb.Message { 
 
     hasAcousticModels(): boolean;
     clearAcousticModels(): void;
     getAcousticModels(): AcousticModels | undefined;
-    setAcousticModels(value?: AcousticModels): S2TInference;
+    setAcousticModels(value?: AcousticModels): S2tInference;
 
     hasLanguageModels(): boolean;
     clearLanguageModels(): void;
     getLanguageModels(): LanguageModels | undefined;
-    setLanguageModels(value?: LanguageModels): S2TInference;
+    setLanguageModels(value?: LanguageModels): S2tInference;
     getInferenceBackend(): InferenceBackend;
-    setInferenceBackend(value: InferenceBackend): S2TInference;
+    setInferenceBackend(value: InferenceBackend): S2tInference;
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): S2TInference.AsObject;
-    static toObject(includeInstance: boolean, msg: S2TInference): S2TInference.AsObject;
+    toObject(includeInstance?: boolean): S2tInference.AsObject;
+    static toObject(includeInstance: boolean, msg: S2tInference): S2tInference.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: S2TInference, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): S2TInference;
-    static deserializeBinaryFromReader(message: S2TInference, reader: jspb.BinaryReader): S2TInference;
+    static serializeBinaryToWriter(message: S2tInference, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): S2tInference;
+    static deserializeBinaryFromReader(message: S2tInference, reader: jspb.BinaryReader): S2tInference;
 }
 
-export namespace S2TInference {
+export namespace S2tInference {
     export type AsObject = {
         acousticModels?: AcousticModels.AsObject,
         languageModels?: LanguageModels.AsObject,
@@ -1049,6 +1064,11 @@ export class AcousticModels extends jspb.Message {
     getS2tCloudServiceMicrosoft(): S2tCloudServiceMicrosoft | undefined;
     setS2tCloudServiceMicrosoft(value?: S2tCloudServiceMicrosoft): AcousticModels;
 
+    hasParakeet(): boolean;
+    clearParakeet(): void;
+    getParakeet(): Parakeet | undefined;
+    setParakeet(value?: Parakeet): AcousticModels;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): AcousticModels.AsObject;
     static toObject(includeInstance: boolean, msg: AcousticModels): AcousticModels.AsObject;
@@ -1070,6 +1090,7 @@ export namespace AcousticModels {
         s2tCloudServiceDeepgram?: S2tCloudServiceDeepgram.AsObject,
         s2tCloudServiceGoogle?: S2tCloudServiceGoogle.AsObject,
         s2tCloudServiceMicrosoft?: S2tCloudServiceMicrosoft.AsObject,
+        parakeet?: Parakeet.AsObject,
     }
 }
 
@@ -1338,6 +1359,38 @@ export namespace Wav2VecTriton {
     }
 }
 
+export class Parakeet extends jspb.Message { 
+    getTritonModelName(): string;
+    setTritonModelName(value: string): Parakeet;
+    getTritonModelVersion(): string;
+    setTritonModelVersion(value: string): Parakeet;
+    getCheckStatusTimeout(): number;
+    setCheckStatusTimeout(value: number): Parakeet;
+    getTritonServerHost(): string;
+    setTritonServerHost(value: string): Parakeet;
+    getTritonServerPort(): number;
+    setTritonServerPort(value: number): Parakeet;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): Parakeet.AsObject;
+    static toObject(includeInstance: boolean, msg: Parakeet): Parakeet.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: Parakeet, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): Parakeet;
+    static deserializeBinaryFromReader(message: Parakeet, reader: jspb.BinaryReader): Parakeet;
+}
+
+export namespace Parakeet {
+    export type AsObject = {
+        tritonModelName: string,
+        tritonModelVersion: string,
+        checkStatusTimeout: number,
+        tritonServerHost: string,
+        tritonServerPort: number,
+    }
+}
+
 export class PtFiles extends jspb.Message { 
     getPath(): string;
     setPath(value: string): PtFiles;
@@ -1457,6 +1510,11 @@ export class StreamingSpeechRecognition extends jspb.Message {
     getNextChunkTimeout(): number;
     setNextChunkTimeout(value: number): StreamingSpeechRecognition;
 
+    hasTurnDetection(): boolean;
+    clearTurnDetection(): void;
+    getTurnDetection(): TurnDetectionOptions | undefined;
+    setTurnDetection(value?: TurnDetectionOptions): StreamingSpeechRecognition;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): StreamingSpeechRecognition.AsObject;
     static toObject(includeInstance: boolean, msg: StreamingSpeechRecognition): StreamingSpeechRecognition.AsObject;
@@ -1474,6 +1532,269 @@ export namespace StreamingSpeechRecognition {
         samplingRate: number,
         minAudioChunkSize: number,
         nextChunkTimeout: number,
+        turnDetection?: TurnDetectionOptions.AsObject,
+    }
+}
+
+export class TurnDetectionOptions extends jspb.Message { 
+
+    hasActive(): boolean;
+    clearActive(): void;
+    getActive(): boolean | undefined;
+    setActive(value: boolean): TurnDetectionOptions;
+
+    hasFullUtteranceDeployment(): boolean;
+    clearFullUtteranceDeployment(): void;
+    getFullUtteranceDeployment(): boolean | undefined;
+    setFullUtteranceDeployment(value: boolean): TurnDetectionOptions;
+
+    hasTurnDetectionSystemPrompt(): boolean;
+    clearTurnDetectionSystemPrompt(): void;
+    getTurnDetectionSystemPrompt(): string | undefined;
+    setTurnDetectionSystemPrompt(value: string): TurnDetectionOptions;
+
+    hasTurnDetectionUserPrompt(): boolean;
+    clearTurnDetectionUserPrompt(): void;
+    getTurnDetectionUserPrompt(): string | undefined;
+    setTurnDetectionUserPrompt(value: string): TurnDetectionOptions;
+
+    hasTurnDetectionLlmOpenaiOptions(): boolean;
+    clearTurnDetectionLlmOpenaiOptions(): void;
+    getTurnDetectionLlmOpenaiOptions(): OpenaiLlmOptions | undefined;
+    setTurnDetectionLlmOpenaiOptions(value?: OpenaiLlmOptions): TurnDetectionOptions;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TurnDetectionOptions.AsObject;
+    static toObject(includeInstance: boolean, msg: TurnDetectionOptions): TurnDetectionOptions.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TurnDetectionOptions, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TurnDetectionOptions;
+    static deserializeBinaryFromReader(message: TurnDetectionOptions, reader: jspb.BinaryReader): TurnDetectionOptions;
+}
+
+export namespace TurnDetectionOptions {
+    export type AsObject = {
+        active?: boolean,
+        fullUtteranceDeployment?: boolean,
+        turnDetectionSystemPrompt?: string,
+        turnDetectionUserPrompt?: string,
+        turnDetectionLlmOpenaiOptions?: OpenaiLlmOptions.AsObject,
+    }
+}
+
+export class OpenaiLlmOptions extends jspb.Message { 
+
+    hasApiKey(): boolean;
+    clearApiKey(): void;
+    getApiKey(): string | undefined;
+    setApiKey(value: string): OpenaiLlmOptions;
+
+    hasOrganization(): boolean;
+    clearOrganization(): void;
+    getOrganization(): string | undefined;
+    setOrganization(value: string): OpenaiLlmOptions;
+
+    hasProject(): boolean;
+    clearProject(): void;
+    getProject(): string | undefined;
+    setProject(value: string): OpenaiLlmOptions;
+
+    hasWebhookSecret(): boolean;
+    clearWebhookSecret(): void;
+    getWebhookSecret(): string | undefined;
+    setWebhookSecret(value: string): OpenaiLlmOptions;
+
+    hasBaseUrl(): boolean;
+    clearBaseUrl(): void;
+    getBaseUrl(): string | undefined;
+    setBaseUrl(value: string): OpenaiLlmOptions;
+
+    hasWebsocketBaseUrl(): boolean;
+    clearWebsocketBaseUrl(): void;
+    getWebsocketBaseUrl(): string | undefined;
+    setWebsocketBaseUrl(value: string): OpenaiLlmOptions;
+
+    hasTimeout(): boolean;
+    clearTimeout(): void;
+    getTimeout(): number | undefined;
+    setTimeout(value: number): OpenaiLlmOptions;
+
+    hasMaxRetries(): boolean;
+    clearMaxRetries(): void;
+    getMaxRetries(): number | undefined;
+    setMaxRetries(value: number): OpenaiLlmOptions;
+
+    getDefaultHeadersMap(): jspb.Map<string, string>;
+    clearDefaultHeadersMap(): void;
+
+    hasDefaultQuery(): boolean;
+    clearDefaultQuery(): void;
+    getDefaultQuery(): google_protobuf_struct_pb.Struct | undefined;
+    setDefaultQuery(value?: google_protobuf_struct_pb.Struct): OpenaiLlmOptions;
+
+    hasStrictResponseValidation(): boolean;
+    clearStrictResponseValidation(): void;
+    getStrictResponseValidation(): boolean | undefined;
+    setStrictResponseValidation(value: boolean): OpenaiLlmOptions;
+    getModel(): string;
+    setModel(value: string): OpenaiLlmOptions;
+
+    hasFrequencyPenalty(): boolean;
+    clearFrequencyPenalty(): void;
+    getFrequencyPenalty(): number | undefined;
+    setFrequencyPenalty(value: number): OpenaiLlmOptions;
+
+    getLogitBiasMap(): jspb.Map<string, number>;
+    clearLogitBiasMap(): void;
+
+    hasLogprobs(): boolean;
+    clearLogprobs(): void;
+    getLogprobs(): boolean | undefined;
+    setLogprobs(value: boolean): OpenaiLlmOptions;
+
+    hasMaxCompletionTokens(): boolean;
+    clearMaxCompletionTokens(): void;
+    getMaxCompletionTokens(): number | undefined;
+    setMaxCompletionTokens(value: number): OpenaiLlmOptions;
+
+    hasMaxTokens(): boolean;
+    clearMaxTokens(): void;
+    getMaxTokens(): number | undefined;
+    setMaxTokens(value: number): OpenaiLlmOptions;
+
+    hasMetadata(): boolean;
+    clearMetadata(): void;
+    getMetadata(): google_protobuf_struct_pb.Struct | undefined;
+    setMetadata(value?: google_protobuf_struct_pb.Struct): OpenaiLlmOptions;
+
+    hasN(): boolean;
+    clearN(): void;
+    getN(): number | undefined;
+    setN(value: number): OpenaiLlmOptions;
+
+    hasPresencePenalty(): boolean;
+    clearPresencePenalty(): void;
+    getPresencePenalty(): number | undefined;
+    setPresencePenalty(value: number): OpenaiLlmOptions;
+
+    hasPromptCacheKey(): boolean;
+    clearPromptCacheKey(): void;
+    getPromptCacheKey(): string | undefined;
+    setPromptCacheKey(value: string): OpenaiLlmOptions;
+
+    hasReasoningEffort(): boolean;
+    clearReasoningEffort(): void;
+    getReasoningEffort(): ReasoningEffort | undefined;
+    setReasoningEffort(value: ReasoningEffort): OpenaiLlmOptions;
+
+    hasSeed(): boolean;
+    clearSeed(): void;
+    getSeed(): number | undefined;
+    setSeed(value: number): OpenaiLlmOptions;
+
+    hasServiceTier(): boolean;
+    clearServiceTier(): void;
+    getServiceTier(): ServiceTier | undefined;
+    setServiceTier(value: ServiceTier): OpenaiLlmOptions;
+    clearStopList(): void;
+    getStopList(): Array<string>;
+    setStopList(value: Array<string>): OpenaiLlmOptions;
+    addStop(value: string, index?: number): string;
+
+    hasStore(): boolean;
+    clearStore(): void;
+    getStore(): boolean | undefined;
+    setStore(value: boolean): OpenaiLlmOptions;
+
+    hasTemperature(): boolean;
+    clearTemperature(): void;
+    getTemperature(): number | undefined;
+    setTemperature(value: number): OpenaiLlmOptions;
+
+    hasTopLogprobs(): boolean;
+    clearTopLogprobs(): void;
+    getTopLogprobs(): number | undefined;
+    setTopLogprobs(value: number): OpenaiLlmOptions;
+
+    hasTopP(): boolean;
+    clearTopP(): void;
+    getTopP(): number | undefined;
+    setTopP(value: number): OpenaiLlmOptions;
+
+    hasUser(): boolean;
+    clearUser(): void;
+    getUser(): string | undefined;
+    setUser(value: string): OpenaiLlmOptions;
+
+    hasVerbosity(): boolean;
+    clearVerbosity(): void;
+    getVerbosity(): Verbosity | undefined;
+    setVerbosity(value: Verbosity): OpenaiLlmOptions;
+
+    hasExtraHeaders(): boolean;
+    clearExtraHeaders(): void;
+    getExtraHeaders(): google_protobuf_struct_pb.Struct | undefined;
+    setExtraHeaders(value?: google_protobuf_struct_pb.Struct): OpenaiLlmOptions;
+
+    hasExtraQuery(): boolean;
+    clearExtraQuery(): void;
+    getExtraQuery(): google_protobuf_struct_pb.Struct | undefined;
+    setExtraQuery(value?: google_protobuf_struct_pb.Struct): OpenaiLlmOptions;
+
+    hasExtraBody(): boolean;
+    clearExtraBody(): void;
+    getExtraBody(): google_protobuf_struct_pb.Struct | undefined;
+    setExtraBody(value?: google_protobuf_struct_pb.Struct): OpenaiLlmOptions;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): OpenaiLlmOptions.AsObject;
+    static toObject(includeInstance: boolean, msg: OpenaiLlmOptions): OpenaiLlmOptions.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: OpenaiLlmOptions, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): OpenaiLlmOptions;
+    static deserializeBinaryFromReader(message: OpenaiLlmOptions, reader: jspb.BinaryReader): OpenaiLlmOptions;
+}
+
+export namespace OpenaiLlmOptions {
+    export type AsObject = {
+        apiKey?: string,
+        organization?: string,
+        project?: string,
+        webhookSecret?: string,
+        baseUrl?: string,
+        websocketBaseUrl?: string,
+        timeout?: number,
+        maxRetries?: number,
+
+        defaultHeadersMap: Array<[string, string]>,
+        defaultQuery?: google_protobuf_struct_pb.Struct.AsObject,
+        strictResponseValidation?: boolean,
+        model: string,
+        frequencyPenalty?: number,
+
+        logitBiasMap: Array<[string, number]>,
+        logprobs?: boolean,
+        maxCompletionTokens?: number,
+        maxTokens?: number,
+        metadata?: google_protobuf_struct_pb.Struct.AsObject,
+        n?: number,
+        presencePenalty?: number,
+        promptCacheKey?: string,
+        reasoningEffort?: ReasoningEffort,
+        seed?: number,
+        serviceTier?: ServiceTier,
+        stopList: Array<string>,
+        store?: boolean,
+        temperature?: number,
+        topLogprobs?: number,
+        topP?: number,
+        user?: string,
+        verbosity?: Verbosity,
+        extraHeaders?: google_protobuf_struct_pb.Struct.AsObject,
+        extraQuery?: google_protobuf_struct_pb.Struct.AsObject,
+        extraBody?: google_protobuf_struct_pb.Struct.AsObject,
     }
 }
 
@@ -1578,8 +1899,13 @@ export class PostProcessors extends jspb.Message {
 
     hasNormalization(): boolean;
     clearNormalization(): void;
-    getNormalization(): S2TNormalization | undefined;
-    setNormalization(value?: S2TNormalization): PostProcessors;
+    getNormalization(): S2tNormalization | undefined;
+    setNormalization(value?: S2tNormalization): PostProcessors;
+
+    hasLlmPostProcessing(): boolean;
+    clearLlmPostProcessing(): void;
+    getLlmPostProcessing(): S2tLlmPostProcessing | undefined;
+    setLlmPostProcessing(value?: S2tLlmPostProcessing): PostProcessors;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): PostProcessors.AsObject;
@@ -1594,7 +1920,8 @@ export class PostProcessors extends jspb.Message {
 export namespace PostProcessors {
     export type AsObject = {
         symSpell?: SymSpell.AsObject,
-        normalization?: S2TNormalization.AsObject,
+        normalization?: S2tNormalization.AsObject,
+        llmPostProcessing?: S2tLlmPostProcessing.AsObject,
     }
 }
 
@@ -1624,28 +1951,340 @@ export namespace SymSpell {
     }
 }
 
-export class S2TNormalization extends jspb.Message { 
+export class S2tNormalization extends jspb.Message { 
     getLanguage(): string;
-    setLanguage(value: string): S2TNormalization;
+    setLanguage(value: string): S2tNormalization;
     clearPipelineList(): void;
     getPipelineList(): Array<string>;
-    setPipelineList(value: Array<string>): S2TNormalization;
+    setPipelineList(value: Array<string>): S2tNormalization;
     addPipeline(value: string, index?: number): string;
 
     serializeBinary(): Uint8Array;
-    toObject(includeInstance?: boolean): S2TNormalization.AsObject;
-    static toObject(includeInstance: boolean, msg: S2TNormalization): S2TNormalization.AsObject;
+    toObject(includeInstance?: boolean): S2tNormalization.AsObject;
+    static toObject(includeInstance: boolean, msg: S2tNormalization): S2tNormalization.AsObject;
     static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
     static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
-    static serializeBinaryToWriter(message: S2TNormalization, writer: jspb.BinaryWriter): void;
-    static deserializeBinary(bytes: Uint8Array): S2TNormalization;
-    static deserializeBinaryFromReader(message: S2TNormalization, reader: jspb.BinaryReader): S2TNormalization;
+    static serializeBinaryToWriter(message: S2tNormalization, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): S2tNormalization;
+    static deserializeBinaryFromReader(message: S2tNormalization, reader: jspb.BinaryReader): S2tNormalization;
 }
 
-export namespace S2TNormalization {
+export namespace S2tNormalization {
     export type AsObject = {
         language: string,
         pipelineList: Array<string>,
+    }
+}
+
+export class S2tLlmPostProcessing extends jspb.Message { 
+
+    hasS2tLlmPostProcessingOpenaiOptions(): boolean;
+    clearS2tLlmPostProcessingOpenaiOptions(): void;
+    getS2tLlmPostProcessingOpenaiOptions(): OpenaiLlmOptions | undefined;
+    setS2tLlmPostProcessingOpenaiOptions(value?: OpenaiLlmOptions): S2tLlmPostProcessing;
+
+    hasS2tLlmPostProcessingSystemPrompt(): boolean;
+    clearS2tLlmPostProcessingSystemPrompt(): void;
+    getS2tLlmPostProcessingSystemPrompt(): string | undefined;
+    setS2tLlmPostProcessingSystemPrompt(value: string): S2tLlmPostProcessing;
+
+    hasS2tLlmPostProcessingEndingPrompt(): boolean;
+    clearS2tLlmPostProcessingEndingPrompt(): void;
+    getS2tLlmPostProcessingEndingPrompt(): string | undefined;
+    setS2tLlmPostProcessingEndingPrompt(value: string): S2tLlmPostProcessing;
+
+    hasS2tLlmPostProcessingCasingOptions(): boolean;
+    clearS2tLlmPostProcessingCasingOptions(): void;
+    getS2tLlmPostProcessingCasingOptions(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setS2tLlmPostProcessingCasingOptions(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessing;
+
+    hasS2tLlmPostProcessingPunctuationOptions(): boolean;
+    clearS2tLlmPostProcessingPunctuationOptions(): void;
+    getS2tLlmPostProcessingPunctuationOptions(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setS2tLlmPostProcessingPunctuationOptions(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessing;
+
+    hasS2tLlmPostProcessingSpellingCorrectionOptions(): boolean;
+    clearS2tLlmPostProcessingSpellingCorrectionOptions(): void;
+    getS2tLlmPostProcessingSpellingCorrectionOptions(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setS2tLlmPostProcessingSpellingCorrectionOptions(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessing;
+
+    hasS2tLlmPostProcessingSemanticCorrectionOptions(): boolean;
+    clearS2tLlmPostProcessingSemanticCorrectionOptions(): void;
+    getS2tLlmPostProcessingSemanticCorrectionOptions(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setS2tLlmPostProcessingSemanticCorrectionOptions(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessing;
+
+    hasS2tLlmPostProcessingTranslationOptions(): boolean;
+    clearS2tLlmPostProcessingTranslationOptions(): void;
+    getS2tLlmPostProcessingTranslationOptions(): S2tLlmPostProcessingTranslationOptions | undefined;
+    setS2tLlmPostProcessingTranslationOptions(value?: S2tLlmPostProcessingTranslationOptions): S2tLlmPostProcessing;
+
+    hasS2tLlmPostProcessingInverseNormalizationOptions(): boolean;
+    clearS2tLlmPostProcessingInverseNormalizationOptions(): void;
+    getS2tLlmPostProcessingInverseNormalizationOptions(): S2tLlmPostProcessingInverseNormalizationOptions | undefined;
+    setS2tLlmPostProcessingInverseNormalizationOptions(value?: S2tLlmPostProcessingInverseNormalizationOptions): S2tLlmPostProcessing;
+
+    hasS2tLlmPostProcessingNormalizationOptions(): boolean;
+    clearS2tLlmPostProcessingNormalizationOptions(): void;
+    getS2tLlmPostProcessingNormalizationOptions(): S2tLlmPostProcessingNormalizationOptions | undefined;
+    setS2tLlmPostProcessingNormalizationOptions(value?: S2tLlmPostProcessingNormalizationOptions): S2tLlmPostProcessing;
+
+    hasS2tLlmPostProcessingSummarizationOptions(): boolean;
+    clearS2tLlmPostProcessingSummarizationOptions(): void;
+    getS2tLlmPostProcessingSummarizationOptions(): S2tLlmPostProcessingSummarizationOptions | undefined;
+    setS2tLlmPostProcessingSummarizationOptions(value?: S2tLlmPostProcessingSummarizationOptions): S2tLlmPostProcessing;
+
+    hasS2tLlmPostProcessingUserPromptOptions(): boolean;
+    clearS2tLlmPostProcessingUserPromptOptions(): void;
+    getS2tLlmPostProcessingUserPromptOptions(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setS2tLlmPostProcessingUserPromptOptions(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessing;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): S2tLlmPostProcessing.AsObject;
+    static toObject(includeInstance: boolean, msg: S2tLlmPostProcessing): S2tLlmPostProcessing.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: S2tLlmPostProcessing, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): S2tLlmPostProcessing;
+    static deserializeBinaryFromReader(message: S2tLlmPostProcessing, reader: jspb.BinaryReader): S2tLlmPostProcessing;
+}
+
+export namespace S2tLlmPostProcessing {
+    export type AsObject = {
+        s2tLlmPostProcessingOpenaiOptions?: OpenaiLlmOptions.AsObject,
+        s2tLlmPostProcessingSystemPrompt?: string,
+        s2tLlmPostProcessingEndingPrompt?: string,
+        s2tLlmPostProcessingCasingOptions?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+        s2tLlmPostProcessingPunctuationOptions?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+        s2tLlmPostProcessingSpellingCorrectionOptions?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+        s2tLlmPostProcessingSemanticCorrectionOptions?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+        s2tLlmPostProcessingTranslationOptions?: S2tLlmPostProcessingTranslationOptions.AsObject,
+        s2tLlmPostProcessingInverseNormalizationOptions?: S2tLlmPostProcessingInverseNormalizationOptions.AsObject,
+        s2tLlmPostProcessingNormalizationOptions?: S2tLlmPostProcessingNormalizationOptions.AsObject,
+        s2tLlmPostProcessingSummarizationOptions?: S2tLlmPostProcessingSummarizationOptions.AsObject,
+        s2tLlmPostProcessingUserPromptOptions?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+    }
+}
+
+export class S2tLlmPostProcessingTranslationOptions extends jspb.Message { 
+
+    hasActive(): boolean;
+    clearActive(): void;
+    getActive(): boolean | undefined;
+    setActive(value: boolean): S2tLlmPostProcessingTranslationOptions;
+
+    hasLanguage(): boolean;
+    clearLanguage(): void;
+    getLanguage(): string | undefined;
+    setLanguage(value: string): S2tLlmPostProcessingTranslationOptions;
+
+    hasPrompt(): boolean;
+    clearPrompt(): void;
+    getPrompt(): string | undefined;
+    setPrompt(value: string): S2tLlmPostProcessingTranslationOptions;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): S2tLlmPostProcessingTranslationOptions.AsObject;
+    static toObject(includeInstance: boolean, msg: S2tLlmPostProcessingTranslationOptions): S2tLlmPostProcessingTranslationOptions.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: S2tLlmPostProcessingTranslationOptions, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): S2tLlmPostProcessingTranslationOptions;
+    static deserializeBinaryFromReader(message: S2tLlmPostProcessingTranslationOptions, reader: jspb.BinaryReader): S2tLlmPostProcessingTranslationOptions;
+}
+
+export namespace S2tLlmPostProcessingTranslationOptions {
+    export type AsObject = {
+        active?: boolean,
+        language?: string,
+        prompt?: string,
+    }
+}
+
+export class S2tLlmPostProcessingInverseNormalizationOptions extends jspb.Message { 
+
+    hasActive(): boolean;
+    clearActive(): void;
+    getActive(): boolean | undefined;
+    setActive(value: boolean): S2tLlmPostProcessingInverseNormalizationOptions;
+
+    hasEmail(): boolean;
+    clearEmail(): void;
+    getEmail(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setEmail(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessingInverseNormalizationOptions;
+
+    hasPhoneNumber(): boolean;
+    clearPhoneNumber(): void;
+    getPhoneNumber(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setPhoneNumber(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessingInverseNormalizationOptions;
+
+    hasDateAndTime(): boolean;
+    clearDateAndTime(): void;
+    getDateAndTime(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setDateAndTime(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessingInverseNormalizationOptions;
+
+    hasCreditCardNumber(): boolean;
+    clearCreditCardNumber(): void;
+    getCreditCardNumber(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setCreditCardNumber(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessingInverseNormalizationOptions;
+
+    hasSocialSecurityNumber(): boolean;
+    clearSocialSecurityNumber(): void;
+    getSocialSecurityNumber(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setSocialSecurityNumber(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessingInverseNormalizationOptions;
+
+    hasTimeZone(): boolean;
+    clearTimeZone(): void;
+    getTimeZone(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setTimeZone(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessingInverseNormalizationOptions;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): S2tLlmPostProcessingInverseNormalizationOptions.AsObject;
+    static toObject(includeInstance: boolean, msg: S2tLlmPostProcessingInverseNormalizationOptions): S2tLlmPostProcessingInverseNormalizationOptions.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: S2tLlmPostProcessingInverseNormalizationOptions, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): S2tLlmPostProcessingInverseNormalizationOptions;
+    static deserializeBinaryFromReader(message: S2tLlmPostProcessingInverseNormalizationOptions, reader: jspb.BinaryReader): S2tLlmPostProcessingInverseNormalizationOptions;
+}
+
+export namespace S2tLlmPostProcessingInverseNormalizationOptions {
+    export type AsObject = {
+        active?: boolean,
+        email?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+        phoneNumber?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+        dateAndTime?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+        creditCardNumber?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+        socialSecurityNumber?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+        timeZone?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+    }
+}
+
+export class S2tLlmPostProcessingNormalizationOptions extends jspb.Message { 
+
+    hasActive(): boolean;
+    clearActive(): void;
+    getActive(): boolean | undefined;
+    setActive(value: boolean): S2tLlmPostProcessingNormalizationOptions;
+
+    hasEmail(): boolean;
+    clearEmail(): void;
+    getEmail(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setEmail(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessingNormalizationOptions;
+
+    hasPhoneNumber(): boolean;
+    clearPhoneNumber(): void;
+    getPhoneNumber(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setPhoneNumber(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessingNormalizationOptions;
+
+    hasDateAndTime(): boolean;
+    clearDateAndTime(): void;
+    getDateAndTime(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setDateAndTime(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessingNormalizationOptions;
+
+    hasCreditCardNumber(): boolean;
+    clearCreditCardNumber(): void;
+    getCreditCardNumber(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setCreditCardNumber(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessingNormalizationOptions;
+
+    hasSocialSecurityNumber(): boolean;
+    clearSocialSecurityNumber(): void;
+    getSocialSecurityNumber(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setSocialSecurityNumber(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessingNormalizationOptions;
+
+    hasTimeZone(): boolean;
+    clearTimeZone(): void;
+    getTimeZone(): S2tLlmPostProcessingSubTaskOptions | undefined;
+    setTimeZone(value?: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessingNormalizationOptions;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): S2tLlmPostProcessingNormalizationOptions.AsObject;
+    static toObject(includeInstance: boolean, msg: S2tLlmPostProcessingNormalizationOptions): S2tLlmPostProcessingNormalizationOptions.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: S2tLlmPostProcessingNormalizationOptions, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): S2tLlmPostProcessingNormalizationOptions;
+    static deserializeBinaryFromReader(message: S2tLlmPostProcessingNormalizationOptions, reader: jspb.BinaryReader): S2tLlmPostProcessingNormalizationOptions;
+}
+
+export namespace S2tLlmPostProcessingNormalizationOptions {
+    export type AsObject = {
+        active?: boolean,
+        email?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+        phoneNumber?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+        dateAndTime?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+        creditCardNumber?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+        socialSecurityNumber?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+        timeZone?: S2tLlmPostProcessingSubTaskOptions.AsObject,
+    }
+}
+
+export class S2tLlmPostProcessingSummarizationOptions extends jspb.Message { 
+
+    hasActive(): boolean;
+    clearActive(): void;
+    getActive(): boolean | undefined;
+    setActive(value: boolean): S2tLlmPostProcessingSummarizationOptions;
+
+    hasPrompt(): boolean;
+    clearPrompt(): void;
+    getPrompt(): string | undefined;
+    setPrompt(value: string): S2tLlmPostProcessingSummarizationOptions;
+
+    hasMinChars(): boolean;
+    clearMinChars(): void;
+    getMinChars(): number | undefined;
+    setMinChars(value: number): S2tLlmPostProcessingSummarizationOptions;
+
+    hasMaxChars(): boolean;
+    clearMaxChars(): void;
+    getMaxChars(): number | undefined;
+    setMaxChars(value: number): S2tLlmPostProcessingSummarizationOptions;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): S2tLlmPostProcessingSummarizationOptions.AsObject;
+    static toObject(includeInstance: boolean, msg: S2tLlmPostProcessingSummarizationOptions): S2tLlmPostProcessingSummarizationOptions.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: S2tLlmPostProcessingSummarizationOptions, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): S2tLlmPostProcessingSummarizationOptions;
+    static deserializeBinaryFromReader(message: S2tLlmPostProcessingSummarizationOptions, reader: jspb.BinaryReader): S2tLlmPostProcessingSummarizationOptions;
+}
+
+export namespace S2tLlmPostProcessingSummarizationOptions {
+    export type AsObject = {
+        active?: boolean,
+        prompt?: string,
+        minChars?: number,
+        maxChars?: number,
+    }
+}
+
+export class S2tLlmPostProcessingSubTaskOptions extends jspb.Message { 
+
+    hasActive(): boolean;
+    clearActive(): void;
+    getActive(): boolean | undefined;
+    setActive(value: boolean): S2tLlmPostProcessingSubTaskOptions;
+
+    hasPrompt(): boolean;
+    clearPrompt(): void;
+    getPrompt(): string | undefined;
+    setPrompt(value: string): S2tLlmPostProcessingSubTaskOptions;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): S2tLlmPostProcessingSubTaskOptions.AsObject;
+    static toObject(includeInstance: boolean, msg: S2tLlmPostProcessingSubTaskOptions): S2tLlmPostProcessingSubTaskOptions.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: S2tLlmPostProcessingSubTaskOptions, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): S2tLlmPostProcessingSubTaskOptions;
+    static deserializeBinaryFromReader(message: S2tLlmPostProcessingSubTaskOptions, reader: jspb.BinaryReader): S2tLlmPostProcessingSubTaskOptions;
+}
+
+export namespace S2tLlmPostProcessingSubTaskOptions {
+    export type AsObject = {
+        active?: boolean,
+        prompt?: string,
     }
 }
 
@@ -1829,6 +2468,48 @@ export namespace TrainUserLanguageModelRequest {
     }
 }
 
+export class ListS2tNormalizationPipelinesRequest extends jspb.Message { 
+    getLanguage(): string;
+    setLanguage(value: string): ListS2tNormalizationPipelinesRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListS2tNormalizationPipelinesRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: ListS2tNormalizationPipelinesRequest): ListS2tNormalizationPipelinesRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListS2tNormalizationPipelinesRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListS2tNormalizationPipelinesRequest;
+    static deserializeBinaryFromReader(message: ListS2tNormalizationPipelinesRequest, reader: jspb.BinaryReader): ListS2tNormalizationPipelinesRequest;
+}
+
+export namespace ListS2tNormalizationPipelinesRequest {
+    export type AsObject = {
+        language: string,
+    }
+}
+
+export class ListS2tNormalizationPipelinesResponse extends jspb.Message { 
+    clearS2tNormalizationPipelinesList(): void;
+    getS2tNormalizationPipelinesList(): Array<string>;
+    setS2tNormalizationPipelinesList(value: Array<string>): ListS2tNormalizationPipelinesResponse;
+    addS2tNormalizationPipelines(value: string, index?: number): string;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): ListS2tNormalizationPipelinesResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: ListS2tNormalizationPipelinesResponse): ListS2tNormalizationPipelinesResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: ListS2tNormalizationPipelinesResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): ListS2tNormalizationPipelinesResponse;
+    static deserializeBinaryFromReader(message: ListS2tNormalizationPipelinesResponse, reader: jspb.BinaryReader): ListS2tNormalizationPipelinesResponse;
+}
+
+export namespace ListS2tNormalizationPipelinesResponse {
+    export type AsObject = {
+        s2tNormalizationPipelinesList: Array<string>,
+    }
+}
+
 export enum Decoding {
     DEFAULT = 0,
     GREEDY = 1,
@@ -1844,4 +2525,28 @@ export enum InferenceBackend {
     INFERENCE_BACKEND_CLOUD_SERVICE_DEEPGRAM = 4,
     INFERENCE_BACKEND_CLOUD_SERVICE_GOOGLE = 5,
     INFERENCE_BACKEND_CLOUD_SERVICE_MICROSOFT = 6,
+}
+
+export enum ServiceTier {
+    SERVICE_TIER_UNSPECIFIED = 0,
+    SERVICE_TIER_AUTO = 1,
+    SERVICE_TIER_DEFAULT = 2,
+    SERVICE_TIER_FLEX = 3,
+    SERVICE_TIER_SCALE = 4,
+    SERVICE_TIER_PRIORITY = 5,
+}
+
+export enum Verbosity {
+    VERBOSITY_UNSPECIFIED = 0,
+    VERBOSITY_LOW = 1,
+    VERBOSITY_MEDIUM = 2,
+    VERBOSITY_HIGH = 3,
+}
+
+export enum ReasoningEffort {
+    REASONING_EFFORT_UNSPECIFIED = 0,
+    REASONING_EFFORT_MINIMAL = 1,
+    REASONING_EFFORT_LOW = 2,
+    REASONING_EFFORT_MEDIUM = 3,
+    REASONING_EFFORT_HIGH = 4,
 }

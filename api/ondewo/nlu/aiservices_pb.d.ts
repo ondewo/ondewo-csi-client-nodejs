@@ -5,6 +5,7 @@
 /* eslint-disable */
 
 import * as jspb from "google-protobuf";
+import * as google_protobuf_field_mask_pb from "google-protobuf/google/protobuf/field_mask_pb";
 import * as google_protobuf_struct_pb from "google-protobuf/google/protobuf/struct_pb";
 import * as ondewo_nlu_ccai_project_pb from "../../ondewo/nlu/ccai_project_pb";
 import * as ondewo_nlu_intent_pb from "../../ondewo/nlu/intent_pb";
@@ -14,6 +15,11 @@ import * as ondewo_nlu_session_pb from "../../ondewo/nlu/session_pb";
 export class ListLlmModelsRequest extends jspb.Message { 
     getCcaiServiceName(): string;
     setCcaiServiceName(value: string): ListLlmModelsRequest;
+
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): ListLlmModelsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListLlmModelsRequest.AsObject;
@@ -28,6 +34,7 @@ export class ListLlmModelsRequest extends jspb.Message {
 export namespace ListLlmModelsRequest {
     export type AsObject = {
         ccaiServiceName: string,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -98,6 +105,11 @@ export class LlmGenerateRequest extends jspb.Message {
     setFileResourcesList(value: Array<ondewo_nlu_session_pb.FileResource>): LlmGenerateRequest;
     addFileResources(value?: ondewo_nlu_session_pb.FileResource, index?: number): ondewo_nlu_session_pb.FileResource;
 
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): LlmGenerateRequest;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): LlmGenerateRequest.AsObject;
     static toObject(includeInstance: boolean, msg: LlmGenerateRequest): LlmGenerateRequest.AsObject;
@@ -113,6 +125,7 @@ export namespace LlmGenerateRequest {
         llmGenerationRequest?: google_protobuf_struct_pb.Struct.AsObject,
         ccaiServiceName: string,
         fileResourcesList: Array<ondewo_nlu_session_pb.FileResource.AsObject>,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -177,6 +190,11 @@ export class ExtractEntitiesRequest extends jspb.Message {
     getIntentName(): string;
     setIntentName(value: string): ExtractEntitiesRequest;
 
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): ExtractEntitiesRequest;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ExtractEntitiesRequest.AsObject;
     static toObject(includeInstance: boolean, msg: ExtractEntitiesRequest): ExtractEntitiesRequest.AsObject;
@@ -193,6 +211,7 @@ export namespace ExtractEntitiesRequest {
         text: string,
         languageCode: string,
         intentName: string,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -209,6 +228,11 @@ export class ExtractEntitiesFuzzyRequest extends jspb.Message {
     setMinimalScore(value: number): ExtractEntitiesFuzzyRequest;
     getAllowOverlaps(): boolean;
     setAllowOverlaps(value: boolean): ExtractEntitiesFuzzyRequest;
+
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): ExtractEntitiesFuzzyRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ExtractEntitiesFuzzyRequest.AsObject;
@@ -227,6 +251,7 @@ export namespace ExtractEntitiesFuzzyRequest {
         potentialEntitiesList: Array<EntityTypeFuzzyNerConfig.AsObject>,
         minimalScore: number,
         allowOverlaps: boolean,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -348,6 +373,11 @@ export class GetAlternativeSentencesRequest extends jspb.Message {
     setWordsToChangeList(value: Array<string>): GetAlternativeSentencesRequest;
     addWordsToChange(value: string, index?: number): string;
 
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): GetAlternativeSentencesRequest;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetAlternativeSentencesRequest.AsObject;
     static toObject(includeInstance: boolean, msg: GetAlternativeSentencesRequest): GetAlternativeSentencesRequest.AsObject;
@@ -366,6 +396,7 @@ export namespace GetAlternativeSentencesRequest {
         parent: string,
         protectedWordsList: Array<string>,
         wordsToChangeList: Array<string>,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -378,6 +409,11 @@ export class GenerateUserSaysRequest extends jspb.Message {
     setNRepeatSynonym(value: number): GenerateUserSaysRequest;
     getBranch(): string;
     setBranch(value: string): GenerateUserSaysRequest;
+
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): GenerateUserSaysRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GenerateUserSaysRequest.AsObject;
@@ -395,6 +431,7 @@ export namespace GenerateUserSaysRequest {
         parent: string,
         nRepeatSynonym: number,
         branch: string,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -409,6 +446,11 @@ export class GenerateResponsesRequest extends jspb.Message {
     setBranch(value: string): GenerateResponsesRequest;
     getDropUnknownParameters(): boolean;
     setDropUnknownParameters(value: boolean): GenerateResponsesRequest;
+
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): GenerateResponsesRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GenerateResponsesRequest.AsObject;
@@ -427,6 +469,7 @@ export namespace GenerateResponsesRequest {
         nRepeatSynonym: number,
         branch: string,
         dropUnknownParameters: boolean,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -462,6 +505,11 @@ export class GetAlternativeTrainingPhrasesRequest extends jspb.Message {
     getBranch(): string;
     setBranch(value: string): GetAlternativeTrainingPhrasesRequest;
 
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): GetAlternativeTrainingPhrasesRequest;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetAlternativeTrainingPhrasesRequest.AsObject;
     static toObject(includeInstance: boolean, msg: GetAlternativeTrainingPhrasesRequest): GetAlternativeTrainingPhrasesRequest.AsObject;
@@ -484,6 +532,7 @@ export namespace GetAlternativeTrainingPhrasesRequest {
         protectedWordsList: Array<string>,
         wordsToChangeList: Array<string>,
         branch: string,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -499,6 +548,11 @@ export class GetSynonymsRequest extends jspb.Message {
     setLanguageCode(value: string): GetSynonymsRequest;
     getParent(): string;
     setParent(value: string): GetSynonymsRequest;
+
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): GetSynonymsRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): GetSynonymsRequest.AsObject;
@@ -516,6 +570,7 @@ export namespace GetSynonymsRequest {
         word: string,
         languageCode: string,
         parent: string,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
@@ -1029,6 +1084,11 @@ export class ClassifyIntentsRequest extends jspb.Message {
     setAlgorithmsList(value: Array<IntentAlgorithms>): ClassifyIntentsRequest;
     addAlgorithms(value: IntentAlgorithms, index?: number): IntentAlgorithms;
 
+    hasFieldMask(): boolean;
+    clearFieldMask(): void;
+    getFieldMask(): google_protobuf_field_mask_pb.FieldMask | undefined;
+    setFieldMask(value?: google_protobuf_field_mask_pb.FieldMask): ClassifyIntentsRequest;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ClassifyIntentsRequest.AsObject;
     static toObject(includeInstance: boolean, msg: ClassifyIntentsRequest): ClassifyIntentsRequest.AsObject;
@@ -1048,6 +1108,7 @@ export namespace ClassifyIntentsRequest {
         contextNamesList: Array<string>,
         mode: Mode,
         algorithmsList: Array<IntentAlgorithms>,
+        fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
     }
 }
 
