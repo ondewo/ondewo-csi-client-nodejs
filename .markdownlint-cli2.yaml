@@ -21,14 +21,14 @@ config:
   # Makefile (src/README.md line-cut) depends on — never strip them.
   MD053: false
 globs:
-  - "*.md"
+  - '*.md'
 ignores:
-  - "node_modules/**"
-  - "api/**"
-  - "ondewo-proto-compiler/**"
-  - "src/ondewo-csi-api/**"
-  - ".test-build/**"
+  - 'node_modules/**'
+  - 'api/**'
+  - 'ondewo-proto-compiler/**'
+  - 'src/ondewo-csi-api/**'
+  - '.test-build/**'
   # Historical changelogs — already excluded from prettier via .prettierignore;
   # do not rewrite release history (duplicate version headings, hr styles, etc.).
-  - "RELEASE.md"
-  - "src/RELEASE.md"
+  - 'RELEASE.md'
+  - 'src/RELEASE.md'
