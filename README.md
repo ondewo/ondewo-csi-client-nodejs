@@ -112,7 +112,7 @@ npm
 
 ```
 
-[comment]: <> 'START OF GITHUB README'
+[comment]: <> (START OF GITHUB README)
 
 ## Build
 
@@ -125,10 +125,10 @@ Other than creating the proto-code, `build` also installs the `dev-dependencies`
 
 In the case that some `google .protos` were not automatically generated, exists the option of creating a `proto-deps.txt` inside of the `src` folder. There, import statements can be written the same way as they are in `.proto` files.
 
-```
-import "google/api/http.proto"; //Example
-  <---- New Line
-```
+  ```
+  import "google/api/http.proto"; //Example
+    <---- New Line
+  ```
 
 > :warning: The last line in the `proto-deps.txt` needs to be an empty new line, otherwise the compiler will fail
 
@@ -177,6 +177,6 @@ The release process can be divided into 6 Steps:
 5. Create and push the `release tag` e.g. `1.3.20`
 6. Create a new `Release` on GitHub
 
-> :warning: The Release Automation checks if the build has created all the proto-code files, but it does not check the code-integrity. Please build and test the generated code prior to starting the release process.
+> :warning:  The Release Automation checks if the build has created all the proto-code files, but it does not check the code-integrity. Please build and test the generated code prior to starting the release process.
 
-[comment]: <> 'END OF GITHUB README'
+[comment]: <> (END OF GITHUB README)

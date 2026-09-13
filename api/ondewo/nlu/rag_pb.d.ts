@@ -1117,6 +1117,18 @@ export class RagRetrievalRequest extends jspb.Message {
     clearRerankModelCcaiServiceName(): void;
     getRerankModelCcaiServiceName(): string | undefined;
     setRerankModelCcaiServiceName(value: string): RagRetrievalRequest;
+    getRerankCandidates(): number;
+    setRerankCandidates(value: number): RagRetrievalRequest;
+
+    hasDedupThreshold(): boolean;
+    clearDedupThreshold(): void;
+    getDedupThreshold(): number | undefined;
+    setDedupThreshold(value: number): RagRetrievalRequest;
+
+    hasDedupBeforeRerank(): boolean;
+    clearDedupBeforeRerank(): void;
+    getDedupBeforeRerank(): boolean | undefined;
+    setDedupBeforeRerank(value: boolean): RagRetrievalRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): RagRetrievalRequest.AsObject;
@@ -1146,6 +1158,9 @@ export namespace RagRetrievalRequest {
         keyword?: boolean,
         fieldMask?: google_protobuf_field_mask_pb.FieldMask.AsObject,
         rerankModelCcaiServiceName?: string,
+        rerankCandidates: number,
+        dedupThreshold?: number,
+        dedupBeforeRerank?: boolean,
     }
 }
 
@@ -1946,6 +1961,11 @@ export class RagCrawlerConfig extends jspb.Message {
     getStatusFilter(): RagCrawlerStatusFilter | undefined;
     setStatusFilter(value?: RagCrawlerStatusFilter): RagCrawlerConfig;
 
+    hasIncrementalConfig(): boolean;
+    clearIncrementalConfig(): void;
+    getIncrementalConfig(): RagCrawlerIncrementalConfig | undefined;
+    setIncrementalConfig(value?: RagCrawlerIncrementalConfig): RagCrawlerConfig;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): RagCrawlerConfig.AsObject;
     static toObject(includeInstance: boolean, msg: RagCrawlerConfig): RagCrawlerConfig.AsObject;
@@ -1962,6 +1982,7 @@ export namespace RagCrawlerConfig {
         deepCrawlerConfig?: RagCrawlerDeepCrawlerConfig.AsObject,
         outputConfig?: RagCrawlerResultsConfig.AsObject,
         statusFilter?: RagCrawlerStatusFilter.AsObject,
+        incrementalConfig?: RagCrawlerIncrementalConfig.AsObject,
     }
 }
 
@@ -2029,6 +2050,10 @@ export class RagCrawlerResultsConfig extends jspb.Message {
     clearDensityPruning(): void;
     getDensityPruning(): RagCrawlerDensityPruning | undefined;
     setDensityPruning(value?: RagCrawlerDensityPruning): RagCrawlerResultsConfig;
+    clearDiscoveryOnlyUrlRegexList(): void;
+    getDiscoveryOnlyUrlRegexList(): Array<string>;
+    setDiscoveryOnlyUrlRegexList(value: Array<string>): RagCrawlerResultsConfig;
+    addDiscoveryOnlyUrlRegex(value: string, index?: number): string;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): RagCrawlerResultsConfig.AsObject;
@@ -2046,6 +2071,7 @@ export namespace RagCrawlerResultsConfig {
         metaDataExtractorsList: Array<RagCrawlerMetaDataExtractor.AsObject>,
         contentScope?: RagCrawlerContentScope.AsObject,
         densityPruning?: RagCrawlerDensityPruning.AsObject,
+        discoveryOnlyUrlRegexList: Array<string>,
     }
 }
 
@@ -2155,6 +2181,16 @@ export class RagCrawlerRetryConfig extends jspb.Message {
     getRetryMaxAttempts(): number | undefined;
     setRetryMaxAttempts(value: number): RagCrawlerRetryConfig;
 
+    hasRetryBackoffSeconds(): boolean;
+    clearRetryBackoffSeconds(): void;
+    getRetryBackoffSeconds(): number | undefined;
+    setRetryBackoffSeconds(value: number): RagCrawlerRetryConfig;
+
+    hasMaxStallSeconds(): boolean;
+    clearMaxStallSeconds(): void;
+    getMaxStallSeconds(): number | undefined;
+    setMaxStallSeconds(value: number): RagCrawlerRetryConfig;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): RagCrawlerRetryConfig.AsObject;
     static toObject(includeInstance: boolean, msg: RagCrawlerRetryConfig): RagCrawlerRetryConfig.AsObject;
@@ -2169,6 +2205,8 @@ export namespace RagCrawlerRetryConfig {
     export type AsObject = {
         pageLoadTimeoutSeconds?: number,
         retryMaxAttempts?: number,
+        retryBackoffSeconds?: number,
+        maxStallSeconds?: number,
     }
 }
 
@@ -2197,6 +2235,32 @@ export namespace RagCrawlerStatusFilter {
     export type AsObject = {
         isActive?: boolean,
         acceptedStatusCodesList: Array<number>,
+    }
+}
+
+export class RagCrawlerIncrementalConfig extends jspb.Message { 
+    getIsActive(): boolean;
+    setIsActive(value: boolean): RagCrawlerIncrementalConfig;
+
+    hasMaxAgeDays(): boolean;
+    clearMaxAgeDays(): void;
+    getMaxAgeDays(): number | undefined;
+    setMaxAgeDays(value: number): RagCrawlerIncrementalConfig;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): RagCrawlerIncrementalConfig.AsObject;
+    static toObject(includeInstance: boolean, msg: RagCrawlerIncrementalConfig): RagCrawlerIncrementalConfig.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: RagCrawlerIncrementalConfig, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): RagCrawlerIncrementalConfig;
+    static deserializeBinaryFromReader(message: RagCrawlerIncrementalConfig, reader: jspb.BinaryReader): RagCrawlerIncrementalConfig;
+}
+
+export namespace RagCrawlerIncrementalConfig {
+    export type AsObject = {
+        isActive: boolean,
+        maxAgeDays?: number,
     }
 }
 
