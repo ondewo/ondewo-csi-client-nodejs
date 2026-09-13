@@ -54,6 +54,8 @@ interface LoginOverrides {
 	tokenExpirationInS?: number;
 	/** The fetch double to inject (always provided). */
 	fetchFn: FetchFn;
+	/** Optional [0,1) jitter source; a constant makes the failure-backoff delay exact. */
+	randomFraction?: () => number;
 }
 
 /** The shared, complete set of login options reused across tests. */
@@ -134,7 +136,8 @@ function doLogin(overrides: LoginOverrides): Promise<OfflineTokenProvider> {
 		refreshSkewInS: overrides.refreshSkewInS,
 		tokenExpirationInS: overrides.tokenExpirationInS,
 		fetchFn: overrides.fetchFn,
-		nowFn: (): number => 0
+		nowFn: (): number => 0,
+		randomFraction: overrides.randomFraction
 	});
 }
 
@@ -665,3 +668,183 @@ async function waitForToken(provider: OfflineTokenProvider, expected: string): P
 	}
 	assert.equal(provider.getAccessToken(), expected);
 }
+
+// ---------------------------------------------------------------------------------------------
+// A failed background refresh must RE-ARM the loop, and it must back off when it keeps failing.
+//
+// The timer callback used to be `void this.refreshOnce()`, which attached no rejection handler at
+// all: a single failed refresh both ended token renewal for the whole life of the process AND
+// surfaced as an unhandledRejection, which Node terminates the process on by default. Re-arming at
+// the existing 1 s floor would have traded that for a 1 Hz poll per client against a realm every
+// call container logs into, so the failure path has its own jittered ladder.
+// ---------------------------------------------------------------------------------------------
+
+/**
+ * Drain the microtask queue so a rejected refresh inside a fired timer can settle.
+ *
+ * @returns a promise resolving once the queued microtasks have run.
+ */
+async function settleMicrotasks(): Promise<void> {
+	for (let turn: number = 0; turn < 20; turn++) {
+		await Promise.resolve();
+	}
+}
+
+nodeTest('a failed background refresh re-arms the loop and the next attempt recovers', async (): Promise<void> => {
+	const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
+	timers.enable({ apis: ['setTimeout'] });
+	try {
+		const stub: FetchStub = makeFetchStub([
+			{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 300) },
+			{ ok: false, status: 500, bodyText: 'boom' },
+			{ ok: true, status: 200, bodyText: tokenBody('access-2', 'offline-2', 300) }
+		]);
+		// randomFraction 0 puts every retry at the base of its window, so the delay is exact.
+		const provider: OfflineTokenProvider = await doLogin({
+			refreshSkewInS: 30,
+			fetchFn: stub.fetchFn,
+			randomFraction: (): number => 0
+		});
+
+		timers.tick(270 * 1000);
+		await settleMicrotasks();
+		assert.equal(stub.requests.length, 2, 'the first refresh should have been attempted and failed');
+		assert.equal(provider.getAccessToken(), 'access-1', 'a failed refresh must not clobber the token');
+
+		timers.tick(4999);
+		await settleMicrotasks();
+		assert.equal(stub.requests.length, 2, 'the retry must not fire before the backoff base elapses');
+
+		// This is the assertion that fails outright on the pre-fix provider, where the rejected
+		// refresh promise had no handler and no timer was ever re-armed.
+		timers.tick(1);
+		await waitForToken(provider, 'access-2');
+		assert.equal(stub.requests.length, 3, 'the loop must re-arm after a failed refresh');
+		provider.stop();
+	} finally {
+		timers.reset();
+	}
+});
+
+nodeTest('consecutive failures back off exponentially and stop growing at the ceiling', async (): Promise<void> => {
+	const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
+	timers.enable({ apis: ['setTimeout'] });
+	try {
+		const replies: StubReply[] = [{ ok: true, status: 200, bodyText: tokenBody('a', 'r', 300) }];
+		for (let index: number = 0; index < 9; index++) {
+			replies.push({ ok: false, status: 503, bodyText: 'down' });
+		}
+		const stub: FetchStub = makeFetchStub(replies);
+		// randomFraction 1 puts every retry at the TOP of its window, i.e. exactly the ceiling for
+		// that failure count -- which is what makes the ladder observable.
+		const provider: OfflineTokenProvider = await doLogin({
+			refreshSkewInS: 30,
+			fetchFn: stub.fetchFn,
+			randomFraction: (): number => 1
+		});
+
+		timers.tick(270 * 1000);
+		await settleMicrotasks();
+		assert.equal(stub.requests.length, 2);
+
+		// base * 2^(failures-1), capped at 300 s. The cap is the point: without it a long outage
+		// would push the next attempt out by hours.
+		const expectedDelaysInS: number[] = [5, 10, 20, 40, 80, 160, 300, 300];
+		let attempt: number = 2;
+		for (const delayInS of expectedDelaysInS) {
+			timers.tick(delayInS * 1000 - 1);
+			await settleMicrotasks();
+			assert.equal(stub.requests.length, attempt, `a retry fired early at the ${delayInS}s step`);
+
+			timers.tick(1);
+			await settleMicrotasks();
+			attempt += 1;
+			assert.equal(stub.requests.length, attempt, `no retry fired at the ${delayInS}s step`);
+		}
+		provider.stop();
+	} finally {
+		timers.reset();
+	}
+});
+
+nodeTest('the retry delay is drawn from the jitter window rather than pinned to its edge', async (): Promise<void> => {
+	const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
+	timers.enable({ apis: ['setTimeout'] });
+	try {
+		const stub: FetchStub = makeFetchStub([
+			{ ok: true, status: 200, bodyText: tokenBody('a', 'r', 300) },
+			{ ok: false, status: 503, bodyText: 'down' },
+			{ ok: false, status: 503, bodyText: 'down' },
+			{ ok: true, status: 200, bodyText: tokenBody('b', 'r2', 300) }
+		]);
+		const provider: OfflineTokenProvider = await doLogin({
+			refreshSkewInS: 30,
+			fetchFn: stub.fetchFn,
+			randomFraction: (): number => 0.5
+		});
+
+		timers.tick(270 * 1000);
+		await settleMicrotasks();
+		assert.equal(stub.requests.length, 2);
+
+		// Failure 1: window [5, 5] -> 5 s regardless of the fraction.
+		timers.tick(5000);
+		await settleMicrotasks();
+		assert.equal(stub.requests.length, 3);
+
+		// Failure 2: window [5, 10], fraction 0.5 -> 7.5 s. Neither edge of the window.
+		timers.tick(7499);
+		await settleMicrotasks();
+		assert.equal(stub.requests.length, 3, 'the jittered retry fired before its drawn delay');
+		timers.tick(1);
+		await waitForToken(provider, 'b');
+		assert.equal(stub.requests.length, 4, 'the jittered retry did not fire at its drawn delay');
+		provider.stop();
+	} finally {
+		timers.reset();
+	}
+});
+
+nodeTest('a successful refresh resets the backoff ladder', async (): Promise<void> => {
+	const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
+	timers.enable({ apis: ['setTimeout'] });
+	try {
+		const stub: FetchStub = makeFetchStub([
+			{ ok: true, status: 200, bodyText: tokenBody('a', 'r', 300) },
+			{ ok: false, status: 503, bodyText: 'down' },
+			{ ok: false, status: 503, bodyText: 'down' },
+			{ ok: true, status: 200, bodyText: tokenBody('b', 'r2', 300) },
+			{ ok: false, status: 503, bodyText: 'down' },
+			{ ok: true, status: 200, bodyText: tokenBody('c', 'r3', 300) }
+		]);
+		const provider: OfflineTokenProvider = await doLogin({
+			refreshSkewInS: 30,
+			fetchFn: stub.fetchFn,
+			randomFraction: (): number => 1
+		});
+
+		timers.tick(270 * 1000);
+		await settleMicrotasks();
+		timers.tick(5000); // failure 1 -> 5 s
+		await settleMicrotasks();
+		timers.tick(10000); // failure 2 -> 10 s, and this attempt SUCCEEDS
+		await waitForToken(provider, 'b');
+		assert.equal(stub.requests.length, 4);
+
+		// Back on the success schedule: expires_in 300 - skew 30 = 270 s.
+		timers.tick(270 * 1000);
+		await settleMicrotasks();
+		assert.equal(stub.requests.length, 5, 'the success path should re-arm on the token lifetime');
+
+		// That attempt failed again -- and because the ladder was reset it must wait 5 s, not 20 s.
+		timers.tick(4999);
+		await settleMicrotasks();
+		assert.equal(stub.requests.length, 5);
+		timers.tick(1);
+		await waitForToken(provider, 'c');
+		assert.equal(stub.requests.length, 6, 'a success must reset the backoff to its base');
+		provider.stop();
+	} finally {
+		timers.reset();
+	}
+});

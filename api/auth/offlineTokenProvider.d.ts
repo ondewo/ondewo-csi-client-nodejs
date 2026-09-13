@@ -67,6 +67,11 @@ export interface OfflineTokenLoginOptions {
     keycloakVerifySsl?: boolean;
     /** Injectable clock returning epoch milliseconds; defaults to `Date.now`. */
     nowFn?: () => number;
+    /**
+     * Injectable [0,1) random source for the failure-backoff jitter; defaults to `Math.random`.
+     * Tests pass a constant to make the retry delay exact.
+     */
+    randomFraction?: () => number;
 }
 /** The token-endpoint response fields the provider consumes. */
 interface KeycloakTokenResponse {
@@ -123,6 +128,10 @@ export declare class OfflineTokenProvider {
     private stopped;
     /** The single shared in-flight refresh promise, so concurrent refreshes coalesce. */
     private inFlightRefresh;
+    /** Consecutive failed background refreshes; drives the retry backoff, reset on every success. */
+    private consecutiveRefreshFailures;
+    /** Injected [0,1) random source used for the failure-backoff jitter. */
+    private readonly randomFraction;
     /**
      * @internal Use {@link login}.
      *
@@ -167,6 +176,23 @@ export declare class OfflineTokenProvider {
      * @param expiresInS lifetime, in seconds, of the access token just received.
      */
     private scheduleRefresh;
+    /**
+     * Arm the next attempt after a FAILED refresh, using bounded exponential backoff with full jitter.
+     *
+     * The delay grows `REFRESH_RETRY_BASE_DELAY_IN_S * 2 ** (failures - 1)` up to
+     * {@link REFRESH_RETRY_MAX_DELAY_IN_S}, and the actual wait is drawn uniformly from
+     * `[base, ceiling]`. The jitter is the load-bearing half: N call containers whose refreshes fail in
+     * the same instant would otherwise retry in lockstep for as long as the outage lasts.
+     */
+    private scheduleRetryAfterFailure;
+    /**
+     * Arm the single refresh timer `delayMs` from now, honouring the bounded deadline. Shared by the
+     * success path ({@link scheduleRefresh}) and the failure path ({@link scheduleRetryAfterFailure}) so
+     * the `stopped` guard, the deadline check and the `unref` are written exactly once.
+     *
+     * @param delayMs milliseconds to wait before the next refresh attempt.
+     */
+    private armRefreshTimer;
     /**
      * Run exactly one refresh, coalescing overlapping callers onto a single
      * in-flight request via {@link inFlightRefresh}.
