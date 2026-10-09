@@ -20,6 +20,8 @@ npm/
 dist/
 .test-build/
 .test-build-examples/
+# c8 coverage output (written by npm test, git-ignored)
+coverage/
 *.env
 # README.md is prettier-ignored: .prettierrc sets useTabs, so prettier re-tabs the fenced
 # code blocks that markdownlint's MD010 then de-tabs, and the husky hook runs prettier -w
