@@ -7,23 +7,44 @@ on:
 
 jobs:
   unit-tests:
+    name: tests (node ${{ matrix.node-version }})
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Node 20 is the floor of the toolchain (c8 11, undici 7); 22 is the current LTS; 24 is current.
+        node-version: ['20', '22', '24']
     steps:
       - uses: actions/checkout@v5
 
-      - name: Set up Node.js 20
+      - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v5
         with:
-          node-version: '20'
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
 
-      - name: Install dependencies
-        # --legacy-peer-deps: this repo pins @typescript-eslint/eslint-plugin@^8.26.1 whose conservative peer
-        # range conflicts with the typescript@^6 devDep (newer 8.x in the sibling repos allow it). The conflict
-        # is cosmetic for our tsc-compile + c8 test, so bypass the strict peer resolution.
-        run: npm install --no-audit --no-fund --legacy-peer-deps
+      # `npm ci`, never `npm install`: it installs exactly the committed lockfile and fails if
+      # package.json and package-lock.json disagree.
+      - name: Install dependencies from the lockfile
+        run: npm ci --no-audit --no-fund
 
       # The repo is ~95% generated gRPC/protobuf stubs; coverage is gated on the HAND-WRITTEN surface
-      # (the D18 Keycloak offline-token auth provider). The test compiles the TS provider + spec and runs
-      # node's built-in test runner under c8 with a >=90% line-coverage gate.
-      - name: Unit tests + >=90% coverage gate on hand-written code
+      # (the Keycloak offline-token provider and the TLS channel helper), 100% lines/branches/functions.
+      - name: Unit tests + 100% coverage gate on hand-written code
         run: npm test
+
+      - name: Lint (type annotations + repo conventions)
+        run: make eslint
+
+      - name: Format check
+        run: npx prettier --config .prettierrc --check --ignore-path .prettierignore ./
+
+      # The npm package ships COMPILED helpers that are committed: auth/grpcChannel.{js,d.ts} (from
+      # auth/grpcChannel.ts) and api/auth/offlineTokenProvider.{js,d.ts} (from
+      # src/auth/offlineTokenProvider.ts). The tests exercise the .ts sources only, so rebuild both and
+      # fail if the result differs from what is committed -- what npm ships must be what was tested.
+      - name: Committed compiled helpers match their source
+        run: |
+          npm run build:auth
+          npm run build:api-auth
+          git diff --exit-code -- auth/ api/auth/
