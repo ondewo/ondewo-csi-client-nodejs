@@ -299,7 +299,7 @@ npm view <pkg> version ; git tag --list <version> ; gh release view <version> --
   `useSecureChannel: false` with an identity all throw before gRPC sees them; the key is `***REDACTED***` in
   `toString` / `inspect` / `JSON.stringify`; no message renders a PEM. Documented in README "TLS, mutual TLS and
   certificates" (edit `src/README.md`, the root copy is a build output).
-- It lives in the TOP-LEVEL `auth/` (not `src/auth/`, whose Keycloak helper ships as `api/auth/*`), so the
+- It lives in the TOP-LEVEL `auth/` (as does the Keycloak helper `auth/offlineTokenProvider.ts` since compiler 5.15.5), so the
   proto-compiler's `append-auth-exports.sh` re-exports it from `public-api.*`; `create_npm_package` copies `auth/`
   (without specs) and `make release` stages it. `auth/grpcChannel.js` / `.d.ts` are committed `npm run build:auth`
   output.
@@ -308,3 +308,14 @@ npm view <pkg> version ; git tag --list <version> ; gh release view <version> --
   30 s, 50 s at 10 s). Do not copy the Python keepalive into `DEFAULT_GRPC_CHANNEL_OPTIONS`.
 - `auth/grpcChannel.spec.ts` builds its PKI with the openssl CLI at test time and runs real handshakes against an
   in-process grpc-js server. `tests/releaseNotes.spec.ts` pins the RELEASE.md heading spelling and separators.
+
+## Package entry point (ondewo-proto-compiler >= 5.15.5)
+
+- `public-api.js` (the package `main`) is a generated CommonJS barrel (`reexport(require('./api/...'))`, first stub
+  keeps a shared name); `public-api.d.ts` keeps `export *` lines. Compiler <= 5.15.4 emitted `export * from` in the
+  `.js`, so `require('@ondewo/csi-client-nodejs')` failed with ERR_MODULE_NOT_FOUND. `tests/entryPoint.spec.ts`
+  `require()`s the package root in a child process on every CI Node version; do not regenerate with an older compiler.
+- The Keycloak helper moved from `src/auth/` (compiled into `api/auth/`) to the top-level `auth/`: the codegen wipes
+  `api/` on every run, so `api/auth/*` disappeared from each regeneration, and the compiler only re-exports
+  top-level `auth/` modules. `npm run build:auth` compiles both helpers; CI diffs the committed output. The removed
+  `ensure_auth_export` target appended ES `export *` lines to the barrel, which would break the CommonJS `.js`.
