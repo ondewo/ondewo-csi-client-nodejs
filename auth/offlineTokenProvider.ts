@@ -297,12 +297,9 @@ export class OfflineTokenProvider {
 		this.consecutiveRefreshFailures += 1;
 		const exponent: number = Math.min(this.consecutiveRefreshFailures - 1, MAX_REFRESH_RETRY_EXPONENT);
 		const growthFactor: number = 2 ** exponent;
-		const ceilingInS: number = Math.min(
-			REFRESH_RETRY_BASE_DELAY_IN_S * growthFactor,
-			REFRESH_RETRY_MAX_DELAY_IN_S
-		);
+		const ceilingInS: number = Math.min(REFRESH_RETRY_BASE_DELAY_IN_S * growthFactor, REFRESH_RETRY_MAX_DELAY_IN_S);
 		const jitteredInS: number =
-			REFRESH_RETRY_BASE_DELAY_IN_S + (this.randomFraction() * (ceilingInS - REFRESH_RETRY_BASE_DELAY_IN_S));
+			REFRESH_RETRY_BASE_DELAY_IN_S + this.randomFraction() * (ceilingInS - REFRESH_RETRY_BASE_DELAY_IN_S);
 		this.armRefreshTimer(jitteredInS * 1000);
 	}
 
