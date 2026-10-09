@@ -112,9 +112,30 @@ npm
 
 ```
 
+## Authentication
+
+All RPCs are authenticated with a Keycloak-issued **bearer token**. Obtain one with the offline-token login helper exported from the package root and attach it to each call as the `Authorization` gRPC metadata header.
+
+```ts
+import { login } from '@ondewo/csi-client-nodejs';
+
+const provider = await login({
+  keycloakUrl: 'https://auth.example.com/auth',
+  realm: 'ondewo-ccai-platform',
+  clientId: '<public SDK client id>',
+  username: 'tech-user@example.com',
+  password: '...'
+});
+
+// `Bearer <jwt>` — set this as the `Authorization` gRPC metadata on each request.
+const authorizationHeader = provider.getAuthorizationHeader();
+```
+
+`login(...)` returns an `OfflineTokenProvider` that refreshes the access token in the background; call `provider.stop()` when you are done. The helper also has a deep path, `@ondewo/csi-client-nodejs/auth/offlineTokenProvider`; up to 5.5.x it shipped as `api/auth/offlineTokenProvider`.
+
 ## TLS, mutual TLS and certificates
 
-gRPC encrypts with **TLS** ("SSL" in names such as `credentials.createSsl` or `grpc.ssl_target_name_override` is legacy naming). The package ships a channel helper, `auth/grpcChannel`, that builds the `@grpc/grpc-js` credentials and channel options for every generated client:
+gRPC encrypts with **TLS** ("SSL" in names such as `credentials.createSsl` or `grpc.ssl_target_name_override` is legacy naming). The package ships a channel helper, `auth/grpcChannel` (exported from the package root), that builds the `@grpc/grpc-js` credentials and channel options for every generated client:
 
 | Mode                                    | `useSecureChannel` | Config fields                                                   |
 |-----------------------------------------|--------------------|-----------------------------------------------------------------|
@@ -136,8 +157,7 @@ Rules the code enforces:
 import { readFileSync } from 'fs';
 
 import * as grpc from '@grpc/grpc-js';
-import { createChannelCredentials, createGrpcClient, GrpcClientConfig } from '@ondewo/csi-client-nodejs/auth/grpcChannel';
-import { ConversationsClient } from '@ondewo/csi-client-nodejs/api/ondewo/csi/conversation_grpc_pb';
+import { ConversationsClient, createChannelCredentials, createGrpcClient, GrpcClientConfig } from '@ondewo/csi-client-nodejs';
 
 const config = new GrpcClientConfig({
   host: '10.0.0.5',
