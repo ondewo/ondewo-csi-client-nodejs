@@ -108,3 +108,4 @@ export * from './api/ondewo/nlu/llm_evaluation_grpc_pb.d';
 export * from './api/ondewo/t2s/text-to-speech_grpc_pb.d';
 export * from './api/ondewo/t2s/text-to-speech_pb.d';
 export * from './api/auth/offlineTokenProvider.d';
+export * from './auth/grpcChannel';

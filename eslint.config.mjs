@@ -25,7 +25,11 @@ export default [
 			'**/api/',
 			'src/ondewo-csi-api',
 			'**/ondewo-proto-compiler',
-			'**/*.mjs'
+			'**/*.mjs',
+			// generated from auth/*.ts by tsc (committed for npm packaging) — lint the .ts source, not the build output
+			'auth/*.js',
+			'auth/*.d.ts',
+			'.test-build/tls/'
 		]
 	},
 	...compat.extends(
