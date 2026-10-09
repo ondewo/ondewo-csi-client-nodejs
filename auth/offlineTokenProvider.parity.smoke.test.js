@@ -1,22 +1,22 @@
 // Parity smoke test for the SHIPPED CommonJS auth artifact.
 //
 // The 100%-coverage gate in `npm test` runs against the compiled TS source
-// (.test-build/offlineTokenProvider.js), NOT the hand-authored CommonJS copy at
-// api/auth/offlineTokenProvider.js that `make create_npm_package` actually ships
-// (`cp -R api npm`) and that customers `require()` via public-api.js. This plain
+// (.test-build/offlineTokenProvider.js), NOT the committed CommonJS build at
+// auth/offlineTokenProvider.js that `make create_npm_package` actually ships
+// (`cp -R auth npm`) and that customers `require()` via public-api.js. This plain
 // CJS smoke test loads that shipped artifact directly and asserts its core Bearer
 // behaviour, so a drift between the two copies is caught. It is chained AFTER the
 // c8 command in the `test` script (with `&&`) so it runs OUTSIDE the coverage gate
-// — otherwise the api copy would be pulled into the `--include '**/offlineTokenProvider.js'`
+// — otherwise the shipped copy would be pulled into the `--include '**/offlineTokenProvider.js'`
 // gate and fail the 100% lines/functions/branches check.
 
-/* eslint-disable -- plain CommonJS smoke test of the shipped api/auth artifact (itself eslint-ignored); the TS-oriented ruleset (require-imports / typedef / id-denylist) does not apply here. */
+/* eslint-disable -- plain CommonJS smoke test of the shipped auth/ artifact (itself eslint-ignored); the TS-oriented ruleset (require-imports / typedef / id-denylist) does not apply here. */
 
 'use strict';
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { login } = require('../../api/auth/offlineTokenProvider');
+const { login } = require('./offlineTokenProvider');
 
 /** A stand-in Keycloak JWT reused across the smoke assertions. */
 const ACCESS_TOKEN = 'shipped-artifact-jwt';
@@ -56,7 +56,7 @@ function loginWithStub() {
 	});
 }
 
-test('shipped api/auth artifact: login resolves a provider exposing the Bearer authorization header', async () => {
+test('shipped auth/ artifact: login resolves a provider exposing the Bearer authorization header', async () => {
 	const provider = await loginWithStub();
 	try {
 		assert.equal(provider.getAccessToken(), ACCESS_TOKEN);
@@ -66,7 +66,7 @@ test('shipped api/auth artifact: login resolves a provider exposing the Bearer a
 	}
 });
 
-test('shipped api/auth artifact: getAuthMetadata sets the bearer entry under the lowercase authorization key', async () => {
+test('shipped auth/ artifact: getAuthMetadata sets the bearer entry under the lowercase authorization key', async () => {
 	const provider = await loginWithStub();
 	// grpc-js normalises the key on set, so spy on the raw key the shipped artifact passes.
 	const grpc = require('@grpc/grpc-js');

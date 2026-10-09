@@ -16,7 +16,7 @@ export
 
 ONDEWO_CSI_VERSION=5.5.1
 CSI_API_GIT_BRANCH=tags/5.5.0
-ONDEWO_PROTO_COMPILER_GIT_BRANCH=tags/5.15.2
+ONDEWO_PROTO_COMPILER_GIT_BRANCH=tags/5.15.5
 ONDEWO_PROTO_COMPILER_DIR=ondewo-proto-compiler
 CSI_APIS_DIR=src/ondewo-csi-api
 CSI_PROTOS_DIR=${CSI_APIS_DIR}/ondewo
@@ -203,15 +203,8 @@ spc: ## Checks if the Release Branch, Tag and Pypi version already exist
 update_package: ## Updates Package Version in src/package.json
 	@perl -i -pe "s/\"version\": \"[0-9]*.[0-9]*.[0-9]\"/\"version\": \"${ONDEWO_CSI_VERSION}\"/g" src/package.json
 
-compile_auth: ## Compiles the hand-written auth helper (src/auth) to shippable api/auth JS + d.ts
-	mkdir -p api/auth
-	./node_modules/.bin/tsc src/auth/offlineTokenProvider.ts --declaration --module commonjs \
-		--target es2020 --moduleResolution node --ignoreDeprecations 6.0 --strict --skipLibCheck \
-		--types node --lib es2020 --outDir api/auth --ignoreConfig
-
-ensure_auth_export: ## Re-appends the auth export to public-api after the proto-compiler regenerates it away
-	grep -q 'api/auth/offlineTokenProvider' public-api.js || printf "export * from './api/auth/offlineTokenProvider';\\n" >> public-api.js
-	grep -q 'api/auth/offlineTokenProvider' public-api.d.ts || printf "export * from './api/auth/offlineTokenProvider.d';\\n" >> public-api.d.ts
+compile_auth: ## Compiles the hand-written auth helpers (auth/*.ts) to the shipped auth/*.js + .d.ts
+	npm run build:auth
 
 build: check_out_correct_submodule_versions build_compiler update_package npm_run_build ## Build Code with Proto-Compiler
 	@echo "################### PROMPT FOR CHANGING FILE OWNERSHIP FROM ROOT TO YOU ##########################"
@@ -231,7 +224,6 @@ build: check_out_correct_submodule_versions build_compiler update_package npm_ru
 	@perl -i -ne 'BEGIN{($$s,$$e)=split/,/,"${DELETE_LINES}"} print unless $$. >= $$s && $$. <= $$e' npm/README.md
 	make install_dependencies
 	make compile_auth
-	make ensure_auth_export
 
 remove_npm_script: ## Removes the scripts section from the npm/ package.json copy (root package.json is left intact)
 	@test -f npm/package.json || make create_npm_package

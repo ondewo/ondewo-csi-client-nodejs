@@ -4,7 +4,7 @@
 // the clock/timers are mocked, so the auto-refresh loop is driven deterministically.
 //
 // Run (Node >= 22, no extra deps):
-//   node --test --experimental-strip-types src/auth/offlineTokenProvider.spec.ts
+//   node --test --experimental-strip-types auth/offlineTokenProvider.spec.ts
 
 import nodeTest from 'node:test';
 import assert from 'node:assert/strict';
@@ -177,29 +177,32 @@ nodeTest('login normalises a trailing slash in keycloakUrl', async (): Promise<v
 });
 
 /** The background timer fires `skew` seconds before expiry and refreshes the access token from the offline token. */
-nodeTest('the background loop refreshes the access token from the offline token before expiry', async (): Promise<void> => {
-	const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
-	timers.enable({ apis: ['setTimeout'] });
-	try {
-		const stub: FetchStub = makeFetchStub([
-			{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 300) },
-			{ ok: true, status: 200, bodyText: tokenBody('access-2', 'offline-2', 300) }
-		]);
-		const provider: OfflineTokenProvider = await doLogin({ refreshSkewInS: 30, fetchFn: stub.fetchFn });
-		assert.equal(provider.getAccessToken(), 'access-1');
-		// expires_in 300 - skew 30 = fire at 270 s.
-		timers.tick(270 * 1000);
-		await waitForToken(provider, 'access-2');
-		assert.equal(stub.requests.length, 2);
-		const refreshRequest: RecordedRequest = stub.requests[1];
-		assert.equal(refreshRequest.form.get('grant_type'), 'refresh_token');
-		assert.equal(refreshRequest.form.get('refresh_token'), 'offline-1');
-		assert.equal(refreshRequest.form.get('client_id'), BASE_OPTIONS.clientId);
-		provider.stop();
-	} finally {
-		timers.reset();
+nodeTest(
+	'the background loop refreshes the access token from the offline token before expiry',
+	async (): Promise<void> => {
+		const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
+		timers.enable({ apis: ['setTimeout'] });
+		try {
+			const stub: FetchStub = makeFetchStub([
+				{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 300) },
+				{ ok: true, status: 200, bodyText: tokenBody('access-2', 'offline-2', 300) }
+			]);
+			const provider: OfflineTokenProvider = await doLogin({ refreshSkewInS: 30, fetchFn: stub.fetchFn });
+			assert.equal(provider.getAccessToken(), 'access-1');
+			// expires_in 300 - skew 30 = fire at 270 s.
+			timers.tick(270 * 1000);
+			await waitForToken(provider, 'access-2');
+			assert.equal(stub.requests.length, 2);
+			const refreshRequest: RecordedRequest = stub.requests[1];
+			assert.equal(refreshRequest.form.get('grant_type'), 'refresh_token');
+			assert.equal(refreshRequest.form.get('refresh_token'), 'offline-1');
+			assert.equal(refreshRequest.form.get('client_id'), BASE_OPTIONS.clientId);
+			provider.stop();
+		} finally {
+			timers.reset();
+		}
 	}
-});
+);
 
 /** When Keycloak rotates the offline refresh token, the newest one is used on the subsequent refresh. */
 nodeTest('a rotated offline refresh token is used for the next refresh', async (): Promise<void> => {
@@ -230,7 +233,9 @@ nodeTest('tokenExpirationInS stops the refresh loop before the next refresh woul
 	const timers: typeof nodeTest.mock.timers = nodeTest.mock.timers;
 	timers.enable({ apis: ['setTimeout'] });
 	try {
-		const stub: FetchStub = makeFetchStub([{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 300) }]);
+		const stub: FetchStub = makeFetchStub([
+			{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 300) }
+		]);
 		// Bound below the 270 s first-refresh point → loop must never refresh.
 		const provider: OfflineTokenProvider = await doLogin({
 			refreshSkewInS: 30,
@@ -317,7 +322,9 @@ nodeTest('forceRefresh re-acquires immediately (e.g. after UNAUTHENTICATED)', as
 
 /** A non-2xx token response raises {@link OfflineTokenError} carrying the HTTP status. */
 nodeTest('login throws OfflineTokenError with status on invalid credentials', async (): Promise<void> => {
-	const stub: FetchStub = makeFetchStub([{ ok: false, status: 401, bodyText: JSON.stringify({ error: 'invalid_grant' }) }]);
+	const stub: FetchStub = makeFetchStub([
+		{ ok: false, status: 401, bodyText: JSON.stringify({ error: 'invalid_grant' }) }
+	]);
 	await assert.rejects(
 		(): Promise<OfflineTokenProvider> => doLogin({ fetchFn: stub.fetchFn }),
 		(thrown: unknown): boolean => {
@@ -401,7 +408,9 @@ nodeTest('getAuthMetadata sets the bearer entry under the lowercase authorizatio
 	const stub: FetchStub = makeFetchStub([{ ok: true, status: 200, bodyText: tokenBody('access-1', 'offline-1', 300) }]);
 	const provider: OfflineTokenProvider = await doLogin({ fetchFn: stub.fetchFn });
 	// eslint-disable-next-line @typescript-eslint/no-require-imports
-	const grpc: { Metadata: { prototype: GrpcMetadataReadback; new (): GrpcMetadataReadback } } = require('@grpc/grpc-js');
+	const grpc: {
+		Metadata: { prototype: GrpcMetadataReadback; new (): GrpcMetadataReadback };
+	} = require('@grpc/grpc-js');
 	const originalSet: (key: string, value: string) => void = grpc.Metadata.prototype.set;
 	const rawKeys: string[] = [];
 	grpc.Metadata.prototype.set = function (key: string, value: string): void {
@@ -449,65 +458,75 @@ nodeTest('login falls back to the global fetch and Date.now when neither is inje
 });
 
 /** By default (flag omitted) the default transport uses the plain global `fetch` with NO dispatcher, so TLS verification stays ON. */
-nodeTest('keycloakVerifySsl default: the default transport attaches no dispatcher (TLS verify ON)', async (): Promise<void> => {
-	const globalRef: { fetch?: FetchFn } = globalThis as { fetch?: FetchFn };
-	const previousFetch: FetchFn | undefined = globalRef.fetch;
-	let capturedInit: FetchInit | undefined;
-	globalRef.fetch = (url: string, init: FetchInit): Promise<FetchResponseLike> => {
-		capturedInit = init;
-		return Promise.resolve({
-			ok: true,
-			status: 200,
-			text: (): Promise<string> => Promise.resolve(tokenBody('access-secure', 'offline-secure', 300))
-		});
-	};
-	try {
-		// Omit fetchFn (-> default transport) and keycloakVerifySsl (-> defaults to verify ON).
-		const provider: OfflineTokenProvider = await login(BASE_OPTIONS);
+nodeTest(
+	'keycloakVerifySsl default: the default transport attaches no dispatcher (TLS verify ON)',
+	async (): Promise<void> => {
+		const globalRef: { fetch?: FetchFn } = globalThis as { fetch?: FetchFn };
+		const previousFetch: FetchFn | undefined = globalRef.fetch;
+		let capturedInit: FetchInit | undefined;
+		globalRef.fetch = (url: string, init: FetchInit): Promise<FetchResponseLike> => {
+			capturedInit = init;
+			return Promise.resolve({
+				ok: true,
+				status: 200,
+				text: (): Promise<string> => Promise.resolve(tokenBody('access-secure', 'offline-secure', 300))
+			});
+		};
 		try {
-			assert.ok(capturedInit !== undefined);
-			// No undici dispatcher => undici's global dispatcher with TLS verification ON.
-			assert.equal(capturedInit.dispatcher, undefined);
-			assert.equal(provider.getAccessToken(), 'access-secure');
+			// Omit fetchFn (-> default transport) and keycloakVerifySsl (-> defaults to verify ON).
+			const provider: OfflineTokenProvider = await login(BASE_OPTIONS);
+			try {
+				assert.ok(capturedInit !== undefined);
+				// No undici dispatcher => undici's global dispatcher with TLS verification ON.
+				assert.equal(capturedInit.dispatcher, undefined);
+				assert.equal(provider.getAccessToken(), 'access-secure');
+			} finally {
+				provider.stop();
+			}
 		} finally {
-			provider.stop();
+			globalRef.fetch = previousFetch;
 		}
-	} finally {
-		globalRef.fetch = previousFetch;
 	}
-});
+);
 
 /** With `keycloakVerifySsl: false` the default transport attaches an undici `Agent` dispatcher, disabling TLS verification for the token call. */
-nodeTest('keycloakVerifySsl false: the default transport attaches an undici Agent dispatcher (TLS verify OFF)', async (): Promise<void> => {
-	const globalRef: { fetch?: FetchFn } = globalThis as { fetch?: FetchFn };
-	const previousFetch: FetchFn | undefined = globalRef.fetch;
-	let capturedInit: FetchInit | undefined;
-	globalRef.fetch = (url: string, init: FetchInit): Promise<FetchResponseLike> => {
-		capturedInit = init;
-		return Promise.resolve({
-			ok: true,
-			status: 200,
-			text: (): Promise<string> => Promise.resolve(tokenBody('access-insecure', 'offline-insecure', 300))
-		});
-	};
-	try {
-		const provider: OfflineTokenProvider = await login({ ...BASE_OPTIONS, keycloakVerifySsl: false, nowFn: (): number => 0 });
+nodeTest(
+	'keycloakVerifySsl false: the default transport attaches an undici Agent dispatcher (TLS verify OFF)',
+	async (): Promise<void> => {
+		const globalRef: { fetch?: FetchFn } = globalThis as { fetch?: FetchFn };
+		const previousFetch: FetchFn | undefined = globalRef.fetch;
+		let capturedInit: FetchInit | undefined;
+		globalRef.fetch = (url: string, init: FetchInit): Promise<FetchResponseLike> => {
+			capturedInit = init;
+			return Promise.resolve({
+				ok: true,
+				status: 200,
+				text: (): Promise<string> => Promise.resolve(tokenBody('access-insecure', 'offline-insecure', 300))
+			});
+		};
 		try {
-			// eslint-disable-next-line @typescript-eslint/no-require-imports
-			const undici: { Agent: new (options: unknown) => unknown } = require('undici') as {
-				Agent: new (options: unknown) => unknown;
-			};
-			assert.ok(capturedInit !== undefined);
-			// The insecure undici Agent (rejectUnauthorized:false) reached the token POST.
-			assert.ok(capturedInit.dispatcher instanceof undici.Agent);
-			assert.equal(provider.getAccessToken(), 'access-insecure');
+			const provider: OfflineTokenProvider = await login({
+				...BASE_OPTIONS,
+				keycloakVerifySsl: false,
+				nowFn: (): number => 0
+			});
+			try {
+				// eslint-disable-next-line @typescript-eslint/no-require-imports
+				const undici: { Agent: new (options: unknown) => unknown } = require('undici') as {
+					Agent: new (options: unknown) => unknown;
+				};
+				assert.ok(capturedInit !== undefined);
+				// The insecure undici Agent (rejectUnauthorized:false) reached the token POST.
+				assert.ok(capturedInit.dispatcher instanceof undici.Agent);
+				assert.equal(provider.getAccessToken(), 'access-insecure');
+			} finally {
+				provider.stop();
+			}
 		} finally {
-			provider.stop();
+			globalRef.fetch = previousFetch;
 		}
-	} finally {
-		globalRef.fetch = previousFetch;
 	}
-});
+);
 
 /** An injected `fetchFn` is used verbatim, so `keycloakVerifySsl: false` is a no-op (no dispatcher) for custom transports. */
 nodeTest('keycloakVerifySsl false is ignored when a custom fetchFn is injected', async (): Promise<void> => {
@@ -529,23 +548,26 @@ nodeTest('keycloakVerifySsl false is ignored when a custom fetchFn is injected',
 });
 
 /** With neither an injected nor a global `fetch`, {@link login} raises {@link OfflineTokenError}. */
-nodeTest('login throws OfflineTokenError when no fetchFn is given and no global fetch exists', async (): Promise<void> => {
-	const globalRef: { fetch?: FetchFn } = globalThis as { fetch?: FetchFn };
-	const previousFetch: FetchFn | undefined = globalRef.fetch;
-	delete (globalThis as { fetch?: FetchFn }).fetch;
-	try {
-		await assert.rejects(
-			(): Promise<OfflineTokenProvider> => login(BASE_OPTIONS),
-			(thrown: unknown): boolean => {
-				assert.ok(thrown instanceof OfflineTokenError);
-				assert.match(thrown.message, /No global fetch available/);
-				return true;
-			}
-		);
-	} finally {
-		globalRef.fetch = previousFetch;
+nodeTest(
+	'login throws OfflineTokenError when no fetchFn is given and no global fetch exists',
+	async (): Promise<void> => {
+		const globalRef: { fetch?: FetchFn } = globalThis as { fetch?: FetchFn };
+		const previousFetch: FetchFn | undefined = globalRef.fetch;
+		delete (globalThis as { fetch?: FetchFn }).fetch;
+		try {
+			await assert.rejects(
+				(): Promise<OfflineTokenProvider> => login(BASE_OPTIONS),
+				(thrown: unknown): boolean => {
+					assert.ok(thrown instanceof OfflineTokenError);
+					assert.match(thrown.message, /No global fetch available/);
+					return true;
+				}
+			);
+		} finally {
+			globalRef.fetch = previousFetch;
+		}
 	}
-});
+);
 
 /** A 2xx response lacking `access_token` raises {@link OfflineTokenError}. */
 nodeTest('login throws OfflineTokenError when access_token is missing', async (): Promise<void> => {

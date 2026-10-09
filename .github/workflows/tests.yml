@@ -39,12 +39,11 @@ jobs:
       - name: Format check
         run: npx prettier --config .prettierrc --check --ignore-path .prettierignore ./
 
-      # The npm package ships COMPILED helpers that are committed: auth/grpcChannel.{js,d.ts} (from
-      # auth/grpcChannel.ts) and api/auth/offlineTokenProvider.{js,d.ts} (from
-      # src/auth/offlineTokenProvider.ts). The tests exercise the .ts sources only, so rebuild both and
-      # fail if the result differs from what is committed -- what npm ships must be what was tested.
+      # The npm package ships COMPILED helpers that are committed: auth/grpcChannel.{js,d.ts} and
+      # auth/offlineTokenProvider.{js,d.ts}, built from the .ts beside them. The tests exercise the .ts
+      # sources, so rebuild them and fail if the result differs from what is committed -- what npm
+      # ships must be what was tested.
       - name: Committed compiled helpers match their source
         run: |
           npm run build:auth
-          npm run build:api-auth
-          git diff --exit-code -- auth/ api/auth/
+          git diff --exit-code -- auth/
