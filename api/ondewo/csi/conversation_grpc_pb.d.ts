@@ -26,6 +26,7 @@ interface IConversationsService extends grpc.ServiceDefinition<grpc.UntypedServi
     checkUpstreamHealth: IConversationsService_ICheckUpstreamHealth;
     getControlStream: IConversationsService_IGetControlStream;
     setControlStatus: IConversationsService_ISetControlStatus;
+    setCallMediaControl: IConversationsService_ISetCallMediaControl;
 }
 
 interface IConversationsService_ICreateS2sPipeline extends grpc.MethodDefinition<ondewo_csi_conversation_pb.S2sPipeline, google_protobuf_empty_pb.Empty> {
@@ -109,6 +110,15 @@ interface IConversationsService_ISetControlStatus extends grpc.MethodDefinition<
     responseSerialize: grpc.serialize<ondewo_csi_conversation_pb.SetControlStatusResponse>;
     responseDeserialize: grpc.deserialize<ondewo_csi_conversation_pb.SetControlStatusResponse>;
 }
+interface IConversationsService_ISetCallMediaControl extends grpc.MethodDefinition<ondewo_csi_conversation_pb.CallMediaControlLevel, ondewo_csi_conversation_pb.SetCallMediaControlResponse> {
+    path: "/ondewo.csi.Conversations/SetCallMediaControl";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_csi_conversation_pb.CallMediaControlLevel>;
+    requestDeserialize: grpc.deserialize<ondewo_csi_conversation_pb.CallMediaControlLevel>;
+    responseSerialize: grpc.serialize<ondewo_csi_conversation_pb.SetCallMediaControlResponse>;
+    responseDeserialize: grpc.deserialize<ondewo_csi_conversation_pb.SetCallMediaControlResponse>;
+}
 
 export const ConversationsService: IConversationsService;
 
@@ -122,6 +132,7 @@ export interface IConversationsServer {
     checkUpstreamHealth: grpc.handleUnaryCall<google_protobuf_empty_pb.Empty, ondewo_csi_conversation_pb.CheckUpstreamHealthResponse>;
     getControlStream: grpc.handleServerStreamingCall<ondewo_csi_conversation_pb.ControlStreamRequest, ondewo_csi_conversation_pb.ControlStreamResponse>;
     setControlStatus: grpc.handleUnaryCall<ondewo_csi_conversation_pb.SetControlStatusRequest, ondewo_csi_conversation_pb.SetControlStatusResponse>;
+    setCallMediaControl: grpc.handleUnaryCall<ondewo_csi_conversation_pb.CallMediaControlLevel, ondewo_csi_conversation_pb.SetCallMediaControlResponse>;
 }
 
 export interface IConversationsClient {
@@ -151,6 +162,9 @@ export interface IConversationsClient {
     setControlStatus(request: ondewo_csi_conversation_pb.SetControlStatusRequest, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetControlStatusResponse) => void): grpc.ClientUnaryCall;
     setControlStatus(request: ondewo_csi_conversation_pb.SetControlStatusRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetControlStatusResponse) => void): grpc.ClientUnaryCall;
     setControlStatus(request: ondewo_csi_conversation_pb.SetControlStatusRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetControlStatusResponse) => void): grpc.ClientUnaryCall;
+    setCallMediaControl(request: ondewo_csi_conversation_pb.CallMediaControlLevel, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetCallMediaControlResponse) => void): grpc.ClientUnaryCall;
+    setCallMediaControl(request: ondewo_csi_conversation_pb.CallMediaControlLevel, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetCallMediaControlResponse) => void): grpc.ClientUnaryCall;
+    setCallMediaControl(request: ondewo_csi_conversation_pb.CallMediaControlLevel, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetCallMediaControlResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class ConversationsClient extends grpc.Client implements IConversationsClient {
@@ -180,4 +194,7 @@ export class ConversationsClient extends grpc.Client implements IConversationsCl
     public setControlStatus(request: ondewo_csi_conversation_pb.SetControlStatusRequest, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetControlStatusResponse) => void): grpc.ClientUnaryCall;
     public setControlStatus(request: ondewo_csi_conversation_pb.SetControlStatusRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetControlStatusResponse) => void): grpc.ClientUnaryCall;
     public setControlStatus(request: ondewo_csi_conversation_pb.SetControlStatusRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetControlStatusResponse) => void): grpc.ClientUnaryCall;
+    public setCallMediaControl(request: ondewo_csi_conversation_pb.CallMediaControlLevel, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetCallMediaControlResponse) => void): grpc.ClientUnaryCall;
+    public setCallMediaControl(request: ondewo_csi_conversation_pb.CallMediaControlLevel, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetCallMediaControlResponse) => void): grpc.ClientUnaryCall;
+    public setCallMediaControl(request: ondewo_csi_conversation_pb.CallMediaControlLevel, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetCallMediaControlResponse) => void): grpc.ClientUnaryCall;
 }

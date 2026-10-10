@@ -293,6 +293,11 @@ export class ControlStreamResponse extends jspb.Message {
     getEpoch(): number;
     setEpoch(value: number): ControlStreamResponse;
 
+    hasMediaControl(): boolean;
+    clearMediaControl(): void;
+    getMediaControl(): CallMediaControlLevel | undefined;
+    setMediaControl(value?: CallMediaControlLevel): ControlStreamResponse;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ControlStreamResponse.AsObject;
     static toObject(includeInstance: boolean, msg: ControlStreamResponse): ControlStreamResponse.AsObject;
@@ -307,6 +312,7 @@ export namespace ControlStreamResponse {
     export type AsObject = {
         controlStatus: ControlStatus,
         epoch: number,
+        mediaControl?: CallMediaControlLevel.AsObject,
     }
 }
 
@@ -350,6 +356,70 @@ export namespace SetControlStatusResponse {
     export type AsObject = {
         oldControlStatus: ControlStatus,
         newControlStatus: ControlStatus,
+    }
+}
+
+export class CallMediaControlLevel extends jspb.Message { 
+    getBotMuted(): boolean;
+    setBotMuted(value: boolean): CallMediaControlLevel;
+    getListeningPaused(): boolean;
+    setListeningPaused(value: boolean): CallMediaControlLevel;
+    getGeneration(): number;
+    setGeneration(value: number): CallMediaControlLevel;
+    getReason(): string;
+    setReason(value: string): CallMediaControlLevel;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): CallMediaControlLevel.AsObject;
+    static toObject(includeInstance: boolean, msg: CallMediaControlLevel): CallMediaControlLevel.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: CallMediaControlLevel, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): CallMediaControlLevel;
+    static deserializeBinaryFromReader(message: CallMediaControlLevel, reader: jspb.BinaryReader): CallMediaControlLevel;
+}
+
+export namespace CallMediaControlLevel {
+    export type AsObject = {
+        botMuted: boolean,
+        listeningPaused: boolean,
+        generation: number,
+        reason: string,
+    }
+}
+
+export class SetCallMediaControlResponse extends jspb.Message { 
+
+    hasApplied(): boolean;
+    clearApplied(): void;
+    getApplied(): CallMediaControlLevel | undefined;
+    setApplied(value?: CallMediaControlLevel): SetCallMediaControlResponse;
+    getChanged(): boolean;
+    setChanged(value: boolean): SetCallMediaControlResponse;
+    getStale(): boolean;
+    setStale(value: boolean): SetCallMediaControlResponse;
+    getBotPlaybackInFlight(): boolean;
+    setBotPlaybackInFlight(value: boolean): SetCallMediaControlResponse;
+    getRefusalReason(): string;
+    setRefusalReason(value: string): SetCallMediaControlResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): SetCallMediaControlResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: SetCallMediaControlResponse): SetCallMediaControlResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: SetCallMediaControlResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): SetCallMediaControlResponse;
+    static deserializeBinaryFromReader(message: SetCallMediaControlResponse, reader: jspb.BinaryReader): SetCallMediaControlResponse;
+}
+
+export namespace SetCallMediaControlResponse {
+    export type AsObject = {
+        applied?: CallMediaControlLevel.AsObject,
+        changed: boolean,
+        stale: boolean,
+        botPlaybackInFlight: boolean,
+        refusalReason: string,
     }
 }
 

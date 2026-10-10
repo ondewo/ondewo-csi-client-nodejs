@@ -39,6 +39,17 @@ function deserialize_google_protobuf_Empty(buffer_arg) {
   return google_protobuf_empty_pb.Empty.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_csi_CallMediaControlLevel(arg) {
+  if (!(arg instanceof ondewo_csi_conversation_pb.CallMediaControlLevel)) {
+    throw new Error('Expected argument of type ondewo.csi.CallMediaControlLevel');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_csi_CallMediaControlLevel(buffer_arg) {
+  return ondewo_csi_conversation_pb.CallMediaControlLevel.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_csi_CheckUpstreamHealthResponse(arg) {
   if (!(arg instanceof ondewo_csi_conversation_pb.CheckUpstreamHealthResponse)) {
     throw new Error('Expected argument of type ondewo.csi.CheckUpstreamHealthResponse');
@@ -136,6 +147,17 @@ function serialize_ondewo_csi_S2sStreamResponse(arg) {
 
 function deserialize_ondewo_csi_S2sStreamResponse(buffer_arg) {
   return ondewo_csi_conversation_pb.S2sStreamResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_csi_SetCallMediaControlResponse(arg) {
+  if (!(arg instanceof ondewo_csi_conversation_pb.SetCallMediaControlResponse)) {
+    throw new Error('Expected argument of type ondewo.csi.SetCallMediaControlResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_csi_SetCallMediaControlResponse(buffer_arg) {
+  return ondewo_csi_conversation_pb.SetCallMediaControlResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_ondewo_csi_SetControlStatusRequest(arg) {
@@ -359,6 +381,30 @@ setControlStatus: {
     requestDeserialize: deserialize_ondewo_csi_SetControlStatusRequest,
     responseSerialize: serialize_ondewo_csi_SetControlStatusResponse,
     responseDeserialize: deserialize_ondewo_csi_SetControlStatusResponse,
+  },
+  // <p>Set the per-call operator media control level: mute the bot and/or pause its listening.</p>
+//
+// <p>Pushed by ondewo-sip only, which owns the per-call level and authenticates with its in-container token
+// (the <code>x-ondewo-sip-in-container-token</code> metadatum). A request without a valid token is refused.</p>
+//
+// <p>The request carries the FULL effective level, never a toggle. The server applies it only when its
+// <code>generation</code> is strictly greater than the last applied generation and otherwise answers
+// <code>stale=true</code> without changing anything, so a push that arrives after the next call's resync can
+// never re-apply an old call's level. The level is cleared at <code>CALL_ENDED</code>; the generation is kept.</p>
+//
+// <p>This RPC never changes the control status of <code>GetControlStream</code> / <code>SetControlStatus</code>
+// (the barge-in slot). A level change is announced on the control stream as a
+// <code>ControlStreamResponse</code> with <code>media_control</code> set.</p>
+setCallMediaControl: {
+    path: '/ondewo.csi.Conversations/SetCallMediaControl',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_csi_conversation_pb.CallMediaControlLevel,
+    responseType: ondewo_csi_conversation_pb.SetCallMediaControlResponse,
+    requestSerialize: serialize_ondewo_csi_CallMediaControlLevel,
+    requestDeserialize: deserialize_ondewo_csi_CallMediaControlLevel,
+    responseSerialize: serialize_ondewo_csi_SetCallMediaControlResponse,
+    responseDeserialize: deserialize_ondewo_csi_SetCallMediaControlResponse,
   },
 };
 

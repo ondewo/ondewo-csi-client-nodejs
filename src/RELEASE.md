@@ -2,6 +2,19 @@
 
 *****************
 
+## Release ONDEWO CSI Nodejs Client 5.6.0
+
+### New Features
+
+* [[OND211-2443]](https://ondewo.atlassian.net/browse/OND211-2443) Tracking API Version [5.6.0](https://github.com/ondewo/ondewo-csi-api/releases/tag/5.6.0) ( [Documentation](https://ondewo.github.io/ondewo-csi-api/) ), regenerated with ondewo-proto-compiler 5.15.5. The generated `ConversationsClient` and messages now cover:
+  * `SetCallMediaControl`: per-call operator media control pushed by ondewo-sip (in-container token only). `CallMediaControlLevel` carries the full effective level (`bot_muted`, `listening_paused`), a monotonic `generation` and a bounded `reason`; `SetCallMediaControlResponse` reports `applied`, `changed`, `stale`, `bot_playback_in_flight` and a `refusal_reason`.
+  * `ControlStreamResponse.media_control`: set only on media-control messages, pushed on a level change and seeded on every `GetControlStream` connect. Handle such a message as media control and do not apply its echoed `control_status`.
+* [[OND211-2443]](https://ondewo.atlassian.net/browse/OND211-2443) `tests/entryPoint.spec.ts` pins that the package root exports the new messages and that `ConversationsClient` carries every `Conversations` RPC of API 5.6.0.
+
+The API change is purely additive: a client built against 5.5.x stays wire-compatible.
+
+*****************
+
 ## Release ONDEWO CSI Nodejs Client 5.5.2
 
 ### Improvements
