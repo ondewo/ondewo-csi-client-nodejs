@@ -54,6 +54,19 @@ function exportedNames(): string[] {
 	return JSON.parse(execFileSync(process.execPath, ['-e', script], { encoding: 'utf8', env })) as string[];
 }
 
+/**
+ * `require()` the package root in a fresh Node process and list the RPCs of one generated client.
+ *
+ * @param client - Name of the generated client exported from the package root.
+ * @returns The method names of the client's service definition.
+ */
+function serviceMethods(client: string): string[] {
+	const script: string = `process.stdout.write(JSON.stringify(Object.keys(require(${JSON.stringify(REPO_ROOT)})[${JSON.stringify(client)}].service)))`;
+	const env: NodeJS.ProcessEnv = { ...process.env };
+	env.NODE_V8_COVERAGE = '';
+	return JSON.parse(execFileSync(process.execPath, ['-e', script], { encoding: 'utf8', env })) as string[];
+}
+
 describe('package entry point', () => {
 	it('package.json main is the CommonJS public-api.js', () => {
 		const manifest: { main?: string } = JSON.parse(readFileSync(join(REPO_ROOT, 'package.json'), 'utf8')) as {
@@ -72,6 +85,8 @@ describe('package entry point', () => {
 		for (const name of [
 			'ConversationsClient',
 			'CheckUpstreamHealthResponse',
+			'CallMediaControlLevel',
+			'SetCallMediaControlResponse',
 			'login',
 			'OfflineTokenProvider',
 			'createGrpcClient',
@@ -80,5 +95,20 @@ describe('package entry point', () => {
 		]) {
 			assert.ok(names.includes(name), `${name} is not exported from the package root`);
 		}
+	});
+
+	it('the generated ConversationsClient carries every Conversations RPC of ondewo-csi-api 5.6.0', () => {
+		assert.deepEqual(serviceMethods('ConversationsClient').sort(), [
+			'checkUpstreamHealth',
+			'createS2sPipeline',
+			'deleteS2sPipeline',
+			'getControlStream',
+			'getS2sPipeline',
+			'listS2sPipelines',
+			's2sStream',
+			'setCallMediaControl',
+			'setControlStatus',
+			'updateS2sPipeline'
+		]);
 	});
 });
