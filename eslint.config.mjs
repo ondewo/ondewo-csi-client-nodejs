@@ -17,6 +17,8 @@ const compat = new FlatCompat({
 export default [
 	{
 		ignores: [
+			// the npm/ release package is a build artifact copied from files that are linted at their source
+			'npm/',
 			'**/*.spec.ts',
 			'.test-build/examples/listS2sPipelines.js',
 			'.test-build/examples/listS2sPipelines.spec.js',
