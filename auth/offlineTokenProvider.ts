@@ -200,8 +200,11 @@ export class OfflineTokenProvider {
 		this.fetchFn = options.fetchFn ?? createDefaultFetch(options.keycloakVerifySsl ?? true);
 		this.nowFn = options.nowFn ?? Date.now;
 		this.randomFraction = options.randomFraction ?? Math.random;
-		this.deadlineMs =
-			options.tokenExpirationInS === undefined ? undefined : this.nowFn() + options.tokenExpirationInS * 1000;
+		this.deadlineMs = undefined;
+		if (options.tokenExpirationInS !== undefined) {
+			const tokenLifetimeMs: number = options.tokenExpirationInS * 1000;
+			this.deadlineMs = this.nowFn() + tokenLifetimeMs;
+		}
 
 		this.accessToken = initialResponse.access_token;
 		this.refreshToken = initialResponse.refresh_token;
@@ -298,8 +301,8 @@ export class OfflineTokenProvider {
 		const exponent: number = Math.min(this.consecutiveRefreshFailures - 1, MAX_REFRESH_RETRY_EXPONENT);
 		const growthFactor: number = 2 ** exponent;
 		const ceilingInS: number = Math.min(REFRESH_RETRY_BASE_DELAY_IN_S * growthFactor, REFRESH_RETRY_MAX_DELAY_IN_S);
-		const jitteredInS: number =
-			REFRESH_RETRY_BASE_DELAY_IN_S + this.randomFraction() * (ceilingInS - REFRESH_RETRY_BASE_DELAY_IN_S);
+		const jitterInS: number = this.randomFraction() * (ceilingInS - REFRESH_RETRY_BASE_DELAY_IN_S);
+		const jitteredInS: number = REFRESH_RETRY_BASE_DELAY_IN_S + jitterInS;
 		this.armRefreshTimer(jitteredInS * 1000);
 	}
 
@@ -429,7 +432,10 @@ function createDefaultFetch(verifySsl: boolean): FetchLike {
 		if (globalFetch === undefined) {
 			throw new OfflineTokenError('No global fetch available; pass options.fetchFn explicitly.');
 		}
-		return globalFetch(input, dispatcher === undefined ? init : { ...init, dispatcher });
+		if (dispatcher === undefined) {
+			return globalFetch(input, init);
+		}
+		return globalFetch(input, { ...init, dispatcher });
 	};
 }
 
@@ -456,7 +462,10 @@ async function postForm(
 			body
 		});
 	} catch (cause) {
-		const reason: string = cause instanceof Error ? cause.message : String(cause);
+		let reason: string = String(cause);
+		if (cause instanceof Error) {
+			reason = cause.message;
+		}
 		throw new OfflineTokenError(`Keycloak token request failed: ${reason}`);
 	}
 	const raw: string = await response.text();

@@ -203,7 +203,10 @@ async function main(): Promise<void> {
 		let channelCredentials: unknown;
 		if (useSecureChannel) {
 			const certPath: string | undefined = process.env.ONDEWO_GRPC_CERT;
-			const rootCerts: Buffer | null = certPath !== undefined && certPath.length > 0 ? fs.readFileSync(certPath) : null;
+			let rootCerts: Buffer | null = null;
+			if (certPath !== undefined && certPath.length > 0) {
+				rootCerts = fs.readFileSync(certPath);
+			}
 			channelCredentials = grpc.credentials.createSsl(rootCerts);
 			console.log(`START: calling ListS2sPipelines over a secure channel at ${address} ...`);
 		} else {

@@ -307,7 +307,10 @@ function pemToText(pem: PemContent | undefined): string | undefined {
 	if (pem === undefined) {
 		return undefined;
 	}
-	return typeof pem === 'string' ? pem : pem.toString('utf8');
+	if (typeof pem === 'string') {
+		return pem;
+	}
+	return pem.toString('utf8');
 }
 
 /**
@@ -320,7 +323,10 @@ function redactSecret(secret: PemContent | undefined): string | undefined {
 	if (secret === undefined) {
 		return undefined;
 	}
-	return secret.length === 0 ? '' : REDACTED;
+	if (secret.length === 0) {
+		return '';
+	}
+	return REDACTED;
 }
 
 /**
@@ -330,7 +336,10 @@ function redactSecret(secret: PemContent | undefined): string | undefined {
  * @returns `<set>` or `<unset>`.
  */
 function isSetText(pem: PemContent | undefined): string {
-	return toPemBuffer(pem) === null ? '<unset>' : '<set>';
+	if (toPemBuffer(pem) === null) {
+		return '<unset>';
+	}
+	return '<set>';
 }
 
 /**
@@ -379,7 +388,10 @@ export function createChannelCredentials(
 		// Empty PEMs were mapped to null: no root certs = system trust store, no identity = plain TLS.
 		return grpc.credentials.createSsl(toPemBuffer(config.grpcCert), clientKey, clientCert);
 	} catch (error: unknown) {
-		const reason: string = error instanceof Error ? error.message : String(error);
+		let reason: string = String(error);
+		if (error instanceof Error) {
+			reason = error.message;
+		}
 		throw new Error(`createChannelCredentials for ${target}: gRPC rejected the TLS material: ${reason}`);
 	}
 }

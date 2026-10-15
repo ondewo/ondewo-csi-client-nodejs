@@ -261,7 +261,10 @@ function pemToText(pem) {
     if (pem === undefined) {
         return undefined;
     }
-    return typeof pem === 'string' ? pem : pem.toString('utf8');
+    if (typeof pem === 'string') {
+        return pem;
+    }
+    return pem.toString('utf8');
 }
 /**
  * Redact a secret: non-empty becomes {@link REDACTED}, empty stays empty, unset stays unset.
@@ -273,7 +276,10 @@ function redactSecret(secret) {
     if (secret === undefined) {
         return undefined;
     }
-    return secret.length === 0 ? '' : exports.REDACTED;
+    if (secret.length === 0) {
+        return '';
+    }
+    return exports.REDACTED;
 }
 /**
  * Say whether a certificate is set without rendering it.
@@ -282,7 +288,10 @@ function redactSecret(secret) {
  * @returns `<set>` or `<unset>`.
  */
 function isSetText(pem) {
-    return toPemBuffer(pem) === null ? '<unset>' : '<set>';
+    if (toPemBuffer(pem) === null) {
+        return '<unset>';
+    }
+    return '<set>';
 }
 /**
  * Build the channel credentials for a configuration.
@@ -322,7 +331,10 @@ function createChannelCredentials(config, options = {}) {
         return grpc.credentials.createSsl(toPemBuffer(config.grpcCert), clientKey, clientCert);
     }
     catch (error) {
-        const reason = error instanceof Error ? error.message : String(error);
+        let reason = String(error);
+        if (error instanceof Error) {
+            reason = error.message;
+        }
         throw new Error(`createChannelCredentials for ${target}: gRPC rejected the TLS material: ${reason}`);
     }
 }
