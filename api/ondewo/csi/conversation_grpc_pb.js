@@ -20,13 +20,11 @@ var grpc = require('@grpc/grpc-js');
 var ondewo_csi_conversation_pb = require('../../ondewo/csi/conversation_pb.js');
 var google_protobuf_empty_pb = require('google-protobuf/google/protobuf/empty_pb.js');
 var google_rpc_status_pb = require('../../google/rpc/status_pb.js');
-var google_protobuf_timestamp_pb = require('google-protobuf/google/protobuf/timestamp_pb.js');
 var google_protobuf_struct_pb = require('google-protobuf/google/protobuf/struct_pb.js');
 var ondewo_nlu_session_pb = require('../../ondewo/nlu/session_pb.js');
 var ondewo_t2s_text$to$speech_pb = require('../../ondewo/t2s/text-to-speech_pb.js');
 var ondewo_s2t_speech$to$text_pb = require('../../ondewo/s2t/speech-to-text_pb.js');
 var ondewo_nlu_context_pb = require('../../ondewo/nlu/context_pb.js');
-var google_protobuf_any_pb = require('google-protobuf/google/protobuf/any_pb.js');
 
 function serialize_google_protobuf_Empty(arg) {
   if (!(arg instanceof google_protobuf_empty_pb.Empty)) {
