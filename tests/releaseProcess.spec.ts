@@ -119,7 +119,18 @@ function git(dir: string, ...args: string[]): string {
  */
 function runMake(dir: string, args: string[], env: NodeJS.ProcessEnv = {}): SpawnSyncReturns<string> {
 	const base: NodeJS.ProcessEnv = { ...process.env };
-	for (const name of ['GITHUB_GH_TOKEN', 'GH_TOKEN', 'NPM_AUTOMATION_TOKEN', 'MAKEFLAGS', 'MAKELEVEL', 'MFLAGS']) {
+	// DEVOPS_ACCOUNT_DIR and RELEASE_ENV_FILE as well: inside a release (the driver sets the first,
+	// ondewo_release the second) they name the REAL credentials, which the stand-in docker below prints.
+	for (const name of [
+		'GITHUB_GH_TOKEN',
+		'GH_TOKEN',
+		'NPM_AUTOMATION_TOKEN',
+		'DEVOPS_ACCOUNT_DIR',
+		'RELEASE_ENV_FILE',
+		'MAKEFLAGS',
+		'MAKELEVEL',
+		'MFLAGS'
+	]) {
 		delete base[name];
 	}
 	return spawnSync('make', ['--no-print-directory', ...args], { cwd: dir, encoding: 'utf8', env: { ...base, ...env } });
@@ -316,7 +327,7 @@ describe('ondewo_release', () => {
 				join(dir, 'fake-release.mk'),
 				[
 					'release:',
-					`\t@{ ls -l "$$RELEASE_ENV_FILE" | cut -c1-10; cat "$$RELEASE_ENV_FILE"; env | grep -c -E "^(GITHUB_GH_TOKEN|NPM_AUTOMATION_TOKEN)=" || true; test -e ondewo-devops-accounts && echo clone-present || echo clone-gone; echo "$$RELEASE_ENV_FILE"; } > ${report}`,
+					`\t@{ ls -l "$(RELEASE_ENV_FILE)" | cut -c1-10; cat "$(RELEASE_ENV_FILE)"; env | grep -c -E "^(GITHUB_GH_TOKEN|NPM_AUTOMATION_TOKEN|RELEASE_ENV_FILE)=" || true; test -e ondewo-devops-accounts && echo clone-present || echo clone-gone; echo "$(RELEASE_ENV_FILE)"; } > ${report}`,
 					'\t@exit 1',
 					''
 				].join('\n')
