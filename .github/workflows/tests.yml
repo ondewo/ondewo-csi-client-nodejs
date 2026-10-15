@@ -3,33 +3,49 @@ name: tests
 on:
   push:
     branches: ['**']
+    tags: ['*']
   pull_request:
+
+permissions:
+  contents: read
 
 jobs:
   unit-tests:
     name: tests (node ${{ matrix.node-version }})
-    runs-on: ubuntu-latest
+    # Pinned instead of ubuntu-latest, whose move to a new Ubuntu release is announced on every job.
+    runs-on: ubuntu-24.04
+    # actions/checkout runs a plain `git init`, and git prints a multi-line default-branch hint when
+    # init.defaultBranch is unset. Setting it through the environment reaches every git the job runs.
+    env:
+      GIT_CONFIG_COUNT: '1'
+      GIT_CONFIG_KEY_0: init.defaultBranch
+      GIT_CONFIG_VALUE_0: master
     strategy:
       fail-fast: false
       matrix:
-        # Node 20 is the floor of the toolchain (c8 11, undici 7); 22 is the current LTS; 24 is current.
+        # Same matrix as ondewo-nlu-client-nodejs: 20 is the toolchain floor, 22 the current LTS, 24 the latest.
         node-version: ['20', '22', '24']
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
+
+      # tests/entryPoint.spec.ts derives the expected RPCs of every client from the pinned protos.
+      - name: Check out the pinned ondewo-csi-api submodule
+        run: git submodule update --init src/ondewo-csi-api
 
       - name: Set up Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      # `npm ci`, never `npm install`: it installs exactly the committed lockfile and fails if
-      # package.json and package-lock.json disagree.
+      # `npm ci`, never `npm install`: it installs exactly the lockfile and fails if package.json and
+      # package-lock.json disagree, instead of silently re-resolving.
       - name: Install dependencies from the lockfile
         run: npm ci --no-audit --no-fund
 
       # The repo is ~95% generated gRPC/protobuf stubs; coverage is gated on the HAND-WRITTEN surface
-      # (the Keycloak offline-token provider and the TLS channel helper), 100% lines/branches/functions.
+      # (auth/offlineTokenProvider.ts and auth/grpcChannel.ts) plus the release, entry-point and RELEASE.md specs
+      # and a smoke test of the SHIPPED auth/offlineTokenProvider.js.
       - name: Unit tests + 100% coverage gate on hand-written code
         run: npm test
 
@@ -39,11 +55,14 @@ jobs:
       - name: Format check
         run: npx prettier --config .prettierrc --check --ignore-path .prettierignore ./
 
-      # The npm package ships COMPILED helpers that are committed: auth/grpcChannel.{js,d.ts} and
-      # auth/offlineTokenProvider.{js,d.ts}, built from the .ts beside them. The tests exercise the .ts
-      # sources, so rebuild them and fail if the result differs from what is committed -- what npm
-      # ships must be what was tested.
-      - name: Committed compiled helpers match their source
+      # auth/*.js and auth/*.d.ts are tsc output that is COMMITTED because the npm package ships them, while
+      # the tests exercise the .ts source. Rebuild them and fail if the committed files differ.
+      - name: Committed auth build artifacts match their source
         run: |
           npm run build:auth
           git diff --exit-code -- auth/
+
+      - name: Typecheck + run example mock tests
+        run: |
+          npm run typecheck:examples
+          npm run test:examples
