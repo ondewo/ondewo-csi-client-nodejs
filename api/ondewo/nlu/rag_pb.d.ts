@@ -1966,6 +1966,11 @@ export class RagCrawlerConfig extends jspb.Message {
     getIncrementalConfig(): RagCrawlerIncrementalConfig | undefined;
     setIncrementalConfig(value?: RagCrawlerIncrementalConfig): RagCrawlerConfig;
 
+    hasMaxPages(): boolean;
+    clearMaxPages(): void;
+    getMaxPages(): number | undefined;
+    setMaxPages(value: number): RagCrawlerConfig;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): RagCrawlerConfig.AsObject;
     static toObject(includeInstance: boolean, msg: RagCrawlerConfig): RagCrawlerConfig.AsObject;
@@ -1983,6 +1988,7 @@ export namespace RagCrawlerConfig {
         outputConfig?: RagCrawlerResultsConfig.AsObject,
         statusFilter?: RagCrawlerStatusFilter.AsObject,
         incrementalConfig?: RagCrawlerIncrementalConfig.AsObject,
+        maxPages?: number,
     }
 }
 

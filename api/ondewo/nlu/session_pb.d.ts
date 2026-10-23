@@ -1021,6 +1021,40 @@ export namespace LlmCcaiServiceUsage {
     }
 }
 
+export class LlmBaseUrlUsage extends jspb.Message { 
+    getBaseUrl(): string;
+    setBaseUrl(value: string): LlmBaseUrlUsage;
+    getCallCount(): number;
+    setCallCount(value: number): LlmBaseUrlUsage;
+
+    hasLlmTokenUsage(): boolean;
+    clearLlmTokenUsage(): void;
+    getLlmTokenUsage(): LlmTokenUsage | undefined;
+    setLlmTokenUsage(value?: LlmTokenUsage): LlmBaseUrlUsage;
+    clearModelNamesList(): void;
+    getModelNamesList(): Array<string>;
+    setModelNamesList(value: Array<string>): LlmBaseUrlUsage;
+    addModelNames(value: string, index?: number): string;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): LlmBaseUrlUsage.AsObject;
+    static toObject(includeInstance: boolean, msg: LlmBaseUrlUsage): LlmBaseUrlUsage.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: LlmBaseUrlUsage, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): LlmBaseUrlUsage;
+    static deserializeBinaryFromReader(message: LlmBaseUrlUsage, reader: jspb.BinaryReader): LlmBaseUrlUsage;
+}
+
+export namespace LlmBaseUrlUsage {
+    export type AsObject = {
+        baseUrl: string,
+        callCount: number,
+        llmTokenUsage?: LlmTokenUsage.AsObject,
+        modelNamesList: Array<string>,
+    }
+}
+
 export class LlmAgentUsage extends jspb.Message { 
     getAgentName(): string;
     setAgentName(value: string): LlmAgentUsage;
@@ -1305,6 +1339,10 @@ export class LlmTelemetryReport extends jspb.Message {
     clearSafetyStats(): void;
     getSafetyStats(): LlmSafetyStats | undefined;
     setSafetyStats(value?: LlmSafetyStats): LlmTelemetryReport;
+    clearBaseUrlsUsedList(): void;
+    getBaseUrlsUsedList(): Array<LlmBaseUrlUsage>;
+    setBaseUrlsUsedList(value: Array<LlmBaseUrlUsage>): LlmTelemetryReport;
+    addBaseUrlsUsed(value?: LlmBaseUrlUsage, index?: number): LlmBaseUrlUsage;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): LlmTelemetryReport.AsObject;
@@ -1338,6 +1376,7 @@ export namespace LlmTelemetryReport {
         toolCallTokensTotal: number,
         toolCallDurationSecondsTotal: number,
         safetyStats?: LlmSafetyStats.AsObject,
+        baseUrlsUsedList: Array<LlmBaseUrlUsage.AsObject>,
     }
 }
 
@@ -1608,6 +1647,52 @@ export namespace LlmTokenUsageUpdateEvent {
     }
 }
 
+export class LlmAgentNodeEvent extends jspb.Message { 
+    getLlmAgentNodeEventNodeRunId(): string;
+    setLlmAgentNodeEventNodeRunId(value: string): LlmAgentNodeEvent;
+    getLlmAgentNodeEventParentNodeRunId(): string;
+    setLlmAgentNodeEventParentNodeRunId(value: string): LlmAgentNodeEvent;
+    getLlmAgentNodeEventNodeDisplayName(): string;
+    setLlmAgentNodeEventNodeDisplayName(value: string): LlmAgentNodeEvent;
+    clearLlmAgentNodeEventNodePathList(): void;
+    getLlmAgentNodeEventNodePathList(): Array<string>;
+    setLlmAgentNodeEventNodePathList(value: Array<string>): LlmAgentNodeEvent;
+    addLlmAgentNodeEventNodePath(value: string, index?: number): string;
+    getLlmAgentNodePhase(): LlmAgentNodePhase;
+    setLlmAgentNodePhase(value: LlmAgentNodePhase): LlmAgentNodeEvent;
+
+    hasTimestamp(): boolean;
+    clearTimestamp(): void;
+    getTimestamp(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setTimestamp(value?: google_protobuf_timestamp_pb.Timestamp): LlmAgentNodeEvent;
+    getLlmAgentNodeEventDurationInS(): number;
+    setLlmAgentNodeEventDurationInS(value: number): LlmAgentNodeEvent;
+    getLlmAgentNodeEventErrorMessage(): string;
+    setLlmAgentNodeEventErrorMessage(value: string): LlmAgentNodeEvent;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): LlmAgentNodeEvent.AsObject;
+    static toObject(includeInstance: boolean, msg: LlmAgentNodeEvent): LlmAgentNodeEvent.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: LlmAgentNodeEvent, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): LlmAgentNodeEvent;
+    static deserializeBinaryFromReader(message: LlmAgentNodeEvent, reader: jspb.BinaryReader): LlmAgentNodeEvent;
+}
+
+export namespace LlmAgentNodeEvent {
+    export type AsObject = {
+        llmAgentNodeEventNodeRunId: string,
+        llmAgentNodeEventParentNodeRunId: string,
+        llmAgentNodeEventNodeDisplayName: string,
+        llmAgentNodeEventNodePathList: Array<string>,
+        llmAgentNodePhase: LlmAgentNodePhase,
+        timestamp?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        llmAgentNodeEventDurationInS: number,
+        llmAgentNodeEventErrorMessage: string,
+    }
+}
+
 export class ReferencedChunk extends jspb.Message { 
     getReferenceIndex(): number;
     setReferenceIndex(value: number): ReferencedChunk;
@@ -1835,6 +1920,11 @@ export class StreamingDetectIntentResponse extends jspb.Message {
     getLlmTokenUsageUpdate(): LlmTokenUsageUpdateEvent | undefined;
     setLlmTokenUsageUpdate(value?: LlmTokenUsageUpdateEvent): StreamingDetectIntentResponse;
 
+    hasLlmAgentNodeEvent(): boolean;
+    clearLlmAgentNodeEvent(): void;
+    getLlmAgentNodeEvent(): LlmAgentNodeEvent | undefined;
+    setLlmAgentNodeEvent(value?: LlmAgentNodeEvent): StreamingDetectIntentResponse;
+
     getTelemetryEventCase(): StreamingDetectIntentResponse.TelemetryEventCase;
 
     serializeBinary(): Uint8Array;
@@ -1859,6 +1949,7 @@ export namespace StreamingDetectIntentResponse {
         llmToolCallFinished?: LlmToolCallFinishedEvent.AsObject,
         llmThinkingDelta?: LlmThinkingDeltaEvent.AsObject,
         llmTokenUsageUpdate?: LlmTokenUsageUpdateEvent.AsObject,
+        llmAgentNodeEvent?: LlmAgentNodeEvent.AsObject,
     }
 
     export enum TelemetryEventCase {
@@ -1869,6 +1960,7 @@ export namespace StreamingDetectIntentResponse {
         LLM_TOOL_CALL_FINISHED = 8,
         LLM_THINKING_DELTA = 9,
         LLM_TOKEN_USAGE_UPDATE = 10,
+        LLM_AGENT_NODE_EVENT = 11,
     }
 
 }
@@ -5311,6 +5403,13 @@ export enum LlmSafetyLocation {
     LLM_SAFETY_LOCATION_UNSPECIFIED = 0,
     LLM_SAFETY_LOCATION_INPUT = 1,
     LLM_SAFETY_LOCATION_OUTPUT = 2,
+}
+
+export enum LlmAgentNodePhase {
+    LLM_AGENT_NODE_PHASE_UNSPECIFIED = 0,
+    LLM_AGENT_NODE_PHASE_STARTED = 1,
+    LLM_AGENT_NODE_PHASE_COMPLETED = 2,
+    LLM_AGENT_NODE_PHASE_FAILED = 3,
 }
 
 export enum AudioEncoding {
