@@ -13,13 +13,13 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = (function() {
-  if (this) { return this; }
-  if (typeof window !== 'undefined') { return window; }
-  if (typeof global !== 'undefined') { return global; }
-  if (typeof self !== 'undefined') { return self; }
-  return Function('return this')();
-}.call(null));
+var global =
+    (typeof globalThis !== 'undefined' && globalThis) ||
+    (typeof window !== 'undefined' && window) ||
+    (typeof global !== 'undefined' && global) ||
+    (typeof self !== 'undefined' && self) ||
+    (function () { return this; }).call(null) ||
+    Function('return this')();
 
 var google_api_annotations_pb = require('../../google/api/annotations_pb.js');
 goog.object.extend(proto, google_api_annotations_pb);
@@ -451,11 +451,11 @@ proto.ondewo.nlu.Operation.prototype.toObject = function(opt_includeInstance) {
  */
 proto.ondewo.nlu.Operation.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    metadata: (f = msg.getMetadata()) && ondewo_nlu_operation_metadata_pb.OperationMetadata.toObject(includeInstance, f),
-    done: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
-    error: (f = msg.getError()) && google_rpc_status_pb.Status.toObject(includeInstance, f),
-    response: (f = msg.getResponse()) && google_protobuf_any_pb.Any.toObject(includeInstance, f)
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+metadata: (f = msg.getMetadata()) && ondewo_nlu_operation_metadata_pb.OperationMetadata.toObject(includeInstance, f),
+done: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
+error: (f = msg.getError()) && google_rpc_status_pb.Status.toObject(includeInstance, f),
+response: (f = msg.getResponse()) && google_protobuf_any_pb.Any.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -764,8 +764,8 @@ proto.ondewo.nlu.GetOperationRequest.prototype.toObject = function(opt_includeIn
  */
 proto.ondewo.nlu.GetOperationRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    fieldMask: (f = msg.getFieldMask()) && google_protobuf_field_mask_pb.FieldMask.toObject(includeInstance, f)
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+fieldMask: (f = msg.getFieldMask()) && google_protobuf_field_mask_pb.FieldMask.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -945,12 +945,12 @@ proto.ondewo.nlu.ListOperationsRequest.prototype.toObject = function(opt_include
  */
 proto.ondewo.nlu.ListOperationsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    filter: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    pageSize: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    pageToken: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    operationFilter: (f = msg.getOperationFilter()) && proto.ondewo.nlu.OperationFilter.toObject(includeInstance, f),
-    fieldMask: (f = msg.getFieldMask()) && google_protobuf_field_mask_pb.FieldMask.toObject(includeInstance, f)
+name: jspb.Message.getFieldWithDefault(msg, 4, ""),
+filter: jspb.Message.getFieldWithDefault(msg, 1, ""),
+pageSize: jspb.Message.getFieldWithDefault(msg, 2, 0),
+pageToken: jspb.Message.getFieldWithDefault(msg, 3, ""),
+operationFilter: (f = msg.getOperationFilter()) && proto.ondewo.nlu.OperationFilter.toObject(includeInstance, f),
+fieldMask: (f = msg.getFieldMask()) && google_protobuf_field_mask_pb.FieldMask.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1314,12 +1314,12 @@ proto.ondewo.nlu.OperationFilter.prototype.toObject = function(opt_includeInstan
  */
 proto.ondewo.nlu.OperationFilter.toObject = function(includeInstance, msg) {
   var f, obj = {
-    projectParentsList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f,
-    statusesList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f,
-    typesList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
-    startTime: (f = msg.getStartTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    endTime: (f = msg.getEndTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    userIdsList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f
+projectParentsList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f,
+statusesList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f,
+typesList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f,
+startTime: (f = msg.getStartTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+endTime: (f = msg.getEndTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+userIdsList: (f = jspb.Message.getRepeatedField(msg, 6)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -1723,9 +1723,9 @@ proto.ondewo.nlu.ListOperationsResponse.prototype.toObject = function(opt_includ
  */
 proto.ondewo.nlu.ListOperationsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    operationsList: jspb.Message.toObjectList(msg.getOperationsList(),
+operationsList: jspb.Message.toObjectList(msg.getOperationsList(),
     proto.ondewo.nlu.Operation.toObject, includeInstance),
-    nextPageToken: jspb.Message.getFieldWithDefault(msg, 2, "")
+nextPageToken: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -1906,7 +1906,7 @@ proto.ondewo.nlu.CancelOperationRequest.prototype.toObject = function(opt_includ
  */
 proto.ondewo.nlu.CancelOperationRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -2036,7 +2036,7 @@ proto.ondewo.nlu.DeleteOperationRequest.prototype.toObject = function(opt_includ
  */
 proto.ondewo.nlu.DeleteOperationRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -2166,10 +2166,10 @@ proto.ondewo.nlu.StreamRemoteOperationContainerLogsRequest.prototype.toObject = 
  */
 proto.ondewo.nlu.StreamRemoteOperationContainerLogsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    minLogLevel: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    tailLines: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    containerId: jspb.Message.getFieldWithDefault(msg, 4, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+minLogLevel: jspb.Message.getFieldWithDefault(msg, 2, 0),
+tailLines: jspb.Message.getFieldWithDefault(msg, 3, 0),
+containerId: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -2386,15 +2386,15 @@ proto.ondewo.nlu.GetRemoteOperationContainerLogsRequest.prototype.toObject = fun
  */
 proto.ondewo.nlu.GetRemoteOperationContainerLogsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    minLogLevel: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    startTime: (f = msg.getStartTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    endTime: (f = msg.getEndTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    maxLines: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    regex: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    containerId: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    beforeSeq: jspb.Message.getFieldWithDefault(msg, 8, 0),
-    afterSeq: jspb.Message.getFieldWithDefault(msg, 9, 0)
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+minLogLevel: jspb.Message.getFieldWithDefault(msg, 2, 0),
+startTime: (f = msg.getStartTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+endTime: (f = msg.getEndTime()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+maxLines: jspb.Message.getFieldWithDefault(msg, 5, 0),
+regex: jspb.Message.getFieldWithDefault(msg, 6, ""),
+containerId: jspb.Message.getFieldWithDefault(msg, 7, ""),
+beforeSeq: jspb.Message.getFieldWithDefault(msg, 8, 0),
+afterSeq: jspb.Message.getFieldWithDefault(msg, 9, 0)
   };
 
   if (includeInstance) {
@@ -2805,12 +2805,12 @@ proto.ondewo.nlu.GetRemoteOperationContainerLogsResponse.prototype.toObject = fu
  */
 proto.ondewo.nlu.GetRemoteOperationContainerLogsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    logLinesList: jspb.Message.toObjectList(msg.getLogLinesList(),
+logLinesList: jspb.Message.toObjectList(msg.getLogLinesList(),
     proto.ondewo.nlu.RemoteOperationContainerLogLine.toObject, includeInstance),
-    truncated: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
-    minAvailableSeq: jspb.Message.getFieldWithDefault(msg, 3, 0),
-    maxAvailableSeq: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    hasMoreOlder: jspb.Message.getBooleanFieldWithDefault(msg, 5, false)
+truncated: jspb.Message.getBooleanFieldWithDefault(msg, 2, false),
+minAvailableSeq: jspb.Message.getFieldWithDefault(msg, 3, 0),
+maxAvailableSeq: jspb.Message.getFieldWithDefault(msg, 4, 0),
+hasMoreOlder: jspb.Message.getBooleanFieldWithDefault(msg, 5, false)
   };
 
   if (includeInstance) {
@@ -3078,12 +3078,12 @@ proto.ondewo.nlu.RemoteOperationContainerLogLine.prototype.toObject = function(o
  */
 proto.ondewo.nlu.RemoteOperationContainerLogLine.toObject = function(includeInstance, msg) {
   var f, obj = {
-    timestamp: (f = msg.getTimestamp()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    level: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    message: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    containerId: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    containerName: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    seq: jspb.Message.getFieldWithDefault(msg, 6, 0)
+timestamp: (f = msg.getTimestamp()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+level: jspb.Message.getFieldWithDefault(msg, 2, 0),
+message: jspb.Message.getFieldWithDefault(msg, 3, ""),
+containerId: jspb.Message.getFieldWithDefault(msg, 4, ""),
+containerName: jspb.Message.getFieldWithDefault(msg, 5, ""),
+seq: jspb.Message.getFieldWithDefault(msg, 6, 0)
   };
 
   if (includeInstance) {
@@ -3379,8 +3379,8 @@ proto.ondewo.nlu.GetRemoteOperationContainerStatusRequest.prototype.toObject = f
  */
 proto.ondewo.nlu.GetRemoteOperationContainerStatusRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    containerId: jspb.Message.getFieldWithDefault(msg, 2, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+containerId: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -3546,25 +3546,25 @@ proto.ondewo.nlu.RemoteOperationContainerStatus.prototype.toObject = function(op
  */
 proto.ondewo.nlu.RemoteOperationContainerStatus.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    lifecycleState: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    hostName: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    containerName: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    containerId: jspb.Message.getFieldWithDefault(msg, 11, ""),
-    exitCode: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    oomKilled: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
-    healthStatus: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    startedAt: (f = msg.getStartedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    finishedAt: (f = msg.getFinishedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    observedAt: (f = msg.getObservedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    environmentVariablesMap: (f = msg.getEnvironmentVariablesMap()) ? f.toObject(includeInstance, undefined) : [],
-    commandList: (f = jspb.Message.getRepeatedField(msg, 13)) == null ? undefined : f,
-    memoryLimitBytes: jspb.Message.getFieldWithDefault(msg, 14, 0),
-    nanoCpus: jspb.Message.getFieldWithDefault(msg, 15, 0),
-    cpusetCpus: jspb.Message.getFieldWithDefault(msg, 16, ""),
-    cpuQuota: jspb.Message.getFieldWithDefault(msg, 17, 0),
-    cpuPeriod: jspb.Message.getFieldWithDefault(msg, 18, 0),
-    image: jspb.Message.getFieldWithDefault(msg, 19, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+lifecycleState: jspb.Message.getFieldWithDefault(msg, 2, 0),
+hostName: jspb.Message.getFieldWithDefault(msg, 3, ""),
+containerName: jspb.Message.getFieldWithDefault(msg, 4, ""),
+containerId: jspb.Message.getFieldWithDefault(msg, 11, ""),
+exitCode: jspb.Message.getFieldWithDefault(msg, 5, 0),
+oomKilled: jspb.Message.getBooleanFieldWithDefault(msg, 6, false),
+healthStatus: jspb.Message.getFieldWithDefault(msg, 7, ""),
+startedAt: (f = msg.getStartedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+finishedAt: (f = msg.getFinishedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+observedAt: (f = msg.getObservedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+environmentVariablesMap: (f = msg.getEnvironmentVariablesMap()) ? f.toObject(includeInstance, undefined) : [],
+commandList: (f = jspb.Message.getRepeatedField(msg, 13)) == null ? undefined : f,
+memoryLimitBytes: jspb.Message.getFieldWithDefault(msg, 14, 0),
+nanoCpus: jspb.Message.getFieldWithDefault(msg, 15, 0),
+cpusetCpus: jspb.Message.getFieldWithDefault(msg, 16, ""),
+cpuQuota: jspb.Message.getFieldWithDefault(msg, 17, 0),
+cpuPeriod: jspb.Message.getFieldWithDefault(msg, 18, 0),
+image: jspb.Message.getFieldWithDefault(msg, 19, "")
   };
 
   if (includeInstance) {
@@ -4121,7 +4121,8 @@ proto.ondewo.nlu.RemoteOperationContainerStatus.prototype.getEnvironmentVariable
  */
 proto.ondewo.nlu.RemoteOperationContainerStatus.prototype.clearEnvironmentVariablesMap = function() {
   this.getEnvironmentVariablesMap().clear();
-  return this;};
+  return this;
+};
 
 
 /**
@@ -4308,25 +4309,25 @@ proto.ondewo.nlu.RemoteOperationContainer.prototype.toObject = function(opt_incl
  */
 proto.ondewo.nlu.RemoteOperationContainer.toObject = function(includeInstance, msg) {
   var f, obj = {
-    containerId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    containerName: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    hostName: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    lifecycleState: jspb.Message.getFieldWithDefault(msg, 4, 0),
-    operationName: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    image: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    phase: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    exitCode: jspb.Message.getFieldWithDefault(msg, 8, 0),
-    oomKilled: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
-    startedAt: (f = msg.getStartedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    finishedAt: (f = msg.getFinishedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    logsAvailable: jspb.Message.getBooleanFieldWithDefault(msg, 12, false),
-    environmentVariablesMap: (f = msg.getEnvironmentVariablesMap()) ? f.toObject(includeInstance, undefined) : [],
-    commandList: (f = jspb.Message.getRepeatedField(msg, 14)) == null ? undefined : f,
-    memoryLimitBytes: jspb.Message.getFieldWithDefault(msg, 15, 0),
-    nanoCpus: jspb.Message.getFieldWithDefault(msg, 16, 0),
-    cpusetCpus: jspb.Message.getFieldWithDefault(msg, 17, ""),
-    cpuQuota: jspb.Message.getFieldWithDefault(msg, 18, 0),
-    cpuPeriod: jspb.Message.getFieldWithDefault(msg, 19, 0)
+containerId: jspb.Message.getFieldWithDefault(msg, 1, ""),
+containerName: jspb.Message.getFieldWithDefault(msg, 2, ""),
+hostName: jspb.Message.getFieldWithDefault(msg, 3, ""),
+lifecycleState: jspb.Message.getFieldWithDefault(msg, 4, 0),
+operationName: jspb.Message.getFieldWithDefault(msg, 5, ""),
+image: jspb.Message.getFieldWithDefault(msg, 6, ""),
+phase: jspb.Message.getFieldWithDefault(msg, 7, ""),
+exitCode: jspb.Message.getFieldWithDefault(msg, 8, 0),
+oomKilled: jspb.Message.getBooleanFieldWithDefault(msg, 9, false),
+startedAt: (f = msg.getStartedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+finishedAt: (f = msg.getFinishedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+logsAvailable: jspb.Message.getBooleanFieldWithDefault(msg, 12, false),
+environmentVariablesMap: (f = msg.getEnvironmentVariablesMap()) ? f.toObject(includeInstance, undefined) : [],
+commandList: (f = jspb.Message.getRepeatedField(msg, 14)) == null ? undefined : f,
+memoryLimitBytes: jspb.Message.getFieldWithDefault(msg, 15, 0),
+nanoCpus: jspb.Message.getFieldWithDefault(msg, 16, 0),
+cpusetCpus: jspb.Message.getFieldWithDefault(msg, 17, ""),
+cpuQuota: jspb.Message.getFieldWithDefault(msg, 18, 0),
+cpuPeriod: jspb.Message.getFieldWithDefault(msg, 19, 0)
   };
 
   if (includeInstance) {
@@ -4880,7 +4881,8 @@ proto.ondewo.nlu.RemoteOperationContainer.prototype.getEnvironmentVariablesMap =
  */
 proto.ondewo.nlu.RemoteOperationContainer.prototype.clearEnvironmentVariablesMap = function() {
   this.getEnvironmentVariablesMap().clear();
-  return this;};
+  return this;
+};
 
 
 /**
@@ -5042,8 +5044,8 @@ proto.ondewo.nlu.ListRemoteOperationContainersRequest.prototype.toObject = funct
  */
 proto.ondewo.nlu.ListRemoteOperationContainersRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    includeSubOperations: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+includeSubOperations: jspb.Message.getBooleanFieldWithDefault(msg, 2, false)
   };
 
   if (includeInstance) {
@@ -5209,7 +5211,7 @@ proto.ondewo.nlu.ListRemoteOperationContainersResponse.prototype.toObject = func
  */
 proto.ondewo.nlu.ListRemoteOperationContainersResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    containersList: jspb.Message.toObjectList(msg.getContainersList(),
+containersList: jspb.Message.toObjectList(msg.getContainersList(),
     proto.ondewo.nlu.RemoteOperationContainer.toObject, includeInstance)
   };
 

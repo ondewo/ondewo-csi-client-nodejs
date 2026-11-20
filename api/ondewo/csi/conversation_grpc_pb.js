@@ -48,6 +48,28 @@ function deserialize_ondewo_csi_CallMediaControlLevel(buffer_arg) {
   return ondewo_csi_conversation_pb.CallMediaControlLevel.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_csi_CallerDtmfRequest(arg) {
+  if (!(arg instanceof ondewo_csi_conversation_pb.CallerDtmfRequest)) {
+    throw new Error('Expected argument of type ondewo.csi.CallerDtmfRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_csi_CallerDtmfRequest(buffer_arg) {
+  return ondewo_csi_conversation_pb.CallerDtmfRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_csi_CallerDtmfResponse(arg) {
+  if (!(arg instanceof ondewo_csi_conversation_pb.CallerDtmfResponse)) {
+    throw new Error('Expected argument of type ondewo.csi.CallerDtmfResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_csi_CallerDtmfResponse(buffer_arg) {
+  return ondewo_csi_conversation_pb.CallerDtmfResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_csi_CheckUpstreamHealthResponse(arg) {
   if (!(arg instanceof ondewo_csi_conversation_pb.CheckUpstreamHealthResponse)) {
     throw new Error('Expected argument of type ondewo.csi.CheckUpstreamHealthResponse');
@@ -178,6 +200,28 @@ function serialize_ondewo_csi_SetControlStatusResponse(arg) {
 
 function deserialize_ondewo_csi_SetControlStatusResponse(buffer_arg) {
   return ondewo_csi_conversation_pb.SetControlStatusResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_csi_WarmTransferOutcomeNotice(arg) {
+  if (!(arg instanceof ondewo_csi_conversation_pb.WarmTransferOutcomeNotice)) {
+    throw new Error('Expected argument of type ondewo.csi.WarmTransferOutcomeNotice');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_csi_WarmTransferOutcomeNotice(buffer_arg) {
+  return ondewo_csi_conversation_pb.WarmTransferOutcomeNotice.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_csi_WarmTransferOutcomeNoticeResponse(arg) {
+  if (!(arg instanceof ondewo_csi_conversation_pb.WarmTransferOutcomeNoticeResponse)) {
+    throw new Error('Expected argument of type ondewo.csi.WarmTransferOutcomeNoticeResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_csi_WarmTransferOutcomeNoticeResponse(buffer_arg) {
+  return ondewo_csi_conversation_pb.WarmTransferOutcomeNoticeResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 
@@ -403,6 +447,54 @@ setCallMediaControl: {
     requestDeserialize: deserialize_ondewo_csi_CallMediaControlLevel,
     responseSerialize: serialize_ondewo_csi_SetCallMediaControlResponse,
     responseDeserialize: deserialize_ondewo_csi_SetCallMediaControlResponse,
+  },
+  // <p>Report one DTMF key the caller pressed on the current call.</p>
+//
+// <p>Sent by ondewo-sip only, one request per key in the order received, authenticated with its in-container
+// token (the <code>x-ondewo-sip-in-container-token</code> metadatum). A request without a valid token is refused
+// with <code>UNAUTHENTICATED</code>.</p>
+//
+// <p>The server turns keys into caller input: a key pressed while the bot speaks is a barge-in, a key of a
+// declared menu commits a turn at once, and a key string is collected until its terminator, its maximum length
+// or its inter-digit timeout. A key of another call, a repeated or older sequence number, or a key while the
+// server takes no keys is answered <code>accepted=false</code> with a reason token and changes nothing. Neither
+// side ever logs the digit in clear.</p>
+setCallerDtmf: {
+    path: '/ondewo.csi.Conversations/SetCallerDtmf',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_csi_conversation_pb.CallerDtmfRequest,
+    responseType: ondewo_csi_conversation_pb.CallerDtmfResponse,
+    requestSerialize: serialize_ondewo_csi_CallerDtmfRequest,
+    requestDeserialize: deserialize_ondewo_csi_CallerDtmfRequest,
+    responseSerialize: serialize_ondewo_csi_CallerDtmfResponse,
+    responseDeserialize: deserialize_ondewo_csi_CallerDtmfResponse,
+  },
+  // <p>Deliver the outcome of a warm transfer that did NOT hand the caller over, so the bot can tell the
+// caller.</p>
+//
+// <p>Sent by ondewo-sip only, authenticated with its in-container token (the
+// <code>x-ondewo-sip-in-container-token</code> metadatum). A request without a valid token is refused with
+// <code>UNAUTHENTICATED</code>. ondewo-sip sends it whenever a notice is attached to the release of the
+// participant hold, after the level push of <code>SetCallMediaControl</code> or on its own when the level did not
+// change, and re-sends a notice it holds as pending (resync) by this RPC only, never inside a level. It clears
+// its pending notice on <code>QUEUED</code> or <code>DUPLICATE</code>.</p>
+//
+// <p>A queued notice is never dropped by the server, except by <code>CALL_ENDED</code>: there is no caller left
+// to tell. It is spoken once the bot is unmuted, its listening is not paused and no utterance is in flight. See
+// <code>WarmTransferOutcomeNotice</code> for how. This RPC has no generation, never changes the control status of
+// <code>GetControlStream</code> / <code>SetControlStatus</code> and is never announced on the control stream. A
+// server built against a CSI API before 5.9.0 answers <code>UNIMPLEMENTED</code>.</p>
+deliverWarmTransferOutcomeNotice: {
+    path: '/ondewo.csi.Conversations/DeliverWarmTransferOutcomeNotice',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_csi_conversation_pb.WarmTransferOutcomeNotice,
+    responseType: ondewo_csi_conversation_pb.WarmTransferOutcomeNoticeResponse,
+    requestSerialize: serialize_ondewo_csi_WarmTransferOutcomeNotice,
+    requestDeserialize: deserialize_ondewo_csi_WarmTransferOutcomeNotice,
+    responseSerialize: serialize_ondewo_csi_WarmTransferOutcomeNoticeResponse,
+    responseDeserialize: deserialize_ondewo_csi_WarmTransferOutcomeNoticeResponse,
   },
 };
 

@@ -2,6 +2,15 @@
 
 *****************
 
+## Release ONDEWO CSI Nodejs Client 5.9.0
+
+### Improvements
+
+* Tracking API Version [5.9.0](https://github.com/ondewo/ondewo-csi-api/releases/tag/5.9.0) ( [Documentation](https://ondewo.github.io/ondewo-csi-api/) )
+* Generated with ondewo-proto-compiler 5.17.0 (protoc 35.1); new runtime floors: `@grpc/grpc-js ^1.14.7` and `google-protobuf 3.21.4`; the stubs come from protoc 35.1 with `protoc-gen-js` 3.21.4 and grpc-tools 1.13.1's `grpc_node_plugin`.
+
+*****************
+
 ## Release ONDEWO CSI Nodejs Client 5.7.0
 
 ### Improvements

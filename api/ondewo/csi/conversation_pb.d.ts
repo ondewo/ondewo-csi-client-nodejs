@@ -162,6 +162,8 @@ export class S2sStreamResponse extends jspb.Message {
     setLastChunk(value: boolean): S2sStreamResponse;
     getTurnEpoch(): number;
     setTurnEpoch(value: number): S2sStreamResponse;
+    getResponseSequence(): number;
+    setResponseSequence(value: number): S2sStreamResponse;
 
     getResponseCase(): S2sStreamResponse.ResponseCase;
 
@@ -184,6 +186,7 @@ export namespace S2sStreamResponse {
         chunkIndex: number,
         lastChunk: boolean,
         turnEpoch: number,
+        responseSequence: number,
     }
 
     export enum ResponseCase {
@@ -295,6 +298,8 @@ export class ControlStreamResponse extends jspb.Message {
     clearMediaControl(): void;
     getMediaControl(): CallMediaControlLevel | undefined;
     setMediaControl(value?: CallMediaControlLevel): ControlStreamResponse;
+    getPlaybackCutRequestId(): number;
+    setPlaybackCutRequestId(value: number): ControlStreamResponse;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ControlStreamResponse.AsObject;
@@ -311,12 +316,22 @@ export namespace ControlStreamResponse {
         controlStatus: ControlStatus,
         epoch: number,
         mediaControl?: CallMediaControlLevel.AsObject,
+        playbackCutRequestId: number,
     }
 }
 
 export class SetControlStatusRequest extends jspb.Message { 
     getControlStatus(): ControlStatus;
     setControlStatus(value: ControlStatus): SetControlStatusRequest;
+
+    hasPlaybackCut(): boolean;
+    clearPlaybackCut(): void;
+    getPlaybackCut(): PlaybackCut | undefined;
+    setPlaybackCut(value?: PlaybackCut): SetControlStatusRequest;
+    getUtteranceId(): string;
+    setUtteranceId(value: string): SetControlStatusRequest;
+    getResponseSequence(): number;
+    setResponseSequence(value: number): SetControlStatusRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): SetControlStatusRequest.AsObject;
@@ -331,6 +346,56 @@ export class SetControlStatusRequest extends jspb.Message {
 export namespace SetControlStatusRequest {
     export type AsObject = {
         controlStatus: ControlStatus,
+        playbackCut?: PlaybackCut.AsObject,
+        utteranceId: string,
+        responseSequence: number,
+    }
+}
+
+export class PlaybackCut extends jspb.Message { 
+    getPlaybackCutRequestId(): number;
+    setPlaybackCutRequestId(value: number): PlaybackCut;
+    getBargeInEpoch(): number;
+    setBargeInEpoch(value: number): PlaybackCut;
+    getUtteranceId(): string;
+    setUtteranceId(value: string): PlaybackCut;
+    getChunkIndex(): number;
+    setChunkIndex(value: number): PlaybackCut;
+    getResponseSequence(): number;
+    setResponseSequence(value: number): PlaybackCut;
+    getWrittenAudioUs(): number;
+    setWrittenAudioUs(value: number): PlaybackCut;
+    getQueuedAudioUs(): number;
+    setQueuedAudioUs(value: number): PlaybackCut;
+    getQueuedAudioEstimated(): boolean;
+    setQueuedAudioEstimated(value: boolean): PlaybackCut;
+    getCutMonotonicNs(): number;
+    setCutMonotonicNs(value: number): PlaybackCut;
+    getRemainderHeld(): boolean;
+    setRemainderHeld(value: boolean): PlaybackCut;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PlaybackCut.AsObject;
+    static toObject(includeInstance: boolean, msg: PlaybackCut): PlaybackCut.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PlaybackCut, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PlaybackCut;
+    static deserializeBinaryFromReader(message: PlaybackCut, reader: jspb.BinaryReader): PlaybackCut;
+}
+
+export namespace PlaybackCut {
+    export type AsObject = {
+        playbackCutRequestId: number,
+        bargeInEpoch: number,
+        utteranceId: string,
+        chunkIndex: number,
+        responseSequence: number,
+        writtenAudioUs: number,
+        queuedAudioUs: number,
+        queuedAudioEstimated: boolean,
+        cutMonotonicNs: number,
+        remainderHeld: boolean,
     }
 }
 
@@ -418,6 +483,116 @@ export namespace SetCallMediaControlResponse {
         stale: boolean,
         botPlaybackInFlight: boolean,
         refusalReason: string,
+    }
+}
+
+export class CallerDtmfRequest extends jspb.Message { 
+    getCallId(): string;
+    setCallId(value: string): CallerDtmfRequest;
+    getSequence(): number;
+    setSequence(value: number): CallerDtmfRequest;
+    getDigit(): string;
+    setDigit(value: string): CallerDtmfRequest;
+    getDurationMs(): number;
+    setDurationMs(value: number): CallerDtmfRequest;
+    getReceivedUnixNs(): number;
+    setReceivedUnixNs(value: number): CallerDtmfRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): CallerDtmfRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: CallerDtmfRequest): CallerDtmfRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: CallerDtmfRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): CallerDtmfRequest;
+    static deserializeBinaryFromReader(message: CallerDtmfRequest, reader: jspb.BinaryReader): CallerDtmfRequest;
+}
+
+export namespace CallerDtmfRequest {
+    export type AsObject = {
+        callId: string,
+        sequence: number,
+        digit: string,
+        durationMs: number,
+        receivedUnixNs: number,
+    }
+}
+
+export class CallerDtmfResponse extends jspb.Message { 
+    getAccepted(): boolean;
+    setAccepted(value: boolean): CallerDtmfResponse;
+    getReason(): string;
+    setReason(value: string): CallerDtmfResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): CallerDtmfResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: CallerDtmfResponse): CallerDtmfResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: CallerDtmfResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): CallerDtmfResponse;
+    static deserializeBinaryFromReader(message: CallerDtmfResponse, reader: jspb.BinaryReader): CallerDtmfResponse;
+}
+
+export namespace CallerDtmfResponse {
+    export type AsObject = {
+        accepted: boolean,
+        reason: string,
+    }
+}
+
+export class WarmTransferOutcomeNotice extends jspb.Message { 
+    getRequestId(): string;
+    setRequestId(value: string): WarmTransferOutcomeNotice;
+    getOutcome(): WarmTransferOutcome;
+    setOutcome(value: WarmTransferOutcome): WarmTransferOutcomeNotice;
+    getIntroSession(): string;
+    setIntroSession(value: string): WarmTransferOutcomeNotice;
+    getCalleeDisplayName(): string;
+    setCalleeDisplayName(value: string): WarmTransferOutcomeNotice;
+    getCause(): string;
+    setCause(value: string): WarmTransferOutcomeNotice;
+    getFallbackText(): string;
+    setFallbackText(value: string): WarmTransferOutcomeNotice;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): WarmTransferOutcomeNotice.AsObject;
+    static toObject(includeInstance: boolean, msg: WarmTransferOutcomeNotice): WarmTransferOutcomeNotice.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: WarmTransferOutcomeNotice, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): WarmTransferOutcomeNotice;
+    static deserializeBinaryFromReader(message: WarmTransferOutcomeNotice, reader: jspb.BinaryReader): WarmTransferOutcomeNotice;
+}
+
+export namespace WarmTransferOutcomeNotice {
+    export type AsObject = {
+        requestId: string,
+        outcome: WarmTransferOutcome,
+        introSession: string,
+        calleeDisplayName: string,
+        cause: string,
+        fallbackText: string,
+    }
+}
+
+export class WarmTransferOutcomeNoticeResponse extends jspb.Message { 
+    getStatus(): WarmTransferOutcomeNoticeStatus;
+    setStatus(value: WarmTransferOutcomeNoticeStatus): WarmTransferOutcomeNoticeResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): WarmTransferOutcomeNoticeResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: WarmTransferOutcomeNoticeResponse): WarmTransferOutcomeNoticeResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: WarmTransferOutcomeNoticeResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): WarmTransferOutcomeNoticeResponse;
+    static deserializeBinaryFromReader(message: WarmTransferOutcomeNoticeResponse, reader: jspb.BinaryReader): WarmTransferOutcomeNoticeResponse;
+}
+
+export namespace WarmTransferOutcomeNoticeResponse {
+    export type AsObject = {
+        status: WarmTransferOutcomeNoticeStatus,
     }
 }
 
@@ -558,6 +733,22 @@ export enum ControlStatus {
     PLAYBACK_RESUMED = 6,
     PLAYBACK_DONE = 7,
     CALL_ENDED = 8,
+    PLAYBACK_CUT = 9,
+}
+
+export enum WarmTransferOutcome {
+    WARM_TRANSFER_OUTCOME_UNSPECIFIED = 0,
+    WARM_TRANSFER_OUTCOME_DECLINED = 1,
+    WARM_TRANSFER_OUTCOME_UNREACHABLE = 2,
+    WARM_TRANSFER_OUTCOME_DELEGATION_EXPIRED = 3,
+}
+
+export enum WarmTransferOutcomeNoticeStatus {
+    WARM_TRANSFER_OUTCOME_NOTICE_STATUS_UNSPECIFIED = 0,
+    WARM_TRANSFER_OUTCOME_NOTICE_STATUS_QUEUED = 1,
+    WARM_TRANSFER_OUTCOME_NOTICE_STATUS_DUPLICATE = 2,
+    WARM_TRANSFER_OUTCOME_NOTICE_STATUS_DISABLED = 3,
+    WARM_TRANSFER_OUTCOME_NOTICE_STATUS_INVALID = 4,
 }
 
 export enum ControlMessageServiceName {

@@ -25,6 +25,8 @@ interface IConversationsService extends grpc.ServiceDefinition<grpc.UntypedServi
     getControlStream: IConversationsService_IGetControlStream;
     setControlStatus: IConversationsService_ISetControlStatus;
     setCallMediaControl: IConversationsService_ISetCallMediaControl;
+    setCallerDtmf: IConversationsService_ISetCallerDtmf;
+    deliverWarmTransferOutcomeNotice: IConversationsService_IDeliverWarmTransferOutcomeNotice;
 }
 
 interface IConversationsService_ICreateS2sPipeline extends grpc.MethodDefinition<ondewo_csi_conversation_pb.S2sPipeline, google_protobuf_empty_pb.Empty> {
@@ -117,6 +119,24 @@ interface IConversationsService_ISetCallMediaControl extends grpc.MethodDefiniti
     responseSerialize: grpc.serialize<ondewo_csi_conversation_pb.SetCallMediaControlResponse>;
     responseDeserialize: grpc.deserialize<ondewo_csi_conversation_pb.SetCallMediaControlResponse>;
 }
+interface IConversationsService_ISetCallerDtmf extends grpc.MethodDefinition<ondewo_csi_conversation_pb.CallerDtmfRequest, ondewo_csi_conversation_pb.CallerDtmfResponse> {
+    path: "/ondewo.csi.Conversations/SetCallerDtmf";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_csi_conversation_pb.CallerDtmfRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_csi_conversation_pb.CallerDtmfRequest>;
+    responseSerialize: grpc.serialize<ondewo_csi_conversation_pb.CallerDtmfResponse>;
+    responseDeserialize: grpc.deserialize<ondewo_csi_conversation_pb.CallerDtmfResponse>;
+}
+interface IConversationsService_IDeliverWarmTransferOutcomeNotice extends grpc.MethodDefinition<ondewo_csi_conversation_pb.WarmTransferOutcomeNotice, ondewo_csi_conversation_pb.WarmTransferOutcomeNoticeResponse> {
+    path: "/ondewo.csi.Conversations/DeliverWarmTransferOutcomeNotice";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_csi_conversation_pb.WarmTransferOutcomeNotice>;
+    requestDeserialize: grpc.deserialize<ondewo_csi_conversation_pb.WarmTransferOutcomeNotice>;
+    responseSerialize: grpc.serialize<ondewo_csi_conversation_pb.WarmTransferOutcomeNoticeResponse>;
+    responseDeserialize: grpc.deserialize<ondewo_csi_conversation_pb.WarmTransferOutcomeNoticeResponse>;
+}
 
 export const ConversationsService: IConversationsService;
 
@@ -131,6 +151,8 @@ export interface IConversationsServer {
     getControlStream: grpc.handleServerStreamingCall<ondewo_csi_conversation_pb.ControlStreamRequest, ondewo_csi_conversation_pb.ControlStreamResponse>;
     setControlStatus: grpc.handleUnaryCall<ondewo_csi_conversation_pb.SetControlStatusRequest, ondewo_csi_conversation_pb.SetControlStatusResponse>;
     setCallMediaControl: grpc.handleUnaryCall<ondewo_csi_conversation_pb.CallMediaControlLevel, ondewo_csi_conversation_pb.SetCallMediaControlResponse>;
+    setCallerDtmf: grpc.handleUnaryCall<ondewo_csi_conversation_pb.CallerDtmfRequest, ondewo_csi_conversation_pb.CallerDtmfResponse>;
+    deliverWarmTransferOutcomeNotice: grpc.handleUnaryCall<ondewo_csi_conversation_pb.WarmTransferOutcomeNotice, ondewo_csi_conversation_pb.WarmTransferOutcomeNoticeResponse>;
 }
 
 export interface IConversationsClient {
@@ -163,6 +185,12 @@ export interface IConversationsClient {
     setCallMediaControl(request: ondewo_csi_conversation_pb.CallMediaControlLevel, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetCallMediaControlResponse) => void): grpc.ClientUnaryCall;
     setCallMediaControl(request: ondewo_csi_conversation_pb.CallMediaControlLevel, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetCallMediaControlResponse) => void): grpc.ClientUnaryCall;
     setCallMediaControl(request: ondewo_csi_conversation_pb.CallMediaControlLevel, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetCallMediaControlResponse) => void): grpc.ClientUnaryCall;
+    setCallerDtmf(request: ondewo_csi_conversation_pb.CallerDtmfRequest, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.CallerDtmfResponse) => void): grpc.ClientUnaryCall;
+    setCallerDtmf(request: ondewo_csi_conversation_pb.CallerDtmfRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.CallerDtmfResponse) => void): grpc.ClientUnaryCall;
+    setCallerDtmf(request: ondewo_csi_conversation_pb.CallerDtmfRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.CallerDtmfResponse) => void): grpc.ClientUnaryCall;
+    deliverWarmTransferOutcomeNotice(request: ondewo_csi_conversation_pb.WarmTransferOutcomeNotice, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.WarmTransferOutcomeNoticeResponse) => void): grpc.ClientUnaryCall;
+    deliverWarmTransferOutcomeNotice(request: ondewo_csi_conversation_pb.WarmTransferOutcomeNotice, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.WarmTransferOutcomeNoticeResponse) => void): grpc.ClientUnaryCall;
+    deliverWarmTransferOutcomeNotice(request: ondewo_csi_conversation_pb.WarmTransferOutcomeNotice, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.WarmTransferOutcomeNoticeResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class ConversationsClient extends grpc.Client implements IConversationsClient {
@@ -195,4 +223,10 @@ export class ConversationsClient extends grpc.Client implements IConversationsCl
     public setCallMediaControl(request: ondewo_csi_conversation_pb.CallMediaControlLevel, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetCallMediaControlResponse) => void): grpc.ClientUnaryCall;
     public setCallMediaControl(request: ondewo_csi_conversation_pb.CallMediaControlLevel, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetCallMediaControlResponse) => void): grpc.ClientUnaryCall;
     public setCallMediaControl(request: ondewo_csi_conversation_pb.CallMediaControlLevel, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.SetCallMediaControlResponse) => void): grpc.ClientUnaryCall;
+    public setCallerDtmf(request: ondewo_csi_conversation_pb.CallerDtmfRequest, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.CallerDtmfResponse) => void): grpc.ClientUnaryCall;
+    public setCallerDtmf(request: ondewo_csi_conversation_pb.CallerDtmfRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.CallerDtmfResponse) => void): grpc.ClientUnaryCall;
+    public setCallerDtmf(request: ondewo_csi_conversation_pb.CallerDtmfRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.CallerDtmfResponse) => void): grpc.ClientUnaryCall;
+    public deliverWarmTransferOutcomeNotice(request: ondewo_csi_conversation_pb.WarmTransferOutcomeNotice, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.WarmTransferOutcomeNoticeResponse) => void): grpc.ClientUnaryCall;
+    public deliverWarmTransferOutcomeNotice(request: ondewo_csi_conversation_pb.WarmTransferOutcomeNotice, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.WarmTransferOutcomeNoticeResponse) => void): grpc.ClientUnaryCall;
+    public deliverWarmTransferOutcomeNotice(request: ondewo_csi_conversation_pb.WarmTransferOutcomeNotice, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_csi_conversation_pb.WarmTransferOutcomeNoticeResponse) => void): grpc.ClientUnaryCall;
 }

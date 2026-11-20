@@ -13,13 +13,13 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = (function() {
-  if (this) { return this; }
-  if (typeof window !== 'undefined') { return window; }
-  if (typeof global !== 'undefined') { return global; }
-  if (typeof self !== 'undefined') { return self; }
-  return Function('return this')();
-}.call(null));
+var global =
+    (typeof globalThis !== 'undefined' && globalThis) ||
+    (typeof window !== 'undefined' && window) ||
+    (typeof global !== 'undefined' && global) ||
+    (typeof self !== 'undefined' && self) ||
+    (function () { return this; }).call(null) ||
+    Function('return this')();
 
 var google_api_annotations_pb = require('../../google/api/annotations_pb.js');
 goog.object.extend(proto, google_api_annotations_pb);
@@ -259,14 +259,14 @@ proto.ondewo.nlu.Context.prototype.toObject = function(opt_includeInstance) {
  */
 proto.ondewo.nlu.Context.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    lifespanCount: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    parametersMap: (f = msg.getParametersMap()) ? f.toObject(includeInstance, proto.ondewo.nlu.Context.Parameter.toObject) : [],
-    lifespanTime: jspb.Message.getFloatingPointFieldWithDefault(msg, 4, 0.0),
-    createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    createdBy: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    modifiedBy: jspb.Message.getFieldWithDefault(msg, 8, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+lifespanCount: jspb.Message.getFieldWithDefault(msg, 2, 0),
+parametersMap: (f = msg.getParametersMap()) ? f.toObject(includeInstance, proto.ondewo.nlu.Context.Parameter.toObject) : [],
+lifespanTime: (f = jspb.Message.getOptionalFloatingPointField(msg, 4)) == null ? undefined : f,
+createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+createdBy: jspb.Message.getFieldWithDefault(msg, 7, ""),
+modifiedBy: jspb.Message.getFieldWithDefault(msg, 8, "")
   };
 
   if (includeInstance) {
@@ -458,14 +458,14 @@ proto.ondewo.nlu.Context.Parameter.prototype.toObject = function(opt_includeInst
  */
 proto.ondewo.nlu.Context.Parameter.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    displayName: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    value: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    valueOriginal: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    createdBy: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    modifiedBy: jspb.Message.getFieldWithDefault(msg, 8, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+displayName: jspb.Message.getFieldWithDefault(msg, 2, ""),
+value: jspb.Message.getFieldWithDefault(msg, 3, ""),
+valueOriginal: jspb.Message.getFieldWithDefault(msg, 4, ""),
+createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+createdBy: jspb.Message.getFieldWithDefault(msg, 7, ""),
+modifiedBy: jspb.Message.getFieldWithDefault(msg, 8, "")
   };
 
   if (includeInstance) {
@@ -863,7 +863,8 @@ proto.ondewo.nlu.Context.prototype.getParametersMap = function(opt_noLazyCreate)
  */
 proto.ondewo.nlu.Context.prototype.clearParametersMap = function() {
   this.getParametersMap().clear();
-  return this;};
+  return this;
+};
 
 
 /**
@@ -1044,8 +1045,8 @@ proto.ondewo.nlu.ListContextsRequest.prototype.toObject = function(opt_includeIn
  */
 proto.ondewo.nlu.ListContextsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    sessionId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    pageToken: jspb.Message.getFieldWithDefault(msg, 3, "")
+sessionId: jspb.Message.getFieldWithDefault(msg, 1, ""),
+pageToken: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -1211,9 +1212,9 @@ proto.ondewo.nlu.ListContextsResponse.prototype.toObject = function(opt_includeI
  */
 proto.ondewo.nlu.ListContextsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    contextsList: jspb.Message.toObjectList(msg.getContextsList(),
+contextsList: jspb.Message.toObjectList(msg.getContextsList(),
     proto.ondewo.nlu.Context.toObject, includeInstance),
-    nextPageToken: jspb.Message.getFieldWithDefault(msg, 2, "")
+nextPageToken: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -1394,7 +1395,7 @@ proto.ondewo.nlu.GetContextRequest.prototype.toObject = function(opt_includeInst
  */
 proto.ondewo.nlu.GetContextRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -1524,8 +1525,8 @@ proto.ondewo.nlu.CreateContextRequest.prototype.toObject = function(opt_includeI
  */
 proto.ondewo.nlu.CreateContextRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    sessionId: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    context: (f = msg.getContext()) && proto.ondewo.nlu.Context.toObject(includeInstance, f)
+sessionId: jspb.Message.getFieldWithDefault(msg, 1, ""),
+context: (f = msg.getContext()) && proto.ondewo.nlu.Context.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1705,8 +1706,8 @@ proto.ondewo.nlu.UpdateContextRequest.prototype.toObject = function(opt_includeI
  */
 proto.ondewo.nlu.UpdateContextRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    context: (f = msg.getContext()) && proto.ondewo.nlu.Context.toObject(includeInstance, f),
-    updateMask: (f = msg.getUpdateMask()) && google_protobuf_field_mask_pb.FieldMask.toObject(includeInstance, f)
+context: (f = msg.getContext()) && proto.ondewo.nlu.Context.toObject(includeInstance, f),
+updateMask: (f = msg.getUpdateMask()) && google_protobuf_field_mask_pb.FieldMask.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -1907,7 +1908,7 @@ proto.ondewo.nlu.DeleteContextRequest.prototype.toObject = function(opt_includeI
  */
 proto.ondewo.nlu.DeleteContextRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {
@@ -2037,7 +2038,7 @@ proto.ondewo.nlu.DeleteAllContextsRequest.prototype.toObject = function(opt_incl
  */
 proto.ondewo.nlu.DeleteAllContextsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    sessionId: jspb.Message.getFieldWithDefault(msg, 1, "")
+sessionId: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
 
   if (includeInstance) {

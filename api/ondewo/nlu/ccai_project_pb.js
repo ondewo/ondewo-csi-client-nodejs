@@ -13,13 +13,13 @@
 
 var jspb = require('google-protobuf');
 var goog = jspb;
-var global = (function() {
-  if (this) { return this; }
-  if (typeof window !== 'undefined') { return window; }
-  if (typeof global !== 'undefined') { return global; }
-  if (typeof self !== 'undefined') { return self; }
-  return Function('return this')();
-}.call(null));
+var global =
+    (typeof globalThis !== 'undefined' && globalThis) ||
+    (typeof window !== 'undefined' && window) ||
+    (typeof global !== 'undefined' && global) ||
+    (typeof self !== 'undefined' && self) ||
+    (function () { return this; }).call(null) ||
+    Function('return this')();
 
 var google_protobuf_field_mask_pb = require('google-protobuf/google/protobuf/field_mask_pb.js');
 goog.object.extend(proto, google_protobuf_field_mask_pb);
@@ -396,16 +396,16 @@ proto.ondewo.nlu.CcaiProject.prototype.toObject = function(opt_includeInstance) 
  */
 proto.ondewo.nlu.CcaiProject.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    displayName: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    ownerName: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    ccaiServicesMapMap: (f = msg.getCcaiServicesMapMap()) ? f.toObject(includeInstance, proto.ondewo.nlu.CcaiServiceList.toObject) : [],
-    ccaiProjectStatus: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    createdBy: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    modifiedBy: jspb.Message.getFieldWithDefault(msg, 9, ""),
-    nluProjectName: jspb.Message.getFieldWithDefault(msg, 10, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+displayName: jspb.Message.getFieldWithDefault(msg, 2, ""),
+ownerName: jspb.Message.getFieldWithDefault(msg, 3, ""),
+ccaiServicesMapMap: (f = msg.getCcaiServicesMapMap()) ? f.toObject(includeInstance, proto.ondewo.nlu.CcaiServiceList.toObject) : [],
+ccaiProjectStatus: jspb.Message.getFieldWithDefault(msg, 5, 0),
+createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+createdBy: jspb.Message.getFieldWithDefault(msg, 8, ""),
+modifiedBy: jspb.Message.getFieldWithDefault(msg, 9, ""),
+nluProjectName: jspb.Message.getFieldWithDefault(msg, 10, "")
   };
 
   if (includeInstance) {
@@ -660,7 +660,8 @@ proto.ondewo.nlu.CcaiProject.prototype.getCcaiServicesMapMap = function(opt_noLa
  */
 proto.ondewo.nlu.CcaiProject.prototype.clearCcaiServicesMapMap = function() {
   this.getCcaiServicesMapMap().clear();
-  return this;};
+  return this;
+};
 
 
 /**
@@ -848,7 +849,7 @@ proto.ondewo.nlu.CcaiServiceList.prototype.toObject = function(opt_includeInstan
  */
 proto.ondewo.nlu.CcaiServiceList.toObject = function(includeInstance, msg) {
   var f, obj = {
-    ccaiServicesList: jspb.Message.toObjectList(msg.getCcaiServicesList(),
+ccaiServicesList: jspb.Message.toObjectList(msg.getCcaiServicesList(),
     proto.ondewo.nlu.CcaiService.toObject, includeInstance)
   };
 
@@ -1001,31 +1002,31 @@ proto.ondewo.nlu.CcaiService.prototype.toObject = function(opt_includeInstance) 
  */
 proto.ondewo.nlu.CcaiService.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    displayName: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    languageCode: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    grpcHost: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    grpcPort: jspb.Message.getFieldWithDefault(msg, 5, 0),
-    webgrpcHost: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    webgrpcPort: jspb.Message.getFieldWithDefault(msg, 7, 0),
-    grpcCert: jspb.Message.getFieldWithDefault(msg, 8, ""),
-    host: jspb.Message.getFieldWithDefault(msg, 9, ""),
-    port: jspb.Message.getFieldWithDefault(msg, 10, 0),
-    port2: jspb.Message.getFieldWithDefault(msg, 11, 0),
-    httpBasicAuthToken: jspb.Message.getFieldWithDefault(msg, 12, ""),
-    accountName: jspb.Message.getFieldWithDefault(msg, 13, ""),
-    accountPassword: jspb.Message.getFieldWithDefault(msg, 14, ""),
-    apiKey: jspb.Message.getFieldWithDefault(msg, 15, ""),
-    ccaiServiceType: jspb.Message.getFieldWithDefault(msg, 16, 0),
-    ccaiProjectName: jspb.Message.getFieldWithDefault(msg, 17, ""),
-    ccaiServiceConfig: (f = msg.getCcaiServiceConfig()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
-    createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
-    createdBy: jspb.Message.getFieldWithDefault(msg, 21, ""),
-    modifiedBy: jspb.Message.getFieldWithDefault(msg, 22, ""),
-    headers: (f = msg.getHeaders()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
-    ccaiServiceProvider: jspb.Message.getFieldWithDefault(msg, 24, 0),
-    serviceHierarchy: jspb.Message.getFieldWithDefault(msg, 25, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+displayName: jspb.Message.getFieldWithDefault(msg, 2, ""),
+languageCode: jspb.Message.getFieldWithDefault(msg, 3, ""),
+grpcHost: jspb.Message.getFieldWithDefault(msg, 4, ""),
+grpcPort: jspb.Message.getFieldWithDefault(msg, 5, 0),
+webgrpcHost: jspb.Message.getFieldWithDefault(msg, 6, ""),
+webgrpcPort: jspb.Message.getFieldWithDefault(msg, 7, 0),
+grpcCert: jspb.Message.getFieldWithDefault(msg, 8, ""),
+host: jspb.Message.getFieldWithDefault(msg, 9, ""),
+port: jspb.Message.getFieldWithDefault(msg, 10, 0),
+port2: jspb.Message.getFieldWithDefault(msg, 11, 0),
+httpBasicAuthToken: jspb.Message.getFieldWithDefault(msg, 12, ""),
+accountName: jspb.Message.getFieldWithDefault(msg, 13, ""),
+accountPassword: jspb.Message.getFieldWithDefault(msg, 14, ""),
+apiKey: jspb.Message.getFieldWithDefault(msg, 15, ""),
+ccaiServiceType: jspb.Message.getFieldWithDefault(msg, 16, 0),
+ccaiProjectName: jspb.Message.getFieldWithDefault(msg, 17, ""),
+ccaiServiceConfig: (f = msg.getCcaiServiceConfig()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
+createdAt: (f = msg.getCreatedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+modifiedAt: (f = msg.getModifiedAt()) && google_protobuf_timestamp_pb.Timestamp.toObject(includeInstance, f),
+createdBy: jspb.Message.getFieldWithDefault(msg, 21, ""),
+modifiedBy: jspb.Message.getFieldWithDefault(msg, 22, ""),
+headers: (f = msg.getHeaders()) && google_protobuf_struct_pb.Struct.toObject(includeInstance, f),
+ccaiServiceProvider: jspb.Message.getFieldWithDefault(msg, 24, 0),
+serviceHierarchy: jspb.Message.getFieldWithDefault(msg, 25, "")
   };
 
   if (includeInstance) {
@@ -1935,8 +1936,8 @@ proto.ondewo.nlu.CreateCcaiProjectRequest.prototype.toObject = function(opt_incl
  */
 proto.ondewo.nlu.CreateCcaiProjectRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    ccaiProject: (f = msg.getCcaiProject()) && proto.ondewo.nlu.CcaiProject.toObject(includeInstance, f),
-    nluProjectName: jspb.Message.getFieldWithDefault(msg, 4, "")
+ccaiProject: (f = msg.getCcaiProject()) && proto.ondewo.nlu.CcaiProject.toObject(includeInstance, f),
+nluProjectName: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -2116,8 +2117,8 @@ proto.ondewo.nlu.CreateCcaiProjectResponse.prototype.toObject = function(opt_inc
  */
 proto.ondewo.nlu.CreateCcaiProjectResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    ccaiProject: (f = msg.getCcaiProject()) && proto.ondewo.nlu.CcaiProject.toObject(includeInstance, f),
-    errorMessage: jspb.Message.getFieldWithDefault(msg, 2, "")
+ccaiProject: (f = msg.getCcaiProject()) && proto.ondewo.nlu.CcaiProject.toObject(includeInstance, f),
+errorMessage: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -2297,11 +2298,11 @@ proto.ondewo.nlu.GetCcaiProjectRequest.prototype.toObject = function(opt_include
  */
 proto.ondewo.nlu.GetCcaiProjectRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    ccaiProjectView: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    ccaiServiceFilter: (f = msg.getCcaiServiceFilter()) && proto.ondewo.nlu.CcaiServiceFilter.toObject(includeInstance, f),
-    nluProjectName: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    fieldMask: (f = msg.getFieldMask()) && google_protobuf_field_mask_pb.FieldMask.toObject(includeInstance, f)
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+ccaiProjectView: jspb.Message.getFieldWithDefault(msg, 2, 0),
+ccaiServiceFilter: (f = msg.getCcaiServiceFilter()) && proto.ondewo.nlu.CcaiServiceFilter.toObject(includeInstance, f),
+nluProjectName: jspb.Message.getFieldWithDefault(msg, 4, ""),
+fieldMask: (f = msg.getFieldMask()) && google_protobuf_field_mask_pb.FieldMask.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2589,9 +2590,9 @@ proto.ondewo.nlu.GetCcaiServiceRequest.prototype.toObject = function(opt_include
  */
 proto.ondewo.nlu.GetCcaiServiceRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    nluProjectName: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    fieldMask: (f = msg.getFieldMask()) && google_protobuf_field_mask_pb.FieldMask.toObject(includeInstance, f)
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+nluProjectName: jspb.Message.getFieldWithDefault(msg, 4, ""),
+fieldMask: (f = msg.getFieldMask()) && google_protobuf_field_mask_pb.FieldMask.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -2800,12 +2801,12 @@ proto.ondewo.nlu.ListCcaiProjectsRequest.prototype.toObject = function(opt_inclu
  */
 proto.ondewo.nlu.ListCcaiProjectsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    ccaiProjectView: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    ccaiServiceFilter: (f = msg.getCcaiServiceFilter()) && proto.ondewo.nlu.CcaiServiceFilter.toObject(includeInstance, f),
-    ccaiProjectSorting: (f = msg.getCcaiProjectSorting()) && proto.ondewo.nlu.CcaiProjectSorting.toObject(includeInstance, f),
-    pageToken: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    nluProjectName: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    fieldMask: (f = msg.getFieldMask()) && google_protobuf_field_mask_pb.FieldMask.toObject(includeInstance, f)
+ccaiProjectView: jspb.Message.getFieldWithDefault(msg, 1, 0),
+ccaiServiceFilter: (f = msg.getCcaiServiceFilter()) && proto.ondewo.nlu.CcaiServiceFilter.toObject(includeInstance, f),
+ccaiProjectSorting: (f = msg.getCcaiProjectSorting()) && proto.ondewo.nlu.CcaiProjectSorting.toObject(includeInstance, f),
+pageToken: jspb.Message.getFieldWithDefault(msg, 4, ""),
+nluProjectName: jspb.Message.getFieldWithDefault(msg, 5, ""),
+fieldMask: (f = msg.getFieldMask()) && google_protobuf_field_mask_pb.FieldMask.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -3150,9 +3151,9 @@ proto.ondewo.nlu.ListCcaiProjectsResponse.prototype.toObject = function(opt_incl
  */
 proto.ondewo.nlu.ListCcaiProjectsResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    ccaiProjectsList: jspb.Message.toObjectList(msg.getCcaiProjectsList(),
+ccaiProjectsList: jspb.Message.toObjectList(msg.getCcaiProjectsList(),
     proto.ondewo.nlu.CcaiProject.toObject, includeInstance),
-    nextPageToken: jspb.Message.getFieldWithDefault(msg, 2, "")
+nextPageToken: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -3333,8 +3334,8 @@ proto.ondewo.nlu.CcaiProjectSorting.prototype.toObject = function(opt_includeIns
  */
 proto.ondewo.nlu.CcaiProjectSorting.toObject = function(includeInstance, msg) {
   var f, obj = {
-    sortingField: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    sortingMode: jspb.Message.getFieldWithDefault(msg, 2, 0)
+sortingField: jspb.Message.getFieldWithDefault(msg, 1, 0),
+sortingMode: jspb.Message.getFieldWithDefault(msg, 2, 0)
   };
 
   if (includeInstance) {
@@ -3511,9 +3512,9 @@ proto.ondewo.nlu.CcaiServiceFilter.prototype.toObject = function(opt_includeInst
  */
 proto.ondewo.nlu.CcaiServiceFilter.toObject = function(includeInstance, msg) {
   var f, obj = {
-    languageCodesList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f,
-    ccaiServiceTypesList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f,
-    ccaiServiceProvidersList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f
+languageCodesList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f,
+ccaiServiceTypesList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f,
+ccaiServiceProvidersList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -3762,10 +3763,10 @@ proto.ondewo.nlu.UpdateCcaiProjectRequest.prototype.toObject = function(opt_incl
  */
 proto.ondewo.nlu.UpdateCcaiProjectRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    ccaiProject: (f = msg.getCcaiProject()) && proto.ondewo.nlu.CcaiProject.toObject(includeInstance, f),
-    ccaiServiceFilter: (f = msg.getCcaiServiceFilter()) && proto.ondewo.nlu.CcaiServiceFilter.toObject(includeInstance, f),
-    updateMask: (f = msg.getUpdateMask()) && google_protobuf_field_mask_pb.FieldMask.toObject(includeInstance, f),
-    nluProjectName: jspb.Message.getFieldWithDefault(msg, 4, "")
+ccaiProject: (f = msg.getCcaiProject()) && proto.ondewo.nlu.CcaiProject.toObject(includeInstance, f),
+ccaiServiceFilter: (f = msg.getCcaiServiceFilter()) && proto.ondewo.nlu.CcaiServiceFilter.toObject(includeInstance, f),
+updateMask: (f = msg.getUpdateMask()) && google_protobuf_field_mask_pb.FieldMask.toObject(includeInstance, f),
+nluProjectName: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -4045,8 +4046,8 @@ proto.ondewo.nlu.UpdateCcaiProjectResponse.prototype.toObject = function(opt_inc
  */
 proto.ondewo.nlu.UpdateCcaiProjectResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    errorMessage: jspb.Message.getFieldWithDefault(msg, 2, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+errorMessage: jspb.Message.getFieldWithDefault(msg, 2, "")
   };
 
   if (includeInstance) {
@@ -4205,8 +4206,8 @@ proto.ondewo.nlu.DeleteCcaiProjectRequest.prototype.toObject = function(opt_incl
  */
 proto.ondewo.nlu.DeleteCcaiProjectRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    nluProjectName: jspb.Message.getFieldWithDefault(msg, 4, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+nluProjectName: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -4365,9 +4366,9 @@ proto.ondewo.nlu.DeleteCcaiProjectResponse.prototype.toObject = function(opt_inc
  */
 proto.ondewo.nlu.DeleteCcaiProjectResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
-    name: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    errorMessage: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    nluProjectName: jspb.Message.getFieldWithDefault(msg, 4, "")
+name: jspb.Message.getFieldWithDefault(msg, 1, ""),
+errorMessage: jspb.Message.getFieldWithDefault(msg, 2, ""),
+nluProjectName: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
