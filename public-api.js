@@ -158,6 +158,8 @@ reexport(require('./api/ondewo/nlu/intent_grpc_pb'));
 reexport(require('./api/ondewo/nlu/intent_pb'));
 reexport(require('./api/ondewo/nlu/llm_evaluation_grpc_pb'));
 reexport(require('./api/ondewo/nlu/llm_evaluation_pb'));
+reexport(require('./api/ondewo/nlu/logs_grpc_pb'));
+reexport(require('./api/ondewo/nlu/logs_pb'));
 reexport(require('./api/ondewo/nlu/operation_metadata_grpc_pb'));
 reexport(require('./api/ondewo/nlu/operation_metadata_pb'));
 reexport(require('./api/ondewo/nlu/operations_grpc_pb'));

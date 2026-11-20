@@ -409,6 +409,39 @@ function deserialize_ondewo_nlu_GetSessionStepRequest(buffer_arg) {
   return ondewo_nlu_session_pb.GetSessionStepRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_GetWarmTransferIntroOutcomeRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.GetWarmTransferIntroOutcomeRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.GetWarmTransferIntroOutcomeRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_GetWarmTransferIntroOutcomeRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.GetWarmTransferIntroOutcomeRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_InterruptTurnRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.InterruptTurnRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.InterruptTurnRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_InterruptTurnRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.InterruptTurnRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_InterruptTurnResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.InterruptTurnResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.InterruptTurnResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_InterruptTurnResponse(buffer_arg) {
+  return ondewo_nlu_session_pb.InterruptTurnResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_ListAccountIdsOfAllSessionsRequest(arg) {
   if (!(arg instanceof ondewo_nlu_session_pb.ListAccountIdsOfAllSessionsRequest)) {
     throw new Error('Expected argument of type ondewo.nlu.ListAccountIdsOfAllSessionsRequest');
@@ -860,6 +893,28 @@ function deserialize_ondewo_nlu_ListUserIdsResponse(buffer_arg) {
   return ondewo_nlu_session_pb.ListUserIdsResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_PrepareWarmTransferIntroRequest(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.PrepareWarmTransferIntroRequest)) {
+    throw new Error('Expected argument of type ondewo.nlu.PrepareWarmTransferIntroRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_PrepareWarmTransferIntroRequest(buffer_arg) {
+  return ondewo_nlu_session_pb.PrepareWarmTransferIntroRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_ondewo_nlu_PrepareWarmTransferIntroResponse(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.PrepareWarmTransferIntroResponse)) {
+    throw new Error('Expected argument of type ondewo.nlu.PrepareWarmTransferIntroResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_PrepareWarmTransferIntroResponse(buffer_arg) {
+  return ondewo_nlu_session_pb.PrepareWarmTransferIntroResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_ondewo_nlu_Session(arg) {
   if (!(arg instanceof ondewo_nlu_session_pb.Session)) {
     throw new Error('Expected argument of type ondewo.nlu.Session');
@@ -959,6 +1014,17 @@ function deserialize_ondewo_nlu_UpdateSessionStepRequest(buffer_arg) {
   return ondewo_nlu_session_pb.UpdateSessionStepRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_ondewo_nlu_WarmTransferIntroOutcome(arg) {
+  if (!(arg instanceof ondewo_nlu_session_pb.WarmTransferIntroOutcome)) {
+    throw new Error('Expected argument of type ondewo.nlu.WarmTransferIntroOutcome');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_ondewo_nlu_WarmTransferIntroOutcome(buffer_arg) {
+  return ondewo_nlu_session_pb.WarmTransferIntroOutcome.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 
 // A session represents an interaction with a user. You retrieve user input and pass it to the <a href="index.html#ondewo.nlu.Sessions.DetectIntent">DetectIntent</a> (or <a href="index.html#ondewo.nlu.Sessions.StreamingDetectIntent">StreamingDetectIntent</a>) method to determine user intent and respond.
 var SessionsService = exports.SessionsService = {
@@ -990,6 +1056,57 @@ streamingDetectIntent: {
     requestDeserialize: deserialize_ondewo_nlu_StreamingDetectIntentRequest,
     responseSerialize: serialize_ondewo_nlu_StreamingDetectIntentResponse,
     responseDeserialize: deserialize_ondewo_nlu_StreamingDetectIntentResponse,
+  },
+  // Interrupts a turn of the session outside a <code>StreamingDetectIntent</code> stream: cancels it, reports what
+// the user actually heard of its answer, or discards the session step of a preemptive draft. Meant for clients
+// without a call-length stream (e.g. a stop button) and for a heard report that arrives after the stream closed.
+// A voice client with an open stream sends the same <code>TurnControl</code> on that stream instead
+// (<code>StreamingDetectIntentRequest.turn_control</code>). Requires the permission to interrupt a turn of the
+// session's project.
+interruptTurn: {
+    path: '/ondewo.nlu.Sessions/InterruptTurn',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.InterruptTurnRequest,
+    responseType: ondewo_nlu_session_pb.InterruptTurnResponse,
+    requestSerialize: serialize_ondewo_nlu_InterruptTurnRequest,
+    requestDeserialize: deserialize_ondewo_nlu_InterruptTurnRequest,
+    responseSerialize: serialize_ondewo_nlu_InterruptTurnResponse,
+    responseDeserialize: deserialize_ondewo_nlu_InterruptTurnResponse,
+  },
+  // Prepares the intro session of a warm transfer: reads the history, the contexts and the slots of the source
+// (caller) session, renders the intro text (with an LLM within a time budget, or from the TEMPLATE when the LLM
+// fails or is not configured), strips every <code>&lt;SIP:…&gt;</code> markup from it, and stores the text, the
+// configuration and the stage in the intro session, which must not exist yet. Writes no step into the source
+// session. Idempotent per (<code>intro_session</code>, <code>transfer_request_id</code>): a repeated request
+// answers the response of the first one. Answers <code>UNIMPLEMENTED</code> when the server's warm transfer
+// feature is switched off, and <code>FAILED_PRECONDITION</code> with <code>reason=warm-intro-disabled-for-agent</code>
+// when <code>Agent.warm_transfer_settings.enabled</code> is false. Requires the permission to run a warm transfer
+// intro of the session's project. See <code>docs/warm_transfer.md</code>.
+prepareWarmTransferIntro: {
+    path: '/ondewo.nlu.Sessions/PrepareWarmTransferIntro',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.PrepareWarmTransferIntroRequest,
+    responseType: ondewo_nlu_session_pb.PrepareWarmTransferIntroResponse,
+    requestSerialize: serialize_ondewo_nlu_PrepareWarmTransferIntroRequest,
+    requestDeserialize: deserialize_ondewo_nlu_PrepareWarmTransferIntroRequest,
+    responseSerialize: serialize_ondewo_nlu_PrepareWarmTransferIntroResponse,
+    responseDeserialize: deserialize_ondewo_nlu_PrepareWarmTransferIntroResponse,
+  },
+  // Returns the decision the target gave in the intro session of a warm transfer. Never returns the reason text
+// or the intro text. Answers <code>UNIMPLEMENTED</code> when the server's warm transfer feature is switched off.
+// Requires the permission to run a warm transfer intro of the session's project.
+getWarmTransferIntroOutcome: {
+    path: '/ondewo.nlu.Sessions/GetWarmTransferIntroOutcome',
+    requestStream: false,
+    responseStream: false,
+    requestType: ondewo_nlu_session_pb.GetWarmTransferIntroOutcomeRequest,
+    responseType: ondewo_nlu_session_pb.WarmTransferIntroOutcome,
+    requestSerialize: serialize_ondewo_nlu_GetWarmTransferIntroOutcomeRequest,
+    requestDeserialize: deserialize_ondewo_nlu_GetWarmTransferIntroOutcomeRequest,
+    responseSerialize: serialize_ondewo_nlu_WarmTransferIntroOutcome,
+    responseDeserialize: deserialize_ondewo_nlu_WarmTransferIntroOutcome,
   },
   // *** SESSION RELATED ENDPOINTS *** //
 //

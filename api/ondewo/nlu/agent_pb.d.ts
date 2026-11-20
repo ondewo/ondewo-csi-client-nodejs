@@ -58,6 +58,11 @@ export class Agent extends jspb.Message {
     getModifiedBy(): string;
     setModifiedBy(value: string): Agent;
 
+    hasWarmTransferSettings(): boolean;
+    clearWarmTransferSettings(): void;
+    getWarmTransferSettings(): WarmTransferAgentSettings | undefined;
+    setWarmTransferSettings(value?: WarmTransferAgentSettings): Agent;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Agent.AsObject;
     static toObject(includeInstance: boolean, msg: Agent): Agent.AsObject;
@@ -84,6 +89,105 @@ export namespace Agent {
         modifiedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
         createdBy: string,
         modifiedBy: string,
+        warmTransferSettings?: WarmTransferAgentSettings.AsObject,
+    }
+}
+
+export class WarmTransferAgentSettings extends jspb.Message { 
+
+    hasEnabled(): boolean;
+    clearEnabled(): void;
+    getEnabled(): boolean | undefined;
+    setEnabled(value: boolean): WarmTransferAgentSettings;
+    getLlmCcaiServiceName(): string;
+    setLlmCcaiServiceName(value: string): WarmTransferAgentSettings;
+
+    getDefaultTextsMap(): jspb.Map<string, WarmTransferAgentTexts>;
+    clearDefaultTextsMap(): void;
+
+    getExtraLexiconMap(): jspb.Map<string, WarmTransferAgentLexicon>;
+    clearExtraLexiconMap(): void;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): WarmTransferAgentSettings.AsObject;
+    static toObject(includeInstance: boolean, msg: WarmTransferAgentSettings): WarmTransferAgentSettings.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: WarmTransferAgentSettings, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): WarmTransferAgentSettings;
+    static deserializeBinaryFromReader(message: WarmTransferAgentSettings, reader: jspb.BinaryReader): WarmTransferAgentSettings;
+}
+
+export namespace WarmTransferAgentSettings {
+    export type AsObject = {
+        enabled?: boolean,
+        llmCcaiServiceName: string,
+
+        defaultTextsMap: Array<[string, WarmTransferAgentTexts.AsObject]>,
+
+        extraLexiconMap: Array<[string, WarmTransferAgentLexicon.AsObject]>,
+    }
+}
+
+export class WarmTransferAgentTexts extends jspb.Message { 
+    getReadyQuestion(): string;
+    setReadyQuestion(value: string): WarmTransferAgentTexts;
+    getAcceptQuestion(): string;
+    setAcceptQuestion(value: string): WarmTransferAgentTexts;
+
+    hasDeclineReasonQuestion(): boolean;
+    clearDeclineReasonQuestion(): void;
+    getDeclineReasonQuestion(): string | undefined;
+    setDeclineReasonQuestion(value: string): WarmTransferAgentTexts;
+    getCallerDeclinedMessage(): string;
+    setCallerDeclinedMessage(value: string): WarmTransferAgentTexts;
+    getCallerUnreachableMessage(): string;
+    setCallerUnreachableMessage(value: string): WarmTransferAgentTexts;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): WarmTransferAgentTexts.AsObject;
+    static toObject(includeInstance: boolean, msg: WarmTransferAgentTexts): WarmTransferAgentTexts.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: WarmTransferAgentTexts, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): WarmTransferAgentTexts;
+    static deserializeBinaryFromReader(message: WarmTransferAgentTexts, reader: jspb.BinaryReader): WarmTransferAgentTexts;
+}
+
+export namespace WarmTransferAgentTexts {
+    export type AsObject = {
+        readyQuestion: string,
+        acceptQuestion: string,
+        declineReasonQuestion?: string,
+        callerDeclinedMessage: string,
+        callerUnreachableMessage: string,
+    }
+}
+
+export class WarmTransferAgentLexicon extends jspb.Message { 
+    clearAcceptPhrasesList(): void;
+    getAcceptPhrasesList(): Array<string>;
+    setAcceptPhrasesList(value: Array<string>): WarmTransferAgentLexicon;
+    addAcceptPhrases(value: string, index?: number): string;
+    clearDeclinePhrasesList(): void;
+    getDeclinePhrasesList(): Array<string>;
+    setDeclinePhrasesList(value: Array<string>): WarmTransferAgentLexicon;
+    addDeclinePhrases(value: string, index?: number): string;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): WarmTransferAgentLexicon.AsObject;
+    static toObject(includeInstance: boolean, msg: WarmTransferAgentLexicon): WarmTransferAgentLexicon.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: WarmTransferAgentLexicon, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): WarmTransferAgentLexicon;
+    static deserializeBinaryFromReader(message: WarmTransferAgentLexicon, reader: jspb.BinaryReader): WarmTransferAgentLexicon;
+}
+
+export namespace WarmTransferAgentLexicon {
+    export type AsObject = {
+        acceptPhrasesList: Array<string>,
+        declinePhrasesList: Array<string>,
     }
 }
 

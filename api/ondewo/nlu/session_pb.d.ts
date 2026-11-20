@@ -134,6 +134,8 @@ export class QueryParameters extends jspb.Message {
     getTranscriptionsList(): Array<S2tTranscription>;
     setTranscriptionsList(value: Array<S2tTranscription>): QueryParameters;
     addTranscriptions(value?: S2tTranscription, index?: number): S2tTranscription;
+    getPreemptiveDraft(): boolean;
+    setPreemptiveDraft(value: boolean): QueryParameters;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): QueryParameters.AsObject;
@@ -160,6 +162,7 @@ export namespace QueryParameters {
         originId: string,
         identifiedUserId: string,
         transcriptionsList: Array<S2tTranscription.AsObject>,
+        preemptiveDraft: boolean,
     }
 }
 
@@ -1712,6 +1715,8 @@ export class ReferencedChunk extends jspb.Message {
     setDocumentUrl(value: string): ReferencedChunk;
     getDeepLinkUrl(): string;
     setDeepLinkUrl(value: string): ReferencedChunk;
+    getDocumentTitle(): string;
+    setDocumentTitle(value: string): ReferencedChunk;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ReferencedChunk.AsObject;
@@ -1734,6 +1739,7 @@ export namespace ReferencedChunk {
         similarity: number,
         documentUrl: string,
         deepLinkUrl: string,
+        documentTitle: string,
     }
 }
 
@@ -1851,6 +1857,13 @@ export class StreamingDetectIntentRequest extends jspb.Message {
     getInputAudio_asB64(): string;
     setInputAudio(value: Uint8Array | string): StreamingDetectIntentRequest;
 
+    hasTurnControl(): boolean;
+    clearTurnControl(): void;
+    getTurnControl(): TurnControl | undefined;
+    setTurnControl(value?: TurnControl): StreamingDetectIntentRequest;
+    getClientTurnId(): string;
+    setClientTurnId(value: string): StreamingDetectIntentRequest;
+
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): StreamingDetectIntentRequest.AsObject;
     static toObject(includeInstance: boolean, msg: StreamingDetectIntentRequest): StreamingDetectIntentRequest.AsObject;
@@ -1868,6 +1881,8 @@ export namespace StreamingDetectIntentRequest {
         queryInput?: QueryInput.AsObject,
         singleUtterance: boolean,
         inputAudio: Uint8Array | string,
+        turnControl?: TurnControl.AsObject,
+        clientTurnId: string,
     }
 }
 
@@ -1925,6 +1940,13 @@ export class StreamingDetectIntentResponse extends jspb.Message {
     getLlmAgentNodeEvent(): LlmAgentNodeEvent | undefined;
     setLlmAgentNodeEvent(value?: LlmAgentNodeEvent): StreamingDetectIntentResponse;
 
+    hasTurnControlAck(): boolean;
+    clearTurnControlAck(): void;
+    getTurnControlAck(): TurnControlAck | undefined;
+    setTurnControlAck(value?: TurnControlAck): StreamingDetectIntentResponse;
+    getClientTurnId(): string;
+    setClientTurnId(value: string): StreamingDetectIntentResponse;
+
     getTelemetryEventCase(): StreamingDetectIntentResponse.TelemetryEventCase;
 
     serializeBinary(): Uint8Array;
@@ -1950,6 +1972,8 @@ export namespace StreamingDetectIntentResponse {
         llmThinkingDelta?: LlmThinkingDeltaEvent.AsObject,
         llmTokenUsageUpdate?: LlmTokenUsageUpdateEvent.AsObject,
         llmAgentNodeEvent?: LlmAgentNodeEvent.AsObject,
+        turnControlAck?: TurnControlAck.AsObject,
+        clientTurnId: string,
     }
 
     export enum TelemetryEventCase {
@@ -1963,6 +1987,461 @@ export namespace StreamingDetectIntentResponse {
         LLM_AGENT_NODE_EVENT = 11,
     }
 
+}
+
+export class TurnControl extends jspb.Message { 
+
+    hasCancelTurn(): boolean;
+    clearCancelTurn(): void;
+    getCancelTurn(): CancelTurn | undefined;
+    setCancelTurn(value?: CancelTurn): TurnControl;
+
+    hasHeardReport(): boolean;
+    clearHeardReport(): void;
+    getHeardReport(): HeardReport | undefined;
+    setHeardReport(value?: HeardReport): TurnControl;
+
+    hasDiscardDraft(): boolean;
+    clearDiscardDraft(): void;
+    getDiscardDraft(): DiscardDraft | undefined;
+    setDiscardDraft(value?: DiscardDraft): TurnControl;
+
+    getTurnControlCase(): TurnControl.TurnControlCase;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TurnControl.AsObject;
+    static toObject(includeInstance: boolean, msg: TurnControl): TurnControl.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TurnControl, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TurnControl;
+    static deserializeBinaryFromReader(message: TurnControl, reader: jspb.BinaryReader): TurnControl;
+}
+
+export namespace TurnControl {
+    export type AsObject = {
+        cancelTurn?: CancelTurn.AsObject,
+        heardReport?: HeardReport.AsObject,
+        discardDraft?: DiscardDraft.AsObject,
+    }
+
+    export enum TurnControlCase {
+        TURN_CONTROL_NOT_SET = 0,
+        CANCEL_TURN = 1,
+        HEARD_REPORT = 2,
+        DISCARD_DRAFT = 3,
+    }
+
+}
+
+export class CancelTurn extends jspb.Message { 
+    getResponseId(): string;
+    setResponseId(value: string): CancelTurn;
+    getClientTurnId(): string;
+    setClientTurnId(value: string): CancelTurn;
+    getTurnInterruptionReason(): TurnInterruptionReason;
+    setTurnInterruptionReason(value: TurnInterruptionReason): CancelTurn;
+
+    hasDecidedAt(): boolean;
+    clearDecidedAt(): void;
+    getDecidedAt(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setDecidedAt(value?: google_protobuf_timestamp_pb.Timestamp): CancelTurn;
+    getBackgroundWorkPolicy(): BackgroundWorkPolicy;
+    setBackgroundWorkPolicy(value: BackgroundWorkPolicy): CancelTurn;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): CancelTurn.AsObject;
+    static toObject(includeInstance: boolean, msg: CancelTurn): CancelTurn.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: CancelTurn, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): CancelTurn;
+    static deserializeBinaryFromReader(message: CancelTurn, reader: jspb.BinaryReader): CancelTurn;
+}
+
+export namespace CancelTurn {
+    export type AsObject = {
+        responseId: string,
+        clientTurnId: string,
+        turnInterruptionReason: TurnInterruptionReason,
+        decidedAt?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        backgroundWorkPolicy: BackgroundWorkPolicy,
+    }
+}
+
+export class HeardMessage extends jspb.Message { 
+    getFulfillmentMessageIndex(): number;
+    setFulfillmentMessageIndex(value: number): HeardMessage;
+    getPlatform(): ondewo_nlu_intent_pb.Intent.Message.Platform;
+    setPlatform(value: ondewo_nlu_intent_pb.Intent.Message.Platform): HeardMessage;
+    getFullText(): string;
+    setFullText(value: string): HeardMessage;
+    getHeardText(): string;
+    setHeardText(value: string): HeardMessage;
+    getHeardCharCount(): number;
+    setHeardCharCount(value: number): HeardMessage;
+    getHeardAudioDurationInS(): number;
+    setHeardAudioDurationInS(value: number): HeardMessage;
+    getTotalAudioDurationInS(): number;
+    setTotalAudioDurationInS(value: number): HeardMessage;
+    getCompleted(): boolean;
+    setCompleted(value: boolean): HeardMessage;
+    getNeverStarted(): boolean;
+    setNeverStarted(value: boolean): HeardMessage;
+    getSkippedSipTrigger(): boolean;
+    setSkippedSipTrigger(value: boolean): HeardMessage;
+    getFillerId(): string;
+    setFillerId(value: string): HeardMessage;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): HeardMessage.AsObject;
+    static toObject(includeInstance: boolean, msg: HeardMessage): HeardMessage.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: HeardMessage, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): HeardMessage;
+    static deserializeBinaryFromReader(message: HeardMessage, reader: jspb.BinaryReader): HeardMessage;
+}
+
+export namespace HeardMessage {
+    export type AsObject = {
+        fulfillmentMessageIndex: number,
+        platform: ondewo_nlu_intent_pb.Intent.Message.Platform,
+        fullText: string,
+        heardText: string,
+        heardCharCount: number,
+        heardAudioDurationInS: number,
+        totalAudioDurationInS: number,
+        completed: boolean,
+        neverStarted: boolean,
+        skippedSipTrigger: boolean,
+        fillerId: string,
+    }
+}
+
+export class HeardReport extends jspb.Message { 
+    getResponseId(): string;
+    setResponseId(value: string): HeardReport;
+    getClientTurnId(): string;
+    setClientTurnId(value: string): HeardReport;
+    getRevision(): number;
+    setRevision(value: number): HeardReport;
+    getTurnInterruptionReason(): TurnInterruptionReason;
+    setTurnInterruptionReason(value: TurnInterruptionReason): HeardReport;
+    clearHeardMessagesList(): void;
+    getHeardMessagesList(): Array<HeardMessage>;
+    setHeardMessagesList(value: Array<HeardMessage>): HeardReport;
+    addHeardMessages(value?: HeardMessage, index?: number): HeardMessage;
+    getHeardTextPrecision(): HeardTextPrecision;
+    setHeardTextPrecision(value: HeardTextPrecision): HeardReport;
+    getCallerOverlapDurationInS(): number;
+    setCallerOverlapDurationInS(value: number): HeardReport;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): HeardReport.AsObject;
+    static toObject(includeInstance: boolean, msg: HeardReport): HeardReport.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: HeardReport, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): HeardReport;
+    static deserializeBinaryFromReader(message: HeardReport, reader: jspb.BinaryReader): HeardReport;
+}
+
+export namespace HeardReport {
+    export type AsObject = {
+        responseId: string,
+        clientTurnId: string,
+        revision: number,
+        turnInterruptionReason: TurnInterruptionReason,
+        heardMessagesList: Array<HeardMessage.AsObject>,
+        heardTextPrecision: HeardTextPrecision,
+        callerOverlapDurationInS: number,
+    }
+}
+
+export class DiscardDraft extends jspb.Message { 
+    getResponseId(): string;
+    setResponseId(value: string): DiscardDraft;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): DiscardDraft.AsObject;
+    static toObject(includeInstance: boolean, msg: DiscardDraft): DiscardDraft.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: DiscardDraft, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): DiscardDraft;
+    static deserializeBinaryFromReader(message: DiscardDraft, reader: jspb.BinaryReader): DiscardDraft;
+}
+
+export namespace DiscardDraft {
+    export type AsObject = {
+        responseId: string,
+    }
+}
+
+export class TurnControlAck extends jspb.Message { 
+    getResponseId(): string;
+    setResponseId(value: string): TurnControlAck;
+    getClientTurnId(): string;
+    setClientTurnId(value: string): TurnControlAck;
+    getTurnControlAckStatus(): TurnControlAckStatus;
+    setTurnControlAckStatus(value: TurnControlAckStatus): TurnControlAck;
+    getServerCancelDurationInS(): number;
+    setServerCancelDurationInS(value: number): TurnControlAck;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): TurnControlAck.AsObject;
+    static toObject(includeInstance: boolean, msg: TurnControlAck): TurnControlAck.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: TurnControlAck, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): TurnControlAck;
+    static deserializeBinaryFromReader(message: TurnControlAck, reader: jspb.BinaryReader): TurnControlAck;
+}
+
+export namespace TurnControlAck {
+    export type AsObject = {
+        responseId: string,
+        clientTurnId: string,
+        turnControlAckStatus: TurnControlAckStatus,
+        serverCancelDurationInS: number,
+    }
+}
+
+export class InterruptTurnRequest extends jspb.Message { 
+    getSession(): string;
+    setSession(value: string): InterruptTurnRequest;
+
+    hasTurnControl(): boolean;
+    clearTurnControl(): void;
+    getTurnControl(): TurnControl | undefined;
+    setTurnControl(value?: TurnControl): InterruptTurnRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): InterruptTurnRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: InterruptTurnRequest): InterruptTurnRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: InterruptTurnRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): InterruptTurnRequest;
+    static deserializeBinaryFromReader(message: InterruptTurnRequest, reader: jspb.BinaryReader): InterruptTurnRequest;
+}
+
+export namespace InterruptTurnRequest {
+    export type AsObject = {
+        session: string,
+        turnControl?: TurnControl.AsObject,
+    }
+}
+
+export class InterruptTurnResponse extends jspb.Message { 
+
+    hasTurnControlAck(): boolean;
+    clearTurnControlAck(): void;
+    getTurnControlAck(): TurnControlAck | undefined;
+    setTurnControlAck(value?: TurnControlAck): InterruptTurnResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): InterruptTurnResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: InterruptTurnResponse): InterruptTurnResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: InterruptTurnResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): InterruptTurnResponse;
+    static deserializeBinaryFromReader(message: InterruptTurnResponse, reader: jspb.BinaryReader): InterruptTurnResponse;
+}
+
+export namespace InterruptTurnResponse {
+    export type AsObject = {
+        turnControlAck?: TurnControlAck.AsObject,
+    }
+}
+
+export class WarmTransferIntroConfig extends jspb.Message { 
+    getIntroPrompt(): string;
+    setIntroPrompt(value: string): WarmTransferIntroConfig;
+    getTextSource(): WarmTransferIntroTextSource;
+    setTextSource(value: WarmTransferIntroTextSource): WarmTransferIntroConfig;
+    getReadyQuestion(): string;
+    setReadyQuestion(value: string): WarmTransferIntroConfig;
+
+    hasConfirmHumanBeforeIntro(): boolean;
+    clearConfirmHumanBeforeIntro(): void;
+    getConfirmHumanBeforeIntro(): boolean | undefined;
+    setConfirmHumanBeforeIntro(value: boolean): WarmTransferIntroConfig;
+    getAcceptQuestion(): string;
+    setAcceptQuestion(value: string): WarmTransferIntroConfig;
+
+    hasDeclineReasonQuestion(): boolean;
+    clearDeclineReasonQuestion(): void;
+    getDeclineReasonQuestion(): string | undefined;
+    setDeclineReasonQuestion(value: string): WarmTransferIntroConfig;
+    getCallerDeclinedMessage(): string;
+    setCallerDeclinedMessage(value: string): WarmTransferIntroConfig;
+    getCallerUnreachableMessage(): string;
+    setCallerUnreachableMessage(value: string): WarmTransferIntroConfig;
+    getAcceptDtmf(): string;
+    setAcceptDtmf(value: string): WarmTransferIntroConfig;
+    getDeclineDtmf(): string;
+    setDeclineDtmf(value: string): WarmTransferIntroConfig;
+    getCalleeDisplayName(): string;
+    setCalleeDisplayName(value: string): WarmTransferIntroConfig;
+    getCalleeDescription(): string;
+    setCalleeDescription(value: string): WarmTransferIntroConfig;
+    getLlmCcaiServiceName(): string;
+    setLlmCcaiServiceName(value: string): WarmTransferIntroConfig;
+    getMaxHistorySteps(): number;
+    setMaxHistorySteps(value: number): WarmTransferIntroConfig;
+    getDecisionTimeoutS(): number;
+    setDecisionTimeoutS(value: number): WarmTransferIntroConfig;
+    getProjectDisplayName(): string;
+    setProjectDisplayName(value: string): WarmTransferIntroConfig;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): WarmTransferIntroConfig.AsObject;
+    static toObject(includeInstance: boolean, msg: WarmTransferIntroConfig): WarmTransferIntroConfig.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: WarmTransferIntroConfig, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): WarmTransferIntroConfig;
+    static deserializeBinaryFromReader(message: WarmTransferIntroConfig, reader: jspb.BinaryReader): WarmTransferIntroConfig;
+}
+
+export namespace WarmTransferIntroConfig {
+    export type AsObject = {
+        introPrompt: string,
+        textSource: WarmTransferIntroTextSource,
+        readyQuestion: string,
+        confirmHumanBeforeIntro?: boolean,
+        acceptQuestion: string,
+        declineReasonQuestion?: string,
+        callerDeclinedMessage: string,
+        callerUnreachableMessage: string,
+        acceptDtmf: string,
+        declineDtmf: string,
+        calleeDisplayName: string,
+        calleeDescription: string,
+        llmCcaiServiceName: string,
+        maxHistorySteps: number,
+        decisionTimeoutS: number,
+        projectDisplayName: string,
+    }
+}
+
+export class PrepareWarmTransferIntroRequest extends jspb.Message { 
+    getIntroSession(): string;
+    setIntroSession(value: string): PrepareWarmTransferIntroRequest;
+    getSourceSession(): string;
+    setSourceSession(value: string): PrepareWarmTransferIntroRequest;
+
+    hasConfig(): boolean;
+    clearConfig(): void;
+    getConfig(): WarmTransferIntroConfig | undefined;
+    setConfig(value?: WarmTransferIntroConfig): PrepareWarmTransferIntroRequest;
+    getLanguageCode(): string;
+    setLanguageCode(value: string): PrepareWarmTransferIntroRequest;
+    getTransferRequestId(): string;
+    setTransferRequestId(value: string): PrepareWarmTransferIntroRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PrepareWarmTransferIntroRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: PrepareWarmTransferIntroRequest): PrepareWarmTransferIntroRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PrepareWarmTransferIntroRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PrepareWarmTransferIntroRequest;
+    static deserializeBinaryFromReader(message: PrepareWarmTransferIntroRequest, reader: jspb.BinaryReader): PrepareWarmTransferIntroRequest;
+}
+
+export namespace PrepareWarmTransferIntroRequest {
+    export type AsObject = {
+        introSession: string,
+        sourceSession: string,
+        config?: WarmTransferIntroConfig.AsObject,
+        languageCode: string,
+        transferRequestId: string,
+    }
+}
+
+export class PrepareWarmTransferIntroResponse extends jspb.Message { 
+    getTextSourceUsed(): WarmTransferIntroTextSource;
+    setTextSourceUsed(value: WarmTransferIntroTextSource): PrepareWarmTransferIntroResponse;
+    getTextFellBack(): boolean;
+    setTextFellBack(value: boolean): PrepareWarmTransferIntroResponse;
+    getIntroTextChars(): number;
+    setIntroTextChars(value: number): PrepareWarmTransferIntroResponse;
+    getPromptDigest(): string;
+    setPromptDigest(value: string): PrepareWarmTransferIntroResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): PrepareWarmTransferIntroResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: PrepareWarmTransferIntroResponse): PrepareWarmTransferIntroResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: PrepareWarmTransferIntroResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): PrepareWarmTransferIntroResponse;
+    static deserializeBinaryFromReader(message: PrepareWarmTransferIntroResponse, reader: jspb.BinaryReader): PrepareWarmTransferIntroResponse;
+}
+
+export namespace PrepareWarmTransferIntroResponse {
+    export type AsObject = {
+        textSourceUsed: WarmTransferIntroTextSource,
+        textFellBack: boolean,
+        introTextChars: number,
+        promptDigest: string,
+    }
+}
+
+export class GetWarmTransferIntroOutcomeRequest extends jspb.Message { 
+    getIntroSession(): string;
+    setIntroSession(value: string): GetWarmTransferIntroOutcomeRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): GetWarmTransferIntroOutcomeRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: GetWarmTransferIntroOutcomeRequest): GetWarmTransferIntroOutcomeRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: GetWarmTransferIntroOutcomeRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): GetWarmTransferIntroOutcomeRequest;
+    static deserializeBinaryFromReader(message: GetWarmTransferIntroOutcomeRequest, reader: jspb.BinaryReader): GetWarmTransferIntroOutcomeRequest;
+}
+
+export namespace GetWarmTransferIntroOutcomeRequest {
+    export type AsObject = {
+        introSession: string,
+    }
+}
+
+export class WarmTransferIntroOutcome extends jspb.Message { 
+    getDecision(): WarmTransferIntroDecision;
+    setDecision(value: WarmTransferIntroDecision): WarmTransferIntroOutcome;
+    getDecidedBy(): WarmTransferIntroDecidedBy;
+    setDecidedBy(value: WarmTransferIntroDecidedBy): WarmTransferIntroOutcome;
+    getDeclineReasonPresent(): boolean;
+    setDeclineReasonPresent(value: boolean): WarmTransferIntroOutcome;
+    getStage(): WarmTransferIntroStage;
+    setStage(value: WarmTransferIntroStage): WarmTransferIntroOutcome;
+    getCause(): string;
+    setCause(value: string): WarmTransferIntroOutcome;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): WarmTransferIntroOutcome.AsObject;
+    static toObject(includeInstance: boolean, msg: WarmTransferIntroOutcome): WarmTransferIntroOutcome.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: WarmTransferIntroOutcome, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): WarmTransferIntroOutcome;
+    static deserializeBinaryFromReader(message: WarmTransferIntroOutcome, reader: jspb.BinaryReader): WarmTransferIntroOutcome;
+}
+
+export namespace WarmTransferIntroOutcome {
+    export type AsObject = {
+        decision: WarmTransferIntroDecision,
+        decidedBy: WarmTransferIntroDecidedBy,
+        declineReasonPresent: boolean,
+        stage: WarmTransferIntroStage,
+        cause: string,
+    }
 }
 
 export class StreamingRecognitionResult extends jspb.Message { 
@@ -5410,6 +5889,71 @@ export enum LlmAgentNodePhase {
     LLM_AGENT_NODE_PHASE_STARTED = 1,
     LLM_AGENT_NODE_PHASE_COMPLETED = 2,
     LLM_AGENT_NODE_PHASE_FAILED = 3,
+}
+
+export enum TurnInterruptionReason {
+    TURN_INTERRUPTION_REASON_UNSPECIFIED = 0,
+    TURN_INTERRUPTION_REASON_BARGE_IN = 1,
+    TURN_INTERRUPTION_REASON_CALLER_SPOKE_WHILE_THINKING = 2,
+    TURN_INTERRUPTION_REASON_CALL_ENDED = 3,
+    TURN_INTERRUPTION_REASON_FILLER_CUT = 4,
+    TURN_INTERRUPTION_REASON_NO_FINAL_TIMEOUT = 5,
+    TURN_INTERRUPTION_REASON_OPERATOR_TAKEOVER = 6,
+    TURN_INTERRUPTION_REASON_BOT_MUTED = 7,
+}
+
+export enum BackgroundWorkPolicy {
+    BACKGROUND_WORK_POLICY_KEEP = 0,
+    BACKGROUND_WORK_POLICY_CANCEL_PENDING = 1,
+}
+
+export enum HeardTextPrecision {
+    HEARD_TEXT_PRECISION_UNSPECIFIED = 0,
+    HEARD_TEXT_PRECISION_NONE_HEARD = 1,
+    HEARD_TEXT_PRECISION_FULL = 2,
+    HEARD_TEXT_PRECISION_ESTIMATED_SERVER = 3,
+    HEARD_TEXT_PRECISION_PROPORTIONAL = 4,
+}
+
+export enum TurnControlAckStatus {
+    TURN_CONTROL_ACK_STATUS_UNSPECIFIED = 0,
+    TURN_CONTROL_ACK_STATUS_CANCELLED = 1,
+    TURN_CONTROL_ACK_STATUS_CANCELLED_QUEUED = 2,
+    TURN_CONTROL_ACK_STATUS_ALREADY_FINISHED = 3,
+    TURN_CONTROL_ACK_STATUS_UNKNOWN_TURN = 4,
+    TURN_CONTROL_ACK_STATUS_HEARD_APPLIED = 5,
+    TURN_CONTROL_ACK_STATUS_HEARD_STALE = 6,
+    TURN_CONTROL_ACK_STATUS_DRAFT_DISCARDED = 7,
+}
+
+export enum WarmTransferIntroTextSource {
+    WARM_TRANSFER_INTRO_TEXT_SOURCE_UNSPECIFIED = 0,
+    WARM_TRANSFER_INTRO_TEXT_SOURCE_TEMPLATE = 1,
+    WARM_TRANSFER_INTRO_TEXT_SOURCE_LLM_SUMMARY = 2,
+}
+
+export enum WarmTransferIntroDecision {
+    WARM_TRANSFER_INTRO_DECISION_UNSPECIFIED = 0,
+    WARM_TRANSFER_INTRO_DECISION_PENDING = 1,
+    WARM_TRANSFER_INTRO_DECISION_ACCEPTED = 2,
+    WARM_TRANSFER_INTRO_DECISION_DECLINED = 3,
+    WARM_TRANSFER_INTRO_DECISION_NO_DECISION = 4,
+}
+
+export enum WarmTransferIntroDecidedBy {
+    WARM_TRANSFER_INTRO_DECIDED_BY_UNSPECIFIED = 0,
+    WARM_TRANSFER_INTRO_DECIDED_BY_DTMF = 1,
+    WARM_TRANSFER_INTRO_DECIDED_BY_SPEECH = 2,
+    WARM_TRANSFER_INTRO_DECIDED_BY_TIMEOUT = 3,
+}
+
+export enum WarmTransferIntroStage {
+    WARM_TRANSFER_INTRO_STAGE_UNSPECIFIED = 0,
+    WARM_TRANSFER_INTRO_STAGE_PREPARED = 1,
+    WARM_TRANSFER_INTRO_STAGE_READY_ASKED = 2,
+    WARM_TRANSFER_INTRO_STAGE_INTRO_SPOKEN = 3,
+    WARM_TRANSFER_INTRO_STAGE_REASON_ASKED = 4,
+    WARM_TRANSFER_INTRO_STAGE_CLOSED = 5,
 }
 
 export enum AudioEncoding {

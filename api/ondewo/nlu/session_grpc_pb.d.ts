@@ -22,6 +22,9 @@ import * as ondewo_nlu_llm_evaluation_pb from "../../ondewo/nlu/llm_evaluation_p
 interface ISessionsService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     detectIntent: ISessionsService_IDetectIntent;
     streamingDetectIntent: ISessionsService_IStreamingDetectIntent;
+    interruptTurn: ISessionsService_IInterruptTurn;
+    prepareWarmTransferIntro: ISessionsService_IPrepareWarmTransferIntro;
+    getWarmTransferIntroOutcome: ISessionsService_IGetWarmTransferIntroOutcome;
     listSessions: ISessionsService_IListSessions;
     getSession: ISessionsService_IGetSession;
     createSession: ISessionsService_ICreateSession;
@@ -89,6 +92,33 @@ interface ISessionsService_IStreamingDetectIntent extends grpc.MethodDefinition<
     requestDeserialize: grpc.deserialize<ondewo_nlu_session_pb.StreamingDetectIntentRequest>;
     responseSerialize: grpc.serialize<ondewo_nlu_session_pb.StreamingDetectIntentResponse>;
     responseDeserialize: grpc.deserialize<ondewo_nlu_session_pb.StreamingDetectIntentResponse>;
+}
+interface ISessionsService_IInterruptTurn extends grpc.MethodDefinition<ondewo_nlu_session_pb.InterruptTurnRequest, ondewo_nlu_session_pb.InterruptTurnResponse> {
+    path: "/ondewo.nlu.Sessions/InterruptTurn";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_session_pb.InterruptTurnRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_session_pb.InterruptTurnRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_session_pb.InterruptTurnResponse>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_session_pb.InterruptTurnResponse>;
+}
+interface ISessionsService_IPrepareWarmTransferIntro extends grpc.MethodDefinition<ondewo_nlu_session_pb.PrepareWarmTransferIntroRequest, ondewo_nlu_session_pb.PrepareWarmTransferIntroResponse> {
+    path: "/ondewo.nlu.Sessions/PrepareWarmTransferIntro";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_session_pb.PrepareWarmTransferIntroRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_session_pb.PrepareWarmTransferIntroRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_session_pb.PrepareWarmTransferIntroResponse>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_session_pb.PrepareWarmTransferIntroResponse>;
+}
+interface ISessionsService_IGetWarmTransferIntroOutcome extends grpc.MethodDefinition<ondewo_nlu_session_pb.GetWarmTransferIntroOutcomeRequest, ondewo_nlu_session_pb.WarmTransferIntroOutcome> {
+    path: "/ondewo.nlu.Sessions/GetWarmTransferIntroOutcome";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<ondewo_nlu_session_pb.GetWarmTransferIntroOutcomeRequest>;
+    requestDeserialize: grpc.deserialize<ondewo_nlu_session_pb.GetWarmTransferIntroOutcomeRequest>;
+    responseSerialize: grpc.serialize<ondewo_nlu_session_pb.WarmTransferIntroOutcome>;
+    responseDeserialize: grpc.deserialize<ondewo_nlu_session_pb.WarmTransferIntroOutcome>;
 }
 interface ISessionsService_IListSessions extends grpc.MethodDefinition<ondewo_nlu_session_pb.ListSessionsRequest, ondewo_nlu_session_pb.ListSessionsResponse> {
     path: "/ondewo.nlu.Sessions/ListSessions";
@@ -528,6 +558,9 @@ export const SessionsService: ISessionsService;
 export interface ISessionsServer {
     detectIntent: grpc.handleUnaryCall<ondewo_nlu_session_pb.DetectIntentRequest, ondewo_nlu_session_pb.DetectIntentResponse>;
     streamingDetectIntent: grpc.handleBidiStreamingCall<ondewo_nlu_session_pb.StreamingDetectIntentRequest, ondewo_nlu_session_pb.StreamingDetectIntentResponse>;
+    interruptTurn: grpc.handleUnaryCall<ondewo_nlu_session_pb.InterruptTurnRequest, ondewo_nlu_session_pb.InterruptTurnResponse>;
+    prepareWarmTransferIntro: grpc.handleUnaryCall<ondewo_nlu_session_pb.PrepareWarmTransferIntroRequest, ondewo_nlu_session_pb.PrepareWarmTransferIntroResponse>;
+    getWarmTransferIntroOutcome: grpc.handleUnaryCall<ondewo_nlu_session_pb.GetWarmTransferIntroOutcomeRequest, ondewo_nlu_session_pb.WarmTransferIntroOutcome>;
     listSessions: grpc.handleUnaryCall<ondewo_nlu_session_pb.ListSessionsRequest, ondewo_nlu_session_pb.ListSessionsResponse>;
     getSession: grpc.handleUnaryCall<ondewo_nlu_session_pb.GetSessionRequest, ondewo_nlu_session_pb.Session>;
     createSession: grpc.handleUnaryCall<ondewo_nlu_session_pb.CreateSessionRequest, ondewo_nlu_session_pb.Session>;
@@ -585,6 +618,15 @@ export interface ISessionsClient {
     streamingDetectIntent(): grpc.ClientDuplexStream<ondewo_nlu_session_pb.StreamingDetectIntentRequest, ondewo_nlu_session_pb.StreamingDetectIntentResponse>;
     streamingDetectIntent(options: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<ondewo_nlu_session_pb.StreamingDetectIntentRequest, ondewo_nlu_session_pb.StreamingDetectIntentResponse>;
     streamingDetectIntent(metadata: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<ondewo_nlu_session_pb.StreamingDetectIntentRequest, ondewo_nlu_session_pb.StreamingDetectIntentResponse>;
+    interruptTurn(request: ondewo_nlu_session_pb.InterruptTurnRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.InterruptTurnResponse) => void): grpc.ClientUnaryCall;
+    interruptTurn(request: ondewo_nlu_session_pb.InterruptTurnRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.InterruptTurnResponse) => void): grpc.ClientUnaryCall;
+    interruptTurn(request: ondewo_nlu_session_pb.InterruptTurnRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.InterruptTurnResponse) => void): grpc.ClientUnaryCall;
+    prepareWarmTransferIntro(request: ondewo_nlu_session_pb.PrepareWarmTransferIntroRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.PrepareWarmTransferIntroResponse) => void): grpc.ClientUnaryCall;
+    prepareWarmTransferIntro(request: ondewo_nlu_session_pb.PrepareWarmTransferIntroRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.PrepareWarmTransferIntroResponse) => void): grpc.ClientUnaryCall;
+    prepareWarmTransferIntro(request: ondewo_nlu_session_pb.PrepareWarmTransferIntroRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.PrepareWarmTransferIntroResponse) => void): grpc.ClientUnaryCall;
+    getWarmTransferIntroOutcome(request: ondewo_nlu_session_pb.GetWarmTransferIntroOutcomeRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.WarmTransferIntroOutcome) => void): grpc.ClientUnaryCall;
+    getWarmTransferIntroOutcome(request: ondewo_nlu_session_pb.GetWarmTransferIntroOutcomeRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.WarmTransferIntroOutcome) => void): grpc.ClientUnaryCall;
+    getWarmTransferIntroOutcome(request: ondewo_nlu_session_pb.GetWarmTransferIntroOutcomeRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.WarmTransferIntroOutcome) => void): grpc.ClientUnaryCall;
     listSessions(request: ondewo_nlu_session_pb.ListSessionsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionsResponse) => void): grpc.ClientUnaryCall;
     listSessions(request: ondewo_nlu_session_pb.ListSessionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionsResponse) => void): grpc.ClientUnaryCall;
     listSessions(request: ondewo_nlu_session_pb.ListSessionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionsResponse) => void): grpc.ClientUnaryCall;
@@ -738,6 +780,15 @@ export class SessionsClient extends grpc.Client implements ISessionsClient {
     public detectIntent(request: ondewo_nlu_session_pb.DetectIntentRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.DetectIntentResponse) => void): grpc.ClientUnaryCall;
     public streamingDetectIntent(options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<ondewo_nlu_session_pb.StreamingDetectIntentRequest, ondewo_nlu_session_pb.StreamingDetectIntentResponse>;
     public streamingDetectIntent(metadata?: grpc.Metadata, options?: Partial<grpc.CallOptions>): grpc.ClientDuplexStream<ondewo_nlu_session_pb.StreamingDetectIntentRequest, ondewo_nlu_session_pb.StreamingDetectIntentResponse>;
+    public interruptTurn(request: ondewo_nlu_session_pb.InterruptTurnRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.InterruptTurnResponse) => void): grpc.ClientUnaryCall;
+    public interruptTurn(request: ondewo_nlu_session_pb.InterruptTurnRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.InterruptTurnResponse) => void): grpc.ClientUnaryCall;
+    public interruptTurn(request: ondewo_nlu_session_pb.InterruptTurnRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.InterruptTurnResponse) => void): grpc.ClientUnaryCall;
+    public prepareWarmTransferIntro(request: ondewo_nlu_session_pb.PrepareWarmTransferIntroRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.PrepareWarmTransferIntroResponse) => void): grpc.ClientUnaryCall;
+    public prepareWarmTransferIntro(request: ondewo_nlu_session_pb.PrepareWarmTransferIntroRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.PrepareWarmTransferIntroResponse) => void): grpc.ClientUnaryCall;
+    public prepareWarmTransferIntro(request: ondewo_nlu_session_pb.PrepareWarmTransferIntroRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.PrepareWarmTransferIntroResponse) => void): grpc.ClientUnaryCall;
+    public getWarmTransferIntroOutcome(request: ondewo_nlu_session_pb.GetWarmTransferIntroOutcomeRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.WarmTransferIntroOutcome) => void): grpc.ClientUnaryCall;
+    public getWarmTransferIntroOutcome(request: ondewo_nlu_session_pb.GetWarmTransferIntroOutcomeRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.WarmTransferIntroOutcome) => void): grpc.ClientUnaryCall;
+    public getWarmTransferIntroOutcome(request: ondewo_nlu_session_pb.GetWarmTransferIntroOutcomeRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.WarmTransferIntroOutcome) => void): grpc.ClientUnaryCall;
     public listSessions(request: ondewo_nlu_session_pb.ListSessionsRequest, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionsResponse) => void): grpc.ClientUnaryCall;
     public listSessions(request: ondewo_nlu_session_pb.ListSessionsRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionsResponse) => void): grpc.ClientUnaryCall;
     public listSessions(request: ondewo_nlu_session_pb.ListSessionsRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: ondewo_nlu_session_pb.ListSessionsResponse) => void): grpc.ClientUnaryCall;
