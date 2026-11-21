@@ -337,19 +337,17 @@ nodeTest('login throws OfflineTokenError with status on invalid credentials', as
 	);
 });
 
-/** A 2xx response lacking `refresh_token` (offline scope not granted) raises {@link OfflineTokenError}. */
-nodeTest('login throws OfflineTokenError when offline refresh token is absent', async (): Promise<void> => {
+/** A 2xx response lacking `refresh_token` (offline scope not granted) is accepted, like the python SDK. */
+nodeTest('login accepts a response whose offline refresh token is absent', async (): Promise<void> => {
 	const stub: FetchStub = makeFetchStub([
 		{ ok: true, status: 200, bodyText: JSON.stringify({ access_token: 'a', expires_in: 300 }) }
 	]);
-	await assert.rejects(
-		(): Promise<OfflineTokenProvider> => doLogin({ fetchFn: stub.fetchFn }),
-		(thrown: unknown): boolean => {
-			assert.ok(thrown instanceof OfflineTokenError);
-			assert.match(thrown.message, /refresh_token/);
-			return true;
-		}
-	);
+	const provider: OfflineTokenProvider = await doLogin({ fetchFn: stub.fetchFn });
+	try {
+		assert.equal(provider.getAccessToken(), 'a');
+	} finally {
+		provider.stop();
+	}
 });
 
 /** A non-JSON response body raises {@link OfflineTokenError}. */
