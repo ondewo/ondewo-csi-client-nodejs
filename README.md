@@ -119,24 +119,33 @@ npm
 
 ## Authentication
 
-All RPCs are authenticated with a Keycloak-issued **bearer token**. Obtain one with the offline-token login helper exported from the package root and attach it to each call as the `Authorization` gRPC metadata header.
+All RPCs are authenticated with a Keycloak-issued **bearer token**. The package ships a token provider that acquires it, refreshes it before it expires and attaches it to every call as the `authorization: Bearer <token>` gRPC metadata.
 
 ```ts
-import { login } from '@ondewo/csi-client-nodejs';
+import { ConversationsClient, createGrpcClient, getKeycloakTokenProvider, GrpcClientConfig } from '@ondewo/csi-client-nodejs';
 
-const provider = await login({
+// One provider per credential set, shared by every client built from it (one login).
+const tokenProvider = await getKeycloakTokenProvider({
   keycloakUrl: 'https://auth.example.com/auth',
   realm: 'ondewo-ccai-platform',
-  clientId: '<public SDK client id>',
+  clientId: 'ondewo-csi-cai-sdk-public',
   username: 'tech-user@example.com',
-  password: '...'
+  password: '...', // password login: one ROPC grant with scope=offline_access
+  // refreshToken: '...', // OR a handed-off OFFLINE token: one refresh grant, no password is ever sent
+  tokenExpirationInS: undefined // optional bound on how long the token is refreshed
 });
 
-// `Bearer <jwt>` — set this as the `Authorization` gRPC metadata on each request.
-const authorizationHeader = provider.getAuthorizationHeader();
+const client: ConversationsClient = createGrpcClient(ConversationsClient, new GrpcClientConfig({ host: 'csi.example.com', port: 443 }), {
+  tokenProvider // null (no Keycloak fields set) attaches nothing
+});
 ```
 
-`login(...)` returns an `OfflineTokenProvider` that refreshes the access token in the background; call `provider.stop()` when you are done. The helper also has a deep path, `@ondewo/csi-client-nodejs/auth/offlineTokenProvider`; up to 5.5.x it shipped as `api/auth/offlineTokenProvider`.
+- **Password or offline token.** With `refreshToken` set the provider starts with one `grant_type=refresh_token` exchange and never sends a password grant, not even when the token is refused (the refusal is raised). Keycloak's brute-force protection counts failed *logins*, so many processes sharing one technical user should start from an offline token.
+- **Refresh.** A background timer (unref-ed, so it never keeps the process alive) refreshes 30 s before expiry; `getAuthorizationMetadata()`, which every call reads, refreshes on demand as well. Concurrent calls share one refresh.
+- **Failures never end the refresh.** A failed refresh is retried with jittered exponential backoff (5 s, doubling, capped at 300 s), logs one warning per failure (`logger`, default `console`) and one info line on recovery. While the token is still valid it keeps being served; only an expired token that cannot be refreshed fails the call, with a `KeycloakAuthenticationError` (an `OfflineTokenError` subclass whose `cause` is the underlying error). No message or rendering contains a password or token.
+- **Validation.** `keycloakUrl`, `realm` and `clientId` go together (setting only some throws), and one of `password` / `refreshToken` is required. `keycloakVerifySsl: false` disables TLS verification for the token request only.
+- `login(options)` builds a new, unshared provider; call `provider.stop()` (or `close()`) when you are done with one. The legacy `cai-token` / HTTP-basic credentials no longer exist. See the [`examples/`](https://github.com/ondewo/ondewo-csi-client-nodejs/tree/master/examples) directory for a full `Conversations.ListS2sPipelines` RPC example.
+- **Earlier (5.x) surface, unchanged.** `fetchFn`, `nowFn` and `refreshSkewInS` still work as aliases of `fetchImpl`, `nowInMs` and `timings.expiryLeewayS`; `getAuthMetadata()` still returns a `Metadata` with the current header (without refreshing it), `forceRefresh()` still refreshes immediately, and every error is still an `OfflineTokenError` (exported as `TokenError` too) whose `status` carries the HTTP status of a refused request. The password grant now sends `scope=offline_access`, as every ONDEWO SDK does. The helper also has a deep path, `@ondewo/csi-client-nodejs/auth/offlineTokenProvider`; up to 5.5.x it shipped as `api/auth/offlineTokenProvider`.
 
 ## TLS, mutual TLS and certificates
 
